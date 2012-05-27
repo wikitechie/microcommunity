@@ -5,3 +5,9 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
+    script(src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.6/underscore-min.js")
+    script(src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js")
+    != js('app')
+    != js('publisher')
+
