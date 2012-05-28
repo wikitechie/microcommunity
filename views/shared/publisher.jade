@@ -1,4 +1,10 @@
-script#publisher-template(type="text/template")
-	p Hello, World, this is the publisher!
 #publisher
+	script#publisher-template(type="text/template")
+		<div class="row-fluid">
+		<textarea class="span12" id="publisher-text" placeholder="Write something..." rows="1"></textarea>
+		<input class="number_field" id="post_user_id" name="post[user_id]" type="hidden" value="1" />
+		<input id="post_owner_type" name="post[owner_type]" type="hidden" value="Group" />
+		<input id="post_owner_id" name="post[owner_id]" type="hidden" value="1" />
+		<input class="btn btn-success pull-right" id="post-button" name="commit" type="submit" value="Post" />
+		</div>
 

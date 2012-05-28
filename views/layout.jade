@@ -2,12 +2,15 @@
 html
 	head
 		title= title
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		link(rel="stylesheet", href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css")
 		!= css('app')
+		link(rel="stylesheet", href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css")
 
 	body
-		div.topbar
-			div.fill
-				div.container
+		.navbar.navbar-fixed-top
+			.navbar-inner
+				.container-fluid
 					a(href='#').brand #{title}
 					ul.nav
 						li.active
@@ -17,8 +20,20 @@ html
 						li
 							a(href='#') Contact
 
-		div.container
-			block content
+		div.container-fluid
+			.row-fluid
+				.span3
+					.well.sidebar-nav
+						ul.nav.nav-list
+							li.nav-header Sidebar
+							li.active
+								a Link
+							li
+								a Link
+				.span9
+					.row-fluid
+					block content
+
 			footer
 				p MicroCommunity 2012
 

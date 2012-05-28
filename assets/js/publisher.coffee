@@ -4,32 +4,28 @@ class window.Publisher extends Backbone.View
 	button : '#post-button'
 	template: _.template($('#publisher-template').html()),
 
-	events: 'click #group-publisher-text': 'expand'
+	events:
+  	'click #publisher-text': 'expand'
+  	'click #post-button' : 'post'
 
 	initialize: ->
 		@render()
-
-		$('.new_post').bind 'ajax:beforeSend', (event) =>
-			@disable()
-
-		$('.new_post').bind 'ajax:complete', (event) =>
-			@enable()
 
 	render: ->
 		$(@el).html @template
 		return this
 
 	disable: ->
-		$("#group-publisher-text").attr("disabled","disabled")
+		$("#publisher-text").attr("disabled","disabled")
 		$(@button).attr("disabled","disabled")
 		$(@el).spin()
 
 	enable: ->
-		$("#group-publisher-text").removeAttr("disabled")
-		$("#group-publisher-text").val('')
+		$("#publisher-text").removeAttr("disabled")
+		$("#publisher-text").val('')
 		$(@button).removeAttr("disabled")
 		$(@el).spin(false)
 
 	expand: ->
-		$("#group-publisher-text").attr("rows","3")
+		$("#publisher-text").attr("rows","3")
 
