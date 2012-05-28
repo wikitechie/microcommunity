@@ -1,13 +1,29 @@
 !!!
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
-    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
-    script(src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.6/underscore-min.js")
-    script(src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js")
-    != js('app')
-    != js('publisher')
+	head
+		title= title
+		!= css('app')
+
+	body
+		div.topbar
+			div.fill
+				div.container
+					a(href='#').brand #{title}
+					ul.nav
+						li.active
+							a(href='#') Home
+						li
+							a(href='#') Wiki
+						li
+							a(href='#') Contact
+
+		div.container
+			block content
+			footer
+				p MicroCommunity 2012
+
+		script( src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
+		script( src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js")
+		script( src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js")
+		!= js('app')
 

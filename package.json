@@ -8,7 +8,11 @@
   "dependencies": {
     "express": "3.0.0alpha4",
     "jade": "*",
-    "connect-assets" : "*"
+    "connect-assets" : "*",
+    "stylus": "*",
+    "nib": "*",
+    "bootstrap-stylus": "*"
+
   }
 }
 
