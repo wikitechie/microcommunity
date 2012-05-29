@@ -9,7 +9,7 @@ var express = require('express')
   , stylus = require('stylus')
   , bootstrap = require('bootstrap-stylus');
 
-var app = express();
+var app = express.createServer();
 
 //function used to configure bootstrap-stylus
 function compile(str, path) {
@@ -42,7 +42,5 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 
-http.createServer(app).listen(app.get('port'), function() {
-  console.log("Express server listening on port " + app.get('port'));
-});
+app.listen(3000);
 
