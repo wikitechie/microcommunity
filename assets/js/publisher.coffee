@@ -29,3 +29,8 @@ class window.Publisher extends Backbone.View
 	expand: ->
 		$("#publisher-text").attr("rows","3")
 
+	post: ->
+		post = new Post
+		post.set	{name: "Guest",	text: $("#publisher-text").val()}
+		window.mediator.trigger("new post", post);
+

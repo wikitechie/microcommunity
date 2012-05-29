@@ -1,3 +1,4 @@
+#= require mediator
 #= require publisher
 #= require social_stream
 
