@@ -1,0 +1,22 @@
+#social-stream
+	script#post-template(type="text/template")
+		<td>
+		<div class="row-fluid">
+		<div class="span1">
+		<a href="/profiles/1"><img width="50" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png"></a>
+		</div>
+		<div class="span10">
+		<p><a data-remote="true" class="remote-wikipage-link" href="/posts/206"><%= name %></a> posted</p>
+		<p><%= text %></p>
+		</td>
+	script#social-stream-template(type="text/template")
+		<table class ="table table-condensed" id ="social-stream-table">
+		<% for (var i = 0; i < posts.length; i++) { %>
+		<% var post = posts[i]; var tmplMarkup = $('#post-template').html();	%>
+		<tr>
+		<% var compiled = _.template(tmplMarkup); %>
+		<% print(compiled(post)); %>
+		<% } %>
+		<tr>
+		</table>
+
