@@ -7,7 +7,33 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , stylus = require('stylus')
-  , bootstrap = require('bootstrap-stylus');
+  , bootstrap = require('bootstrap-stylus')
+  , mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/microcommunity');
+
+var Post = mongoose.model('Post', new mongoose.Schema({
+  name: String,
+  text: String
+}));
+
+var post;
+post = new Post({
+	name: "Amjad",
+	text: "Hello, MongoDB!"
+});
+
+
+/*
+post.save(function(err){
+  if (!err) {
+    console.log("created");
+  }
+  else {
+  	console.log(err);
+  }
+
+}); */
 
 var app = express.createServer();
 
@@ -41,6 +67,24 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+
+/*
+app.get('/', function(req, res){
+
+  Post.find(function(err, posts) {
+    res.render('index', { title: 'MicroCmmunity', posts: posts});
+  });
+
+});
+
+*/
+
+app.get('/api/posts', function(req, res){
+	_res = res;
+  Post.find(function(err, posts) {
+    _res.send(posts);
+  });
+});
 
 app.listen(3000);
 

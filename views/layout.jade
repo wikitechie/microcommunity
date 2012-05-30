@@ -36,9 +36,16 @@ html
 
 			footer
 				p MicroCommunity 2012
+				p = posts
 
 		script( src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
+		script( src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js")
 		script( src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js")
 		script( src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js")
+		- var myposts = JSON.stringify(posts, null, 2);
+		script
+			console.debug(JSON.parse('{"posts": #{myposts}}'));
+
+
 		!= js('app')
 

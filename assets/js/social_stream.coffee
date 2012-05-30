@@ -44,7 +44,7 @@ class window.SocialStream extends Backbone.View
 
 	injectPost: (post)=>
 		postView = new PostView	model: post
-		$("#social-stream-table").append postView.render().el
+		$("#social-stream-table").prepend postView.render().el
 
 	addPost: (post)=>
 		@posts.add post
