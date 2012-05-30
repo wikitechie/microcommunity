@@ -13,7 +13,9 @@
     "connect-assets" : "*",
     "stylus": "*",
     "nib": "*",
-    "bootstrap-stylus": "*"
+    "bootstrap-stylus": "*",
+    "express-expose": "*"
+
 
   }
 }

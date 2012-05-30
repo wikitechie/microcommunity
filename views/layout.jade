@@ -42,10 +42,9 @@ html
 		script( src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js")
 		script( src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js")
 		script( src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js")
-		- var myposts = JSON.stringify(posts, null, 2);
+		script!= javascript
 		script
-			console.debug(JSON.parse('{"posts": #{myposts}}'));
-
+			console.debug(myposts.posts);
 
 		!= js('app')
 
