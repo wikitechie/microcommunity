@@ -43,7 +43,7 @@ class window.SocialStream extends Backbone.View
 
 	render: ->
 		$(@el).html @template { posts : [{name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"}] }
-		return this
+		@
 
 	injectPost: (post)=>
 		postView = new PostView	model: post
