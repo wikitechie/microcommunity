@@ -9,4 +9,5 @@ jQuery ->
 	#contentStream = new window.ContentStream()
 	$('#social-stream-table').masonry
 		 itemSelector : '.well'
+		 isAnimated: true
 
