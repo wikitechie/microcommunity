@@ -34,20 +34,19 @@ class window.SocialStream extends Backbone.View
 		@posts = new Posts
 		@posts.bind 'add', @injectPost
 
-		@render()
-
 		window.mediator.bind "new post", (post)=>
 		  @addPost post
 
+		@render()
 
 
 	render: ->
-		$(@el).html @template { posts : [{name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"}] }
+		$(@el).html @template { posts : [{name: "Amjad", text: "Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone "}, {name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"},{name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"}] }
 		@
 
 	injectPost: (post)=>
 		postView = new PostView	model: post
-		$("#social-stream-table").prepend postView.render().el
+		$("#social-stream-table").prepend(postView.render().el).masonry( 'reload' )
 
 	addPost: (post)=>
 		@posts.add post
