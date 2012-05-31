@@ -1,10 +1,10 @@
 extends layout
 
 block content
-	.span6
-		include shared/publisher
-		hr
-		include shared/social_stream
-	.span6
-		include shared/content_stream
+	.row
+		.span5.offset3
+			include shared/publisher
+	.row
+		.span10.offset1
+			include shared/social_stream
 

@@ -11,7 +11,7 @@ html
 	body
 		.navbar.navbar-fixed-top
 			.navbar-inner
-				.container-fluid
+				.container
 					a(href='#').brand #{title}
 					ul.nav
 						li.active
@@ -21,19 +21,10 @@ html
 						li
 							a(href='#') Contact
 
-		div.container-fluid
-			.row-fluid
-				.span3
-					.well.sidebar-nav
-						ul.nav.nav-list
-							li.nav-header Sidebar
-							li.active
-								a Link
-							li
-								a Link
-				.span9
-					.row-fluid
-						block content
+		div.container
+			.row
+				.span12
+					block content
 
 			footer
 				p MicroCommunity 2012
