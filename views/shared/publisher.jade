@@ -1,36 +1,24 @@
 #publisher
-	script#publisher-template(type="text/template")
+	script#publisher-container-template(type="text/template")
 		<div class="row-fluid">
 		<ul class="nav nav-tabs" id="publisher-tab">
-		<li class="active"><a href="#post">Post</a></li>
-		<li><a href="#wikipage">Wikipage</a></li>
-		<li><a href="#question">Question</a></li>
 		</ul>
-		<div class="tab-content">
-		<div class="tab-pane active" id="post">
-		<textarea class="span12" id="publisher-text" placeholder="Write something..." rows="1"></textarea>
-		<input class="number_field" id="post_user_id" name="post[user_id]" type="hidden" value="1" />
-		<input id="post_owner_type" name="post[owner_type]" type="hidden" value="Group" />
-		<input id="post_owner_id" name="post[owner_id]" type="hidden" value="1" />
-		<input class="btn btn-success pull-right" id="post-button" name="commit" type="submit" value="Post" />
-		</div>
-		<div class="tab-pane" id="wikipage">
-		<textarea class="span12" id="publisher-text" placeholder="Write a seed..." rows="1"></textarea>
-		<input  class="span12" id="post_user_id" name="post[user_id]" type="text" placeholder="Give it a nice title..." />
-		<input class="number_field" id="post_user_id" name="post[user_id]" type="hidden" value="1" />
-		<input id="post_owner_type" name="post[owner_type]" type="hidden" value="Group" />
-		<input id="post_owner_id" name="post[owner_id]" type="hidden" value="1" />
-		<input class="btn btn-success pull-right" id="wikipage-button" name="commit" type="submit" value="Post" />
-		</div>
-		<div class="tab-pane" id="question">
-		<textarea class="span12" id="publisher-text" placeholder="Write your question..." rows="1"></textarea>
-		<input  class="span12" id="post_user_id" name="post[user_id]" type="text" placeholder="Give it a nice title..." />
-		<input class="number_field" id="post_user_id" name="post[user_id]" type="hidden" value="1" />
-		<input id="post_owner_type" name="post[owner_type]" type="hidden" value="Group" />
-		<input id="post_owner_id" name="post[owner_id]" type="hidden" value="1" />
-		<input class="btn btn-success pull-right" id="post-button" name="commit" type="submit" value="Post" />
+		<div class="tab-content" id="publisher-content">
 		</div>
 		</div>
 
-		</div>
+script#post-publisher-template(type="text/template")
+	<textarea class="span12" id="publisher-text" placeholder="Write something..." rows="1"></textarea>
+	<input class="number_field" id="post_user_id" name="post[user_id]" type="hidden" value="1" />
+	<input id="post_owner_type" name="post[owner_type]" type="hidden" value="Group" />
+	<input id="post_owner_id" name="post[owner_id]" type="hidden" value="1" />
+	<input class="btn btn-success pull-right" id="post-button" name="commit" type="submit" value="Post" />		</div>
+
+script#wikipage-publisher-template(type="text/template")
+	<textarea class="span12" id="wikipage-text" placeholder="Write a seed..." rows="1"></textarea>
+	<input  class="span12" id="post_user_id" name="post[user_id]" type="text" placeholder="Give it a nice title..." />
+	<input class="number_field" id="post_user_id" name="post[user_id]" type="hidden" value="1" />
+	<input id="post_owner_type" name="post[owner_type]" type="hidden" value="Group" />
+	<input id="post_owner_id" name="post[owner_id]" type="hidden" value="1" />
+	<input class="btn btn-success pull-right" id="wikipage-button" name="commit" type="submit" value="Post" />
 

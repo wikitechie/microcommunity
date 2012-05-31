@@ -4,7 +4,7 @@
 
 
 jQuery ->
-	publisher = new window.Publisher()
+	publisher = new window.PublisherContainer()
 	socialStream = new window.SocialStream()
 	#contentStream = new window.ContentStream()
 	$('#social-stream-table').masonry

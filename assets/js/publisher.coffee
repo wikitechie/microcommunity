@@ -1,24 +1,18 @@
-class window.Publisher extends Backbone.View
+class window.PostPublisher extends Backbone.View
 
-	el: '#publisher'
 	button : '#post-button'
-	template: _.template($('#publisher-template').html()),
+	template: _.template($('#post-publisher-template').html()),
 
 	events:
-  	'click textarea': 'expand'
+  	'click #publisher-text': 'expand'
   	'click #post-button' : 'post'
-  	'click #wikipage-button' : 'post'
 
 	initialize: ->
 		@render()
 
 	render: ->
 		$(@el).html @template
-		$('#publisher-tab a').click (e) ->
-			e.preventDefault();
-			$(this).tab('show')
-
-		return this
+		@
 
 	disable: ->
 		$("#publisher-text").attr("disabled","disabled")
@@ -36,10 +30,69 @@ class window.Publisher extends Backbone.View
 
 	reset: ->
 		$("#publisher-text").val("")
+		$("#publisher-text").attr("rows","1")
 
 	post: ->
 		post = new Post
 		post.set	{name: "Guest",	text: $("#publisher-text").val()}
 		window.mediator.trigger("new post", post)
 		@reset()
+
+class window.WikipagePublisher extends Backbone.View
+
+	button : '#post-button'
+	template: _.template($('#wikipage-publisher-template').html()),
+
+	events:
+  	'click #wikipage-text': 'expand'
+
+	initialize: ->
+		@render()
+
+	render: ->
+		$(@el).html @template
+		return this
+
+	disable: ->
+		$("#publisher-text").attr("disabled","disabled")
+		$(@button).attr("disabled","disabled")
+		$(@el).spin()
+
+	enable: ->
+		$("#publisher-text").removeAttr("disabled")
+		$("#publisher-text").val('')
+		$(@button).removeAttr("disabled")
+		$(@el).spin(false)
+
+	expand: ->
+		$("#wikipage-text").attr("rows","3")
+
+
+
+
+
+class window.PublisherContainer extends Backbone.View
+
+	el: '#publisher'
+	template: _.template($('#publisher-container-template').html()),
+
+	initialize: ->
+		@render()
+		@addPublisher "post", "Post", new PostPublisher
+		@addPublisher "wikipage", "Wiki", new WikipagePublisher
+		$('#publisher-tab a').click (e) ->
+			e.preventDefault();
+			$(this).tab('show')
+		$('#publisher-tab a:first').tab('show');
+
+
+	addPublisher: (identifier, label, view)->
+		$("#publisher-tab").append("<li><a href='##{identifier}'>#{label}</a></li>")
+		element = $("<div class='tab-pane' id='#{identifier}'></div>").append view.render().el
+		$("#publisher-content").append element
+
+
+	render: ->
+		$(@el).html @template
+		@
 
