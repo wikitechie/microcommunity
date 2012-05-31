@@ -40,11 +40,12 @@ class window.PostPublisher extends Backbone.View
 
 class window.WikipagePublisher extends Backbone.View
 
-	button : '#post-button'
+	button : '#wikipage-button'
 	template: _.template($('#wikipage-publisher-template').html()),
 
 	events:
   	'click #wikipage-text': 'expand'
+  	'click #wikipage-button': 'post'
 
 	initialize: ->
 		@render()
@@ -54,21 +55,29 @@ class window.WikipagePublisher extends Backbone.View
 		return this
 
 	disable: ->
-		$("#publisher-text").attr("disabled","disabled")
+		$("#wikipage-text").attr("disabled","disabled")
 		$(@button).attr("disabled","disabled")
 		$(@el).spin()
 
 	enable: ->
-		$("#publisher-text").removeAttr("disabled")
-		$("#publisher-text").val('')
+		$("#wikipage-text").removeAttr("disabled")
+		$("#wikipage-text").val('')
 		$(@button).removeAttr("disabled")
 		$(@el).spin(false)
+
+	reset: ->
+		$("#wikipage-text").val("")
+		$("#wikipage-text").attr("rows","1")
+		$("#wikipage-title").val("")
 
 	expand: ->
 		$("#wikipage-text").attr("rows","3")
 
-
-
+	post: ->
+		wikipage = new WikiPage
+		wikipage.set	{title: $("#wikipage-title").val(),	body: $("#wikipage-text").val()}
+		window.mediator.trigger("new wikipage", wikipage)
+		@reset()
 
 
 class window.PublisherContainer extends Backbone.View

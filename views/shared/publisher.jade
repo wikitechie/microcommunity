@@ -9,16 +9,10 @@
 
 script#post-publisher-template(type="text/template")
 	<textarea class="span12" id="publisher-text" placeholder="Write something..." rows="1"></textarea>
-	<input class="number_field" id="post_user_id" name="post[user_id]" type="hidden" value="1" />
-	<input id="post_owner_type" name="post[owner_type]" type="hidden" value="Group" />
-	<input id="post_owner_id" name="post[owner_id]" type="hidden" value="1" />
 	<input class="btn btn-success pull-right" id="post-button" name="commit" type="submit" value="Post" />		</div>
 
 script#wikipage-publisher-template(type="text/template")
 	<textarea class="span12" id="wikipage-text" placeholder="Write a seed..." rows="1"></textarea>
-	<input  class="span12" id="post_user_id" name="post[user_id]" type="text" placeholder="Give it a nice title..." />
-	<input class="number_field" id="post_user_id" name="post[user_id]" type="hidden" value="1" />
-	<input id="post_owner_type" name="post[owner_type]" type="hidden" value="Group" />
-	<input id="post_owner_id" name="post[owner_id]" type="hidden" value="1" />
+	<input  class="span12" id="wikipage-title" type="text" placeholder="Give it a nice title..." />
 	<input class="btn btn-success pull-right" id="wikipage-button" name="commit" type="submit" value="Post" />
 

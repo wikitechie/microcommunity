@@ -1,28 +1,3 @@
-class window.Post extends Backbone.Model
-	defaults:
-		name: "Amjad"
-		text: "Hello, Backbone"
-
-	idAttribute: "_id",
-
-class window.Posts extends Backbone.Collection
-	model: window.Post
-	url: '/api/posts'
-
-class window.PostView extends Backbone.View
-	tagName: "tr"
-
-	template: _.template($('#post-template').html()),
-
-	initialize: ->
-		_.bindAll @
-
-	render: ->
-		$(@el).html @template @model.attributes
-
-		@
-
-
 class window.SocialStream extends Backbone.View
 
 	el: '#social-stream'
@@ -32,10 +7,15 @@ class window.SocialStream extends Backbone.View
 		_.bindAll @
 
 		@posts = new Posts
+		@wikipages = new WikiPages
 		@posts.bind 'add', @injectPost
+		@wikipages.bind 'add', @injectWikipage
 
 		window.mediator.bind "new post", (post)=>
 		  @addPost post
+
+		window.mediator.bind "new wikipage", (wikipage)=>
+		  @addWikipage wikipage
 
 		@render()
 
@@ -48,6 +28,13 @@ class window.SocialStream extends Backbone.View
 		postView = new PostView	model: post
 		$("#social-stream-table").prepend(postView.render().el).masonry( 'reload' )
 
+	injectWikipage: (wikipage)=>
+		wikipageView = new WikiPageView	model: wikipage
+		$("#social-stream-table").prepend(wikipageView.render().el).masonry( 'reload' )
+
 	addPost: (post)=>
 		@posts.add post
+
+	addWikipage: (wikipage)=>
+		@wikipages.add wikipage
 
