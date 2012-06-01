@@ -1,7 +1,7 @@
 class window.Post extends Backbone.Model
 	defaults:
 		name: "Amjad"
-		text: "Hello, Backbone"
+		text: "Newly posted, Hello, Backbone"
 
 	idAttribute: "_id"
 

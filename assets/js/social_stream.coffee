@@ -19,6 +19,10 @@ class window.SocialStream extends Backbone.View
 
 		@render()
 
+		$('#social-stream-table').masonry
+			 itemSelector : '.well'
+			 isAnimated: true
+
 		wikipage = new WikiPage
 		wikipage.set	{title: "Node.js",	body: "Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices."}
 
@@ -29,6 +33,10 @@ class window.SocialStream extends Backbone.View
 		linkView = new LinkView	model: link
 		@injectView linkView
 
+		post = new Post
+		postView = new PostView	model: post
+		@injectView postView
+
 		link = new Link
 		link.set
 			title: "Confirmed: US and Israel created Stuxnet, lost control of it | Ars Technica "
@@ -36,6 +44,11 @@ class window.SocialStream extends Backbone.View
 			preview_thumbnail: "http://img.scoop.it/Zux1dLahsC0OGeb4LxUI1zl72eJkfbmt4t8yenImKBVaiQDB_Rd1H6kmuBWtceBJ"
 			preview: "http://img.scoop.it/Zux1dLahsC0OGeb4LxUI1zl72eJkfbmt4t8yenImKBVaiQDB_Rd1H6kmuBWtceBJ"
 			curation: "In 2011, the US government rolled out its International Strategy for Cyberspace, which reminded us that interconnected networks link nations more closely, so an attack on one nation’s networks may have impact far beyond its borders. An in-depth report today from the New York Times confirms the truth of that statement as it finally lays bare the history and development of the Stuxnet virus—and how it accidentally escaped from the Iranian nuclear facility that was its target."
+
+		post = new Post
+		postView = new PostView	model: post
+		@injectView postView
+
 
 		linkView = new LinkView	model: link
 		linkView.setTemplate "thumb"
