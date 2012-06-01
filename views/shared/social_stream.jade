@@ -53,14 +53,20 @@
 	script#link-template-thumbnail(type="text/template")
 		<div class="well">
 		<div class="row-fluid">
-		<p><%= curation %></p>
+		<div class="span2">
+		<p><a href="/profiles/1"><img width="50" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png"></a></p>
 		</div>
+		<div class="span10">
+		<p><a data-remote="true" class="remote-wikipage-link" href="/posts/206"><%= name %></a> posted</p>
+		<p><%= curation %></p>
 		<div class="row-fluid">
 		<div class="span3">
 		<p><a href="#"><img src="<%= preview %>"></a></p>
 		</div>
 		<div class="span9">
 		<a href="<%= url %>"><%= title %></a><br />
+		</div>
+		</div>
 		</div>
 		</div>
 		</div>
@@ -74,6 +80,11 @@
 		<div class="row-fluid">
 		<div class="span12">
 		<p><%= curation %></p>
+		</div>
+		<div class="span12 ">
+		<div class="pull-right ">
+		<p><a href="/profiles/1"><img width="20" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png"></a> shared by Guest</p>
+		</div>
 		</div>
 		</div>
 

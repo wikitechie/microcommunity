@@ -29,6 +29,19 @@ class window.SocialStream extends Backbone.View
 		linkView = new LinkView	model: link
 		@injectView linkView
 
+		link = new Link
+		link.set
+			title: "Confirmed: US and Israel created Stuxnet, lost control of it | Ars Technica "
+			url: "http://arstechnica.com/tech-policy/2012/06/confirmed-us-israel-created-stuxnet-lost-control-of-it/"
+			preview_thumbnail: "http://img.scoop.it/Zux1dLahsC0OGeb4LxUI1zl72eJkfbmt4t8yenImKBVaiQDB_Rd1H6kmuBWtceBJ"
+			preview: "http://img.scoop.it/Zux1dLahsC0OGeb4LxUI1zl72eJkfbmt4t8yenImKBVaiQDB_Rd1H6kmuBWtceBJ"
+			curation: "In 2011, the US government rolled out its International Strategy for Cyberspace, which reminded us that interconnected networks link nations more closely, so an attack on one nation’s networks may have impact far beyond its borders. An in-depth report today from the New York Times confirms the truth of that statement as it finally lays bare the history and development of the Stuxnet virus—and how it accidentally escaped from the Iranian nuclear facility that was its target."
+
+		linkView = new LinkView	model: link
+		linkView.setTemplate "thumb"
+
+		@injectView linkView
+
 
 	render: ->
 		$(@el).html @template { posts : [{name: "Amjad", text: "Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone "}, {name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"},{name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"}] }

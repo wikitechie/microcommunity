@@ -6,10 +6,16 @@ class window.LinkView extends Backbone.View
 
 	initialize: ->
 		_.bindAll @
-		@template = @curatedTemplate
+		@setTemplate "curated"
 
 	render: ->
 		$(@el).html @template @model.attributes
 
 		@
+
+	setTemplate: (mode) ->
+		if (mode =="curated")
+			@template = @curatedTemplate
+		else
+			@template=  @thumbnailTemplate
 
