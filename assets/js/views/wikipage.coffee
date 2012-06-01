@@ -1,5 +1,4 @@
 class window.WikiPageView extends Backbone.View
-	tagName: "tr"
 
 	normalTemplate: _.template($('#wikipage-template').html())
 	editTemplate: _.template($('#wikipage-edit-template').html())
@@ -14,9 +13,7 @@ class window.WikiPageView extends Backbone.View
 		@template = @normalTemplate
 
 	render: ->
-		@toggleTemplate
 		$(@el).html @template @model.attributes
-
 		@
 
 	editButton: ->

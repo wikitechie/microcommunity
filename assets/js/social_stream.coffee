@@ -21,7 +21,13 @@ class window.SocialStream extends Backbone.View
 
 		wikipage = new WikiPage
 		wikipage.set	{title: "Node.js",	body: "Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices."}
-		@addWikipage wikipage
+
+		wikipageView = new WikiPageView	model: wikipage
+		@injectView wikipageView
+
+		link = new Link
+		linkView = new LinkView	model: link
+		@injectView linkView
 
 
 	render: ->
@@ -35,6 +41,9 @@ class window.SocialStream extends Backbone.View
 	injectWikipage: (wikipage)=>
 		wikipageView = new WikiPageView	model: wikipage
 		$("#social-stream-table").prepend(wikipageView.render().el).masonry( 'reload' )
+
+	injectView: (view)=>
+		$("#social-stream-table").prepend(view.render().el).masonry( 'reload' )
 
 	addPost: (post)=>
 		@posts.add post
