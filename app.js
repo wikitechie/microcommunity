@@ -8,8 +8,7 @@ var express = require('express')
   , http = require('http')
   , stylus = require('stylus')
   , bootstrap = require('bootstrap-stylus')
-  , mongoose = require('mongoose')
-  , expose = require('express-expose');
+  , mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/microcommunity');
 
@@ -23,6 +22,10 @@ post = new Post({
 	name: "Amjad",
 	text: "Hello, MongoDB!"
 });
+
+//post.save(function (err) {
+//  if (!err) console.log('Success!');
+//});
 
 //post.save();
 
@@ -112,4 +115,3 @@ app.post('/api/posts', function(req, res){
 
 
 app.listen(3000);
-
