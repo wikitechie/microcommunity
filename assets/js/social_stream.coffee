@@ -7,7 +7,6 @@ class window.SocialStream extends Backbone.View
 		_.bindAll @
 
 		@posts = new Posts
-		@posts.add posts
 		@wikipages = new WikiPages
 		@posts.bind 'add', @injectPost
 		@wikipages.bind 'add', @injectWikipage
@@ -20,6 +19,9 @@ class window.SocialStream extends Backbone.View
 
 
 		@render()
+
+		#initializing posts rendered from the server
+		@posts.add eval(posts)
 
 		$('#social-stream-table').masonry
 			 itemSelector : '.well'

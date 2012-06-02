@@ -35,13 +35,6 @@
 
 	script#social-stream-template(type="text/template")
 		<div id ="social-stream-table">
-		<% var myposts = eval(posts); %>
-		<% console.debug(myposts.length); %>
-		<% for (var i = 0; i < myposts.length; i++) { %>
-		<% var post = myposts[i]; var tmplMarkup = $('#post-template').html();	%>
-		<% var compiled = _.template(tmplMarkup); %>
-		<% print(compiled(post)); %>
-		<% } %>
 		</div>
 	script#wikipage-template(type="text/template")
 		<div class="well">

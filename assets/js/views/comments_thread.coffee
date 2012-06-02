@@ -3,7 +3,7 @@ class window.CommentsThreadView extends Backbone.View
 	template: _.template($('#comments-thread-template').html())
 
 	events:
-		"keyup .comments-text": "newComment"
+		"keydown .comments-text": "newComment"
 
 	initialize: ->
 		_.bindAll @
@@ -25,6 +25,7 @@ class window.CommentsThreadView extends Backbone.View
 		keycode = if e.keyCode then e.keyCode else e.which
 		#if enter preseed
 		if keycode == 13
+			e.preventDefault()
 			comment = new Comment
 			comment.set text: $(@el).find(".comments-text").val()
 			@comments.add comment
