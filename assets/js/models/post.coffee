@@ -5,6 +5,9 @@ class window.Post extends Backbone.Model
 
 	idAttribute: "_id"
 
+	url: ->
+		"/api/posts/#{@id}"
+
 
 class window.Posts extends Backbone.Collection
 	model: window.Post

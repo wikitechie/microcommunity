@@ -10,7 +10,7 @@ var express = require('express')
   , bootstrap = require('bootstrap-stylus')
   , mongoose = require('mongoose')
   , expose = require('express-expose');
-/*
+
 mongoose.connect('mongodb://localhost/microcommunity');
 
 var Post = mongoose.model('Post', new mongoose.Schema({
@@ -24,8 +24,8 @@ post = new Post({
 	text: "Hello, MongoDB!"
 });
 
-post.save();
-*/
+//post.save();
+
 
 var app = express.createServer();
 
@@ -58,18 +58,58 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
+//app.get('/', routes.index);
 
-/*
-app.get('/api/posts', function(req, res){
-	_res = res;
+app.get('/', function(req, res){
   Post.find(function(err, posts) {
-  	console.log(posts);
-    _res.send(posts);
+		console.log(posts[0].name);
+		res.render('index', { title: 'MicroCmmunity', posts : posts });
   });
 });
 
-*/
+
+app.get('/api/posts', function(req, res){
+  return Post.find(function(err, posts) {
+    return res.send(posts);
+  });
+});
+
+app.get('/api/posts/:id', function(req, res){
+  return Post.findById(req.params.id, function(err, post) {
+    if (!err) {
+      return res.send(post);
+    }
+  });
+});
+
+app.put('/api/posts/:id', function(req, res){
+  return Post.findById(req.params.id, function(err, post) {
+    post.text = req.body.text;
+    post.name = req.body.name;
+    return post.save(function(err) {
+      if (!err) {
+        console.log("updated");
+      }
+      return res.send(post);
+    });
+  });
+});
+
+app.post('/api/posts', function(req, res){
+  var post;
+  post = new Post({
+    text: req.body.text,
+    name: req.body.name
+
+  });
+  post.save(function(err) {
+    if (!err) {
+      return console.log("created");
+    }
+  });
+  return res.send(post);
+});
+
 
 app.listen(3000);
 

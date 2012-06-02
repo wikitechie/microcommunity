@@ -35,5 +35,8 @@ html
 		!= js('lib/underscore-min')
 		!= js('lib/backbone-min')
 		!= js('lib/jquery.masonry.min')
+		!= "<script type='text/javascript'>"
+		!= "var posts =" + JSON.stringify(posts) + ";"
+		!= "</script>"
 		!= js('app')
 

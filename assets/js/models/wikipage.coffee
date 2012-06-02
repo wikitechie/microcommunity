@@ -3,7 +3,7 @@ class window.WikiPage extends Backbone.Model
 		title: "Amjad"
 		body: "Hello, Backbone"
 
-	idAttribute: "_id",
+	idAttribute: "_id"
 
 class window.WikiPages extends Backbone.Collection
 	model: window.Wikipage

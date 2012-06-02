@@ -7,6 +7,7 @@ class window.SocialStream extends Backbone.View
 		_.bindAll @
 
 		@posts = new Posts
+		@posts.add posts
 		@wikipages = new WikiPages
 		@posts.bind 'add', @injectPost
 		@wikipages.bind 'add', @injectWikipage
@@ -16,6 +17,7 @@ class window.SocialStream extends Backbone.View
 
 		window.mediator.bind "new wikipage", (wikipage)=>
 		  @addWikipage wikipage
+
 
 		@render()
 
@@ -33,10 +35,6 @@ class window.SocialStream extends Backbone.View
 		linkView = new LinkView	model: link
 		@injectView linkView
 
-		post = new Post
-		postView = new PostView	model: post
-		@injectView postView
-
 		link = new Link
 		link.set
 			title: "Confirmed: US and Israel created Stuxnet, lost control of it | Ars Technica "
@@ -45,11 +43,6 @@ class window.SocialStream extends Backbone.View
 			preview: "http://img.scoop.it/Zux1dLahsC0OGeb4LxUI1zl72eJkfbmt4t8yenImKBVaiQDB_Rd1H6kmuBWtceBJ"
 			curation: "In 2011, the US government rolled out its International Strategy for Cyberspace, which reminded us that interconnected networks link nations more closely, so an attack on one nation’s networks may have impact far beyond its borders. An in-depth report today from the New York Times confirms the truth of that statement as it finally lays bare the history and development of the Stuxnet virus—and how it accidentally escaped from the Iranian nuclear facility that was its target."
 
-		post = new Post
-		postView = new PostView	model: post
-		@injectView postView
-
-
 		linkView = new LinkView	model: link
 		linkView.setTemplate "thumb"
 
@@ -57,7 +50,7 @@ class window.SocialStream extends Backbone.View
 
 
 	render: ->
-		$(@el).html @template { posts : [{name: "Amjad", text: "Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone Hello, Backbone "}, {name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"},{name: "Amjad", text: "Hello, Backbone"}, {name: "Amjad", text: "Hello, Backbone"}] }
+		$(@el).html @template posts: JSON.stringify(@posts)
 		@
 
 	injectPost: (post)=>
