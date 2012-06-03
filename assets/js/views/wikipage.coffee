@@ -20,7 +20,7 @@ class window.WikiPageView extends Backbone.View
 		console.debug "editing..."
 		@template = @editTemplate
 		@render()
-		$('#social-stream-table').masonry( 'reload' )
+		$('#content-stream-table').masonry( 'reload' )
 
 	saveButton: ->
 		console.debug "saving..."
@@ -28,10 +28,10 @@ class window.WikiPageView extends Backbone.View
 
 		@template = @normalTemplate
 		@render()
-		$('#social-stream-table').masonry( 'reload' )
+		$('#content-stream-table').masonry( 'reload' )
 
 	cancelButton: ->
 		@template = @normalTemplate
 		@render()
-		$('#social-stream-table').masonry( 'reload' )
+		$('#content-stream-table').masonry( 'reload' )
 

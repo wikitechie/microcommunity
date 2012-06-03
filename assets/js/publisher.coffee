@@ -5,7 +5,7 @@ class window.PostPublisher extends Backbone.View
 
 	events:
   	'click #publisher-text': 'expand'
-  	'click #post-button' : 'post'
+  	'click #post-button' : 'newpost'
 
 	initialize: ->
 		@render()
@@ -32,10 +32,10 @@ class window.PostPublisher extends Backbone.View
 		$("#publisher-text").val("")
 		$("#publisher-text").attr("rows","1")
 
-	post: ->
+	newpost: ->
 		post = new Post
 		post.set	{name: "Guest",	text: $("#publisher-text").val()}
-		window.mediator.trigger("new post", post)
+		window.mediator.trigger("new-post", post)
 		@reset()
 
 class window.WikipagePublisher extends Backbone.View
@@ -76,7 +76,7 @@ class window.WikipagePublisher extends Backbone.View
 	post: ->
 		wikipage = new WikiPage
 		wikipage.set	{title: $("#wikipage-title").val(),	body: $("#wikipage-text").val()}
-		window.mediator.trigger("new wikipage", wikipage)
+		window.mediator.trigger("new-wikipage", wikipage)
 		@reset()
 
 

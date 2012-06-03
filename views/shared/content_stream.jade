@@ -1,35 +1,5 @@
 #content-stream
-	script#wikipage-template(type="text/template")
-		<td>
-		<div class="row-fluid">
-		<div class="span9">
-		<h2><%= title %> </h2>
-		</div>
-		<div class="span3">
-		<a href="#"><span id="edit-button" class="label label-info pull-right">Edit</span></a>
-		</div>
-		</div>
-		<div class="row-fluid">
-		<p><%= body %></p>
-		</div>
-		</td>
-	script#wikipage-edit-template(type="text/template")
-		<td>
-		<div class="span9">
-		<h2><%= title %> </h2>
-		</div>
-		<div class="span3">
-		<a href="#"> <div class="pull-right"><span id="save-button" class="label label-success" >Save</span></a>
-		<a href="#"> <span id="cancel-button" class="label label-important">Cancel</span></a>
-		</div>
-		</div>
-		<div class="row-fluid">
-		<textarea id="wikipage-body" class="span12" rows= 6><%= body %></textarea>
-		</div>
-		</td>
-
 	script#content-stream-template(type="text/template")
-		<table class ="table table-condensed" id ="content-stream-table">
-
-		</table>
+		<div id ="content-stream-table">
+		</div>
 
