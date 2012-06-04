@@ -69,7 +69,7 @@ app.configure('development', function(){
 
 app.get('/', function(req, res){
   Post.find(function(err, posts) {
-		console.log(posts[0].name);
+		console.log(posts);
 		res.render('index', { title: 'MicroCommunity', posts : posts });
   });
 });

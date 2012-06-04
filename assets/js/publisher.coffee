@@ -33,8 +33,7 @@ class window.PostPublisher extends Backbone.View
 		$("#publisher-text").attr("rows","1")
 
 	newpost: ->
-		post = new Post
-		post.set	{name: "Guest",	text: $("#publisher-text").val()}
+		post = new Post {name: "Guest",	text: $("#publisher-text").val(), comments: []}
 		window.mediator.trigger("new-post", post)
 		@reset()
 
