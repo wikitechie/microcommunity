@@ -7,17 +7,17 @@ class window.CommentsThreadView extends Backbone.View
 
 	initialize: ->
 		_.bindAll @
-		@comments = new Comments
-		@comments.bind 'add', @injectComment
-
+		@collection.bind 'add', @injectComment
 		@render()
+
 
 	render: ->
 		$(@el).html @template
+		@collection.each (comment)=>
+			@injectComment comment
 		@
 
 	injectView: (view) ->
-		console.debug "injecting..."
 		$(@el).find('.comments-list').append(view.render().el)
 		$("#social-stream-table").masonry( 'reload' )
 
@@ -28,14 +28,13 @@ class window.CommentsThreadView extends Backbone.View
 			e.preventDefault()
 			comment = new Comment
 			comment.set text: $(@el).find(".comments-text").val()
-			@comments.add comment
+			@collection.add comment
 			$(@el).find(".comments-text").val("")
 			$(@el).find(".comments-text").setCursorPosition(0)
 
 	injectComment: (comment) =>
 		commentView = new CommentView model: comment
 		@injectView commentView
-
 
 	clearText: ->
 		$(@el).find(".comments-text").val("")

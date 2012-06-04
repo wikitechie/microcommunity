@@ -8,6 +8,11 @@ class window.Post extends Backbone.Model
 	url: ->
 		"/api/posts/#{@id}"
 
+	initialize: (options)->
+		console.debug options
+		@comments = new Comments
+		@comments.add options.comments
+
 
 class window.Posts extends Backbone.Collection
 	model: window.Post

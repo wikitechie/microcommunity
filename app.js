@@ -13,18 +13,25 @@ var express = require('express')
 
 mongoose.connect('mongodb://localhost/microcommunity');
 
+var Comments = new mongoose.Schema({
+    name     : String
+  , text      : String
+});
+
 var Post = mongoose.model('Post', new mongoose.Schema({
   name: String,
-  text: String
+  text: String,
+  comments : [Comments]
 }));
 
 var post;
 post = new Post({
 	name: "Amjad",
-	text: "Hello, MongoDB!"
+	text: "Hello, MongoDB!",
+	comments: [ {name: "Commenter", text: "Some comment"},{name: "Commenter2", text: "Some comment2"}]
 });
 
-//post.save();
+post.save();
 
 
 var app = express.createServer();
