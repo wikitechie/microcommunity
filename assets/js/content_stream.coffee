@@ -1,6 +1,6 @@
 class window.ContentStream extends Backbone.View
 
-	el: '#content-stream'
+	el: '#content-deck'
 	template: _.template($('#content-stream-template').html()),
 
 	initialize: ->

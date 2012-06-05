@@ -8,12 +8,16 @@ class window.WikiPageView extends Backbone.View
 		"click #cancel-button": "cancelButton"
 		"click #save-button": "saveButton"
 
-	initialize: ->
+	initialize: (options)->
 		_.bindAll @
+		if options.embeded
+			@embeded = true
 		@template = @normalTemplate
 
 	render: ->
 		$(@el).html @template @model.attributes
+		if @embeded
+			$(@el).find('.well').addClass('embeded')
 		@
 
 	editButton: ->
