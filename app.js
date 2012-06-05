@@ -8,8 +8,7 @@ var express = require('express')
   , http = require('http')
   , stylus = require('stylus')
   , bootstrap = require('bootstrap-stylus')
-  , mongoose = require('mongoose')
-  , expose = require('express-expose');
+  , mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/microcommunity');
 
@@ -31,7 +30,13 @@ post = new Post({
 	comments: [ {name: "Commenter", text: "Some comment"},{name: "Commenter2", text: "Some comment2"}]
 });
 
-post.save();
+
+//post.save(function (err) {
+//  if (!err) console.log('Success!');
+//});
+
+//post.save();
+
 
 
 var app = express.createServer();
