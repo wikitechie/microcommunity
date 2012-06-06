@@ -45,13 +45,40 @@
 		</div>
 		<div class="row-fluid">
 		<div class="span12"><%= body %> </div>
-		<div class="span12 ">
+		</div>
+		<hr />
+		<div class="answers-thread"></div>
+		</div>
+
+
+	script#answer-template(type="text/template")
+		<div class="row-fluid">
+		<div class="span2 ">
+		<h2>21</h2>
+		</div>
+		<div class="span10 ">
+
+		<div class="row-fluid">
+		<p><%= text %></p>
+		</div>
+
+		<div class="row-fluid">
 		<div class="pull-right ">
-		<p><a href="/profiles/1"><img width="20" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png"></a> asked by <%= name %></p>
+		<p>
+		<a href="#" rel="tooltip" title="<%= name %>" id="tooltip">
+		<img width="20" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png">
+		</a>
 		</div>
 		</div>
 
 		</div>
+		</div>
+
+	script#answers-thread-template(type="text/template")
+		<div class="row-fluid answers-list">
+		</div>
+		<div class="row-fluid">
+		<textarea class="span12 answers-text" rows=1 style="line-height:80%;"></textarea>
 		</div>
 
 	script#wikipage-template(type="text/template")
