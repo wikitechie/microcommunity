@@ -34,11 +34,16 @@ class window.ContentStream extends Backbone.View
 		linkView.setTemplate "thumb"
 		@injectView linkView
 
+
 		wikipage = new WikiPage
 		wikipage.set	{title: "Node.js",	body: "Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices."}
 
 		wikipageView = new WikiPageView	model: wikipage
 		@injectView wikipageView
+
+		question = new Question
+		questionView = new QuestionView	model: question
+		@injectView questionView
 
 
 	render: ->

@@ -35,11 +35,30 @@
 	script#social-stream-template(type="text/template")
 		<div id ="social-stream-table">
 		</div>
+
+	script#question-template(type="text/template")
+		<div class="well">
+		<div class="row-fluid">
+		<div class="span12">
+		<h3><%= title %> </h3>
+		</div>
+		</div>
+		<div class="row-fluid">
+		<div class="span12"><%= body %> </div>
+		<div class="span12 ">
+		<div class="pull-right ">
+		<p><a href="/profiles/1"><img width="20" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png"></a> asked by <%= name %></p>
+		</div>
+		</div>
+
+		</div>
+		</div>
+
 	script#wikipage-template(type="text/template")
 		<div class="well">
 		<div class="row-fluid">
 		<div class="span8">
-		<h2><%= title %> </h2>
+		<h3><%= title %> </h3>
 		</div>
 		<div class="span4" id="buttons"></div>
 		</div>
@@ -92,7 +111,7 @@
 	script#link-template-curated(type="text/template")
 		<div class="well">
 		<div class="row-fluid">
-		<h2><a href="<%= url %>"><%= title %></a></h2>
+		<h3><a href="<%= url %>"><%= title %></a></h3>
 		<p><img class="span12" src="<%= preview %>" style="margin-bottom:5px;"></p>
 		</div>
 		<div class="row-fluid">
