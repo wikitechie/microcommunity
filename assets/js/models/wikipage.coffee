@@ -5,6 +5,9 @@ class window.WikiPage extends Backbone.Model
 
 	idAttribute: "_id"
 
+	initialize: ->
+		@comments = new Comments
+
 class window.WikiPages extends Backbone.Collection
 	model: window.Wikipage
 	url: '/api/wikipages'

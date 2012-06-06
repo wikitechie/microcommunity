@@ -19,9 +19,11 @@ class window.WikiPageView extends Backbone.View
 			@embeded = true
 		@fullview = false
 		@template = @normalTemplate
+		@commentsThread = new CommentsThreadView collection: @model.comments
 
 	render: ->
 		$(@el).html @template _.extend(@model.attributes, {fullview: @fullview})
+		$(@el).find('.comments-thread').html @commentsThread.render().el
 
 		$(@el).find("#wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
 		$(@el).find("#buttons").html @editButtons
