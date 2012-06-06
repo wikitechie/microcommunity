@@ -9,6 +9,8 @@ class window.Link extends Backbone.Model
 
 	idAttribute: "_id"
 
+	initialize: ->
+		@comments = new Comments
 
 class window.Links extends Backbone.Collection
 	model: window.Link

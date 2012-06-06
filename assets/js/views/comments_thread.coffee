@@ -20,6 +20,7 @@ class window.CommentsThreadView extends Backbone.View
 	injectView: (view) ->
 		$(@el).find('.comments-list').append(view.render().el)
 		$("#social-stream-table").masonry( 'reload' )
+		$("#content-stream-table").masonry( 'reload' )
 
 	newComment: (e) ->
 		keycode = if e.keyCode then e.keyCode else e.which

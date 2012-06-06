@@ -9,10 +9,10 @@
 		<p><a data-remote="true" class="remote-wikipage-link" href="/posts/206"><%= name %></a></p>
 		<p><%= text %></p>
 		<hr />
-		<div class="row-fluid">
-		<div class="comments-thread"></div>
 		</div>
 
+		<div class="row-fluid">
+		<div class="comments-thread"></div>
 		</div>
 
 
@@ -21,13 +21,11 @@
 
 	script#comment-template(type="text/template")
 		<div class="row-fluid">
-		<div class="span2">
-		<p><a href="/profiles/1"><img width="50" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png"></a></p>
-		</div>
-		<div class="span10">
-		<a href="/posts/206"><%= name %></a><br />
-		<p><%= text %></p>
-		</div>
+		<table cellpadding="5"><tr>
+		<td><a href="/profiles/1"><img width="30" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png"></a></td>
+		<td><a href="/posts/206"><%= name %></a><br />
+		<p><%= text %></p></td>
+		</tr></table>
 		</div>
 
 	script#comments-thread-template(type="text/template")
@@ -192,5 +190,10 @@
 		</div>
 		</div>
 		</div>
+		<hr />
+		<div class="row-fluid">
+		<div class="comments-thread"></div>
+		</div>
+
 		</div>
 
