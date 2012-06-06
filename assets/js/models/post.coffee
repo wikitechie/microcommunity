@@ -9,7 +9,6 @@ class window.Post extends Backbone.Model
 		"/api/posts/#{@id}"
 
 	initialize: (options)->
-		console.debug options
 		@comments = new Comments
 		@comments.add options.comments
 

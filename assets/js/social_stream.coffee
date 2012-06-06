@@ -14,12 +14,14 @@ class window.SocialStream extends Backbone.View
 
 		@render()
 
-		#initializing posts rendered from the server
-		@posts.add eval(posts)
-
 		$('#social-stream-table').masonry
 			 itemSelector : '.well'
 			 isAnimated: true
+
+		#initializing posts rendered from the server
+		@posts.add eval(posts)
+
+
 
 
 	render: ->
