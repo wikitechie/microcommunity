@@ -114,9 +114,9 @@ class window.QuestionPublisher extends Backbone.View
 		$("#question-text").attr("rows","3")
 
 	post: ->
-		wikipage = new WikiPage
-		wikipage.set	{title: $("#question-title").val(),	body: $("#question-text").val()}
-		window.mediator.trigger("new-question", wikipage)
+		question = new Question
+		question.set	{title: $("#question-title").val(),	body: $("#question-text").val()}
+		window.mediator.trigger("new-question", question)
 		@reset()
 
 

@@ -9,8 +9,14 @@ class window.ContentStream extends Backbone.View
 		@wikipages = new WikiPages
 		@wikipages.bind 'add', @injectWikipage
 
+		@questions = new Questions
+		@questions.bind 'add', @injectQuestion
+
 		window.mediator.bind "new-wikipage", (wikipage)=>
 		  @addWikipage wikipage
+
+		window.mediator.bind "new-question", (question)=>
+		  @addQuestion question
 
 		@render()
 
@@ -30,11 +36,6 @@ class window.ContentStream extends Backbone.View
 		wikipageView = new WikiPageView	model: wikipage
 		@injectView wikipageView
 
-		question = new Question
-		questionView = new QuestionView	model: question
-		@injectView questionView
-
-
 	render: ->
 		$(@el).html @template
 		@
@@ -44,9 +45,17 @@ class window.ContentStream extends Backbone.View
 		wikipageView = new WikiPageView	model: wikipage
 		$("#content-stream-table").prepend(wikipageView.render().el).masonry( 'reload' )
 
+	injectQuestion: (question)=>
+		console.debug "injecting question"
+		questionView = new QuestionView	model: question
+		@injectView questionView
+
 	injectView: (view)=>
 		$("#content-stream-table").prepend(view.render().el).masonry( 'reload' )
 
 	addWikipage: (wikipage)=>
 		@wikipages.add wikipage
+
+	addQuestion: (question)=>
+		@questions.add question
 
