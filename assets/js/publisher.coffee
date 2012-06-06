@@ -78,6 +78,50 @@ class window.WikipagePublisher extends Backbone.View
 		window.mediator.trigger("new-wikipage", wikipage)
 		@reset()
 
+class window.QuestionPublisher extends Backbone.View
+
+	button : '#question-button'
+	template: _.template($('#question-publisher-template').html()),
+
+	events:
+  	'click #question-text': 'expand'
+  	'click #question-button': 'post'
+
+	initialize: ->
+		@render()
+
+	render: ->
+		$(@el).html @template
+		return this
+
+	disable: ->
+		$("#question-text").attr("disabled","disabled")
+		$(@button).attr("disabled","disabled")
+		$(@el).spin()
+
+	enable: ->
+		$("#question-text").removeAttr("disabled")
+		$("#question-text").val('')
+		$(@button).removeAttr("disabled")
+		$(@el).spin(false)
+
+	reset: ->
+		$("#question-text").val("")
+		$("#question-text").attr("rows","1")
+		$("#question-title").val("")
+
+	expand: ->
+		$("#question-text").attr("rows","3")
+
+	post: ->
+		wikipage = new WikiPage
+		wikipage.set	{title: $("#question-title").val(),	body: $("#question-text").val()}
+		window.mediator.trigger("new-question", wikipage)
+		@reset()
+
+
+
+
 
 class window.PublisherContainer extends Backbone.View
 
@@ -88,6 +132,8 @@ class window.PublisherContainer extends Backbone.View
 		@render()
 		@addPublisher "post", "Post", new PostPublisher
 		@addPublisher "wikipage", "Wiki", new WikipagePublisher
+		@addPublisher "question", "Question", new QuestionPublisher
+
 		$('#publisher-tab a').click (e) ->
 			e.preventDefault();
 			$(this).tab('show')
