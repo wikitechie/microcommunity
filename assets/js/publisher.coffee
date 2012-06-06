@@ -120,6 +120,56 @@ class window.QuestionPublisher extends Backbone.View
 		@reset()
 
 
+class window.LinkPublisher extends Backbone.View
+
+	button : '#link-button'
+	template: _.template($('#link-publisher-template').html()),
+
+	events:
+  	'click #link-text': 'expand'
+  	'click #link-button': 'post'
+
+	initialize: ->
+		@render()
+
+	render: ->
+		$(@el).html @template
+		return this
+
+	disable: ->
+		$("#link-text").attr("disabled","disabled")
+		$(@button).attr("disabled","disabled")
+		$(@el).spin()
+
+	enable: ->
+		$("#link-text").removeAttr("disabled")
+		$("#link-text").val('')
+		$(@button).removeAttr("disabled")
+		$(@el).spin(false)
+
+	reset: ->
+		$("#link-text").val("")
+		$("#link-title").val("")
+		$("#link-url").val("")
+		$("#link-image").val("")
+		$("#link-text").attr("rows","1")
+		$("#link-title").val("")
+
+	expand: ->
+		$("#question-link").attr("rows","3")
+
+	post: ->
+		link = new Link
+		link.set
+			name: "Guest"
+			title: $("#link-title").val()
+			url: $("#link-url").val()
+			preview: $("#link-image").val()
+			curation: $("#link-text").val()
+
+		window.mediator.trigger("new-link", link)
+		@reset()
+
 
 
 
@@ -133,6 +183,7 @@ class window.PublisherContainer extends Backbone.View
 		@addPublisher "post", "Post", new PostPublisher
 		@addPublisher "wikipage", "Wiki", new WikipagePublisher
 		@addPublisher "question", "Question", new QuestionPublisher
+		@addPublisher "link", "Link", new LinkPublisher
 
 		$('#publisher-tab a').click (e) ->
 			e.preventDefault();

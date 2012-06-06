@@ -22,8 +22,6 @@ class window.SocialStream extends Backbone.View
 		@posts.add eval(posts)
 
 
-
-
 	render: ->
 		$(@el).html @template posts: JSON.stringify(@posts)
 		@

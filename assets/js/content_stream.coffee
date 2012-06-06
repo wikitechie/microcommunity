@@ -12,11 +12,17 @@ class window.ContentStream extends Backbone.View
 		@questions = new Questions
 		@questions.bind 'add', @injectQuestion
 
+		@links = new Links
+		@links.bind 'add', @injectLink
+
 		window.mediator.bind "new-wikipage", (wikipage)=>
 		  @addWikipage wikipage
 
 		window.mediator.bind "new-question", (question)=>
 		  @addQuestion question
+
+		window.mediator.bind "new-link", (link)=>
+		  @addLink link
 
 		@render()
 
@@ -29,7 +35,6 @@ class window.ContentStream extends Backbone.View
 		@injectView linkView
 
 
-
 		wikipage = new WikiPage
 		wikipage.set	{title: "Node.js",	body: "Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices."}
 
@@ -40,22 +45,27 @@ class window.ContentStream extends Backbone.View
 		$(@el).html @template
 		@
 
+	injectView: (view)=>
+		$("#content-stream-table").prepend(view.render().el).masonry( 'reload' )
 
 	injectWikipage: (wikipage)=>
 		wikipageView = new WikiPageView	model: wikipage
-		$("#content-stream-table").prepend(wikipageView.render().el).masonry( 'reload' )
+		@injectView wikipageView
 
 	injectQuestion: (question)=>
-		console.debug "injecting question"
 		questionView = new QuestionView	model: question
 		@injectView questionView
 
-	injectView: (view)=>
-		$("#content-stream-table").prepend(view.render().el).masonry( 'reload' )
+	injectLink: (link)=>
+		linkView = new LinkView	model: link
+		@injectView linkView
 
 	addWikipage: (wikipage)=>
 		@wikipages.add wikipage
 
 	addQuestion: (question)=>
 		@questions.add question
+
+	addLink: (link)=>
+		@links.add link
 
