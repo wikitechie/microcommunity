@@ -130,6 +130,36 @@ app.post('/api/posts', function(req, res){
   return res.send(post);
 });
 
+//comments api
+app.post('/api/posts/:id/comments', function(req, res){
+  Post.findById(req.params.id, function(err, post) {
+    if (!err) {
+		  var comment;
+			comment = new Comment({
+				text: req.body.text,
+				name: req.body.name
+			});
+
+			post.comments.push(comment);
+
+			post.save(function(err) {
+				if (!err) {
+				  console.log("created");
+				  res.send(post);
+				}
+			});
+    }
+  });
+});
+
+app.get('/api/posts/:id/comments', function(req, res){
+  Post.findById(req.params.id, function(err, post) {
+    if (!err) {
+			return res.send(post.comments);
+    }
+  });
+});
+
 
 //wikipages api
 

@@ -31,8 +31,6 @@ class window.CommentsThreadView extends Backbone.View
 			comment.set text: $(@el).find(".comments-text").val()
 			@addComment comment
 
-
-
 	injectComment: (comment) =>
 		commentView = new CommentView model: comment
 		@injectView commentView

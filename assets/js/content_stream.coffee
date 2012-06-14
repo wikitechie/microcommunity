@@ -30,11 +30,8 @@ class window.ContentStream extends Backbone.View
 			 itemSelector : '.well'
 			 isAnimated: true
 
-
 		#initializing posts rendered from the server
 		@wikipages.add eval(wikipages)
-
-
 
 		question = new Question
 		questionView = new QuestionView	model: question
