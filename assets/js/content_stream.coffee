@@ -27,7 +27,7 @@ class window.ContentStream extends Backbone.View
 		@render()
 
 		$('#content-stream-table').masonry
-			 itemSelector : '.well'
+			 itemSelector : '.card'
 			 isAnimated: true
 
 		#initializing posts rendered from the server

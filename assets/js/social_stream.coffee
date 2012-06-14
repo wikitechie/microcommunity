@@ -15,7 +15,7 @@ class window.SocialStream extends Backbone.View
 		@render()
 
 		$('#social-stream-table').masonry
-			 itemSelector : '.well'
+			 itemSelector : '.card'
 			 isAnimated: true
 
 		#initializing posts rendered from the server
