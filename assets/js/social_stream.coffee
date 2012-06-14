@@ -21,7 +21,6 @@ class window.SocialStream extends Backbone.View
 		#initializing posts rendered from the server
 		@posts.add eval(posts)
 
-
 	render: ->
 		$(@el).html @template posts: JSON.stringify(@posts)
 		@
@@ -34,5 +33,7 @@ class window.SocialStream extends Backbone.View
 		$("#social-stream-table").prepend(view.render().el).masonry( 'reload' )
 
 	addPost: (post)=>
-		@posts.add post
+		post.save(null,
+			success: (post)=> @posts.add post
+		)
 

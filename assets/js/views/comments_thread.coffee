@@ -29,9 +29,9 @@ class window.CommentsThreadView extends Backbone.View
 			e.preventDefault()
 			comment = new Comment
 			comment.set text: $(@el).find(".comments-text").val()
-			@collection.add comment
-			$(@el).find(".comments-text").val("")
-			$(@el).find(".comments-text").setCursorPosition(0)
+			@addComment comment
+
+
 
 	injectComment: (comment) =>
 		commentView = new CommentView model: comment
@@ -39,4 +39,9 @@ class window.CommentsThreadView extends Backbone.View
 
 	clearText: ->
 		$(@el).find(".comments-text").val("")
+
+	addComment: (comment)->
+		@collection.add comment
+		$(@el).find(".comments-text").val("")
+		$(@el).find(".comments-text").setCursorPosition(0)
 

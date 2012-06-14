@@ -6,11 +6,12 @@ class window.Post extends Backbone.Model
 	idAttribute: "_id"
 
 	url: ->
-		"/api/posts/#{@id}"
+		"/api/posts/"
 
 	initialize: (options)->
 		@comments = new Comments
-		@comments.add options.comments
+		if options?
+			@comments.add options.comments
 
 
 class window.Posts extends Backbone.Collection
