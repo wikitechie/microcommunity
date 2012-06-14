@@ -23,6 +23,12 @@ var Post = mongoose.model('Post', new mongoose.Schema({
   comments : [Comments]
 }));
 
+var Wikipage = mongoose.model('Wikipage', new mongoose.Schema({
+  title: String,
+  body: String
+}));
+
+
 var post;
 post = new Post({
 	name: "Amjad",
@@ -74,8 +80,10 @@ app.configure('development', function(){
 
 app.get('/', function(req, res){
   Post.find(function(err, posts) {
-		console.log(posts);
-		res.render('index', { title: 'MicroCommunity', posts : posts });
+	  Wikipage.find(function(err, wikipages) {
+			console.log(posts);
+			res.render('index', { title: 'MicroCommunity', posts : posts, wikipages: wikipages });
+	  });
   });
 });
 
@@ -121,6 +129,53 @@ app.post('/api/posts', function(req, res){
   });
   return res.send(post);
 });
+
+
+//wikipages api
+
+app.get('/api/wikipages', function(req, res){
+  return Wikipage.find(function(err, wikipages) {
+    return res.send(wikipages);
+  });
+});
+
+app.get('/api/wikipages/:id', function(req, res){
+  return Wikipage.findById(req.params.id, function(err, wikipage) {
+    if (!err) {
+      return res.send(wikipage);
+    }
+  });
+});
+
+app.put('/api/wikipages/:id', function(req, res){
+  return Wikipage.findById(req.params.id, function(err, wikipage) {
+    wikipage.title = req.body.title;
+    wikipage.body = req.body.body;
+    return wikipage.save(function(err) {
+      if (!err) {
+        console.log("updated");
+      }
+      return res.send(wikipage);
+    });
+  });
+});
+
+app.post('/api/wikipages', function(req, res){
+  var wikipage;
+  wikipage = new Wikipage({
+    title: req.body.title,
+    body: req.body.body
+
+  });
+  wikipage.save(function(err) {
+    if (!err) {
+      return console.log("created");
+    }
+  });
+  return res.send(wikipage);
+});
+
+
 
 
 app.listen(3000);

@@ -30,11 +30,11 @@ class window.ContentStream extends Backbone.View
 			 itemSelector : '.well'
 			 isAnimated: true
 
-		wikipage = new WikiPage
-		wikipage.set	{title: "Node.js",	body: "Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices."}
 
-		wikipageView = new WikiPageView	model: wikipage
-		@injectView wikipageView
+		#initializing posts rendered from the server
+		@wikipages.add eval(wikipages)
+
+
 
 		question = new Question
 		questionView = new QuestionView	model: question
@@ -65,7 +65,9 @@ class window.ContentStream extends Backbone.View
 		@injectView linkView
 
 	addWikipage: (wikipage)=>
-		@wikipages.add wikipage
+		wikipage.save(null,
+			success: (wikipage)=> @wikipages.add wikipage
+		)
 
 	addQuestion: (question)=>
 		@questions.add question
