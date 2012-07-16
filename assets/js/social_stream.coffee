@@ -14,10 +14,6 @@ class window.SocialStream extends Backbone.View
 
 		@render()
 
-		$('#social-stream-table').masonry
-			 itemSelector : '.card'
-			 isAnimated: true
-
 		#initializing posts rendered from the server
 		@posts.add eval(posts)
 
@@ -27,10 +23,10 @@ class window.SocialStream extends Backbone.View
 
 	injectPost: (post)=>
 		postView = new PostView	model: post
-		$("#social-stream-table").prepend(postView.render().el).masonry( 'reload' )
+		$("#social-stream-table").prepend(postView.render().el)
 
 	injectView: (view)=>
-		$("#social-stream-table").prepend(view.render().el).masonry( 'reload' )
+		$("#social-stream-table").prepend(view.render().el)
 
 	addPost: (post)=>
 		post.save(null,

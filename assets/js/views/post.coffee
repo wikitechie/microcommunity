@@ -1,4 +1,5 @@
 class window.PostView extends Backbone.View
+	className: "row-fluid post"
 	template: _.template($('#post-template').html()),
 
 	initialize: ->
