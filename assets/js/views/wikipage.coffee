@@ -1,4 +1,5 @@
 class window.WikiPageView extends Backbone.View
+	className : "wikipage row-fluid"
 
 	normalTemplate: _.template($('#wikipage-template').html())
 	editButtons: _.template($('#wikipage-edit-buttons-template').html())

@@ -1,4 +1,5 @@
 class window.LinkView extends Backbone.View
+	className : "link row-fluid"
 
 	thumbnailTemplate: _.template($('#link-template-thumbnail').html())
 	curatedTemplate: _.template($('#link-template-curated').html())

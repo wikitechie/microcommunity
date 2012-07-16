@@ -40,8 +40,7 @@
 		</div>
 
 	script#question-template(type="text/template")
-		<div class="card well">
-		<div class="row-fluid">
+
 		<div class="span12">
 		<h3><%= title %> </h3>
 		</div>
@@ -51,6 +50,7 @@
 		</div>
 		<hr />
 		<div class="answers-thread"></div>
+		<hr />
 		</div>
 
 
@@ -87,9 +87,9 @@
 		<div class="row-fluid">
 		<textarea class="span12 answers-text" rows=1 style="line-height:80%;"></textarea>
 		</div>
-
+		
 	script#wikipage-template(type="text/template")
-		<div class="card well">
+		<div class="span12">	
 		<div class="row-fluid">
 		<div class="span8">
 		<h3><%= title %> </h3>
@@ -123,8 +123,11 @@
 		<div class="row-fluid">
 		<div class="comments-thread"></div>
 		</div>
+		
+		<hr />		
 
 		</div>
+
 		</div>
 
 	script#wikipage-edit-buttons-template(type="text/template")
@@ -154,7 +157,6 @@
 
 
 	script#link-template-thumbnail(type="text/template")
-		<div class="card well">
 		<div class="row-fluid">
 		<div class="span2">
 		<p><a href="/profiles/1"><img width="50" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png"></a></p>
@@ -177,7 +179,7 @@
 		</div>
 
 	script#link-template-curated(type="text/template")
-		<div class="card well">
+
 		<div class="row-fluid">
 		<div class="span12"><h3><a href="<%= url %>"><%= title %></a></h3></div>
 		</div>
@@ -199,6 +201,7 @@
 		<div class="row-fluid">
 		<div class="comments-thread"></div>
 		</div>
+		<hr />
 
-		</div>
+
 
