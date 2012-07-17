@@ -5,12 +5,11 @@
 
 		<table><tr>
 		<td valign="top" style="padding-right:10px"><a href="/profiles/1"><img width="50" src="avatar.JPG"></a></td>
-		<td width="100%"><a href="/posts/206"><%= name %></a><br />
+		<td width="100%">
+		<p><a href="/posts/206"><%= name %></a></p>
 		<p><%= nl2br(text, false) %></p></td>
 		</tr>
-		<tr><td><td><hr style="margin:1px;" /></tr>
-		<tr><td><td><a href="#">Like</a> | <a href="#">Comment</a></tr>
-		<tr><td><td><hr style="margin:1px;" /></tr>
+		<tr><td><td><hr style="margin:2px;" /></tr>
 		<tr><td></td>
 		<td class="comments-thread">
 		</td>
@@ -23,15 +22,17 @@
 	script#comment-template(type="text/template")
 		<tr>
 		<td  valign="top" style="padding-right:4px"><a href="/profiles/1"><img width="30" src="avatar.JPG"></a></td>
-		<td><a href="/posts/206"><%= name %></a><br />
+		<td width="100%"><a href="/posts/206"><%= name %></a><br />
 		<p><%= text %></p></td>
+		<tr><td colspan="2"><hr style="margin:1px;" /></tr>
 		</tr>
 		
 	script#comments-thread-template(type="text/template")
-		<table class="comments-list">
-		</table>
-
 		<div class="row-fluid">
+		<div class="span12">
+		<table class="comments-list" width="100%">
+		</table>		
+		</div>
 		<textarea class="span12 comments-text" rows=1 ></textarea>
 		</div>
 
