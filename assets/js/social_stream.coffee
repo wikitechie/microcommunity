@@ -36,6 +36,11 @@ class window.SocialStream extends Backbone.View
 		#wikipage = new WikiPage
 		#wikipageView = new WikiPageView	model: wikipage
 		#@injectView wikipageView
+		
+		#activity = new Activity
+		#activityView = new ActivityView	model: activity
+		#@injectView activityView		
+		
 
 	render: ->
 		$(@el).html @template posts: JSON.stringify(@posts)
