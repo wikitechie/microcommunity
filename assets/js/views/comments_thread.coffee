@@ -8,6 +8,8 @@ class window.CommentsThreadView extends Backbone.View
 	initialize: ->
 		_.bindAll @
 		@collection.bind 'add', @injectComment
+		console.debug(@options.postId);
+		@postId = @options.postId
 		@render()
 
 
@@ -19,8 +21,8 @@ class window.CommentsThreadView extends Backbone.View
 
 	injectView: (view) ->
 		$(@el).find('.comments-list').append(view.render().el)
-		$("#social-stream-table").masonry( 'reload' )
-		$("#content-stream-table").masonry( 'reload' )
+		$("#social-stream-table")
+		$("#content-stream-table")
 
 	newComment: (e) ->
 		keycode = if e.keyCode then e.keyCode else e.which
@@ -39,6 +41,9 @@ class window.CommentsThreadView extends Backbone.View
 		$(@el).find(".comments-text").val("")
 
 	addComment: (comment)->
+		console.debug("posting... #{@postId}");
+		comment.url = "api/posts/#{@postId}/comments/"
+		comment.save()
 		@collection.add comment
 		$(@el).find(".comments-text").val("")
 		$(@el).find(".comments-text").setCursorPosition(0)

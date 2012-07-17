@@ -3,7 +3,9 @@ class window.PostView extends Backbone.View
 	template: _.template($('#post-template').html()),
 
 	initialize: ->
-		@commentsThread = new CommentsThreadView collection: @model.comments
+		@commentsThread = new CommentsThreadView 
+			collection: @model.comments
+			postId: @model.id			
 
 		_.bindAll @
 

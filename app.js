@@ -132,24 +132,21 @@ app.post('/api/posts', function(req, res){
 
 //comments api
 app.post('/api/posts/:id/comments', function(req, res){
-  Post.findById(req.params.id, function(err, post) {
-    if (!err) {
-		  var comment;
-			comment = new Comment({
-				text: req.body.text,
-				name: req.body.name
-			});
 
-			post.comments.push(comment);
+	var comment = {
+		text : req.body.text,
+		name : "Guest"	
+	};
 
-			post.save(function(err) {
-				if (!err) {
-				  console.log("created");
-				  res.send(post);
-				}
-			});
-    }
-  });
+	Post.update(
+		{ _id :  mongoose.Types.ObjectId(req.params.id) }, 
+		{ $push : {comments: comment } },  
+		function(err, post){
+			console.log(post);
+		}
+	);
+	
+	
 });
 
 app.get('/api/posts/:id/comments', function(req, res){

@@ -32,7 +32,7 @@
 		</table>
 
 		<div class="row-fluid">
-		<textarea class="span12 comments-text" rows=1 style="line-height:80%;"></textarea>
+		<textarea class="span12 comments-text" rows=1 ></textarea>
 		</div>
 
 	script#social-stream-template(type="text/template")
@@ -89,14 +89,25 @@
 		</div>
 		
 	script#wikipage-template(type="text/template")
-		<div class="span12">	
+		<div class="row-fluid">
+		<div class="span12">
+		<table><tr>
+		<td valign="top" style="padding-right:5px"><a href="/profiles/1"><img width="50" src="avatar.JPG"></a></td>
+		<td width="100%"><a href="/posts/206">Guest</a> posted a new wiki page</td>
+		</tr>
+		</table>
+		<hr />
+		</div>
+		</div>
+		<div class="row-fluid">
+		<div class="span1">  </div>
+		<div class="span11">	
 		<div class="row-fluid">
 		<div class="span8">
 		<h3><%= title %> </h3>
 		</div>
 		<div class="span4" id="buttons"></div>
 		</div>
-
 		<div class="row-fluid"><div class="span12" id="wikipage-history">
 		<table class="table table-striped">
 		<tr><td><a href="#" rel="tooltip" title="Amjad" id="tooltip"><img width="20" src="http://gravatar.com/avatar/a2ef1d09ea1c872b8174b618b6eabcd1.png"></a> New line at that end
@@ -106,7 +117,6 @@
 		</table>
 		</div>
 		</div>
-
 		<div class="row-fluid"><div class="span12" id="wikipage-contributors">
 		<div class="pull-right ">
 		<p>19 contributors<a href="#" rel="tooltip" title="Amjad" id="tooltip">
@@ -115,21 +125,17 @@
 		</div>
 		</div>
 		</div>
-
-
 		<div class="row-fluid" id="wikipage-body-area"></div>
-
-
 		<div class="row-fluid">
-		<div class="comments-thread"></div>
-		</div>
-		
 		<hr />		
+		<div class="comments-thread"></div>
+		</div>		
 
 		</div>
-
 		</div>
-
+		</div>
+		<hr />				
+		
 	script#wikipage-edit-buttons-template(type="text/template")
 		<div class="pull-right">
 		<a href="#"> <span id="edit-button" class="label label-info" >Edit</span></a>

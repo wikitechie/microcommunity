@@ -1,7 +1,7 @@
 class window.WikiPage extends Backbone.Model
 	defaults:
-		title: "Amjad"
-		body: "Hello, Backbone"
+		title: "Backbone.js"
+		body: "Backbone.js is a MVC javascript framework for the client side."
 
 	idAttribute: "_id"
 	url: '/api/wikipages/'
