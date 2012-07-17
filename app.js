@@ -135,7 +135,7 @@ app.post('/api/posts/:id/comments', function(req, res){
 
 	var comment = {
 		text : req.body.text,
-		name : "Guest"	
+		name : req.body.name	
 	};
 
 	Post.update(
@@ -144,8 +144,7 @@ app.post('/api/posts/:id/comments', function(req, res){
 		function(err, post){
 			console.log(post);
 		}
-	);
-	
+	);	
 	
 });
 
