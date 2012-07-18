@@ -1,6 +1,10 @@
 extends layout
 
-block content
+block content	
+	!= "<script type='text/javascript'>"
+	!= "var posts =" + JSON.stringify(posts) + ";"
+	!= "var wikipages =" + JSON.stringify(wikipages) + ";"
+	!= "</script>"
 
 	.row
 		.span3
@@ -25,6 +29,5 @@ block content
 		.span3
 
 
-		
 					
 

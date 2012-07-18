@@ -1,7 +1,7 @@
 !!!
 html
 	head
-		title= title
+		title MicroCommunity
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		!= css('lib/bootstrap.min')
 		!= css('app')
@@ -16,18 +16,27 @@ html
 		.navbar.navbar-fixed-top
 			.navbar-inner
 				.container
-					a(href='#').brand #{title}
-					div.btn-group.pull-right
-						a.btn.dropdown-toggle(href="#", data-toggle="dropdown")
-							i.icon-user
-							= "Username"
-							span.caret
-						ul.dropdown-menu
-							li
-								a(href="#") Profile
-							li.divider
-							li
-								a(href="#") Sign out
+					a(href='#').brand MicroCommunity
+					- if (user)
+						div.btn-group.pull-right
+							a.btn.dropdown-toggle(href="#", data-toggle="dropdown")
+								i.icon-user
+								= user.username
+								span.caret
+							ul.dropdown-menu
+								li
+									a(href="#") 
+										= "Account"
+								li.divider
+								li
+									a(href="/logout") Log out
+					- else
+						<ul class="nav pull-right">
+						<li>
+						<a href="/login">Log in</a>
+						</li>
+						<li><a href="#">Sign up</a></li>
+						</ul>						
 						
 
 					ul.nav
@@ -37,13 +46,7 @@ html
 							a(href='#') Wiki
 						li
 							a(href='#') Contact
-						li
-							- if (!user)
-								a(href='/login') Login						
-							- else
-								a(href='/logout') Log out
-							
-						
+			
 
 		div.container
 			.row
@@ -53,16 +56,12 @@ html
 			footer
 				hr
 				p MicroCommunity 2012
-				p = posts
+
 
 		!= js('lib/jquery.min')
 		!= js('lib/bootstrap.min')
 		!= js('lib/underscore-min')
 		!= js('lib/backbone-min')
 		!= js('lib/jquery.masonry.min')
-		!= "<script type='text/javascript'>"
-		!= "var posts =" + JSON.stringify(posts) + ";"
-		!= "var wikipages =" + JSON.stringify(wikipages) + ";"
-		!= "</script>"
 		!= js('app')
 
