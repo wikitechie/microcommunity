@@ -3,14 +3,27 @@ extends layout
 block content
 
 	.row
-		.span2
-			"Side Left"
-		.span7
+		.span3
+			.well.sidebar-nav
+				ul.nav.nav-list
+					li.nav-header Basic
+					li.active
+						a(href="#") Home
+					li
+						a(href="#") Close friends			
+			.well.sidebar-nav
+				ul.nav.nav-list
+					li.nav-header Groups
+					li
+						a(href="#") Group 1
+					li
+						a(href="#") Group 2									
+		.span6
 			include shared/publisher
 			hr
 			include shared/social_stream
 		.span3
-			"Side Right"
+
 
 		
 					

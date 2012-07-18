@@ -17,6 +17,19 @@ html
 			.navbar-inner
 				.container
 					a(href='#').brand #{title}
+					div.btn-group.pull-right
+						a.btn.dropdown-toggle(href="#", data-toggle="dropdown")
+							i.icon-user
+							= "Username"
+							span.caret
+						ul.dropdown-menu
+							li
+								a(href="#") Profile
+							li.divider
+							li
+								a(href="#") Sign out
+						
+
 					ul.nav
 						li.active
 							a(href='#') Home
