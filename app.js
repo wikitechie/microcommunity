@@ -130,10 +130,30 @@ app.get('/login', function(req, res){
 
 
 app.get('/signup', function(req, res){
-  res.render('signup', { user: req.user });
+  res.render('signup', { user: req.user, message: req.flash('error') });
+});
+
+app.post('/signup', function(req, res){
+
+	if(req.body.password == req.body.passwordconf) {
+		var user;
+		user = new User({
+		  email: req.body.email,
+		  password: req.body.password
+
+		});
+		user.save(function(err) {
+		  if (!err) {
+		    console.log("user created");
+				return res.redirect('/');		    
+		  }
+		});	
+	}
+
 });
 
 app.post('/login', function(req, res, next) {
+	console.log(req.body);
   passport.authenticate('local', function(err, user, info) {
 
     if (err) { return next(err) }
