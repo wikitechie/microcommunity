@@ -17,7 +17,14 @@ html
 			.navbar-inner
 				.container
 					a(href='#').brand MicroCommunity
-					- if (user)
+					- if (!user)
+						<ul class="nav pull-right">
+						<li>
+						<a href="/login">Log in</a>
+						</li>
+						<li><a href="/signup">Sign up</a></li>
+						</ul>						
+					- else
 						div.btn-group.pull-right
 							a.btn.dropdown-toggle(href="#", data-toggle="dropdown")
 								i.icon-user
@@ -29,15 +36,7 @@ html
 										= "Account"
 								li.divider
 								li
-									a(href="/logout") Log out
-					- else
-						<ul class="nav pull-right">
-						<li>
-						<a href="/login">Log in</a>
-						</li>
-						<li><a href="#">Sign up</a></li>
-						</ul>						
-						
+									a(href="/logout") Log out						
 
 					ul.nav
 						li.active

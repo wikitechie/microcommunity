@@ -1,0 +1,31 @@
+extend layout
+
+block content
+	.row
+		.span6.offset3
+			form.form-horizontal(action="/signup", method="post")
+				.fieldset
+					legend Sign up
+					
+					.control-group
+						label.control-label Username
+						.controls
+							input.input-xlarge(type="text")
+							p.help-block Your username
+							
+					.control-group
+						label.control-label Password
+						.controls
+							input.input-xlarge(type="text")
+							p.help-block Password with 8 characters						
+							
+					.control-group
+						label.control-label Password confirmation
+						.controls
+							input.input-xlarge(type="text")
+							p.help-block Re-type your password
+					
+					.form-actions
+						button.btn.btn-primary(type="submit") Sign up
+						button.btn Cancel
+

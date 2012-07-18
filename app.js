@@ -162,6 +162,11 @@ app.get('/login', function(req, res){
   res.render('login', { user: req.user, message: req.flash('error') });
 });
 
+
+app.get('/signup', function(req, res){
+  res.render('signup', { user: req.user });
+});
+
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {

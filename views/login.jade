@@ -3,12 +3,23 @@ extend layout
 block content
 	.row
 		.span6.offset3
-			<form class="well form-inline" action="/login" method="post">
-			<input type="text" class="input-small" name="username" placeholder="Username">
-			<input type="password" class="input-small" name="password" placeholder="Password">
-			<label class="checkbox">
-			<input type="checkbox"> Remember me
-			</label>
-			<button type="submit" class="btn">Sign in</button>
-			</form>
+			form.form-horizontal(action="/login", method="post")
+				.fieldset
+					legend Log in
+					
+					.control-group
+						label.control-label Username
+						.controls
+							input.input-xlarge(type="text", name="username")
+							p.help-block Enter your username
+							
+					.control-group
+						label.control-label Password
+						.controls
+							input.input-xlarge(type="password", name="password")
+							p.help-block Your password
+					
+					.form-actions
+						button.btn.btn-primary(type="submit") Log in
+						button.btn Cancel
 
