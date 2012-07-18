@@ -14,7 +14,12 @@ window.AppRouter = Backbone.Router.extend
 		socialStream = new window.SocialStream()
 
 	default: ->
-		publisher = new window.PublisherContainer()
+		
+		current_user = eval(user)
+		
+		if current_user?
+			publisher = new window.PublisherContainer()
+
 		socialStream = new window.SocialStream()		
 
 jQuery ->
