@@ -13,8 +13,10 @@
     "stylus": "*",
     "nib": "*",
     "bootstrap-stylus": "*",
-    "express-expose": "*"
-
+    "express-expose": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "connect-flash": "*"
 
   }
 }
