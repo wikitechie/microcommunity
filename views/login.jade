@@ -3,8 +3,7 @@ extend layout
 block content
 	.row
 		.span6.offset3
-			- if (message)
-				p = message					
+			= message
 				
 			form.form-horizontal(action="/login", method="post")
 				.fieldset

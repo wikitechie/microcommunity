@@ -45,29 +45,16 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy(
   function(email, password, done) {
     // asynchronous verification, for effect...
-    process.nextTick(function () {
-      
-      // Find the user by username.  If there is no user with the given
-      // username, or the password is not correct, set the user to `false` to
-      // indicate failure and set a flash message.  Otherwise, return the
-      // authenticated `user`.
-      
-  		
-
-      
-   	User.findOne({ email: email }, function(err, user){
-   			console.log(user);
-		    if (err) { return done(err); }
-		    if (!user) { return done(null, false, { message: 'Unknown email ' + email }); }
-		    if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
-		    return done(null, user);
-    	});
-    	
+    process.nextTick(function () {     
+		 	User.findOne({ email: email }, function(err, user){
+				  if (err) { return done(err); }
+				  if (!user) { return done(null, false, { message: 'Unknown email ' + email }); }
+				  if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+				  return done(null, user);
+			});    	
     });
   }
 ));
-
-
 
 var Comments = new mongoose.Schema({
     name     : String
@@ -93,15 +80,6 @@ post = new Post({
 	text: "Hello, MongoDB!",
 	comments: [ {name: "Commenter", text: "Some comment"},{name: "Commenter2", text: "Some comment2"}]
 });
-
-
-//post.save(function (err) {
-//  if (!err) console.log('Success!');
-//});
-
-//post.save();
-
-
 
 var app = express.createServer();
 
@@ -182,7 +160,6 @@ app.get('/logout', function(req, res){
 app.get('/', function(req, res){
   Post.find(function(err, posts) {
 	  Wikipage.find(function(err, wikipages) {
-			console.log(posts);
 			res.render('index', { title: 'MicroCommunity', posts : posts, wikipages: wikipages, user: req.user });
 	  });
   });
