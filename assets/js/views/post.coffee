@@ -5,12 +5,16 @@ class window.PostView extends Backbone.View
 	initialize: ->
 		@commentsThread = new CommentsThreadView 
 			collection: @model.comments
-			postId: @model.id			
+			postId: @model.id
+				
 
 		_.bindAll @
 
 	render: ->
 		$(@el).html @template(@model.attributes)
 		$(@el).find('.comments-thread').html @commentsThread.render().el
+		if @options.embeded
+			$(@el).find(".avatar").attr('width','35')
+			$(@el).find("hr").last().hide()
 		@
 

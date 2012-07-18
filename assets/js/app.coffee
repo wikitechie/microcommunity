@@ -3,8 +3,6 @@
 #= require mediator
 #= require publisher
 #= require social_stream
-#= require content_stream
-#= require embeded_content
 
 window.AppRouter = Backbone.Router.extend
 	routes:
@@ -14,15 +12,12 @@ window.AppRouter = Backbone.Router.extend
 	embededContent: (id)->
 		publisher = new window.PublisherContainer()
 		socialStream = new window.SocialStream()
-		embededContent = new window.EmbededContent()
 
 	default: ->
 		publisher = new window.PublisherContainer()
-		socialStream = new window.SocialStream()
-		#contentStream = new window.ContentStream()
+		socialStream = new window.SocialStream()		
 
 jQuery ->
-
 	appRouter = new AppRouter()
 	Backbone.history.start()
 

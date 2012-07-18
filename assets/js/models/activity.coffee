@@ -11,9 +11,12 @@ class window.Activity extends Backbone.Model
 		"/api/activity/"
 
 	initialize: (options)->
-		@comments = new Comments
+		#@comments = new Comments
+		
+		@post = new Post
 		if options?
-			@comments.add options.comments
+			#@comments.add options.comments
+			@post = options.post
 
 
 class window.Activities extends Backbone.Collection
