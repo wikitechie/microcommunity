@@ -6,7 +6,6 @@
     "start": "node app"
   },
   "dependencies": {
-    "everyauth": ">=0.2.7",
     "express": "3.0.0alpha1",
     "mongoose":"*",
     "jade": ">= 0.12.1",

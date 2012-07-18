@@ -24,6 +24,13 @@ html
 							a(href='#') Wiki
 						li
 							a(href='#') Contact
+						li
+							- if (!user)
+								a(href='/login') Login						
+							- else
+								a(href='/logout') Log out
+							
+						
 
 		div.container
 			.row
