@@ -15,7 +15,7 @@ window.AppRouter = Backbone.Router.extend
 
 	default: ->
 		
-		current_user = eval(user)
+		window.current_user = eval(user)
 		
 		if current_user?
 			publisher = new window.PublisherContainer()
