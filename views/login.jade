@@ -3,15 +3,18 @@ extend layout
 block content
 	.row
 		.span6.offset3
+			- if (message)
+				p = message					
+				
 			form.form-horizontal(action="/login", method="post")
 				.fieldset
 					legend Log in
 					
 					.control-group
-						label.control-label Username
+						label.control-label Email
 						.controls
 							input.input-xlarge(type="text", name="username")
-							p.help-block Enter your username
+							p.help-block Enter your email
 							
 					.control-group
 						label.control-label Password
