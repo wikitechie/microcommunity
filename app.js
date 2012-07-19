@@ -197,6 +197,7 @@ app.get('/', function(req, res){
 									email: map[p.user].email												
 								};						
 								joinedpost = {
+									_id  : p._id,
 									text : p.text,
 									user : user,
 									comments : p.comments
@@ -236,6 +237,7 @@ app.get('/api/posts', function(req, res){
   				};
   				
   				joinedpost = {
+  					_id  : p._id,
   					text : p.text,
   					user : user,
   					comments : p.comments
@@ -260,6 +262,7 @@ app.get('/api/posts/:id', function(req, res){
     	User.findById(post.user, function(err, user){
  		
     		var joinedpost = {
+    			_id  : post._id,
     			name : post.name,
     			text : post.text,
     			user : user
@@ -297,6 +300,7 @@ app.post('/api/posts', function(req, res){
   });
   
 	var joinedpost = {
+		_id  : post._id,
 		name : post.name,
 		text : post.text,
 		user : req.body.user
