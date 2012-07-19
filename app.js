@@ -194,13 +194,16 @@ app.get('/', function(req, res){
 							var joinedposts = [];
 							var joinedpost = {};					
 							_.each(posts, function(p){
-								p.user = map[p.user];						
+								var user = {
+									_id : map[p.user]._id,
+									email: map[p.user].email												
+								};						
 								joinedpost = {
 									text : p.text,
-									user : map[p.user],
+									user : user,
 									comments : p.comments
 								};						
-								joinedposts.push(joinedpost);								
+								joinedposts.push(joinedpost);		
 							});					
 							return res.render('index', { posts: joinedposts, wikipages: wikipages, user: req.user });
 						});
@@ -218,7 +221,6 @@ app.get('/api/posts', function(req, res){
   		var userIds = _.pluck(posts, "user");
   		
   		User.find({ _id : { $in : userIds } }, function(err, users){
-  			console.log(users);
   			var map = {};
   			_.each(users, function(u){
   				map[u.id] = u;
@@ -228,11 +230,16 @@ app.get('/api/posts', function(req, res){
   			var joinedpost = {};
   			
   			_.each(posts, function(p){
-  				p.user = map[p.user];
+
+  				var user = {
+  					_id : map[p.user]._id,
+  					email: map[p.user].email
+  				  				
+  				};
   				
   				joinedpost = {
   					text : p.text,
-  					user : map[p.user],
+  					user : user,
   					comments : p.comments
   				};
   				
