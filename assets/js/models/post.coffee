@@ -12,6 +12,10 @@ class window.Post extends Backbone.Model
 		@comments = new Comments
 		if options?
 			@comments.add options.comments
+			
+		if @get('user')?
+			@user = @get('user')
+			console.debug "user id #{@get('user')}"
 
 
 class window.Posts extends Backbone.Collection

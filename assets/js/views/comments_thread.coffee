@@ -8,7 +8,6 @@ class window.CommentsThreadView extends Backbone.View
 	initialize: ->
 		_.bindAll @
 		@collection.bind 'add', @injectComment
-		console.debug(@options.postId);
 		@postId = @options.postId
 		@render()
 
@@ -41,7 +40,6 @@ class window.CommentsThreadView extends Backbone.View
 		$(@el).find(".comments-text").val("")
 
 	addComment: (comment)->
-		console.debug("posting... #{@postId}");
 		comment.url = "api/posts/#{@postId}/comments/"
 		comment.save()
 		@collection.add comment

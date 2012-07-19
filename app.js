@@ -63,6 +63,7 @@ var Comments = new mongoose.Schema({
 
 
 var Post = mongoose.model('Post', new mongoose.Schema({
+	user: mongoose.Schema.ObjectId, 
   name: String,
   text: String,
   comments : [Comments]
@@ -188,14 +189,26 @@ app.get('/', function(req, res){
 
 app.get('/api/posts', function(req, res){
   return Post.find(function(err, posts) {
-    return res.send(posts);
+  	
+  	if(!err){
+  		res.send(posts);
+  	}
+
   });
 });
 
 app.get('/api/posts/:id', function(req, res){
   return Post.findById(req.params.id, function(err, post) {
     if (!err) {
-      return res.send(post);
+    	User.findById(post.user, function(err, user){
+ 		
+    		var joinedpost = {
+    			name : post.name,
+    			text : post.text,
+    			user : user
+    		};
+	      return res.send(joinedpost);    	
+    	});
     }
   });
 });
@@ -217,16 +230,25 @@ app.post('/api/posts', function(req, res){
   var post;
   post = new Post({
     text: req.body.text,
-    name: req.body.name
-
+    name: req.body.name,
+    user: mongoose.Types.ObjectId(req.body.user._id)
   });
   post.save(function(err) {
     if (!err) {
+    	console.log(post);	
       return console.log("created");
     }
   });
-  return res.send(post);
+  
+	var joinedpost = {
+		name : post.name,
+		text : post.text,
+		user : req.body.user
+	};
+  return res.send(joinedpost);    	  
+ 
 });
+
 
 //comments api
 app.post('/api/posts/:id/comments', function(req, res){
