@@ -29,7 +29,10 @@ class window.CommentsThreadView extends Backbone.View
 		if keycode == 13
 			e.preventDefault()
 			comment = new Comment
-			comment.set text: $(@el).find(".comments-text").val()
+			console.debug current_user
+			comment.set 
+				text: $(@el).find(".comments-text").val()
+				user: current_user
 			@addComment comment
 
 	injectComment: (comment) =>

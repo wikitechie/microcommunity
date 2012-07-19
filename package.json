@@ -17,7 +17,8 @@
     "passport": "*",
     "passport-local": "*",
     "connect-flash": "*",
-    "underscore" : "*"
+    "underscore" : "*",
+    "async" : "*"
 
   }
 }
