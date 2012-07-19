@@ -16,7 +16,8 @@
     "express-expose": "*",
     "passport": "*",
     "passport-local": "*",
-    "connect-flash": "*"
+    "connect-flash": "*",
+    "underscore" : "*"
 
   }
 }

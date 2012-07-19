@@ -11,6 +11,7 @@ var express = require('express')
   , mongoose = require('mongoose')
   , passport = require('passport')  
   , flash = require('connect-flash')
+  , _ = require('underscore')
   , LocalStrategy = require('passport-local').Strategy;
 
 mongoose.connect('mongodb://localhost/microcommunity');
@@ -179,11 +180,33 @@ app.get('/logout', function(req, res){
 //app.get('/', routes.index);
 
 app.get('/', function(req, res){
-  Post.find(function(err, posts) {
-	  Wikipage.find(function(err, wikipages) {
-			res.render('index', { title: 'MicroCommunity', posts : posts, wikipages: wikipages, user: req.user });
+
+  Wikipage.find(function(err, wikipages) {	  
+  	  Post.find(function(err, posts) {			
+					if(!err){			
+						var userIds = _.pluck(posts, "user");				
+						User.find({ _id : { $in : userIds } }, function(err, users){
+							console.log(users);
+							var map = {};
+							_.each(users, function(u){
+								map[u.id] = u;
+							});					
+							var joinedposts = [];
+							var joinedpost = {};					
+							_.each(posts, function(p){
+								p.user = map[p.user];						
+								joinedpost = {
+									text : p.text,
+									user : map[p.user],
+									comments : p.comments
+								};						
+								joinedposts.push(joinedpost);								
+							});					
+							return res.render('index', { posts: joinedposts, wikipages: wikipages, user: req.user });
+						});
+					}
+				});			
 	  });
-  });
 });
 
 
@@ -191,7 +214,36 @@ app.get('/api/posts', function(req, res){
   return Post.find(function(err, posts) {
   	
   	if(!err){
-  		res.send(posts);
+  	
+  		var userIds = _.pluck(posts, "user");
+  		
+  		User.find({ _id : { $in : userIds } }, function(err, users){
+  			console.log(users);
+  			var map = {};
+  			_.each(users, function(u){
+  				map[u.id] = u;
+  			});
+  			
+  			var joinedposts = [];
+  			var joinedpost = {};
+  			
+  			_.each(posts, function(p){
+  				p.user = map[p.user];
+  				
+  				joinedpost = {
+  					text : p.text,
+  					user : map[p.user],
+  					comments : p.comments
+  				};
+  				
+  				joinedposts.push(joinedpost);
+  						
+  			});
+  			
+  			return res.send(joinedposts);
+  			
+  		});
+
   	}
 
   });
