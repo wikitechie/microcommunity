@@ -62,6 +62,7 @@ var Comments = new mongoose.Schema({
     name     : String
   , text      : String
   , user : mongoose.Schema.ObjectId
+  , created_at : Date
 });
 
 
@@ -69,7 +70,8 @@ var Post = mongoose.model('Post', new mongoose.Schema({
 	user: mongoose.Schema.ObjectId, 
   name: String,
   text: String,
-  comments : [Comments]
+  comments : [Comments],
+  created_at : Date
 }));
 
 var Wikipage = mongoose.model('Wikipage', new mongoose.Schema({
@@ -222,7 +224,8 @@ Post.find(function(err, posts) {
 										text : comment.text,
 										name : comment.name,
 										_id  : comment._id,
-										user : user
+										user : user,
+										created_at : comment.created_at
 									};
 								
 									final_comments.push(joinedcomment);		
@@ -240,6 +243,7 @@ Post.find(function(err, posts) {
 								name : p.name,
 								text : p.text,
 								user : user,
+								created_at : p.created_at,
 								comments: final_comments
 							};
 					  	joinedposts.push(joinedpost);     			
@@ -305,7 +309,8 @@ app.get('/api/posts', function(req, res){
 										text : comment.text,
 										name : comment.name,
 										_id  : comment._id,
-										user : user
+										user : user,
+										created_at : comment.created_at
 									};
 								
 									final_comments.push(joinedcomment);		
@@ -323,6 +328,7 @@ app.get('/api/posts', function(req, res){
 								name : p.name,
 								text : p.text,
 								user : user,
+								created_at : p.created_at,
 								comments: final_comments
 							};
 					  	joinedposts.push(joinedpost);     			
@@ -369,7 +375,8 @@ app.get('/api/posts/:id', function(req, res){
 		  					text : comment.text,
 		  					name : comment.name,
 		  					_id  : comment._id,
-		  					user : user
+		  					user : user,
+		  					created_at: comment.created_at
 		  				};
 		  				
 		  				final_comments.push(joinedcomment);		
@@ -387,6 +394,7 @@ app.get('/api/posts/:id', function(req, res){
 		  			name : post.name,
 		  			text : post.text,
 		  			user : user,
+		  			created_at : post.created_at,
 		  			comments: final_comments
     			};
 	      	return res.send(joinedpost);     			
@@ -411,12 +419,16 @@ app.put('/api/posts/:id', function(req, res){
 });
 
 app.post('/api/posts', function(req, res){
+
   var post;
   post = new Post({
     text: req.body.text,
     name: req.body.name,
-    user: mongoose.Types.ObjectId(req.body.user._id)
+    user: mongoose.Types.ObjectId(req.body.user._id),
+    created_at : req.body.created_at
   });
+  
+  console.log(post	);
   post.save(function(err) {
     if (!err) {
       return console.log("created");
@@ -427,7 +439,8 @@ app.post('/api/posts', function(req, res){
 		_id  : post._id,
 		name : post.name,
 		text : post.text,
-		user : req.body.user
+		user : req.body.user,
+		created_at : post.created_at
 	};
   return res.send(joinedpost);    	  
  
@@ -440,7 +453,8 @@ app.post('/api/posts/:id/comments', function(req, res){
 	var comment = {
 		text : req.body.text,
 		name : req.body.name,
-		user : req.body.user._id
+		user : req.body.user._id,
+		created_at : req.body.created_at
 	};
 
 	Post.update(

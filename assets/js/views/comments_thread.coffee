@@ -32,6 +32,7 @@ class window.CommentsThreadView extends Backbone.View
 			comment.set 
 				text: $(@el).find(".comments-text").val()
 				user: current_user
+				created_at : Date()
 			@addComment comment
 
 	injectComment: (comment) =>

@@ -31,6 +31,7 @@
 		<td valign="top" width="100%">
 		<p><a href="/posts/206"><%= user.email %></a></p>
 		<p><%= nl2br(text, false) %></p>
+		<p><small><%= created_at %></small></p>
 		<div class="row-fluid">
 		<hr style="margin:2px;" />
 		<div class="comments-thread"></div>
@@ -46,7 +47,7 @@
 		<tr>
 		<td  valign="top" style="padding-right:4px"><a href="/profiles/1"><img width="30" src="avatar.JPG"></a></td>
 		<td width="100%"><a href="/posts/206"><%= user.email %></a><br />
-		<p><%= text %></p></td>
+		<p><%= text %> <small><%= created_at %></small></p></td>
 		<tr><td colspan="2"><hr style="margin:1px;" /></tr>
 		</tr>
 		
