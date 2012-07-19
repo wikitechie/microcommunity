@@ -1,6 +1,6 @@
 class window.Comment extends Backbone.Model
 	defaults:
-		name: "Amjad"
+
 		text: "Hehe! Great idea!"
 
 	idAttribute: "_id"

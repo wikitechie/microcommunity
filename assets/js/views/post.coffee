@@ -11,7 +11,6 @@ class window.PostView extends Backbone.View
 		_.bindAll @
 
 	render: ->
-		console.debug @model.attributes
 		$(@el).html @template(@model.attributes)
 		$(@el).find('.comments-thread').html @commentsThread.render().el
 		unless window.current_user?

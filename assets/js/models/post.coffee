@@ -11,13 +11,9 @@ class window.Post extends Backbone.Model
 	initialize: (options)->
 		@comments = new Comments
 		if options?
+			console.debug options.comments
 			@comments.add options.comments
 			
-		if @get('user')?
-			@user = @get('user')
-			console.debug "user id #{@get('user')}"
-
-
 class window.Posts extends Backbone.Collection
 	model: window.Post
 	url: '/api/posts'
