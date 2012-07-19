@@ -155,7 +155,6 @@ app.post('/signup', function(req, res){
 });
 
 app.post('/login', function(req, res, next) {
-	console.log(req.body);
   passport.authenticate('local', function(err, user, info) {
 
     if (err) { return next(err) }
@@ -186,7 +185,6 @@ app.get('/', function(req, res){
 					if(!err){			
 						var userIds = _.pluck(posts, "user");				
 						User.find({ _id : { $in : userIds } }, function(err, users){
-							console.log(users);
 							var map = {};
 							_.each(users, function(u){
 								map[u.id] = u;
@@ -294,7 +292,6 @@ app.post('/api/posts', function(req, res){
   });
   post.save(function(err) {
     if (!err) {
-    	console.log(post);	
       return console.log("created");
     }
   });
