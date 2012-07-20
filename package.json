@@ -18,7 +18,8 @@
     "passport-local": "*",
     "connect-flash": "*",
     "underscore" : "*",
-    "async" : "*"
+    "async" : "*",
+    "express-resource" : "git://github.com/isstaif/express-resource.git#master"
 
   }
 }
