@@ -125,7 +125,8 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.resource('api/posts', require('./api/posts'));  
+app.resource('api/posts', require('./api/posts'));
+app.resource('api/posts/:id/comments', require('./api/comments'));    
 
 
 app.get('/account', ensureAuthenticated, function(req, res){
@@ -269,35 +270,6 @@ Post.find(function(err, posts) {
 
   });		
 	  });
-});
-
-
-//comments api
-app.post('/api/posts/:id/comments', function(req, res){
-
-	var comment = {
-		text : req.body.text,
-		name : req.body.name,
-		user : req.body.user._id,
-		created_at : req.body.created_at
-	};
-
-	Post.update(
-		{ _id :  mongoose.Types.ObjectId(req.params.id) }, 
-		{ $push : {comments: comment } },  
-		function(err, post){
-			console.log(post);
-		}
-	);	
-	
-});
-
-app.get('/api/posts/:id/comments', function(req, res){
-  Post.findById(req.params.id, function(err, post) {
-    if (!err) {
-			return res.send(post.comments);
-    }
-  });
 });
 
 
