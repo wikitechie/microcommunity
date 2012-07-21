@@ -14,7 +14,8 @@ var express = require('express')
   , _ = require('underscore')
   , LocalStrategy = require('passport-local').Strategy
   , async = require('async')
-  , Resource = require('express-resource'); 
+  , Resource = require('express-resource')
+  , posts_provider = require('./providers/posts-provider'); 
 
 
 mongoose.connect('mongodb://localhost/microcommunity');
@@ -122,89 +123,11 @@ app.resource('api/wikipages', require('./api/wikipages'));
 var auth = require('./routes/auth');
 auth.install(app);
 
+//main app
 app.get('/', function(req, res){
-
-  Post.find(function(err, posts) {
-  	
-  	if(!err){
-  	
-  		var userIds = _.pluck(posts, "user");
-  		
-  		User.find({ _id : { $in : userIds } }, function(err, users){
-  			var map = {};
-  			_.each(users, function(u){
-  				map[u.id] = u;
-  			});
-  			
-  			var joinedposts = [];
-  			var joinedpost = {};
- 				var functions = []; 			
-  			
-  			_.each(posts, function(p){  			
-  			
-  				function myfunction(callback) {
-						var user = {
-							_id : map[p.user]._id,
-							email: map[p.user].email  				  				
-						};  				
-						
-						var functions = [];    		
-		  			var final_comments = [];
-		  			var j = 0;
-		  	
-						for(var i=0; i< p.comments.length; i++){
-							
-							function myfunction(callback){							
-								var comment = p.comments[j];
-								j++;
-							
-								User.findById(comment.user, function(err, user){
-									var joinedcomment = {
-										text : comment.text,
-										name : comment.name,
-										_id  : comment._id,
-										user : user,
-										created_at : comment.created_at
-									};
-								
-									final_comments.push(joinedcomment);		
-								
-									callback(null);
-								
-								});    			
-							}    			
-							functions.push(myfunction);   		    			
-						}
-		  		
-						async.waterfall(functions, function(err, result){
-							var joinedpost = {
-								_id  : p._id,
-								name : p.name,
-								text : p.text,
-								user : user,
-								created_at : p.created_at,
-								comments: final_comments
-							};
-					  	joinedposts.push(joinedpost);     			
-					  	callback(null);
-						});					
-		  		  				
-  				}
-  				
-  				functions.push(myfunction);  						
-  			});
-  			
-	
-				async.waterfall(functions, function(err, result){
-					return res.render('index', { posts: joinedposts, user: req.user });
-				});				
-  			
-  		});
-
-  	}
-
-  });		
-
+	posts_provider.fetchPosts(function(err, posts){	
+		res.render('index', { posts: posts, user: req.user });
+	});
 });
 
 
