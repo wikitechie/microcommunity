@@ -1,5 +1,5 @@
 var provider = require('./../providers/posts-provider'); 
-
+var mongoose = require('mongoose');
 exports.index = function(req, res){
 	provider.fetchPosts(function(err, posts){
 		return res.send(posts);	
