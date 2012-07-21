@@ -21,44 +21,50 @@
                 </div>
                 
         script#post-template(type="text/template")
-                .span12
-                    .row-fluid
-                        .span2
-                            a(href="profiles/1")
-                                img.avatar.thumbnail(src="avatar.JPG",width=100)
-                        .span10
-                            a(href="/posts/206")
-                                <%= user.email %>
-                            p
-                                <%= nl2br(text, false) %>
-                            small
-                                <%= created_at %>
-                            hr
-                            .row-fluid
-                                .comments-thread
+          .row-fluid
+            .span12            
+              .avatar
+                a(href="profiles/1")
+                  img(src="avatar.JPG",width="50px")
+              .mainWrapper
+                p
+                  a(href="/posts/206")
+                    <%= user.email %>
+                p
+                  <%= nl2br(text, false) %>
+                p  
+                  small
+                    a(href='#') Like 
+                    · <%= created_at %>
+                hr
+                .row-fluid
+                  .comments-thread
+          .row-fluid                  
+            .span12
+              hr
                 
         script#comment-template(type="text/template")
             .row-fluid
-                .span1
-                    a(href="/profiles/1")
-                        img.avatar(src="avatar.JPG")
-                .span11
+                .avatar
+                    a(href="#")
+                        img(src="avatar.JPG", width="35px")
+                .mainWrapper.comments
                     p
-                        <%= text %>
-                    small
+                      a(href="#") <%= user.email %> 
+                      <%= text %>
+                      br
+                      small
                         <%= created_at %>
-                        | by 
-                        a(href='/profiles/1')
-                            <%= user.email %>
+            
                 
         script#comments-thread-template(type="text/template")
                 <div class="row-fluid">
 
                 <table class="comments-list" width="100%">
                 </table>
-
                 <textarea class="span12 comments-text" rows=1 ></textarea>
                 </div>
+                
 
         script#social-stream-template(type="text/template")
                 <div id = "social-stream-table">
