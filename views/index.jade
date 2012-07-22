@@ -5,6 +5,8 @@ block content
 	!= "var posts =" + JSON.stringify(posts) + ";"
 	!= "var user =" +JSON.stringify(user)  + ";"
 	!= "</script>"
+	
+	include shared/templates
 
 	.row
 		.span3
@@ -25,7 +27,8 @@ block content
 		.span6
 			include shared/publisher
 			hr
-			include shared/social_stream
+			#social-stream
+			
 		.span3
 
 

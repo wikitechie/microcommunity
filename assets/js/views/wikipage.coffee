@@ -11,7 +11,6 @@ class window.WikiPageView extends Backbone.View
 		"click #edit-button": "editButton"
 		"click #cancel-button": "cancelButton"
 		"click #save-button": "saveButton"
-		"click #history-button": "historyButton"
 		'click #read-more' : "expand"
 
 	initialize: (options)->

@@ -31,9 +31,9 @@ class window.SocialStream extends Backbone.View
                 #initializing posts rendered from the server
                 @posts.add eval(posts)
                                 
-                #wikipage = new WikiPage
-                #wikipageView = new WikiPageView        model: wikipage
-                #@injectView wikipageView
+                wikipage = new WikiPage
+                wikipageView = new WikiPageView        model: wikipage
+                @injectView wikipageView
                 
                 post = @posts.last()
                 
