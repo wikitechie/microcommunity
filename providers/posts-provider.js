@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
   , async = require('async')
   , comments_provider = require('./comments-provider'); 
 
-mongoose.connect('mongodb://localhost/microcommunity');
+mongoose = mongoose.connect('mongodb://localhost/microcommunity');
 
 
 var Post = mongoose.model('Post', new mongoose.Schema({
@@ -89,3 +89,5 @@ exports.createPost = function(attr, callback){
   	callback(err);
   });
 }
+
+exports.model = Post;
