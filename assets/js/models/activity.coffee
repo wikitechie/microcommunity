@@ -4,6 +4,7 @@ class window.Activity extends Backbone.Model
 		verb: "verbed"
 		object: "Object"
 		target: "Target"
+		created_at : Date()
 
 	idAttribute: "_id"
 
@@ -16,7 +17,7 @@ class window.Activity extends Backbone.Model
 		@post = new Post
 		if options?
 			#@comments.add options.comments
-			@post = options.post
+			@wikipage = options.wikipage
 
 
 class window.Activities extends Backbone.Collection

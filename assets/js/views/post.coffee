@@ -15,8 +15,6 @@ class window.PostView extends Backbone.View
 		$(@el).find('.comments-thread').html @commentsThread.render().el
 		unless window.current_user?
 			$(@el).find('.comments-text').hide()
-		if @options.embeded
-			$(@el).find(".avatar").attr('width','35')
-			$(@el).find("hr").last().hide()
+
 		@
 

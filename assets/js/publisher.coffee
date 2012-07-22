@@ -194,8 +194,8 @@ class window.PublisherContainer extends Backbone.View
 		@render()
 		@addPublisher "post", "Post", new PostPublisher
 		@addPublisher "wikipage", "Wiki", new WikipagePublisher
-		@addPublisher "question", "Question", new QuestionPublisher
-		@addPublisher "link", "Link", new LinkPublisher
+		#@addPublisher "question", "Question", new QuestionPublisher
+		#@addPublisher "link", "Link", new LinkPublisher
 
 		$('#publisher-tab a').click (e) ->
 			e.preventDefault();

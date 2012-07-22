@@ -6,8 +6,8 @@ class window.ActivityView extends Backbone.View
 		#@commentsThread = new CommentsThreadView 
 			#collection: @model.comments
 			#postId: @model.id			
-		@postView = new PostView
-			model: @model.post
+		@wikipageView = new WikiPageView
+			model: @model.wikipage
 			embeded: true
 
 		_.bindAll @
@@ -15,6 +15,6 @@ class window.ActivityView extends Backbone.View
 	render: ->
 		$(@el).html @template(@model.attributes)
 		#$(@el).find('.comments-thread').html @commentsThread.render().el
-		$(@el).find('.embeded-content').html @postView.render().el		
+		$(@el).find('.embeded-content').html @wikipageView.render().el		
 		@
 
