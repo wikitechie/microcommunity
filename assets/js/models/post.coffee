@@ -2,6 +2,7 @@ class window.Post extends Backbone.Model
 	defaults:
 		name: "Amjad"
 		text: "Newly posted, Hello, Backbone"
+		created_at: 'date not given'
 
 	idAttribute: "_id"
 
@@ -15,6 +16,7 @@ class window.Post extends Backbone.Model
 			@comments.add options.comments
 			
 class window.Posts extends Backbone.Collection
+	backend: 'posts'
 	model: window.Post
 	url: '/api/posts'
 
