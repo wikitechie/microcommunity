@@ -15,32 +15,12 @@ var express = require('express')
   , LocalStrategy = require('passport-local').Strategy
   , async = require('async')
   , Resource = require('express-resource')
-  , posts_provider = require('./providers/posts-provider'); 
+  , posts_provider = require('./providers/posts-provider')
+  , schemas = require('./providers/mongoose-schemas')
+  , mongoose = require('mongoose'); 
 
 
 mongoose.connect('mongodb://localhost/microcommunity');
-
-var Post = mongoose.model('Post', new mongoose.Schema({
-	user: mongoose.Schema.ObjectId, 
-  name: String,
-  text: String,
-  comments : [Comments],
-  created_at : Date
-}));
-
-var Comments = new mongoose.Schema({
-    name     : String
-  , text      : String
-  , user : mongoose.Schema.ObjectId
-  , created_at : Date
-});
-
-
-var User = mongoose.model('User', new mongoose.Schema({
-	email: String,
-	password: String
-}));
-
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -52,7 +32,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-	User.findById(id, function(err, user) {
+	schemas.User.findById(id, function(err, user) {
 		done(err, user);
   });
 });
@@ -68,7 +48,7 @@ passport.use(new LocalStrategy(
   function(email, password, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {     
-		 	User.findOne({ email: email }, function(err, user){
+		 	schemas.User.findOne({ email: email }, function(err, user){
 				  if (err) { return done(err); }
 				  if (!user) { return done(null, false, { message: 'Unknown email ' + email }); }
 				  if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
@@ -117,7 +97,6 @@ app.configure('development', function(){
 
 app.resource('api/posts', require('./api/posts'));
 app.resource('api/posts/:id/comments', require('./api/comments'));    
-app.resource('api/wikipages', require('./api/wikipages'));    
 
 //authentication pages
 var auth = require('./routes/auth');

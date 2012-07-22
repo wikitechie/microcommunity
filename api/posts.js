@@ -1,5 +1,7 @@
-var provider = require('./../providers/posts-provider'); 
-var mongoose = require('mongoose');
+var provider = require('./../providers/posts-provider')
+	, schemas = require('./../providers/mongoose-schemas')
+	, mongoose = require('mongoose');
+	
 exports.index = function(req, res){
 	provider.fetchPosts(function(err, posts){
 		return res.send(posts);	
@@ -15,8 +17,8 @@ exports.create = function(req, res){
     created_at : req.body.created_at
 	};
   
-  provider.createPost(post, function(err){
-	  return res.send({status: "ok"});     
+  provider.createPost(post, function(err, new_post){
+	  return res.send(new_post);     
   });	  
 };
 
