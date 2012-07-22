@@ -26,16 +26,12 @@ class window.WikiPageView extends Backbone.View
 		$(@el).find('.comments-thread').html @commentsThread.render().el
 		unless window.current_user?
 			$(@el).find('.comments-text').hide()		
+		else
+			$(@el).find("#buttons").html @editButtons
 		
 
 		$(@el).find("#wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
-		$(@el).find("#buttons").html @editButtons
-		$(@el).find("#wikipage-history").hide()
-		@showHistory = false
-
-		if @embeded
-			$(@el).find('.well').addClass('embeded')
-		$('#content-stream-table').masonry( 'reload' )
+		
 		@
 
 	expand: ->
