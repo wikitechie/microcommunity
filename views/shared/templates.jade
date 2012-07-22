@@ -1,21 +1,24 @@
-script#wikipage-template(type="text/template")
+script#activity-template(type="text/template")
 	.row-fluid
 		.span12
-			.row-fluid
-				.span8
-					h3 <%= title %>
-				.span4#buttons
-			.row-fluid#wikipage-body-area
-			.row-fluid
+			.avatar
+				a(href="#")
+				img.avatar-img(src="avatar.JPG")
+			.mainWrapper
+				p
+					<%= actor %> <%= verb %> on <%= object %> upon <%= target %>			
+				.row-fluid
+					.embeded-content
+	.row-fluid
+		.span12
 			hr
-			.comments-thread
-			
+
 script#post-template(type="text/template")
 	.row-fluid
 		.span12
 			.avatar
-				a(href="profiles/1")
-				img(src="avatar.JPG",width="50px")
+				a(href="#")
+				img.avatar-img(src="avatar.JPG")
 			.mainWrapper
 				p
 					a(href="/posts/206")     			
@@ -31,11 +34,12 @@ script#post-template(type="text/template")
 	.row-fluid
 		.span12
 			hr
+			
 script#comment-template(type="text/template")
 	.row-fluid
 		.avatar
 			a(href="#")
-				img(src="avatar.JPG", width="35px")
+				img.avatar-img(src="avatar.JPG")
 		.mainWrapper.comments
 			p
 				a(href="#") <%= user.email %> 
@@ -51,6 +55,19 @@ script#comments-thread-template(type="text/template")
 	
 script#social-stream-template(type="text/template")
 	#social-stream-table
+
+script#wikipage-template(type="text/template")
+	.row-fluid
+		.span12
+			.row-fluid
+				.span8
+					h3 <%= title %>
+				.span4#buttons
+			.row-fluid#wikipage-body-area
+			.comments-thread
+	.row-fluid
+		.span12
+			hr
              
 script#wikipage-edit-buttons-template(type="text/template")
 	.pull-right

@@ -1,5 +1,5 @@
 class window.ActivityView extends Backbone.View
-	className: "row-fluid activity"
+	className: "activity"
 	template: _.template($('#activity-template').html()),
 
 	initialize: ->
@@ -15,6 +15,6 @@ class window.ActivityView extends Backbone.View
 	render: ->
 		$(@el).html @template(@model.attributes)
 		#$(@el).find('.comments-thread').html @commentsThread.render().el
-		$(@el).find('.content-area').html @postView.render().el		
+		$(@el).find('.embeded-content').html @postView.render().el		
 		@
 

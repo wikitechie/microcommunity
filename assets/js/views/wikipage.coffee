@@ -1,5 +1,5 @@
 class window.WikiPageView extends Backbone.View
-	className : "wikipage row-fluid"
+	className : "wikipage"
 
 	normalTemplate: _.template($('#wikipage-template').html())
 	editButtons: _.template($('#wikipage-edit-buttons-template').html())
@@ -24,6 +24,9 @@ class window.WikiPageView extends Backbone.View
 	render: ->
 		$(@el).html @template _.extend(@model.attributes, {fullview: @fullview})
 		$(@el).find('.comments-thread').html @commentsThread.render().el
+		unless window.current_user?
+			$(@el).find('.comments-text').hide()		
+		
 
 		$(@el).find("#wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
 		$(@el).find("#buttons").html @editButtons
