@@ -15,7 +15,8 @@ var express = require('express')
   , LocalStrategy = require('passport-local').Strategy
   , async = require('async')
   , Resource = require('express-resource')
-  , posts_provider = require('./providers/posts-provider'); 
+  , posts_provider = require('./providers/posts-provider')
+  , backboneio = require('backbone.io'); 
 
 
 mongoose.connect('mongodb://localhost/microcommunity');
@@ -131,9 +132,8 @@ app.get('/', function(req, res){
 });
 
 
+// Backbone.io backends
 
-app.listen(3000);
+app = app.listen(3000);
 
-
-
-
+backboneio.listen(app, require('./providers/backends-provider.js'));
