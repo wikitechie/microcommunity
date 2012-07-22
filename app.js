@@ -7,7 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , stylus = require('stylus')
-  , bootstrap = require('bootstrap-stylus')confl
+  , bootstrap = require('bootstrap-stylus')
   , mongoose = require('mongoose')
   , passport = require('passport')  
   , flash = require('connect-flash')
@@ -17,7 +17,7 @@ var express = require('express')
   , Resource = require('express-resource')
   , posts_provider = require('./providers/posts-provider')
   , schemas = require('./providers/mongoose-schemas')
-  , mongoose = require('mongoose'); 
+  , mongoose = require('mongoose')
   , backboneio = require('backbone.io'); 
 
 mongoose.connect('mongodb://localhost/microcommunity');

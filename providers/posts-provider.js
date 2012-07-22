@@ -72,4 +72,4 @@ exports.createPost = function(attr, callback){
   });
 }
 
-exports.model = Post;
+exports.model = schemas.Post;
