@@ -3,7 +3,7 @@ var mongoose = require('mongoose')
   , comments_provider = require('./comments-provider')
   , schemas = require('./../providers/mongoose-schemas'); 
 
-mongoose.connect('mongodb://localhost/microcommunity');
+mongoose = mongoose.connect('mongodb://localhost/microcommunity');
 
 exports.fetchJoinedPost = function (post, callback){
 	schemas.Post.findById(post, function(err, post) {
@@ -71,3 +71,5 @@ exports.createPost = function(attr, callback){
   	
   });
 }
+
+exports.model = Post;

@@ -7,7 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , stylus = require('stylus')
-  , bootstrap = require('bootstrap-stylus')
+  , bootstrap = require('bootstrap-stylus')confl
   , mongoose = require('mongoose')
   , passport = require('passport')  
   , flash = require('connect-flash')
@@ -18,7 +18,7 @@ var express = require('express')
   , posts_provider = require('./providers/posts-provider')
   , schemas = require('./providers/mongoose-schemas')
   , mongoose = require('mongoose'); 
-
+  , backboneio = require('backbone.io'); 
 
 mongoose.connect('mongodb://localhost/microcommunity');
 
@@ -110,9 +110,8 @@ app.get('/', function(req, res){
 });
 
 
+// Backbone.io backends
 
-app.listen(3000);
+app = app.listen(3000);
 
-
-
-
+backboneio.listen(app, require('./providers/backends-provider.js'));

@@ -19,8 +19,8 @@
     "connect-flash": "*",
     "underscore" : "*",
     "async" : "*",
-    "express-resource" : "git://github.com/isstaif/express-resource.git#master"
-
+    "express-resource" : "git://github.com/isstaif/express-resource.git#master",
+    "backbone.io" : "*"
   }
 }
 
