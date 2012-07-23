@@ -12,7 +12,6 @@ class window.Post extends Backbone.Model
 	initialize: (options)->
 		@comments = new Comments
 		if options?
-			console.debug options.comments
 			@comments.add options.comments
 			
 class window.Posts extends Backbone.Collection

@@ -17,7 +17,7 @@ class window.Activity extends Backbone.Model
 		@post = new Post
 		if options?
 			#@comments.add options.comments
-			@wikipage = options.wikipage
+			@object = options.object
 
 
 class window.Activities extends Backbone.Collection

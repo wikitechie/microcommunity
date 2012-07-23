@@ -22,14 +22,12 @@ exports.fetchWikiPages = function (callback){
 exports.createWikiPage = function(attr, callback){
   var wikipage = new exports.model(attr);
   wikipage.save(function(err) {
-  	console.log(wikipage);
 		callback(err, wikipage);
   });
 }
 
 exports.updateWikiPage = function(id, updated, callback){
 	exports.model.update({_id : mongoose.Types.ObjectId(id)}, updated, function(err, wikipage){
-		console.log("errors" + err);
 		callback(err, wikipage);	
 	});
 }

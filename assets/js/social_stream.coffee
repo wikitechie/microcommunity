@@ -38,7 +38,7 @@ class window.SocialStream extends Backbone.View
                 post = @posts.last()
                 
                 activity = new Activity
-                        wikipage: wikipage
+                        object: wikipage
                 activity.set
                         verb: "edit"
                         object: "a wikipage"
@@ -82,9 +82,8 @@ class window.SocialStream extends Backbone.View
                 
         addWikipage: (wikipage)=>
                 wikipage.save(null,
-                        success: (wikipage)=> 
-                        	@wikipages.add wikipage
-                        	console.debug wikipage.id
+                        success: (wikipage, response)=> 
+                        	@wikipages.add wikipage                        	
                 )               
 
         addQuestion: (question)=>

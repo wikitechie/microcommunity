@@ -5,9 +5,11 @@ class window.ActivityView extends Backbone.View
 	initialize: ->
 		#@commentsThread = new CommentsThreadView 
 			#collection: @model.comments
-			#postId: @model.id			
+			#postId: @model.id
+			
+		
 		@wikipageView = new WikiPageView
-			model: @model.wikipage
+			model: @model.object
 			embeded: true
 
 		_.bindAll @

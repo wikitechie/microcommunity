@@ -48,13 +48,12 @@ class window.WikiPageView extends Backbone.View
 		$(@el).find("#buttons").html @saveButtons
 
 	saveButton: ->
-		@model.set {body: $("#wikipage-body").val()}
-		@model.save(null,
+		@model.save({body: $("#wikipage-body").val()},
 			success : ()=>
 				$(@el).find("#wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
 				$(@el).find("#buttons").html @editButtons
+			url : "/api/wikipages/#{@model.id}"
 		)
-
 
 	cancelButton: ->
 		$(@el).find("#wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
