@@ -69,6 +69,12 @@ script#wikipage-template(type="text/template")
 						h3 <%= title %>
 					.span4#buttons
 				.row-fluid#wikipage-body-area
+				.row-fluid
+					p
+						small
+							a#expand(href="#") Expand 
+							· 
+							a#collapse(href="#") Collapse
 	.row-fluid.separator
 		.span12
 			hr
@@ -87,13 +93,11 @@ script#wikipage-save-buttons(type="text/template")
 			
 script#wikipage-body-view(type="text/template")
 	<% if((typeof fullview)=="undefined") {var fullview = false;} %>
-	<% if(body.length < 500 || fullview) {%>
+	<% if(body.length < 250 || fullview) {%>
 	p <%= nl2br(body, false) %>
 	<% } else { %>
 	p 
-		<%= nl2br(body.substring(0, 500), false) %>...
-		a#read-more(href="#")
-			read more
+		<%= nl2br(body.substring(0, 250), false) %>...
 	<% }%>
 	
 script#wikipage-body-edit(type="text/template")

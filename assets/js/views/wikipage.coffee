@@ -11,7 +11,8 @@ class window.WikiPageView extends Backbone.View
 		"click #edit-button": "editButton"
 		"click #cancel-button": "cancelButton"
 		"click #save-button": "saveButton"
-		'click #read-more' : "expand"
+		'click #expand' : "expand"
+		'click #collapse' : "collapse"
 
 	initialize: (options)->
 		_.bindAll @
@@ -36,30 +37,24 @@ class window.WikiPageView extends Backbone.View
 
 	expand: ->
 		$(@el).find("#wikipage-body-area").html @wikipageBodyView {body: @model.get('body'), fullview: true}
-		$('#content-stream-table').masonry( 'reload' )
+		$(@el).find("#expand")
+	
+	collapse: ->
+		$(@el).find("#wikipage-body-area").html @wikipageBodyView {body: @model.get('body')}
 
 	editButton: ->
 		$(@el).find("#wikipage-body-area").html @wikipageBodyEdit body: @model.get 'body'
 		$(@el).find("#wikipage-body").attr("rows", 3 + (@model.get('body').length/100) )
 		$(@el).find("#buttons").html @saveButtons
-		$('#content-stream-table').masonry( 'reload' )
 
 	saveButton: ->
 		@model.set {body: $("#wikipage-body").val()}
-		$(@el).find("#wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
-		$(@el).find("#buttons").html @editButtons
-		$('#content-stream-table').masonry( 'reload' )
+		@model.save(null,
+			success : ()=>
+				$(@el).find("#wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
+				$(@el).find("#buttons").html @editButtons
+		)
 
-	historyButton: ->
-		if @showHistory
-			$(@el).find("#wikipage-history").slideUp ()=>
-				@showHistory = false
-				$('#content-stream-table').masonry( 'reload' )
-
-		else
-			$(@el).find("#wikipage-history").show()
-			@showHistory = true
-			$('#content-stream-table').masonry( 'reload' )
 
 	cancelButton: ->
 		$(@el).find("#wikipage-body-area").html @wikipageBodyView body: @model.get 'body'

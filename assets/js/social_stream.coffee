@@ -82,7 +82,9 @@ class window.SocialStream extends Backbone.View
                 
         addWikipage: (wikipage)=>
                 wikipage.save(null,
-                        success: (wikipage)=> @wikipages.add wikipage
+                        success: (wikipage)=> 
+                        	@wikipages.add wikipage
+                        	console.debug wikipage.id
                 )               
 
         addQuestion: (question)=>
