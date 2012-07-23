@@ -1,9 +1,6 @@
 var mongoose = require('mongoose')
   , async = require('async');
 
-mongoose.connect('mongodb://localhost/microcommunity');
-
-
 var Post = mongoose.model('Post', new mongoose.Schema({
 	user: mongoose.Schema.ObjectId, 
   name: String,

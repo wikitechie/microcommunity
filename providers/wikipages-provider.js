@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 
-mongoose = mongoose.connect('mongodb://localhost/microcommunity');
-
 exports.model = mongoose.model('Wikipage', new mongoose.Schema({
 	title: String,
 	body: String
