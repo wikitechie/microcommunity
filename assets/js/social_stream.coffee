@@ -38,12 +38,10 @@ class window.SocialStream extends Backbone.View
                 post = @posts.last()
                 
                 activity = new Activity
+                        actor : current_user
                         object: wikipage
-                activity.set
                         verb: "edit"
-                        object: "a wikipage"
-                        target: "wikitechie"
-                        
+                                        
                 activityView = new ActivityView        model: activity
                 @injectView activityView
                 

@@ -1,9 +1,6 @@
 class window.Activity extends Backbone.Model
 	defaults:
-		actor: "Actor"
-		verb: "verbed"
-		object: "Object"
-		target: "Target"
+		verb: "create"
 		created_at : Date()
 
 	idAttribute: "_id"
@@ -18,7 +15,8 @@ class window.Activity extends Backbone.Model
 		if options?
 			#@comments.add options.comments
 			@object = options.object
-
+			@actor = options.actor
+			
 
 class window.Activities extends Backbone.Collection
 	model: window.Activity
