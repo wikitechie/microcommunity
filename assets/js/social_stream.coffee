@@ -29,7 +29,7 @@ class window.SocialStream extends Backbone.View
     @render()
 
     #initializing posts rendered from the server
-    @posts.add eval(posts)
+    @activities.add eval(activities)
                     
     wikipage = new WikiPage
     wikipageView = new WikiPageView        model: wikipage

@@ -15,7 +15,7 @@ var express = require('express')
   , LocalStrategy = require('passport-local').Strategy
   , async = require('async')
   , Resource = require('express-resource')
-  , posts_provider = require('./providers/posts-provider')
+  , activities_provider = require('./providers/activities-provider')
   , schemas = require('./providers/mongoose-schemas')
   , mongoose = require('mongoose')
   , backboneio = require('backbone.io'); 
@@ -104,8 +104,8 @@ auth.install(app);
 
 //main app
 app.get('/', function(req, res){
-	posts_provider.fetchPosts(function(err, posts){	
-		res.render('index', { posts: posts, user: req.user });
+	activities_provider.fetchActivities(function(err, activities){	
+		res.render('index', { activities: activities, user: req.user });
 	});
 });
 
