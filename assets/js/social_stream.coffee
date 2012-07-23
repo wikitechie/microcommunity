@@ -5,14 +5,13 @@ class window.SocialStream extends Backbone.View
 	initialize: ->
     _.bindAll @
     #initializing models collections
-    @posts = new Posts
-    @posts.bind 'add', @injectPost          
-    @wikipages = new WikiPages
-    @wikipages.bind 'add', @injectWikipage          
-    @questions = new Questions
-    @questions.bind 'add', @injectQuestion
+    @posts = new Posts    
+    @wikipages = new WikiPages    
+    @questions = new Questions    
     @links = new Links
-    @links.bind 'add', @injectLink
+        
+    @activities = new Activities
+    @activities.bind 'add', @injectActivity
                     
     #bindings publisher events to the stream
     window.mediator.bind "new-post", (post)=>
@@ -23,6 +22,8 @@ class window.SocialStream extends Backbone.View
       @addQuestion question
     window.mediator.bind "new-link", (link)=>
       @addLink link
+    window.mediator.bind "new-activity", (activity)=>
+      @addActivity activity    
       
 
     @render()
@@ -50,22 +51,10 @@ class window.SocialStream extends Backbone.View
   	@
           
   #injecting views
-
-  injectPost: (post)=>
-    postView = new PostView model: post
-    @injectView postView
-
-  injectWikipage: (wikipage)=>
-    wikipageView = new WikiPageView model: wikipage
-    @injectView wikipageView                
-
-  injectQuestion: (question)=>
-    questionView = new QuestionView model: question
-    @injectView questionView
-
-  injectLink: (link)=>
-    linkView = new LinkView model: link
-    @injectView linkView
+   
+  injectActivity: (activity)=>
+  	activityView = new ActivityView model: activity
+  	@injectView activityView
     
   injectView: (view)=>
     $("#social-stream-table").prepend(view.render().el)
@@ -80,18 +69,30 @@ class window.SocialStream extends Backbone.View
 		  		actor : current_user
 		  		object: post
 		  		verb: "create"
-		  	activity.save())
-          
+	  		@addActivity activity
+  		)
+	          
   addWikipage: (wikipage)=>
     wikipage.save(null,
 		  success: (wikipage, response)=> 
-		  	@wikipages.add wikipage                        	
-    )               
+		  	@wikipages.add wikipage
+		  	activity = new Activity
+		  		actor : current_user
+		  		object: wikipage
+		  		verb: "create"
+	  		@addActivity activity
+  		)
+
 
   addQuestion: (question)=>
     @questions.add question
 
   addLink: (link)=>
-    @links.add link         
-          
+    @links.add link
+    
+  addActivity:(activity)=>
+  	activity.save(null,
+  		success: (activity)=> 
+  		@activities.add activity
+  		)
 

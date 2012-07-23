@@ -37,8 +37,6 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
-
 // Use the LocalStrategy within Passport.
 //   Strategies in passport require a `verify` function, which accept
 //   credentials (in this case, a username and password), and invoke a callback

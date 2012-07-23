@@ -33,7 +33,7 @@ class window.ActivityView extends Backbone.View
 		messages = 
 			WikiPage : 
 				edit: "#{name} edited a wikipage titled #{@model.object.get('title')}"
-				create: "#{name} edited a wikipage titled #{@model.object.get('title')}"
+				create: "#{name} created a wikipage titled #{@model.object.get('title')}"
 			Post: 
 				comment: "#{name} commented a post"
 				create: "#{name} created a new post"
