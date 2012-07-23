@@ -6,7 +6,7 @@ class window.Activity extends Backbone.Model
 	idAttribute: "_id"
 
 	url: ->
-		"/api/activity/"
+		"/api/activities/"
 
 	initialize: (options)->
 		#@comments = new Comments

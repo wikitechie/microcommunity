@@ -97,7 +97,8 @@ app.configure('development', function(){
 
 app.resource('api/posts', require('./api/posts'));
 app.resource('api/posts/:id/comments', require('./api/comments'));    
-app.resource('api/wikipages', require('./api/wikipages'));    
+app.resource('api/wikipages', require('./api/wikipages'));
+app.resource('api/activities', require('./api/activities'));        
 
 //authentication pages
 var auth = require('./routes/auth');

@@ -36,6 +36,7 @@ class window.ActivityView extends Backbone.View
 				create: "#{name} edited a wikipage titled #{@model.object.get('title')}"
 			Post: 
 				comment: "#{name} commented a post"
+				create: "#{name} created a new post"
 		messages[@objectClass][@model.get('verb')]
 		
 
