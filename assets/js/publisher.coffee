@@ -82,8 +82,6 @@ class window.WikipagePublisher extends Backbone.View
 		wikipage.set	{title: $("#wikipage-title").val(),	body: $("#wikipage-text").val()}
 		window.mediator.trigger("new-wikipage", wikipage)
 		@reset()
-		destination = $("#content-deck").offset().top;
-		$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-40}, 500 );
 
 class window.QuestionPublisher extends Backbone.View
 

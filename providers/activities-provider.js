@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
-	, ObjectId = mongoose.Schema.ObjectId;
+	, ObjectId = mongoose.Schema.ObjectId
+	, schemas = require('./../providers/mongoose-schemas');
 
 mongoose.connect('mongodb://localhost/microcommunity');
 
@@ -13,8 +14,17 @@ exports.model = mongoose.model('Activity', new mongoose.Schema({
 
 exports.fetchActivity = function (activity, callback){
 	exports.model.findById(activity, function(err, activity) {
-		callback(err, activity);
-	});	
+  	schemas.User.findById(activity.actor, function(err, user){
+			var joined_activity = {
+				_id  : activity._id,
+				actor : user,
+				created_at : activity.created_at
+			};				
+			callback(err, joined_activity);
+		});	
+	
+	});
+
 }
 
 exports.fetchActivities = function (callback){

@@ -2,7 +2,7 @@
 #= require basic
 #= require mediator
 #= require publisher
-#= require social_stream
+#= require activity_stream
 
 window.AppRouter = Backbone.Router.extend
 	routes:
@@ -11,16 +11,16 @@ window.AppRouter = Backbone.Router.extend
 
 	embededContent: (id)->
 		publisher = new window.PublisherContainer()
-		socialStream = new window.SocialStream()
+		socialStream = new window.ActivityStream()
 
 	default: ->
 		
 		window.current_user = eval(user)
 		
 		if current_user?
-			publisher = new window.PublisherContainer()
-
-		socialStream = new window.SocialStream()		
+			publisher = new window.PublisherContainer()	
+		
+		socialStream = new window.ActivityStream()		
 
 
 jQuery ->
