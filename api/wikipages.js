@@ -24,7 +24,6 @@ exports.create = function(req, res){
 
 exports.show = function(req, res){
 	provider.fetch(req.params.wikipage, function(err, wikipage){
-		console.log(wikipage);
 		return res.send(wikipage); 	
 	});  
 }
