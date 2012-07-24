@@ -6,11 +6,8 @@ script#activity-template(type="text/template")
 					<img class="avatar-img" src="<%= $.gravatar(actor.email, { size: 50 }) %>" />
 			.mainWrapper
 				p
-					<%= message %>
-				p
-					small
-						a(href='#') Like 
-						· <%= moment(created_at).fromNow() %>					
+					<%= message %> 
+					small (<%= moment(created_at).fromNow() %>)
 				.row-fluid
 					.embeded-content
 	.row-fluid
@@ -84,15 +81,15 @@ script#wikipage-template(type="text/template")
              
 script#wikipage-edit-buttons-template(type="text/template")
 	.pull-right
-		a(href="#")
+		a(href="#edit-button")
 			span#edit-button.label.label-info Edit
 	
 script#wikipage-save-buttons(type="text/template")
 	.pull-right
-		a(href="#")
+		a(href="#save-button")
 			span#save-button.label.label-success Save
-		a(href="#")
-			span#save-button.label.label-important Cancel
+		a(href="#cancel-button")
+			span#cancel-button.label.label-important Cancel
 			
 script#wikipage-body-view(type="text/template")
 	<% if((typeof fullview)=="undefined") {var fullview = false;} %>

@@ -19,9 +19,12 @@ class window.ActivityView extends Backbone.View
 		_.bindAll @
 
 	render: ->
-		$(@el).html @template(_.extend(@model.attributes, {message : @message(), actor : @model.actor}) )
-		#$(@el).find('.comments-thread').html @commentsThread.render().el
-		$(@el).find('.embeded-content').html @view.render().el		
+		if @objectClass == "Post" && @model.get('verb') == 'create'
+			$(@el).html @view.render().el
+		else			
+			$(@el).html @template(_.extend(@model.attributes, {message : @message(), actor : @model.actor}) )
+			#$(@el).find('.comments-thread').html @commentsThread.render().el
+			$(@el).find('.embeded-content').html @view.render().el		
 		@
 				
 		

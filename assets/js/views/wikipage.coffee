@@ -57,6 +57,5 @@ class window.WikiPageView extends Backbone.View
 
 	cancelButton: ->
 		$(@el).find("#wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
-		$(@el).find("#buttons").html @editButtons
-		$('#content-stream-table').masonry( 'reload' )
+		$(@el).find("#buttons").html @editButtons		
 
