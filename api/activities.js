@@ -3,7 +3,7 @@ var provider = require('./../providers/activities-provider')
 	, mongoose = require('mongoose');
 	
 exports.index = function(req, res){
-	provider.fetchActivities(function(err, activities){
+	provider.fetchActivities(req.query.from, req.query.to, function(err, activities){
 		return res.send(activities);	
 	});
 };

@@ -70,8 +70,18 @@ exports.fetchJoinedActivities = function (activities, callback){
 }
 
 
-exports.fetchActivities = function (callback){
-  exports.model.find(function(err, activities) {	
+exports.fetchActivities = function (from, to, callback){
+	if(typeof from == 'undefined')
+		from = 0;
+		
+	if(typeof to == 'undefined')
+		to = 10;	
+		
+  exports.model
+  .where()
+  .skip(from)
+  .limit(to)
+  .exec(function(err, activities) {	
 		if(!err){
 			exports.fetchJoinedActivities(activities, function(err, joined_activities){
 				callback(err, joined_activities);											
