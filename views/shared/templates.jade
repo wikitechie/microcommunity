@@ -10,7 +10,7 @@ script#activity-template(type="text/template")
 				p
 					small
 						a(href='#') Like 
-						· <%= time_ago(created_at) %>					
+						· <%= moment(created_at).fromNow() %>					
 				.row-fluid
 					.embeded-content
 	.row-fluid
@@ -32,7 +32,7 @@ script#post-template(type="text/template")
 				p
 					small
 						a(href='#') Like 
-						· <%= time_ago(created_at) %>
+						· <%= moment(created_at).fromNow() %>
 				.row-fluid
 					.comments-thread
 	.row-fluid.separator
@@ -50,7 +50,7 @@ script#comment-template(type="text/template")
 				<%= text %>
 				br
 				small
-					<%= time_ago(created_at) %>
+					<%= moment(created_at).fromNow() %>
 						
 script#comments-thread-template(type="text/template")
 	.row-fluid
