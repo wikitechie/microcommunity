@@ -14,17 +14,18 @@ exports.create = function(req, res){
     text: req.body.text,
     name: req.body.name,
     user: mongoose.Types.ObjectId(req.body.user._id),
-    created_at : req.body.created_at
+    created_at : Date()
 	};
   
   provider.createPost(post, function(err, new_post){
+  	console.log(new_post);
 	  return res.send(new_post);     
   });	  
 };
 
 
 exports.show = function(req, res){
-	provider.fetchJoinedPost(req.params.post, function(err, joined_post){
+	provider.fetch(req.params.post, function(err, joined_post){
 		return res.send(joined_post); 	
 	});  
 }

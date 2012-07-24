@@ -5,7 +5,7 @@ exports.model = mongoose.model('Wikipage', new mongoose.Schema({
 	body: String
 }));
 
-exports.fetchWikiPage = function (wikipage, callback){
+exports.fetch = function (wikipage, callback){
 	exports.model.findById(wikipage, function(err, wikipage) {
 		callback(err, wikipage);
 	});	

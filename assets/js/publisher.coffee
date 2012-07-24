@@ -38,7 +38,6 @@ class window.PostPublisher extends Backbone.View
 			text: $("#publisher-text").val()
 			comments: []
 			user: current_user
-			created_at: Date()
 		window.mediator.trigger("new-post", post)
 		@reset()
 

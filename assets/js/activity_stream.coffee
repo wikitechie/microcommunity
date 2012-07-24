@@ -29,7 +29,8 @@ class window.ActivityStream extends Backbone.View
     @render()
 
     #initializing posts rendered from the server
-    #@activities.add eval(activities)
+    @activities.add eval(activities)
+    
                     
     wikipage = new WikiPage
     wikipageView = new WikiPageView        model: wikipage
@@ -68,6 +69,7 @@ class window.ActivityStream extends Backbone.View
 		  	activity = new Activity
 		  		actor : current_user
 		  		object: post
+		  		object_type: "Post"
 		  		verb: "create"
 	  		@addActivity activity
   		)
@@ -79,6 +81,7 @@ class window.ActivityStream extends Backbone.View
 		  	activity = new Activity
 		  		actor : current_user
 		  		object: wikipage
+		  		object_type: "WikiPage"
 		  		verb: "create"
 	  		@addActivity activity
   		)
@@ -93,6 +96,6 @@ class window.ActivityStream extends Backbone.View
   addActivity:(activity)=>
   	activity.save(null,
   		success: (activity)=> 
-  		@activities.add activity
+  			@activities.add activity  			
   		)
 

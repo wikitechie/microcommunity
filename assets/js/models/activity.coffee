@@ -1,7 +1,6 @@
 class window.Activity extends Backbone.Model
 	defaults:
 		verb: "create"
-		created_at : Date()
 
 	idAttribute: "_id"
 
@@ -14,9 +13,13 @@ class window.Activity extends Backbone.Model
 		@post = new Post
 		if options?
 			#@comments.add options.comments
-			@object = options.object
+			model_classes = 
+				WikiPage : WikiPage
+				Post: Post				
+				
+			@object = new model_classes[@get('object_type')] options.object
 			@actor = options.actor
-			
+				
 
 class window.Activities extends Backbone.Collection
 	model: window.Activity

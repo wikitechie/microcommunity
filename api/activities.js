@@ -13,11 +13,13 @@ exports.create = function(req, res){
 		actor: mongoose.Types.ObjectId(req.body.actor._id),
     verb: req.body.verb,
     object: mongoose.Types.ObjectId(req.body.object._id),
+    object_type: req.body.object_type,
     //target: mongoose.Types.ObjectId(req.body.target._id),
     created_at : Date()
 	};
   
   provider.createActivity(activity, function(err, new_activity){
+  	console.log(new_activity);
 	  return res.send(new_activity);     
   });	  
 };

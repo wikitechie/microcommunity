@@ -23,7 +23,7 @@ exports.create = function(req, res){
 
 
 exports.show = function(req, res){
-	provider.fetchWikiPage(req.params.wikipage, function(err, wikipage){
+	provider.fetch(req.params.wikipage, function(err, wikipage){
 		return res.send(wikipage); 	
 	});  
 }

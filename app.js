@@ -20,7 +20,7 @@ var express = require('express')
   , mongoose = require('mongoose')
   , backboneio = require('backbone.io'); 
 
-mongoose.connect('mongodb://localhost/microcommunity');
+var db = mongoose.connect('mongodb://localhost/microcommunity');
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -115,3 +115,10 @@ app.get('/', function(req, res){
 app = app.listen(3000);
 
 //backboneio.listen(app, require('./providers/backends-provider.js'));
+
+
+
+
+
+
+

@@ -6,9 +6,9 @@ class window.ActivityView extends Backbone.View
 		#@commentsThread = new CommentsThreadView 
 			#collection: @model.comments
 			#postId: @model.id
-			
+					
 		@objectClass = @model.object.constructor.name		
-			
+		
 		views_classes = 
 			WikiPage : WikiPageView
 			Post: PostView
@@ -17,8 +17,6 @@ class window.ActivityView extends Backbone.View
 			model: @model.object
 				
 		_.bindAll @
-		
-		
 
 	render: ->
 		$(@el).html @template(_.extend(@model.attributes, {message : @message(), actor : @model.actor}) )

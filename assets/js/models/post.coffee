@@ -2,7 +2,7 @@ class window.Post extends Backbone.Model
 	defaults:
 		name: "Amjad"
 		text: "Newly posted, Hello, Backbone"
-		created_at: 'date not given'
+		created_at: Date()
 
 	idAttribute: "_id"
 
@@ -12,7 +12,8 @@ class window.Post extends Backbone.Model
 	initialize: (options)->
 		@comments = new Comments
 		if options?
-			@comments.add options.comments
+			if options.comments.length > 0
+				@comments.add options.comments
 			
 class window.Posts extends Backbone.Collection
 	backend: 'posts'
