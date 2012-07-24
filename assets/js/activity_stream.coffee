@@ -96,6 +96,7 @@ class window.ActivityStream extends Backbone.View
   addActivity:(activity)=>
   	activity.save(null,
   		success: (activity)=> 
+  			console.debug activity
   			@activities.add activity  			
   		)
 

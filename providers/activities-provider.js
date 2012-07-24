@@ -84,7 +84,10 @@ exports.fetchActivities = function (callback){
 exports.createActivity = function(attr, callback){
   var activity = new exports.model(attr);
   activity.save(function(err) {
-		callback(err, activity);
+  	exports.fetchActivity(activity, function(err, activity){
+  		callback(err, activity);
+  	});
+		
 		
   });
 }
