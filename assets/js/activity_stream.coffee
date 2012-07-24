@@ -2,6 +2,9 @@ class window.ActivityStream extends Backbone.View
 	el: '#social-stream'
 	template: _.template($('#activity-stream-template').html())
 	
+	events:
+		'click #load-more' : 'loadMore'
+	
 	initialize: ->
     _.bindAll @
     #initializing models collections
@@ -9,6 +12,8 @@ class window.ActivityStream extends Backbone.View
     @wikipages = new WikiPages    
     @questions = new Questions    
     @links = new Links
+    
+    @current_index = 5
         
     @activities = new Activities
     @activities.bind 'add', @injectActivity
@@ -56,10 +61,30 @@ class window.ActivityStream extends Backbone.View
   injectActivity: (activity)=>
   	activityView = new ActivityView model: activity
   	@injectView activityView
+
+  appendActivity: (activity)=>
+  	activityView = new ActivityView model: activity
+  	@appendView activityView
     
   injectView: (view)=>
     $("#activity-stream-table").prepend(view.render().el)
-          
+    
+  appendView: (view)=>
+    $("#activity-stream-table").append(view.render().el)    
+    
+  loadMore : ()->	
+  	@activities.fetch
+  		data: 
+  			from: @current_index
+  			to: 5
+  		success: (collection, response)=>  			
+  			if collection.length == 0
+  				$(@el).find("#load-more").addClass("disabled")
+  			collection.each (item)=>				
+  				console.debug item.attributes
+  				@current_index = @current_index + 2
+  				@appendActivity item
+			
   #adding new models to the collections
   
   addPost: (post)=>        

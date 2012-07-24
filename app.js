@@ -104,7 +104,7 @@ auth.install(app);
 
 //main app
 app.get('/', function(req, res){
-	activities_provider.fetchActivities(function(err, activities){	
+	activities_provider.fetchActivities(0,5,function(err, activities){	
 		res.render('index', { activities: activities, user: req.user });
 	});
 });

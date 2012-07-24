@@ -75,10 +75,11 @@ exports.fetchActivities = function (from, to, callback){
 		from = 0;
 		
 	if(typeof to == 'undefined')
-		to = 10;	
+		to = 5;	
 		
   exports.model
   .where()
+  .sort('created_at', 1)
   .skip(from)
   .limit(to)
   .exec(function(err, activities) {	
