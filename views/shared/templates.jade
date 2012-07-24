@@ -3,7 +3,7 @@ script#activity-template(type="text/template")
 		.span12
 			.avatar
 				a(href="#")
-				img.avatar-img(src="avatar.JPG")
+					<img class="avatar-img" src="<%= $.gravatar(actor.email, { size: 50 }) %>" />
 			.mainWrapper
 				p
 					<%= message %>
@@ -22,7 +22,7 @@ script#post-template(type="text/template")
 		.span12
 			.avatar
 				a(href="#")
-				img.avatar-img(src="avatar.JPG")
+					<img class="avatar-img" src="<%= $.gravatar(user.email, { size: 50 }) %>" />
 			.mainWrapper
 				p
 					a(href="/posts/206")     			
@@ -43,7 +43,7 @@ script#comment-template(type="text/template")
 	.row-fluid
 		.avatar
 			a(href="#")
-				img.avatar-img(src="avatar.JPG")
+				<img class="avatar-img" src="<%= $.gravatar(user.email, { size: 50 }) %>" />
 		.mainWrapper.comments
 			p
 				a(href="#") <%= user.email %> 
