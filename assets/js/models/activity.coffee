@@ -16,8 +16,10 @@ class window.Activity extends Backbone.Model
 			model_classes = 
 				WikiPage : WikiPage
 				Post: Post				
+			
+			console.debug options.object
 				
-			@object = new model_classes[@get('object_type')] options.object
+			@object = new model_classes[@get('object_type')](options.object) 
 			@actor = options.actor
 				
 

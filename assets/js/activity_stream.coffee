@@ -68,7 +68,7 @@ class window.ActivityStream extends Backbone.View
 		  	@posts.add post
 		  	activity = new Activity
 		  		actor : current_user
-		  		object: post
+		  		object: post.attributes
 		  		object_type: "Post"
 		  		verb: "create"
 	  		@addActivity activity
@@ -80,9 +80,11 @@ class window.ActivityStream extends Backbone.View
 		  	@wikipages.add wikipage
 		  	activity = new Activity
 		  		actor : current_user
-		  		object: wikipage
+		  		object: wikipage.attributes
 		  		object_type: "WikiPage"
 		  		verb: "create"
+		  	#console.debug activity.object.get 'title'
+		  	#console.debug wikipage.get 'title'			  		
 	  		@addActivity activity
   		)
 
@@ -96,7 +98,6 @@ class window.ActivityStream extends Backbone.View
   addActivity:(activity)=>
   	activity.save(null,
   		success: (activity)=> 
-  			console.debug activity
   			@activities.add activity  			
   		)
 

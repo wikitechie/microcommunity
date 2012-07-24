@@ -12,7 +12,7 @@ exports.create = function(req, res){
 
 	var wikipage = {
 		title: req.body.title, 
-    text: req.body.body,
+    body: req.body.body,
     created_at : Date()
 	};
   
@@ -24,6 +24,7 @@ exports.create = function(req, res){
 
 exports.show = function(req, res){
 	provider.fetch(req.params.wikipage, function(err, wikipage){
+		console.log(wikipage);
 		return res.send(wikipage); 	
 	});  
 }
@@ -31,7 +32,7 @@ exports.show = function(req, res){
 exports.update = function(req, res){	
 	var updated_wikipage = {
 		title: req.body.title, 
-    text: req.body.body,
+    body: req.body.body,
     created_at : req.body.created_at
 	};  
 	
