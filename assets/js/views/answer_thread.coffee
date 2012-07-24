@@ -1,6 +1,6 @@
 class window.AnswersThreadView extends Backbone.View
 
-	template: _.template($('#answers-thread-template').html())
+	#template: _.template($('#answers-thread-template').html())
 
 	events:
 		"keydown .answers-text": "newAnswer"

@@ -16,7 +16,7 @@ class window.ActivityStream extends Backbone.View
     @current_index = 5
         
     @activities = new Activities
-    @activities.bind 'add', @injectActivity
+    @activities.bind 'add', @appendActivity
                     
     #bindings publisher events to the stream
     window.mediator.bind "new-post", (post)=>
@@ -77,12 +77,11 @@ class window.ActivityStream extends Backbone.View
   		data: 
   			from: @current_index
   			to: 5
-  		success: (collection, response)=>  			
+  		success: (collection, response)=>
+  			@current_index = @current_index + 5  			
   			if collection.length == 0
   				$(@el).find("#load-more").addClass("disabled")
-  			collection.each (item)=>				
-  				console.debug item.attributes
-  				@current_index = @current_index + 2
+  			collection.each (item)=>				  				  				
   				@appendActivity item
 			
   #adding new models to the collections
@@ -123,6 +122,7 @@ class window.ActivityStream extends Backbone.View
   addActivity:(activity)=>
   	activity.save(null,
   		success: (activity)=> 
-  			@activities.add activity  			
+  			@activities.add activity, {silent: true}
+  			@injectActivity activity
   		)
 

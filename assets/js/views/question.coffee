@@ -1,6 +1,6 @@
 class window.QuestionView extends Backbone.View
 	className: "question row-fluid"
-	template: _.template($('#question-template').html()),
+	#template: _.template($('#question-template').html()),
 
 	initialize: ->
 		@answersThread = new AnswersThreadView

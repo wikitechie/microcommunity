@@ -57,8 +57,10 @@ script#comments-thread-template(type="text/template")
 script#activity-stream-template(type="text/template")
 	#activity-stream-table
 	.row-fluid
-		a.btn.span12#load-more Load
-	hr
+		center
+			.btn.btn-primary.btn-large#load-more Load more!
+	.row-fluid
+		hr
 
 script#wikipage-template(type="text/template")
 	.row-fluid
@@ -67,40 +69,31 @@ script#wikipage-template(type="text/template")
 				.row-fluid
 					.span8
 						h3 <%= title %>
-					.span4#buttons
-				.row-fluid#wikipage-body-area
+					.span4
+						.buttons
 				.row-fluid
-					p
-						small
-							a#expand(href="#") Expand 
-							· 
-							a#collapse(href="#") Collapse
+					.span12
+						hr
+				.row-fluid
+					.span12
+						.wikipage-body-area
 	.row-fluid.separator
 		.span12
 			hr
              
 script#wikipage-edit-buttons-template(type="text/template")
-	.pull-right
-		a(href="#edit-button")
-			span#edit-button.label.label-info Edit
+	.pull-right		
+		.edit-button.btn.btn-info Edit
 	
 script#wikipage-save-buttons(type="text/template")
 	.pull-right
-		a(href="#save-button")
-			span#save-button.label.label-success Save
-		a(href="#cancel-button")
-			span#cancel-button.label.label-important Cancel
+		.save-button.btn.btn-success Save
+		.cancel-button.btn.btn-danger Cancel
 			
 script#wikipage-body-view(type="text/template")
-	<% if((typeof fullview)=="undefined") {var fullview = false;} %>
-	<% if(body.length < 250 || fullview) {%>
 	p <%= nl2br(body, false) %>
-	<% } else { %>
-	p 
-		<%= nl2br(body.substring(0, 250), false) %>...
-	<% }%>
 	
 script#wikipage-body-edit(type="text/template")
-	input.span12#wikipage-title(type="text", placeholder="Give a description of your edit (optional)")
-	textarea#wikipage-body.span12(rows=6) <%= body %>
+	input.span12.wikipage-title(type="text", placeholder="Give a description of your edit (optional)")
+	textarea.wikipage-body.span12(rows=6) <%= body %>
 

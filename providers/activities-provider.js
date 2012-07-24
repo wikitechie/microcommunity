@@ -79,7 +79,7 @@ exports.fetchActivities = function (from, to, callback){
 		
   exports.model
   .where()
-  .sort('created_at', 1)
+  .sort('created_at', -1)
   .skip(from)
   .limit(to)
   .exec(function(err, activities) {	

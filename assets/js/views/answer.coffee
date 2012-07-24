@@ -1,6 +1,6 @@
 class window.AnswerView extends Backbone.View
 
-	template: _.template($('#answer-template').html()),
+	#template: _.template($('#answer-template').html()),
 
 	events:
 		"click .icon-chevron-up": "upvote"
