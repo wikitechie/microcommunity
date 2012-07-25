@@ -45,3 +45,10 @@ function generate_diff(diff) {
 }
 
 
+function contains_arabic(text)
+{
+    var arregex = /[\u0600-\u06ff]|[\u0750-\u077f]|[\ufb50-\ufc3f]|[\ufe70-\ufefc]/;
+    return arregex.test(text);
+} 
+
+
