@@ -18,10 +18,8 @@ function nl2br (str, is_xhtml) {
 }
 
 
-function diff(a, b) {
-	jq_fragment = $('<div/>');
-	var diff = JsDiff.diffWords(a, b);
-	console.debug(diff);
+function generate_diff(diff) {
+	jq_fragment = $('<div/>');	
 	for (var i=0; i < diff.length; i++) {
 
 		if (diff[i].added && diff[i + 1] && diff[i + 1].removed) {

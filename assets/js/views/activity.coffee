@@ -24,7 +24,8 @@ class window.ActivityView extends Backbone.View
 	render: ->
 		if @objectClass == "Post" && @model.get('verb') == 'create'
 			$(@el).html @view.render().el
-		else			
+		else		
+			console.debug @model.get 'diff'	
 			$(@el).html @template(_.extend(@model.attributes, {message : @message(), actor : @model.actor}) )
 			#$(@el).find('.comments-thread').html @commentsThread.render().el
 			$(@el).find('.embeded-content').html @view.render().el

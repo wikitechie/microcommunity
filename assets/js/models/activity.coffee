@@ -1,6 +1,7 @@
 class window.Activity extends Backbone.Model
 	defaults:
 		verb: "create"
+		
 	idAttribute: "_id"
 
 	url: ->

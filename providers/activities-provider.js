@@ -5,43 +5,67 @@ var mongoose = require('mongoose')
 	, posts_provider = require('./../providers/posts-provider')
 	, async = require('async');
 
-mongoose.connect('mongodb://localhost/microcommunity');
 
-exports.model = mongoose.model('Activity', new mongoose.Schema({
-	actor : ObjectId,
-	verb  : String, 
-	object: ObjectId,
-	object_type : String,
-	target: ObjectId,
-	created_at: Date
-}));
+var Db = require('mongodb').Db,
+  Connection = require('mongodb').Connection,
+    Server = require('mongodb').Server;
+    
 
-exports.fetchActivity = function (activity, callback){
-	exports.model.findById(activity, function(err, activity) {
-		schemas.User.findById(activity.actor, function(err, actor){
-			
-			var providers_index = {
-				WikiPage : wikipages_provider,
-				Post : posts_provider
-			};
-			
-			var provider = providers_index[activity.object_type];
-			
-			provider.fetch(activity.object, function(err, object){
-				var joined_activity = {
-					_id    : activity._id,
-					actor  : actor,
-					object : object,
-					object_type : activity.object_type,
-					verb   : activity.verb,
-					created_at: activity.created_at
-				};
+var host = process.env['MONGO_NODE_DRIVER_HOST'] != null ? process.env['MONGO_NODE_DRIVER_HOST'] : 'localhost';
+var port = process.env['MONGO_NODE_DRIVER_PORT'] != null ? process.env['MONGO_NODE_DRIVER_PORT'] : Connection.DEFAULT_PORT;
+
+console.log("Connecting to " + host + ":" + port);
+
+var db = new Db('microcommunity', new Server(host, port));
+db.open(function(){});
+
+
+
+
+exports.createActivity = function(attr, callback){
+
+	db.collection('activities', function(err, collection){
+		collection.insert(attr, function(err, activity){
+			exports.fetchActivity(activity[0]._id, function(err, joined_activity){
 				callback(err, joined_activity);
-			});		
-
+			});
 		});
 	});
 
+}
+
+exports.fetchActivity = function (activity, callback){
+
+	db.collection('activities', function(err, collection){
+		collection.findOne({_id: activity},
+		function(err, activity){
+			db.collection('users', function(err, users){
+				users.findOne({_id: activity.actor}, function(err, actor){
+					var providers_index = {
+					WikiPage : wikipages_provider,
+					Post : posts_provider
+					};
+
+					var provider = providers_index[activity.object_type];
+
+					provider.fetch(activity.object, function(err, object){
+					var joined_activity = {
+						_id : activity._id,
+						actor : actor,
+						object : object,
+						object_type : activity.object_type,
+						verb : activity.verb,
+						created_at: activity.created_at,
+						diff : activity.diff
+					};
+					callback(err, joined_activity);
+					}); 
+
+				});
+			});
+		}
+		);
+	});
 }
 
 exports.fetchJoinedActivities = function (activities, callback){
@@ -56,7 +80,7 @@ exports.fetchJoinedActivities = function (activities, callback){
 			activity = activities[j];
 			j++;
 			
-			exports.fetchActivity(activity, function(err, joined_activity){
+			exports.fetchActivity(activity._id, function(err, joined_activity){
 				joined_activities.push(joined_activity);			
 				callback(null);
 			});
@@ -71,35 +95,21 @@ exports.fetchJoinedActivities = function (activities, callback){
 
 
 exports.fetchActivities = function (from, to, callback){
-	if(typeof from == 'undefined')
-		from = 0;
-		
-	if(typeof to == 'undefined')
-		to = 5;	
-		
-  exports.model
-  .where()
-  .sort('created_at', -1)
-  .skip(from)
-  .limit(to)
-  .exec(function(err, activities) {	
-		if(!err){
-			exports.fetchJoinedActivities(activities, function(err, joined_activities){
-				callback(err, joined_activities);											
+	
+	db.collection('activities', function(err, collection){
+		collection.find()
+		.sort('created_at', -1)
+		.skip(parseInt(from))
+		.limit(parseInt(to))
+		.toArray(function(err, result){
+			exports.fetchJoinedActivities(result, function(err, result){
+				callback(err, result);
 			});
-		}
-});
-
-}
-
-exports.createActivity = function(attr, callback){
-  var activity = new exports.model(attr);
-  activity.save(function(err) {
-  	exports.fetchActivity(activity, function(err, activity){
-  		callback(err, activity);
-  	});
+			
+		});
+	});	
 		
-		
-  });
+
+
 }
 

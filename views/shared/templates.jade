@@ -10,11 +10,11 @@ script#activity-template(type="text/template")
 					small (<%= moment(created_at).fromNow() %>)
 				.row-fluid
 					span12 
-						<% if (object_type == 'WikiPage') {%>
+						<% if (object_type == 'WikiPage' && verb == 'edit') {%>
 						.diff
-							p.diff-content <%= diff("Backbone.js gives structure to web applications by providing models with key-value binding and custom events, collections with a rich API of enumerable functions, views with declarative event handling, and connects it all to your existing API over a RESTful JSON interface. ", "Backbone.js gives structure to web apps by providing you with models, collections with a rich API of enumerable functions, views with declarative event handling, and connects it all to your existing API over a RESTful JSON interface. ").html() %>
+							p.diff-content <%= generate_diff(diff).html() %>
 							p
-								a.toggle-diff(href="#toggle-diff") Diff
+								a.toggle-diff(href="#toggle-diff") Show difference
 						<% }%>						
 				.row-fluid
 					.embeded-content
@@ -28,6 +28,8 @@ script#post-template(type="text/template")
 			.avatar
 				a(href="#")
 					<img class="avatar-img" src="<%= $.gravatar(user.email, { size: 50 }) %>" />
+				
+					
 			.mainWrapper
 				p
 					a(href="/posts/206")     			
@@ -47,7 +49,7 @@ script#post-template(type="text/template")
 script#comment-template(type="text/template")
 	.row-fluid
 		.avatar
-			a(href="#")
+			a(href="#")				
 				<img class="avatar-img" src="<%= $.gravatar(user.email, { size: 50 }) %>" />
 		.mainWrapper.comments
 			p

@@ -107,6 +107,7 @@ class window.ActivityStream extends Backbone.View
 		  		object: wikipage.attributes
 		  		object_type: "WikiPage"
 		  		verb: "create"
+		  	console.debug activity.attributes
 		  	#console.debug activity.object.get 'title'
 		  	#console.debug wikipage.get 'title'			  		
 	  		@addActivity activity

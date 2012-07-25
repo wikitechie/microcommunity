@@ -45,8 +45,16 @@ class window.WikiPageView extends Backbone.View
 		$(@el).find(".buttons").html @saveButtons
 
 	saveButton: ->
+		old_text = @model.get 'body'
 		@model.save({body: $(".wikipage-body").val()},
 			success : (model, response)=>
+				activity = new Activity
+		  		actor : current_user
+		  		object: model.attributes
+		  		object_type: "WikiPage"
+		  		verb: "edit"
+		  		diff: JsDiff.diffWords(old_text, @model.get 'body')
+	  		window.mediator.trigger("new-activity", activity)
 				$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
 				$(@el).find(".buttons").html @editButtons
 			url : "/api/wikipages/#{@model.id}"

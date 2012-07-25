@@ -17,10 +17,10 @@ var express = require('express')
   , Resource = require('express-resource')
   , activities_provider = require('./providers/activities-provider')
   , schemas = require('./providers/mongoose-schemas')
-  , mongoose = require('mongoose')
+  //, mongoose = require('mongoose')
   , backboneio = require('backbone.io'); 
 
-var db = mongoose.connect('mongodb://localhost/microcommunity');
+//var db = mongoose.connect('mongodb://localhost/microcommunity');
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to

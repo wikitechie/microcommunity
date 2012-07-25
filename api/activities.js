@@ -8,14 +8,19 @@ exports.index = function(req, res){
 	});
 };
 
+
+var ObjectID = require('mongodb').ObjectID;
+
 exports.create = function(req, res){
 	var activity = {
-		actor: mongoose.Types.ObjectId(req.body.actor._id),
+		actor: new ObjectID(req.body.actor._id),
     verb: req.body.verb,
-    object: mongoose.Types.ObjectId(req.body.object._id),
+    object: new ObjectID(req.body.object._id),
     object_type: req.body.object_type,
     //target: mongoose.Types.ObjectId(req.body.target._id),
-    created_at : Date()
+    created_at : Date(),
+    diff: req.body.diff
+    
 	};
   
   provider.createActivity(activity, function(err, new_activity){
@@ -25,7 +30,7 @@ exports.create = function(req, res){
 
 
 exports.show = function(req, res){
-	provider.fetchActivity(req.params.activitie, function(err, activity){
+	provider.fetchActivity(new ObjectID(req.params.activitie), function(err, activity){
 		return res.send(activity); 	
 	});  
 }
