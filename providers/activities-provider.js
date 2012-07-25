@@ -56,7 +56,8 @@ exports.fetchActivity = function (activity, callback){
 						object_type : activity.object_type,
 						verb : activity.verb,
 						created_at: activity.created_at,
-						diff : activity.diff
+						diff : activity.diff,
+						summary : activity.summary
 					};
 					callback(err, joined_activity);
 					}); 

@@ -46,7 +46,7 @@ class window.WikiPageView extends Backbone.View
 
 	saveButton: ->
 		old_text = @model.get 'body'
-		@model.save({body: $(".wikipage-body").val()},
+		@model.save({body: $(@el).find(".wikipage-body").val() },
 			success : (model, response)=>
 				activity = new Activity
 		  		actor : current_user
@@ -54,6 +54,7 @@ class window.WikiPageView extends Backbone.View
 		  		object_type: "WikiPage"
 		  		verb: "edit"
 		  		diff: JsDiff.diffWords(old_text, @model.get 'body')
+		  		summary: $(@el).find(".wikipage-summary").val()
 	  		window.mediator.trigger("new-activity", activity)
 				$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
 				$(@el).find(".buttons").html @editButtons

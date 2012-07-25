@@ -19,7 +19,8 @@ exports.create = function(req, res){
     object_type: req.body.object_type,
     //target: mongoose.Types.ObjectId(req.body.target._id),
     created_at : Date(),
-    diff: req.body.diff
+    diff: req.body.diff,
+    summary: req.body.summary
     
 	};
   
