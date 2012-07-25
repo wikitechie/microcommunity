@@ -105,7 +105,7 @@ auth.install(app);
 //main app
 app.get('/', function(req, res){
 	activities_provider.fetchActivities(0,5,function(err, activities){	
-		res.render('index', { activities: activities, user: req.user });
+		res.render('index', { activities: activities, user: req.user});
 	});
 });
 
@@ -115,10 +115,4 @@ app.get('/', function(req, res){
 app = app.listen(3000);
 
 //backboneio.listen(app, require('./providers/backends-provider.js'));
-
-
-
-
-
-
 

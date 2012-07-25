@@ -20,7 +20,8 @@
     "underscore" : "*",
     "async" : "*",
     "express-resource" : "git://github.com/visionmedia/express-resource.git#add/express3x-support",
-    "backbone.io" : "*"
+    "backbone.io" : "*",
+    "diff" : "*"
   }
 }
 

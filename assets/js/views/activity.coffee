@@ -1,6 +1,9 @@
 class window.ActivityView extends Backbone.View
 	className: "activity"
-	template: _.template($('#activity-template').html()),
+	template: _.template($('#activity-template').html())
+	
+	events:
+		'click .toggle-diff': 'toggleDiff'
 
 	initialize: ->
 		#@commentsThread = new CommentsThreadView 
@@ -24,7 +27,8 @@ class window.ActivityView extends Backbone.View
 		else			
 			$(@el).html @template(_.extend(@model.attributes, {message : @message(), actor : @model.actor}) )
 			#$(@el).find('.comments-thread').html @commentsThread.render().el
-			$(@el).find('.embeded-content').html @view.render().el		
+			$(@el).find('.embeded-content').html @view.render().el
+			$(@el).find('.diff-content').hide()
 		@
 				
 		
@@ -39,5 +43,8 @@ class window.ActivityView extends Backbone.View
 				comment: "#{name} commented a post"
 				create: "#{name} created a new post"
 		messages[@objectClass][@model.get('verb')]
+		
+	toggleDiff : ->
+		$(@el).find('.diff-content').slideToggle()
 		
 

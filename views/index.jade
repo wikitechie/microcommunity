@@ -3,7 +3,7 @@ extends layout
 block content	
 	!= "<script type='text/javascript'>"
 	!= "var activities =" + JSON.stringify(activities) + ";"
-	!= "var user =" +JSON.stringify(user)  + ";"
+	!= "var user =" +JSON.stringify(user)  + ";"	
 	!= "</script>"
 	
 	include shared/templates
@@ -26,6 +26,8 @@ block content
 						a(href="#") Group 2									
 		.span7
 			include shared/publisher
+			hr
+			#diff
 			hr
 			#social-stream
 			
