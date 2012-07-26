@@ -84,6 +84,7 @@ class window.ActivityStream extends Backbone.View
   			@current_index = @current_index + 5  			
   			if collection.length == 0
   				$(@el).find("#load-more").addClass("disabled")
+  				$(@el).find("#load-more").html("Nothing more!")
   			collection.each (item)=>				  				  				
   				@appendActivity item
 			

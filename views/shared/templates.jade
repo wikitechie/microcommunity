@@ -107,5 +107,5 @@ script#diff-template(type="text/template")
 				<% if( summary != 'null') {%>
 				i <%= summary %> 
 				<% } %>
-				a.toggle-diff(href="#toggle-diff") Show difference
+				button.btn.btn-mini.toggle-diff Show difference
 			p.diff-content <%= generate_diff(diff).html() %>			
