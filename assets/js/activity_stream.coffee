@@ -81,17 +81,22 @@ class window.ActivityStream extends Backbone.View
   appendView: (view)=>
     $("#activity-stream-table").append(view.render().el)    
     
-  loadMore : ()->	
-  	@activities.fetch
-  		data: 
-  			from: @current_index
-  			to: 5
-  		success: (collection, response)=>
-  			@current_index = @current_index + 5  			
-  			if collection.length == 0
-  				$(@el).find("#load-more").addClass("disabled")
-  				$(@el).find("#load-more").html("Nothing more!")
-  			@process collection
+  
+  loadMore: ()->  	
+  	if @loadable is true
+  		@activities.fetch
+  			data:
+  				from: @current_index
+  				to: 5  			
+  			success: (collection, response)=>
+  				@current_index = @current_index + 5
+  				if collection.length == 0
+  					@loadable = false
+  					$(@el).find("#load-more").addClass("disabled")
+  					$(@el).find("#load-more").html("Nothing more!")  				
+  				@process collection
+
+					
 
 	process : (collection)->
 		aggrs = []
