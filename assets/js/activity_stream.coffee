@@ -14,6 +14,7 @@ class window.ActivityStream extends Backbone.View
     @links = new Links
     
     @current_index = 5
+    @loadable = true
         
     @activities = new Activities
     @activities.bind 'add', @appendActivity
@@ -37,7 +38,9 @@ class window.ActivityStream extends Backbone.View
     @render()
 
     #initializing posts rendered from the server
-    @activities.add eval(activities)
+    init_activities = new Activities
+    init_activities.add eval(activities)
+    @process init_activities
     
                     
     wikipage = new WikiPage
@@ -66,7 +69,10 @@ class window.ActivityStream extends Backbone.View
   	@injectView activityView
 
   appendActivity: (activity)=>
-  	activityView = new ActivityView model: activity
+  	collection = new Activities
+  	collection.add activity
+  	activityView = new ActivityView 
+  		collection: collection
   	@appendView activityView
     
   injectView: (view)=>
@@ -85,12 +91,56 @@ class window.ActivityStream extends Backbone.View
   			if collection.length == 0
   				$(@el).find("#load-more").addClass("disabled")
   				$(@el).find("#load-more").html("Nothing more!")
-  			collection.each (item)=>				  				  				
-  				@appendActivity item
+  			@process collection
+
+	process : (collection)->
+		aggrs = []
+		collection.each (scanned)=>
+			verb = scanned.get 'verb'
+			actor = scanned.actor
+			object_type = scanned.get 'object_type'
+			object_id = scanned.object.id
+			aggr = {}
+			aggr[collection.indexOf(scanned)]	= true
+			collection.each (compared) =>				
+				if scanned.id isnt compared.id
+					if (object_id is compared.object.id) and (verb == compared.get 'verb') and (actor._id is compared.actor._id)
+						aggr[collection.indexOf(compared)] = true
+			aggrs.push aggr	
 			
-  #adding new models to the collections
-  
-  addPost: (post)=>        
+		arrgs = @refine aggrs
+		_.each arrgs, (group) =>
+			if true
+				@appendAggr collection, _.keys(group)
+
+		
+	refine : (array) ->
+		to_be_removed = {}
+		scanned = {}		
+		_.each array, (x)->			
+			_.each array, (y)->
+				if not scanned[array.indexOf(y)] 
+					if x isnt y
+						if _.isEqual(x, y)
+							scanned[array.indexOf(y)] = true
+							to_be_removed[array.indexOf(y)] = true
+			scanned[array.indexOf(x)] = true
+		new_array = []
+		_.each array, (x)->
+			unless to_be_removed[array.indexOf(x)]
+				new_array.push x
+		new_array
+			
+	
+	appendAggr : (collection, array)->
+		aggr_collection = new Activities
+		_.each array, (x)->
+			aggr_collection.add collection.at(x) 
+		activityView = new ActivityView
+			collection: aggr_collection
+		@appendView activityView
+		
+	addPost: (post)=>        
     post.save(null,
 		  success: (post)=>
 		  	@posts.add post
@@ -123,7 +173,7 @@ class window.ActivityStream extends Backbone.View
   addLink: (link)=>
     @links.add link
     
-  addSilentActivity:(activity)=>
+  addSilentActivity: (activity)=>
   	activity.save(null,
   		success: (activity)=> 
   			@activities.add activity, {silent: true}

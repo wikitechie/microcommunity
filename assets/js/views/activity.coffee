@@ -6,23 +6,46 @@ class window.ActivityView extends Backbone.View
 		#@commentsThread = new CommentsThreadView 
 			#collection: @model.comments
 			#postId: @model.id
-					
-		@objectClass = @model.object.constructor.name		
+
+		if @collection.length is 1
+			@singleMode = true
+			
+		@model = @collection.at(0)
+	
+		@objectClass = @model.object.constructor.name
 		
 		views_classes = 
 			WikiPage : WikiPageView
 			Post: PostView
-			
+		
 		@view = new views_classes[@objectClass]
 			model: @model.object
-			
-		if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
-			mydiff = new Diff
-				diff    : @model.get('diff')
-				summary : @model.get('summary')				
 				
-			@diffView = new DiffView 
-				model : mydiff
+		if @singleMode			
+			if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+				mydiff = new Diff
+					diff    : @model.get('diff')
+					summary : @model.get('summary')				
+					created_at : @model.get('created_at')
+				
+				@diffView = new DiffView 
+					model : mydiff
+		else
+			@diffViews = []
+			@collection.each (model)=>
+				if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+					mydiff = new Diff
+						diff    : model.get('diff')
+						summary : model.get('summary')
+						created_at : model.get('created_at')				
+					
+					diffView = new DiffView 
+						model : mydiff				
+						
+					@diffViews.push diffView
+				
+
+				
 
 				
 		_.bindAll @
@@ -34,23 +57,36 @@ class window.ActivityView extends Backbone.View
 			$(@el).html @template(_.extend(@model.attributes, {message : @message(), actor : @model.actor}) )
 			#$(@el).find('.comments-thread').html @commentsThread.render().el
 			$(@el).find('.embeded-content').html @view.render().el
-			if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
-				$(@el).find('.attachements').append @diffView.render().el				
-				$(@el).find('.diff-content').hide()
+			if @singleMode
+				if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+					$(@el).find('.attachements').append @diffView.render().el				
+					$(@el).find('.diff-content').hide()
+			else
+				_.each @diffViews, (diffView)=>
+					if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+						$(@el).find('.attachements').append diffView.render().el				
+						$(@el).find('.diff-content').hide()				
 		@
 				
 		
-	message: ->
-			
+	message: ()->
+
 		name = @model.actor.email
 		messages = 
 			WikiPage : 
 				edit: "#{name} edited a wikipage titled #{@model.object.get('title')}"
+				aggr_edit : "#{name} made several edits on the wikipage titled #{@model.object.get('title')}"
 				create: "#{name} created a wikipage titled #{@model.object.get('title')}"
 			Post: 
 				comment: "#{name} commented a post"
 				create: "#{name} created a new post"
-		messages[@objectClass][@model.get('verb')]
+	
+		if @singleMode
+			messages[@objectClass][@model.get('verb')]
+		else
+			messages[@objectClass].aggr_edit
+			
+			
 		
 	
 
