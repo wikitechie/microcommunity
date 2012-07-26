@@ -38,6 +38,18 @@ class window.WikiPageView extends Backbone.View
 	
 	collapse: ->
 		$(@el).find(".wikipage-body-area").html @wikipageBodyView {body: @model.get('body')}
+		
+	disable: ->
+		$(@el).find(".wikipage-body-area").spin()
+		$(@el).find('.wikipage-summary').attr('disabled','disabled'	)
+		$(@el).find('.wikipage-body').attr('disabled','disabled'	)
+		$(@el).find('.buttons .btn').addClass('disabled')
+		
+	enable: ->
+		$(@el).find(".wikipage-body-area").spin(false)
+		$(@el).find('.wikipage-summary').removeAttr('disabled'	)
+		$(@el).find('.wikipage-body').removeAttr('disabled'	)
+		$(@el).find('.buttons .btn').removeClass('disabled')		
 
 	editButton: ->
 		$(@el).find(".wikipage-body-area").html @wikipageBodyEdit body: @model.get 'body'
@@ -45,6 +57,7 @@ class window.WikiPageView extends Backbone.View
 		$(@el).find(".buttons").html @saveButtons
 
 	saveButton: ->
+		@disable()
 		old_text = @model.get 'body'
 		@model.save({body: $(@el).find(".wikipage-body").val() },
 			success : (model, response)=>
@@ -55,9 +68,14 @@ class window.WikiPageView extends Backbone.View
 		  		verb: "edit"
 		  		diff: JsDiff.diffWords(old_text, @model.get 'body')
 		  		summary: $(@el).find(".wikipage-summary").val()
-	  		window.mediator.trigger("new-silent-activity", activity)
-				$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
-				$(@el).find(".buttons").html @editButtons
+				activity.save(null,
+					success: (activity)=>
+						@enable()
+						window.mediator.trigger("new-silent-activity", activity)
+						$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
+						$(@el).find(".buttons").html @editButtons						 						
+					) 			  		
+
 			url : "/api/wikipages/#{@model.id}"
 		)
 

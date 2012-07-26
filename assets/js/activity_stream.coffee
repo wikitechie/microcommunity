@@ -77,6 +77,9 @@ class window.ActivityStream extends Backbone.View
   	activityView = new ActivityView 
   		collection: collection
   	@appendView activityView
+  	
+  addSilentActivity: (activity)=>
+  	@activities.add activity, {silent: true}
     
   injectView: (view)=>
     $("#activity-stream-table").prepend(view.render().el)
@@ -147,46 +150,8 @@ class window.ActivityStream extends Backbone.View
 		activityView = new ActivityView
 			collection: aggr_collection
 		@appendView activityView
-		
-	addPost: (post)=>        
-    post.save(null,
-		  success: (post)=>
-		  	@posts.add post
-		  	activity = new Activity
-		  		actor : current_user
-		  		object: post.attributes
-		  		object_type: "Post"
-		  		verb: "create"
-	  		@addActivity activity
-  		)
-	          
-  addWikipage: (wikipage)=>
-    wikipage.save(null,
-		  success: (wikipage, response)=> 
-		  	@wikipages.add wikipage
-		  	activity = new Activity
-		  		actor : current_user
-		  		object: wikipage.attributes
-		  		object_type: "WikiPage"
-		  		verb: "create"
-		  	#console.debug activity.object.get 'title'
-		  	#console.debug wikipage.get 'title'			  		
-	  		@addActivity activity
-  		)
 
 
-  addQuestion: (question)=>
-    @questions.add question
-
-  addLink: (link)=>
-    @links.add link
-    
-  addSilentActivity: (activity)=>
-  	activity.save(null,
-  		success: (activity)=> 
-  			@activities.add activity, {silent: true}
-  			#@injectActivity activity
-  		)
   		
   addActivity:(activity)=>
   	activity.save(null,
