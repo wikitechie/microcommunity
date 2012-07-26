@@ -1,9 +1,6 @@
 class window.ActivityView extends Backbone.View
 	className: "activity"
 	template: _.template($('#activity-template').html())
-	
-	events:
-		'click .toggle-diff': 'toggleDiff'
 
 	initialize: ->
 		#@commentsThread = new CommentsThreadView 
@@ -18,17 +15,28 @@ class window.ActivityView extends Backbone.View
 			
 		@view = new views_classes[@objectClass]
 			model: @model.object
+			
+		if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+			mydiff = new Diff
+				diff    : @model.get('diff')
+				summary : @model.get('summary')				
+				
+			@diffView = new DiffView 
+				model : mydiff
+
 				
 		_.bindAll @
 
 	render: ->
 		if @objectClass == "Post" && @model.get('verb') == 'create'
-			$(@el).html @view.render().el
+			$(@el).html @view.render().el					
 		else		
 			$(@el).html @template(_.extend(@model.attributes, {message : @message(), actor : @model.actor}) )
 			#$(@el).find('.comments-thread').html @commentsThread.render().el
 			$(@el).find('.embeded-content').html @view.render().el
-			$(@el).find('.diff-content').hide()
+			if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+				$(@el).find('.attachements').append @diffView.render().el				
+				$(@el).find('.diff-content').hide()
 		@
 				
 		
@@ -44,7 +52,5 @@ class window.ActivityView extends Backbone.View
 				create: "#{name} created a new post"
 		messages[@objectClass][@model.get('verb')]
 		
-	toggleDiff : ->
-		$(@el).find('.diff-content').slideToggle()
-		
+	
 
