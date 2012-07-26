@@ -31,7 +31,7 @@ class window.ActivityStream extends Backbone.View
     window.mediator.bind "new-silent-activity", (activity)=>
       @addSilentActivity activity
     window.mediator.bind "new-activity", (activity)=>
-      @addActivity activity      
+      @injectActivity activity      
           
       
 
@@ -65,7 +65,10 @@ class window.ActivityStream extends Backbone.View
   #injecting views
    
   injectActivity: (activity)=>
-  	activityView = new ActivityView model: activity
+  	collection = new Activities
+  	collection.add activity
+  	activityView = new ActivityView 
+  		collection: collection
   	@injectView activityView
 
   appendActivity: (activity)=>

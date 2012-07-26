@@ -1,4 +1,4 @@
-#= require lib/general
+#= require_tree lib
 #= require basic
 #= require mediator
 #= require publisher

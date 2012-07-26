@@ -1,5 +1,6 @@
 class window.PostPublisher extends Backbone.View
 
+	id: "post-publisher"
 	button : '#post-button'
 	template: _.template($('#post-publisher-template').html()),
 
@@ -19,27 +20,45 @@ class window.PostPublisher extends Backbone.View
 		$(@button).attr("disabled","disabled")
 		$(@el).spin()
 
-	enable: ->
-		$("#publisher-text").removeAttr("disabled")
-		$("#publisher-text").val('')
-		$(@button).removeAttr("disabled")
-		$(@el).spin(false)
-
 	expand: ->
 		$("#publisher-text").attr("rows","3")
+		
+	disable: ->
+		$("#publisher-text").attr('disabled','disabled'	)
+		$("#post-button").addClass('disabled')
+		$("#spinner").spin()
+		
+	enable: ->
+		$("#publisher-text").removeAttr('disabled')
+		$("#post-button").removeClass('disabled')
+		$("#spinner").spin(false)						
 
 	reset: ->
 		$("#publisher-text").val("")
 		$("#publisher-text").attr("rows","1")
 
 	newpost: ->
-		post = new Post 
-			name: "Guest",	
+		post = new Post
+		post.set
 			text: $("#publisher-text").val()
 			comments: []
 			user: current_user
-		window.mediator.trigger("new-post", post)
-		@reset()
+		@disable()
+		post.save(null,
+		  success: (post, response)=> 	
+		  	activity = new Activity
+		  		actor : current_user
+		  		object: post.attributes
+		  		object_type: "Post"
+		  		verb: "create"
+	  		activity.save(null,
+					success: (activity)=> 
+						window.mediator.trigger("new-activity", activity)
+						@enable()
+						@reset()
+					)	  	
+  		)	
+
 
 class window.WikipagePublisher extends Backbone.View
 
@@ -58,15 +77,16 @@ class window.WikipagePublisher extends Backbone.View
 		return this
 
 	disable: ->
-		$("#wikipage-text").attr("disabled","disabled")
-		$(@button).attr("disabled","disabled")
-		$(@el).spin()
-
+		$("#wikipage-text").attr('disabled','disabled'	)
+		$("#wikipage-title").attr('disabled','disabled'	)
+		$("#wikipage-button").addClass('disabled')
+		$("#spinner").spin()
+		
 	enable: ->
-		$("#wikipage-text").removeAttr("disabled")
-		$("#wikipage-text").val('')
-		$(@button).removeAttr("disabled")
-		$(@el).spin(false)
+		$("#wikipage-text").removeAttr('disabled')
+		$("#wikipage-title").removeAttr('disabled')
+		$("#wikipage-button").removeClass('disabled')
+		$("#spinner").spin(false)		
 
 	reset: ->
 		$("#wikipage-text").val("")
@@ -79,8 +99,21 @@ class window.WikipagePublisher extends Backbone.View
 	post: ->
 		wikipage = new WikiPage
 		wikipage.set	{title: $("#wikipage-title").val(),	body: $("#wikipage-text").val()}
-		window.mediator.trigger("new-wikipage", wikipage)
-		@reset()
+		@disable()
+		wikipage.save(null,
+		  success: (wikipage, response)=> 	
+		  	activity = new Activity
+		  		actor : current_user
+		  		object: wikipage.attributes
+		  		object_type: "WikiPage"
+		  		verb: "create"
+	  		activity.save(null,
+					success: (activity)=> 
+						window.mediator.trigger("new-activity", activity)
+						@enable()
+						@reset()
+					)	  	
+  		)	
 
 class window.QuestionPublisher extends Backbone.View
 
@@ -204,8 +237,7 @@ class window.PublisherContainer extends Backbone.View
 		$("#publisher-tab").append("<li><a href='##{identifier}'>#{label}</a></li>")
 		element = $("<div class='tab-pane' id='#{identifier}'></div>").append view.render().el
 		$("#publisher-content").append element
-
-
+		
 	render: ->
 		$(@el).html @template
 		@

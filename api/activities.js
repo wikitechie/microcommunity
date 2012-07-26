@@ -23,8 +23,6 @@ exports.create = function(req, res){
     summary: req.body.summary
     
 	};
-		
-	console.log(activity);
   
   provider.createActivity(activity, function(err, new_activity){
 	  return res.send(new_activity);     

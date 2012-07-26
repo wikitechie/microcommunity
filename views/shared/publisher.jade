@@ -1,15 +1,19 @@
 #publisher
 	script#publisher-container-template(type="text/template")
 		<div class="row-fluid">
+		<div class="span12">
 		<ul class="nav nav-tabs" id="publisher-tab">
 		</ul>
+		<div id="spinner">
 		<div class="tab-content" id="publisher-content">
+		</div>
+		</div>
 		</div>
 		</div>
 
 script#post-publisher-template(type="text/template")
 	<textarea class="span12" id="publisher-text" placeholder="Write something..." rows="1"></textarea>
-	<input class="btn btn-success pull-right" id="post-button" name="commit" type="submit" value="Post" />		</div>
+	<input class="btn btn-success pull-right" id="post-button" name="commit" type="submit" value="Post" />
 
 script#wikipage-publisher-template(type="text/template")
 	<textarea class="span12" id="wikipage-text" placeholder="Write a seed..." rows="1"></textarea>
