@@ -55,7 +55,7 @@ class window.WikiPageView extends Backbone.View
 		  		verb: "edit"
 		  		diff: JsDiff.diffWords(old_text, @model.get 'body')
 		  		summary: $(@el).find(".wikipage-summary").val()
-	  		window.mediator.trigger("new-activity", activity)
+	  		window.mediator.trigger("new-silent-activity", activity)
 				$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
 				$(@el).find(".buttons").html @editButtons
 			url : "/api/wikipages/#{@model.id}"

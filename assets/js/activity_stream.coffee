@@ -27,8 +27,11 @@ class window.ActivityStream extends Backbone.View
       @addQuestion question
     window.mediator.bind "new-link", (link)=>
       @addLink link
+    window.mediator.bind "new-silent-activity", (activity)=>
+      @addSilentActivity activity
     window.mediator.bind "new-activity", (activity)=>
-      @addActivity activity    
+      @addActivity activity      
+          
       
 
     @render()
@@ -119,10 +122,17 @@ class window.ActivityStream extends Backbone.View
   addLink: (link)=>
     @links.add link
     
+  addSilentActivity:(activity)=>
+  	activity.save(null,
+  		success: (activity)=> 
+  			@activities.add activity, {silent: true}
+  			#@injectActivity activity
+  		)
+  		
   addActivity:(activity)=>
   	activity.save(null,
   		success: (activity)=> 
   			@activities.add activity, {silent: true}
   			@injectActivity activity
-  		)
+  		)  		
 

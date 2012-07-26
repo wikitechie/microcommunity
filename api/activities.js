@@ -18,11 +18,13 @@ exports.create = function(req, res){
     object: new ObjectID(req.body.object._id),
     object_type: req.body.object_type,
     //target: mongoose.Types.ObjectId(req.body.target._id),
-    created_at : Date(),
+    created_at : new Date(),
     diff: req.body.diff,
     summary: req.body.summary
     
 	};
+		
+	console.log(activity);
   
   provider.createActivity(activity, function(err, new_activity){
 	  return res.send(new_activity);     

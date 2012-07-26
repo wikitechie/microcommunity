@@ -99,7 +99,7 @@ exports.fetchActivities = function (from, to, callback){
 	
 	db.collection('activities', function(err, collection){
 		collection.find()
-		.sort('created_at', -1)
+		.sort({created_at: -1})
 		.skip(parseInt(from))
 		.limit(parseInt(to))
 		.toArray(function(err, result){
