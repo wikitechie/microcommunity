@@ -78,18 +78,33 @@ class window.ActivityStream extends Backbone.View
   		collection: collection
   	@appendView activityView
   	
-  addSilentActivity: (activity)=>
+  addSilentActivity: (activity)->
   	@activities.add activity, {silent: true}
     
-  injectView: (view)=>
+  injectView: (view)->
     $("#activity-stream-table").prepend(view.render().el)
     
-  appendView: (view)=>
+  appendView: (view)->
     $("#activity-stream-table").append(view.render().el)    
     
-  
+  pendingLoading: ()->
+    @loadable = false
+    $("#load-more").addClass('disabled','disabled')
+    $("#load-more").spin()
+
+  disableLoading: ()->
+    @loadable = false
+    $("#load-more").addClass('disabled','disabled')
+    $("#load-more").html("Nothing more!")
+    
+  enableLoading: ()->
+    @loadable = true
+    $("#load-more").removeClass('disabled')
+    $("#load-more").spin(false)    
+      
   loadMore: ()->  	
   	if @loadable is true
+  		@pendingLoading()
   		@activities.fetch
   			data:
   				from: @current_index
@@ -97,9 +112,10 @@ class window.ActivityStream extends Backbone.View
   			success: (collection, response)=>
   				@current_index = @current_index + 5
   				if collection.length == 0
-  					@loadable = false
-  					$(@el).find("#load-more").addClass("disabled")
-  					$(@el).find("#load-more").html("Nothing more!")  				
+  					@disableLoading()
+  				if collection.length > 0
+  					@enableLoading()				
+		
   				@process collection
 
 					
