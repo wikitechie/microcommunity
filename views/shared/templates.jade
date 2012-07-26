@@ -86,12 +86,13 @@ script#wikipage-template(type="text/template")
              
 script#wikipage-edit-buttons-template(type="text/template")
 	.pull-right		
-		.edit-button.btn.btn-info Edit
+		.edit-button.btn.btn-info.btn-mini Edit
 	
 script#wikipage-save-buttons(type="text/template")
 	.pull-right
-		.save-button.btn.btn-success Save
-		.cancel-button.btn.btn-danger Cancel
+		.save-button.btn.btn-success.btn-mini Save
+		= " "
+		.cancel-button.btn.btn-danger.btn-mini Cancel
 			
 script#wikipage-body-view(type="text/template")
 	p <%= nl2br(body, false) %>
