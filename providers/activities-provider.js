@@ -11,13 +11,12 @@ var Db = require('mongodb').Db,
     Server = require('mongodb').Server;
     
 
-var host = process.env['MONGO_NODE_DRIVER_HOST'] != null ? process.env['MONGO_NODE_DRIVER_HOST'] : 'localhost';
-var port = process.env['MONGO_NODE_DRIVER_PORT'] != null ? process.env['MONGO_NODE_DRIVER_PORT'] : Connection.DEFAULT_PORT;
+var db ;
 
-console.log("Connecting to " + host + ":" + port);
-
-var db = new Db('microcommunity', new Server(host, port));
-db.open(function(){});
+Db.connect('mongodb://localhost/microcommunity', function(err, database) {
+		console.log("errors: " + err);
+		db = database;
+});
 
 
 
