@@ -1,27 +1,22 @@
 {
-  "name": "application-name",
+  "name": "microcommunity",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node app.js"
   },
   "dependencies": {
     "express": "3.0.0alpha1",
     "mongoose":"*",
+    "mongodb": "*",
     "jade": ">= 0.12.1",
-    "connect-assets" : "*",
-    "stylus": "*",
-    "nib": "*",
-    "bootstrap-stylus": "*",
-    "express-expose": "*",
     "passport": "*",
     "passport-local": "*",
     "connect-flash": "*",
     "underscore" : "*",
     "async" : "*",
     "express-resource" : "git://github.com/visionmedia/express-resource.git#add/express3x-support",
-    "backbone.io" : "*",
-    "diff" : "*"
+    "backbone.io" : "*"
   }
 }
 

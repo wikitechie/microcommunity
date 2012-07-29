@@ -6,8 +6,6 @@
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
-  , stylus = require('stylus')
-  , bootstrap = require('bootstrap-stylus')
   , mongoose = require('mongoose')
   , passport = require('passport')  
   , flash = require('connect-flash')
@@ -59,14 +57,6 @@ passport.use(new LocalStrategy(
 
 var app = express.createServer();
 
-//function used to configure bootstrap-stylus
-function compile(str, path) {
-  return stylus(str)
-    .set('filename', path)
-    .use(bootstrap());
-}
-
-
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
@@ -82,11 +72,6 @@ app.configure(function(){
   app.use(passport.session());  
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
-  app.use(require('connect-assets')());
-  app.use(stylus.middleware({
-		src: __dirname + '/public',
-		compile: compile
-	}));
 });
 
 app.configure('development', function(){
