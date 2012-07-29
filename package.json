@@ -7,16 +7,19 @@
   },
   "dependencies": {
     "express": "3.0.0alpha1",
-    "mongoose":"*",
+    "mongoose": "*",
     "mongodb": "*",
     "jade": ">= 0.12.1",
     "passport": "*",
     "passport-local": "*",
     "connect-flash": "*",
-    "underscore" : "*",
-    "async" : "*",
-    "express-resource" : "git://github.com/visionmedia/express-resource.git#add/express3x-support",
-    "backbone.io" : "*"
+    "underscore": "*",
+    "async": "*",
+    "express-resource": "git://github.com/visionmedia/express-resource.git#add/express3x-support",
+    "backbone.io": "*"
+  },
+  "subdomain": "microcommunity",
+  "engines": {
+    "node": "0.6.19"
   }
 }
-
