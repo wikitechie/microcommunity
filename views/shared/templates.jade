@@ -105,10 +105,22 @@ script#diff-template(type="text/template")
 	.span12 
 		.diff							
 			p
-				button.btn.btn-mini.toggle-diff Show difference 
-				<%= " "+ moment(created_at).fromNow() %>
-				<%  if( summary != 'null') {%>
-				i <%= summary %> 
-				<% } %>				
+				i <%= summary %> 			
+				<%  if( summary.length> 0) { %>
+				
+				<%= "--" %>
+				
+				<% } %>								
+				small
+					<%= "("+ moment(created_at).fromNow() +") "%>				
+					a.toggle-diff Show difference					
+					= " · "					
+					a Like
+					= " · "
+					a Comment
+					= " · "
+
+
+				
 			p.diff-content <%= generate_diff(diff).html() %>	
 			hr		
