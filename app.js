@@ -93,6 +93,10 @@ app.get('/', function(req, res){
 	});
 });
 
+app.get('/profile', function(req, res){
+	res.render('profile', {user: req.user});
+});
+
 
 // Backbone.io backends
 

@@ -82,3 +82,10 @@ ins {
 .rtl {
 	direction:rtl;
 }
+
+.floating-avatar {
+	float: left;
+	width:100px;
+	margin-right: 20px;
+}
+

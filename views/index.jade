@@ -5,11 +5,9 @@ block content
 	!= "var activities =" + JSON.stringify(activities) + ";"
 	!= "var user =" +JSON.stringify(user)  + ";"	
 	!= "</script>"
-	
-	include shared/templates
 
 	.row
-		.span3
+		.span3.offset1
 			.well.sidebar-nav
 				ul.nav.nav-list
 					li.nav-header Basic
@@ -28,8 +26,7 @@ block content
 			include shared/publisher
 			hr
 			#social-stream
-			
-		.span3
+
 
 
 					

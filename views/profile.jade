@@ -1,0 +1,75 @@
+extends layout
+
+block content
+
+	!= "<script type='text/javascript'>"
+	!= "var user =" +JSON.stringify(user)  + ";"	
+	!= "</script>"
+		
+	.row
+		.span10.offset1		
+			.row-fluid.page-header
+				.span12
+					h2(style='display:inline;') Profile Name
+					.btn.btn-primary.pull-right Follow
+						
+			.row-fluid			
+				.span5						
+					.row-fluid				
+						.span12
+							.floating-avatar
+								p
+									<img src="http://www.gravatar.com/avatar/91d5ada2af741682c957f76d929969c0.jpg?s=160" />	
+								.well
+									center
+										h2 23	
+										p reputation						
+							p 
+								i Write something about yourself
+							p 
+								b Location: 
+								= "Damascus, Syria"								
+							p 
+								b Member since: 
+								= "Apr 15, 2011"
+									
+									
+					.row-fluid
+						hr
+	
+					.row-fluid
+						.span3							
+							center
+								h2 23
+								p 									
+									small follower
+
+						.span3							
+							center
+								h2 23
+								p 
+									small following
+						.span3							
+							center
+								h2 23
+								p 
+									small edit count									
+						.span3							
+							center
+								h2 23
+								p 
+									small edit count						
+									
+					.row-fluid
+						hr
+
+												
+				.span7
+					
+					.row-fluid
+						.span12
+							include shared/publisher
+							hr
+							#social-stream
+
+
