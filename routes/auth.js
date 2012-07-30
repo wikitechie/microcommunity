@@ -1,5 +1,6 @@
 var flash = require('connect-flash')
-	, passport = require('passport') ;
+	, passport = require('passport')
+	, schemas = require('./../providers/mongoose-schemas') ;
 
 exports.install = function(app){
 
@@ -21,7 +22,7 @@ exports.install = function(app){
 
 		if(req.body.password == req.body.passwordconf) {
 			var user;
-			user = new User({
+			user = new schemas.User({
 				email: req.body.email,
 				password: req.body.password
 

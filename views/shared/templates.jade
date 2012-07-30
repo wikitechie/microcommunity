@@ -25,14 +25,13 @@ script#post-template(type="text/template")
 					
 			.mainWrapper
 				p
-					a(href="/posts/206")     			
+					a(href="#")     			
 						<%= user.email %>
 				p
 					<%= nl2br(text, false) %>
 				p
-					small
-						a(href='#') Like 
-						· <%= moment(created_at).fromNow() %>
+					small						
+						<%= moment(created_at).fromNow() %>
 				.row-fluid
 					.comments-thread
 	.row-fluid.separator

@@ -13,7 +13,7 @@ var Db = require('mongodb').Db,
 
 var db ;
 
-Db.connect('mongodb://localhost/microcommunity', function(err, database) {
+Db.connect('mongodb://nodejitsu:ba98acb140bb176fd14db5172894570e@flame.mongohq.com:27086/nodejitsudb841117975789', function(err, database) {
 		console.log("errors: " + err);
 		db = database;
 });

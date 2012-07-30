@@ -1,6 +1,6 @@
 {
   "name": "microcommunity",
-  "version": "0.0.1",
+  "version": "0.0.1-9",
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -15,8 +15,7 @@
     "connect-flash": "*",
     "underscore": "*",
     "async": "*",
-    "express-resource": "git://github.com/visionmedia/express-resource.git#add/express3x-support",
-    "backbone.io": "*"
+    "express-resource": "git://github.com/visionmedia/express-resource.git#add/express3x-support"
   },
   "subdomain": "microcommunity",
   "engines": {

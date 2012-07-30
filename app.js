@@ -14,9 +14,8 @@ var express = require('express')
   , async = require('async')
   , Resource = require('express-resource')
   , activities_provider = require('./providers/activities-provider')
-  , schemas = require('./providers/mongoose-schemas')
-  //, mongoose = require('mongoose')
-  , backboneio = require('backbone.io'); 
+  , schemas = require('./providers/mongoose-schemas');
+
 
 //var db = mongoose.connect('mongodb://localhost/microcommunity');
 

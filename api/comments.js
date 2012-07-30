@@ -6,7 +6,7 @@ var mongoose = require('mongoose')
   , async = require('async')
   , schemas = require('./../providers/mongoose-schemas'); 
 
-mongoose.connect('mongodb://localhost/microcommunity');
+mongoose.connect('mongodb://nodejitsu:ba98acb140bb176fd14db5172894570e@flame.mongohq.com:27086/nodejitsudb841117975789');
 
 exports.index = function(req, res){
 
