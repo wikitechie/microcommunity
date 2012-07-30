@@ -115,12 +115,9 @@ script#diff-template(type="text/template")
 					<%= "("+ moment(created_at).fromNow() +") "%>				
 					a.toggle-diff Show difference					
 					= " · "					
-					a Like
+					a.vote-up Vote-up
 					= " · "
 					a Comment
-					= " · "
-
-
 				
 			p.diff-content <%= generate_diff(diff).html() %>	
 			hr		
