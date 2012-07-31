@@ -28,9 +28,10 @@ define [
 				@embeded = true
 			@fullview = false
 			@template = @normalTemplate
-			@commentsThread = new CommentsThreadView collection: @model.comments
+			@commentsThread = new CommentsThreadView collection: @model.comments			
 
 		render: ->
+			console.debug @model.attributes
 			$(@el).html @template _.extend(@model.attributes, {fullview: @fullview})
 			$(@el).find('.comments-thread').html @commentsThread.render().el
 			unless window.current_user?
@@ -39,15 +40,15 @@ define [
 				$(@el).find(".buttons").html @editButtons
 		
 
-			$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
+			$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get('current_revision').body
 		
 			@
 
 		expand: ->
-			$(@el).find(".wikipage-body-area").html @wikipageBodyView {body: @model.get('body'), fullview: true}
+			$(@el).find(".wikipage-body-area").html @wikipageBodyView {body: @model.get('current_revision').body, fullview: true}
 	
 		collapse: ->
-			$(@el).find(".wikipage-body-area").html @wikipageBodyView {body: @model.get('body')}
+			$(@el).find(".wikipage-body-area").html @wikipageBodyView {body: @model.get('current_revision').body}
 		
 		disable: ->
 			$(@el).find(".wikipage-body-area").spin()
@@ -62,27 +63,29 @@ define [
 			$(@el).find('.buttons .btn').removeClass('disabled')		
 
 		editButton: ->
-			$(@el).find(".wikipage-body-area").html @wikipageBodyEdit body: @model.get 'body'
-			$(@el).find(".wikipage-body").attr("rows", 3 + (@model.get('body').length/100) )
+			$(@el).find(".wikipage-body-area").html @wikipageBodyEdit body: @model.get('current_revision').body
+			$(@el).find(".wikipage-body").attr("rows", 3 + (@model.get('current_revision').body.length/100) )
 			$(@el).find(".buttons").html @saveButtons
 
 		saveButton: ->
 			@disable()
-			old_text = @model.get 'body'
+			old_text = @model.get('current_revision').body
+			console.debug $(@el).find(".wikipage-body").val()
 			@model.save({body: $(@el).find(".wikipage-body").val() },
 				success : (model, response)=>
+					console.debug model
 					activity = new Activity
 						actor : current_user
 						object: model.attributes
 						object_type: "WikiPage"
 						verb: "edit"
-						diff: JsDiff.diffWords(old_text, @model.get 'body')
+						diff: JsDiff.diffWords(old_text, model.get('current_revision').body)
 						summary: $(@el).find(".wikipage-summary").val()
 					activity.save(null,
 						success: (activity)=>
 							@enable()
 							window.mediator.trigger("new-silent-activity", activity)
-							$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
+							$(@el).find(".wikipage-body-area").html @wikipageBodyView body: model.get('current_revision').body
 							$(@el).find(".buttons").html @editButtons						 						
 						) 			  		
 
@@ -90,6 +93,6 @@ define [
 			)
 
 		cancelButton: ->
-			$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get 'body'
+			$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get('current_revision').body
 			$(@el).find(".buttons").html @editButtons		
 

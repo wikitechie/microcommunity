@@ -13,7 +13,7 @@ var Db = require('mongodb').Db,
 
 var db ;
 
-Db.connect('mongodb://localhost/microcommunity_test', function(err, database) {
+Db.connect('mongodb://localhost/microcommunity', function(err, database) {
 		db = database;
 });
 

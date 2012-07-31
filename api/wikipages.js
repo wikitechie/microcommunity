@@ -39,7 +39,7 @@ exports.update = function(req, res){
 	};  
 	
 	provider.updateWikiPage(req.params.wikipage, updated_wikipage, function(err, wikipage){
-		return res.send(updated_wikipage); 	
+		return res.send(wikipage); 	
 	});  
 }
 
