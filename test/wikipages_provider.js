@@ -216,6 +216,12 @@ describe('WikiPages Provider', function(){
   
   })
   
+	after(function(done){
+		db.close()
+		done()
+
+	});  
+  
 	function resetDatabase(done){
 			db.collection('wikipages', function(err, wikipages){
 				wikipages.remove({})

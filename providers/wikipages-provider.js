@@ -21,17 +21,10 @@ exports.model = mongoose.model('Wikipage', new mongoose.Schema({
 
 exports.fetch = function (wikipage_id, callback){
 
-	var object;
-	if(wikipage_id.constructor.name != 'ObjectID'){
-		object = new ObjectID(wikipage_id);
-	}	else {
-		object = new ObjectID(wikipage_id.toString());
-	}	
-	
-	
+	wikipage_id = database.normalizeID(wikipage_id);
 
 	db.collection('wikipages', function(err, wikipages){
-		wikipages.findOne({_id: object }, function(err, wikipage){
+		wikipages.findOne({_id: wikipage_id }, function(err, wikipage){
 			db.collection('revisions', function(err, revisions){
 				revisions.findOne( { _id: wikipage.current_revision }, function(err, revision){
 					_.extend(wikipage, {current_revision: revision});

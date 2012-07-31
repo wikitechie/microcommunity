@@ -1,5 +1,4 @@
 var mongoose = require('mongoose')
-	, ObjectId = mongoose.Schema.ObjectId
 	, schemas = require('./../providers/mongoose-schemas')
 	, wikipages_provider = require('./../providers/wikipages-provider')
 	, posts_provider = require('./../providers/posts-provider')
@@ -29,6 +28,8 @@ exports.createActivity = function(attr, callback){
 
 exports.fetchActivity = function (activity, callback){
 
+	activity = database.normalizeID(activity);
+
 	db.collection('activities', function(err, collection){
 		collection.findOne({_id: activity},
 		function(err, activity){
@@ -38,6 +39,7 @@ exports.fetchActivity = function (activity, callback){
 					WikiPage : wikipages_provider,
 					Post : posts_provider
 					};
+					
 
 					var provider = providers_index[activity.object_type];
 
