@@ -17,6 +17,11 @@
     "async": "*",
     "express-resource": "git://github.com/visionmedia/express-resource.git#add/express3x-support"
   },
+  
+  "devDependencies":{
+  	"mocha": "*",
+  	"coffee-script" : "*"
+  },
   "subdomain": "microcommunity",
   "engines": {
     "node": "0.6.19"
