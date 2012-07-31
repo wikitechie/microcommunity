@@ -5,7 +5,7 @@ var Db = require('mongodb').Db,
 exports.connectDB = function(callback){
 	if (process.env.NODE_ENV == 'test') {
 		Db.connect('mongodb://localhost/microcommunity_test', function(err, database) {
-			callback(err, database);
+			callback(err, database);			
 		});
 	} else {
 		Db.connect('mongodb://localhost/microcommunity', function(err, database) {
