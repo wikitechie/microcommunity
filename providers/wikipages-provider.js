@@ -4,19 +4,15 @@ var mongoose = require('mongoose')
 	, wikipages_provider = require('./../providers/wikipages-provider')
 	, posts_provider = require('./../providers/posts-provider')
 	, async = require('async')
-  , _ = require('underscore');
-
-
-var Db = require('mongodb').Db,
-  Connection = require('mongodb').Connection,
-    Server = require('mongodb').Server;
+  , _ = require('underscore')
+  , database = require('./db');
 
 var db ;
 
-Db.connect('mongodb://localhost/microcommunity', function(err, database) {
-		db = database;
-});
-
+exports.setup = function (database){
+	db = database;
+	return db;
+};
 
 exports.model = mongoose.model('Wikipage', new mongoose.Schema({
 	title: String,
@@ -48,8 +44,14 @@ exports.fetch = function (wikipage_id, callback){
 }
 
 exports.fetchWikiPages = function (callback){
-	exports.model.find({}, function(err, wikipages) {
-		callback(err, wikipages);
+	database.connectDB(function(err, database){
+		db = database;	
+		db.collection('wikipages', function(err, wikipages){
+			wikipages.find()
+				.toArray(function(err, results){
+					callback(err, results);
+				});
+		});
 	});	
 }
 

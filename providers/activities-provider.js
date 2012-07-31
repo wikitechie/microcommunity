@@ -3,23 +3,17 @@ var mongoose = require('mongoose')
 	, schemas = require('./../providers/mongoose-schemas')
 	, wikipages_provider = require('./../providers/wikipages-provider')
 	, posts_provider = require('./../providers/posts-provider')
-	, async = require('async');
-
-
-var Db = require('mongodb').Db,
-  Connection = require('mongodb').Connection,
-    Server = require('mongodb').Server;
-    
+	, async = require('async')
+	, database = require('./db');
 
 var db ;
 
-Db.connect('mongodb://localhost/microcommunity', function(err, database) {
-		console.log("errors: " + err);
-		db = database;
-});
-
-
-
+exports.setup = function (database){
+	db = database;
+	wikipages_provider.setup(database);
+	//posts_provider.setup(database);	
+	return db;
+};
 
 exports.createActivity = function(attr, callback){
 

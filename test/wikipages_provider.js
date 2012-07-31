@@ -1,17 +1,21 @@
+process.env.NODE_ENV = 'test';
+
 var assert = require("assert")
 	, wikipages_provider = require('./../providers/wikipages-provider')
-	, mongoose = require('mongoose');
+	, database = require('./../providers/db');
 
-mongoose = mongoose.connect('mongodb://localhost/microcommunity_test');
-
-
-var Db = require('mongodb').Db,
-  Connection = require('mongodb').Connection,
-    Server = require('mongodb').Server;
-
-  var db;
 
 describe('WikiPages Provider', function(){
+
+	var db ;
+	before(function(done){
+		database.connectDB(function(err, database){
+			db = database;
+			wikipages_provider.setup(database);
+			done()
+		});
+	})
+
 	
   describe('fetchWikipages', function(){
   	before(function(done){
@@ -19,15 +23,10 @@ describe('WikiPages Provider', function(){
   			title : "Title",
   			body  : "Body",
   			created_at : new Date()  		
-  		} 		  		
-
-			Db.connect('mongodb://localhost/microcommunity_test', function(err, database) {
-				db = database;					
-				wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
-					done();
-				});
-			}); 		
-
+  		} 				
+			wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
+				done();
+			});
   	});
   	
   	
@@ -53,49 +52,38 @@ describe('WikiPages Provider', function(){
   			body  : "Body",
   			created_at : new Date()  		
   		} 		  		
-
-			Db.connect('mongodb://localhost/microcommunity_test', function(err, database) {
-				db = database;					
-				wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
-					done();
-				});
-			}); 		
-
+				
+			wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
+				done();
+			});
   	})
   
   	it('should create a new wikipage object', function(done){
-  		db.collection('wikipages', function(err, wikipages){
-  		
+  		db.collection('wikipages', function(err, wikipages){  		
   			wikipages.find().count(function(err, count){
 					assert.equal(count, 1);
 					done();  				
   			})
-
   		});
   	}) 	
   	  	
   	it('should create a new revision object', function(done){
-  		db.collection('revisions', function(err, revisions){
-  		
+  		db.collection('revisions', function(err, revisions){  		
   			revisions.find().count(function(err, count){
 					assert.equal(count, 1);
 					done();  				
   			})
-
   		});
   	})
   	
   	it('should create the correct wikipage object', function(done){
   		db.collection('wikipages', function(err, wikipages){
-  			wikipages.findOne({}, function(err, wikipage){
-  			
+  			wikipages.findOne({}, function(err, wikipage){  			
   				db.collection('revisions', function(err, revisions){
-  					revisions.findOne({}, function(err, revision){
-  					
+  					revisions.findOne({}, function(err, revision){  					
   						assert.equal(wikipage.title, "Title")
   						assert.equal(wikipage.current_revision.toString(), revision._id.toString())
-  						assert.equal(revision.body, "Body")
-  						
+  						assert.equal(revision.body, "Body")  						
   						done()
   					})
   				})
@@ -106,9 +94,7 @@ describe('WikiPages Provider', function(){
 		
 		after(function(done){
 			resetDatabase(done);
-		});        			
-		
-		  	  	
+		});
   })
   
   describe('fetch', function(){
@@ -119,20 +105,16 @@ describe('WikiPages Provider', function(){
   			body  : "Body",
   			created_at : new Date()  		
   		} 		  		
-
-			Db.connect('mongodb://localhost/microcommunity_test', function(err, database) {
-				db = database;					
-				wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
-					db.collection('wikipages', function(err, wikipages){
-						wikipages.findOne({}, function(err, wikipage){
-							wikipage_id = wikipage._id
-							revision_id = wikipage.current_revision
-							done()
-						})
+		
+			wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
+				db.collection('wikipages', function(err, wikipages){
+					wikipages.findOne({}, function(err, wikipage){
+						wikipage_id = wikipage._id
+						revision_id = wikipage.current_revision
+						done()
 					})
-				});
-			}); 		
-
+				})
+			});
   	})
   	
   	it('should return a correct wikipage object', function(done){
@@ -167,9 +149,7 @@ describe('WikiPages Provider', function(){
   	
 		after(function(done){
 			resetDatabase(done);
-		});        	  	
-  	
-  	  		
+		});	
   })  
   
   
@@ -190,23 +170,14 @@ describe('WikiPages Provider', function(){
 
   	before(function(done){
 
-			Db.connect('mongodb://localhost/microcommunity_test', function(err, database) {
-				db = database;			
-				
-				wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
-				
-					wikipage_id = new_wikipage._id
-					first_revision = new_wikipage.current_revision._id
-				
-					wikipages_provider.updateWikiPage(new_wikipage._id.toString(), updated_wikipage, function(err, wikipage){
-						second_revision = wikipage.current_revision._id
-						done() 	
-					}); 					
-				})
-				
-				
-				
-			}); 
+			wikipages_provider.createWikiPage(attr, function(err, new_wikipage){		
+				wikipage_id = new_wikipage._id
+				first_revision = new_wikipage.current_revision._id		
+				wikipages_provider.updateWikiPage(new_wikipage._id.toString(), updated_wikipage, function(err, wikipage){
+					second_revision = wikipage.current_revision._id
+					done() 	
+				}); 					
+			})
   	})
   	
   	it('should create a new revision', function(done){
@@ -235,37 +206,31 @@ describe('WikiPages Provider', function(){
 	  			assert.equal(new_revision._id.toString(), second_revision.toString())
 	  			done()
 	  		})
-	  	})    	
-  		
-	
-  	})  	
+	  	})
+  	})  
   	
-
-  	
-  
 		after(function(done){
 			resetDatabase(done);
 		});        	
-
-    
+   
   
   })
   
+	function resetDatabase(done){
+			db.collection('wikipages', function(err, wikipages){
+				wikipages.remove({})
+
+				db.collection('revisions', function(err, revisions){
+					revisions.remove({})
+					done()
+				})
+
+			})
+	}
+
 
   
 })
 
-
-function resetDatabase(done){
-  	db.collection('wikipages', function(err, wikipages){
-  		wikipages.remove({})
-
-	  	db.collection('revisions', function(err, revisions){
-	  		revisions.remove({})
-	  		done()
-	  	})
-
-  	})
-}
 
 
