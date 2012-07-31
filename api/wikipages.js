@@ -3,12 +3,6 @@ var provider = require('./../providers/wikipages-provider')
 	, mongoose = require('mongoose')
 	, ObjectID = require('mongodb').ObjectID;
 	
-exports.index = function(req, res){
-	provider.fetchWikiPages(function(err, wikipages){
-		return res.send(wikipages);	
-	});
-};
-
 exports.create = function(req, res){
 
 	var attr = {

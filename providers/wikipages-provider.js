@@ -1,10 +1,4 @@
-var mongoose = require('mongoose')
-	, ObjectID = require('mongodb').ObjectID
-	, schemas = require('./../providers/mongoose-schemas')
-	, wikipages_provider = require('./../providers/wikipages-provider')
-	, posts_provider = require('./../providers/posts-provider')
-	, async = require('async')
-  , _ = require('underscore')
+var  _ = require('underscore')
   , database = require('./db');
 
 var db ;
@@ -13,11 +7,6 @@ exports.setup = function (database){
 	db = database;
 	return db;
 };
-
-exports.model = mongoose.model('Wikipage', new mongoose.Schema({
-	title: String,
-	body: String
-}));
 
 exports.fetch = function (wikipage_id, callback){
 
@@ -33,18 +22,6 @@ exports.fetch = function (wikipage_id, callback){
 			});				
 		});	
 
-	});	
-}
-
-exports.fetchWikiPages = function (callback){
-	database.connectDB(function(err, database){
-		db = database;	
-		db.collection('wikipages', function(err, wikipages){
-			wikipages.find()
-				.toArray(function(err, results){
-					callback(err, results);
-				});
-		});
 	});	
 }
 
@@ -97,7 +74,7 @@ exports.createWikiPage = function(attr, callback){
 
 exports.updateWikiPage = function(id, updated, callback){
 
-	var object = new ObjectID(id);
+	var object =  database.normalizeID(id);
 
 	db.collection('wikipages', function(err, wikipages){
 		wikipages.findOne({_id: object }, function(err, wikipage){

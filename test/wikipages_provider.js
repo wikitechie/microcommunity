@@ -16,33 +16,6 @@ describe('WikiPages Provider', function(){
 		});
 	})
 
-	
-  describe('fetchWikipages', function(){
-  	before(function(done){
-  		var attr = {
-  			title : "Title",
-  			body  : "Body",
-  			created_at : new Date()  		
-  		} 				
-			wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
-				done();
-			});
-  	});
-  	
-  	
-    it('should return the right number of wikipages', function(done){
-    	wikipages_provider.fetchWikiPages(function(err, wikipages){
-    		assert.equal(1, wikipages.length);   
-    		done(); 	
-    	});
-    });
-    
-		after(function(done){
-			resetDatabase(done);
-		});        	
-  
-    
-  });
 
   
   describe('createWikipage', function(){
