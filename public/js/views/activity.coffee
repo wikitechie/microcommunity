@@ -3,9 +3,10 @@ define [
 	'backbone'
 	'cs!modules/post'
 	'cs!modules/wikipage'
+	'cs!models/revision'
 	'cs!models/diff'
 	'cs!views/diff'
-], ($, Backbone, Post, WikiPage, Diff, DiffView) ->
+], ($, Backbone, Post, WikiPage, Revision, Diff, DiffView) ->
 	class ActivityView extends Backbone.View
 		className: "activity"
 		template: _.template($('#activity-template').html())
@@ -23,8 +24,9 @@ define [
 			@objectClass = @model.object.constructor.name
 		
 			views_classes = 
-				WikiPage : WikiPage.View
+				#WikiPage : WikiPage.View
 				Post: Post.View
+				Revision: WikiPage.View
 		
 			@view = new views_classes[@objectClass]
 				model: @model.object
@@ -41,21 +43,15 @@ define [
 			else
 				@diffViews = []
 				@collection.each (model)=>
-					if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+					if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 						mydiff = new Diff
 							diff    : model.get('diff')
 							summary : model.get('summary')
-							created_at : model.get('created_at')				
-					
+							created_at : model.get('created_at')					
 						diffView = new DiffView 
 							model : mydiff				
-						
 						@diffViews.push diffView
-				
-
-				
-
-				
+						
 			_.bindAll @
 
 		render: ->
@@ -66,12 +62,13 @@ define [
 				#$(@el).find('.comments-thread').html @commentsThread.render().el
 				$(@el).find('.embeded-content').html @view.render().el
 				if @singleMode
-					if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+					if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 						$(@el).find('.attachements').append @diffView.render().el				
 						$(@el).find('.diff-content').hide()
 				else
 					_.each @diffViews, (diffView)=>
-						if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+						console.debug diffView.constructor.name
+						if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 							$(@el).find('.attachements').append diffView.render().el				
 							$(@el).find('.diff-content').hide()				
 			@
@@ -81,10 +78,10 @@ define [
 
 			name = @model.actor.email
 			messages = 
-				WikiPage : 
-					edit: "#{name} edited a wikipage titled #{@model.object.get('title')}"
-					aggr_edit : "#{name} made several edits on the wikipage titled #{@model.object.get('title')}"
-					create: "#{name} created a wikipage titled #{@model.object.get('title')}"
+				Revision : 
+					edit: "#{name} edited a wikipage titled #{@model.object.page.get('title')}"
+					aggr_edit : "#{name} made several edits on the wikipage titled #{@model.object.page.get('title')}"
+					create: "#{name} created a wikipage titled #{@model.object.page.get('title')}"
 				Post: 
 					comment: "#{name} commented a post"
 					create: "#{name} created a new post"

@@ -49,11 +49,12 @@ define [
 				success: (wikipage, response)=> 	
 					activity = new Activity
 						actor : current_user
-						object: wikipage.attributes
-						object_type: "WikiPage"
+						object: wikipage.attributes.current_revision
+						object_type: "Revision"
 						verb: "create"
 					activity.save(null,
-						success: (activity)=> 
+						success: (activity)=>
+							console.debug activity 
 							window.mediator.trigger("new-activity", activity)
 							@enable()
 							@reset()

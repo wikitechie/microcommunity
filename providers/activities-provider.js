@@ -1,6 +1,8 @@
 var mongoose = require('mongoose')
 	, schemas = require('./../providers/mongoose-schemas')
 	, wikipages_provider = require('./../providers/wikipages-provider')
+	, coffee = require('coffee-script')
+	, revisions_provider = require('./../providers/revisions-provider')
 	, posts_provider = require('./../providers/posts-provider')
 	, async = require('async')
 	, database = require('./db');
@@ -10,6 +12,7 @@ var db ;
 exports.setup = function (database){
 	db = database;
 	wikipages_provider.setup(database);
+	revisions_provider.setup(database);	
 	//posts_provider.setup(database);	
 	return db;
 };
@@ -37,6 +40,7 @@ exports.fetchActivity = function (activity, callback){
 				users.findOne({_id: activity.actor}, function(err, actor){
 					var providers_index = {
 					WikiPage : wikipages_provider,
+					Revision : revisions_provider,
 					Post : posts_provider
 					};
 					

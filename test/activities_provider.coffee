@@ -52,8 +52,8 @@ describe 'Activities provider', ()->
 						activity = 
 							actor : actor_id
 							verb  : "some verb"
-							object: object._id
-							object_type : "WikiPage"
+							object: object.current_revision._id
+							object_type : "Revision"
 						db.collection 'activities', (err, activities)->
 							activities.insert activity, (err, new_activity)->	
 								activity = new_activity[0]
@@ -78,7 +78,7 @@ describe 'Activities provider', ()->
 		
 		it 'should return an activity object joined to the right object', (done)->
 			activities_provider.fetchActivity activity._id, (err, act)->
-				assert.equal act.object._id.toString(), wikipage._id.toString()
+				assert.equal act.object._id.toString(), wikipage.current_revision._id.toString()
 				done()
 							
 		it 'should return a correct activity object (passing ObjectID as a string)', (done)->

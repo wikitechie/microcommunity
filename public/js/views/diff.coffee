@@ -10,9 +10,11 @@ define [
 			'click .toggle-diff': 'toggleDiff'
 		
 		initialize: ->
+			console.debug 'diffff'				
 			_.bindAll @
 
 		render: ->	
+
 			$(@el).html @template @model.attributes
 			@
 

@@ -123,12 +123,14 @@ define [
 				verb = scanned.get 'verb'
 				actor = scanned.actor
 				object_type = scanned.get 'object_type'
-				object_id = scanned.object.id
+				#dangerous hack needs to be refactored, works only for wiki pages activities
+				object_id = scanned.object.page.id
 				aggr = {}
 				aggr[collection.indexOf(scanned)]	= true
 				collection.each (compared) =>				
 					if scanned.id isnt compared.id
-						if (object_id is compared.object.id) and (verb == compared.get 'verb') and (actor._id is compared.actor._id)
+						#dangerous hack needs to be refactored, works only for wiki pages activities
+						if (object_id is compared.object.page.id) and (verb == compared.get 'verb') and (actor._id is compared.actor._id)
 							aggr[collection.indexOf(compared)] = true
 				aggrs.push aggr	
 			
