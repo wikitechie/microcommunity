@@ -1,4 +1,6 @@
 require({
+
+	deps: window.mocha ? [ '/runner.js' ] : ['cs!csmain'],
   paths: {
     cs: 'cs',
     'coffee-script': 'coffee-script',
@@ -40,4 +42,4 @@ require({
   	
   }
   
-}, ['cs!csmain']);
+});

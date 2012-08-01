@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
+  , fs = require('fs')
   , mongoose = require('mongoose')
   , passport = require('passport')  
   , flash = require('connect-flash')
@@ -77,7 +78,9 @@ app.configure(function(){
   app.use(passport.initialize());
   app.use(passport.session());  
   app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/public')); 
+  app.use(express.static(__dirname + '/test/client'));   
+  
 });
 
 app.configure('development', function(){
@@ -103,6 +106,23 @@ app.get('/', function(req, res){
 app.get('/profile', function(req, res){
 	res.render('profile', {user: req.user});
 });
+
+
+if(app.get('env') == 'development'){
+	app.get('/test', function(req, res){
+		fs.createReadStream(__dirname + '/test/client/runner.html').pipe(res);
+	});
+
+	app.get('/mocha', function(req, res){
+		fs.createReadStream(__dirname + '/node_modules/mocha/mocha.js').pipe(res);
+	});
+	
+	app.get('/chai', function(req, res){
+		fs.createReadStream(__dirname + '/node_modules/chai/chai.js').pipe(res);
+	});
+		
+}
+
 
 
 // Backbone.io backends

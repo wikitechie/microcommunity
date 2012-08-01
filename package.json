@@ -20,7 +20,8 @@
   
   "devDependencies":{
   	"mocha": "*",
-  	"coffee-script" : "*"
+  	"coffee-script" : "*",
+  	"chai" : "*"
   },
   "subdomain": "microcommunity",
   "engines": {
