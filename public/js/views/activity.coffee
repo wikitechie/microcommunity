@@ -67,7 +67,6 @@ define [
 						$(@el).find('.diff-content').hide()
 				else
 					_.each @diffViews, (diffView)=>
-						console.debug diffView.constructor.name
 						if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 							$(@el).find('.attachements').append diffView.render().el				
 							$(@el).find('.diff-content').hide()				
