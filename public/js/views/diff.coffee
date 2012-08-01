@@ -2,7 +2,7 @@ define [
 	'jquery'
 	'backbone'
 ], ($, Backbone) ->
-	class window.DiffView extends Backbone.View
+	class DiffView extends Backbone.View
 		className: "diff"
 		template: _.template($('#diff-template').html())
 	
