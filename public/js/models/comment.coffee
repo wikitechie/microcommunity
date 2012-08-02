@@ -1,15 +1,13 @@
 define [
 	'backbone'
-], (Backbone) ->
-	class Comment extends Backbone.Model
-		defaults:
-
-			text: "Hehe! Great idea!"
-
+	'cs!models/user'
+	'backbone-relational'
+], (Backbone, User) ->
+	class Comment extends Backbone.RelationalModel
 		idAttribute: "_id"
-	
-		initialize : ()-> 
-			@url = 	'api/posts/12/comments/'
-	
-
+		
+		relations : [
+			{	type : Backbone.HasOne,	key : "user",	relatedModel : User	}
+		]
+			
 

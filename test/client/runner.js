@@ -1,7 +1,9 @@
 require([
-	'cs!/post_model',
-	'cs!/user_model'
+	'cs!/models/post',
+	'cs!/models/user',
+	'cs!/models/comment'
 ], function(){
+	"use strict";
 	mocha.run();
 });
 

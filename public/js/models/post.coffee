@@ -1,17 +1,15 @@
 define [
 	'backbone'
-	'cs!collections/comments'
+	'cs!models/comment'
 	'cs!models/user'
 	'backbone-relational'
-], (Backbone, Comments, User) ->
+], (Backbone, Comment, User) ->
 	class Post extends Backbone.RelationalModel
-		defaults:
-			created_at: Date()
-
 		idAttribute: "_id"
 		
 		relations : [
 			{	type : Backbone.HasOne,	key : "user",	relatedModel : User	}
+			{	type : Backbone.HasMany, key : "comments",	relatedModel : Comment	}
 		]
 		
 		validate : (attrs)->
@@ -23,6 +21,7 @@ define [
 		urlRoot: "/api/posts"
 
 		initialize: ()->
+			@get('comments').url = "/api/posts/#{@id}/comments"
 		
 			#@comments = new Comments
 			#if options? and options.comments? 
