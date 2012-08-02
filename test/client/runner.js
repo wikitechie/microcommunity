@@ -1,4 +1,4 @@
-require(['/sample_test.js'], function(){
+require(['cs!/post_model'], function(){
 	mocha.run();
 });
 

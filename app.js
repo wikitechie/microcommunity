@@ -108,7 +108,7 @@ app.get('/profile', function(req, res){
 });
 
 
-if(app.get('env') == 'development'){
+if(app.get('env') == 'test'){
 	app.get('/test', function(req, res){
 		fs.createReadStream(__dirname + '/test/client/runner.html').pipe(res);
 	});

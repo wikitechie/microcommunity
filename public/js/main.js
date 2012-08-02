@@ -6,6 +6,7 @@ require({
     'coffee-script': 'coffee-script',
     jquery : 'lib/jquery.min',
     backbone : 'lib/backbone.min',
+    'backbone-relational' : 'lib/backbone-relational',    
     underscore: 'lib/underscore.min',
     bootstrap: 'lib/bootstrap.min',
     'jquery.gravatar': 'lib/jquery.gravatar',
@@ -35,6 +36,7 @@ require({
   	'general' : [],
   	'moment' : [],
   	'diff' : [],
+  	'backbone-relational' : ['backbone'],
 
   	'bootstrap' : {
   		exports: ''

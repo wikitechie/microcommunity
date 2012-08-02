@@ -1,11 +1,22 @@
-define(function(){
-	describe('Array', function(){
-		describe('#indexOf()', function(){
-		  it('should return -1 when the value is not present', function(){
-		    chai.assert.equal(-1, [1,2,3].indexOf(5));
-		    chai.assert.equal(-1, [1,2,3].indexOf(0));
-		  })
-		})
+define(['cs!models/post'], function(Post){
+
+	describe('Post Model', function(){
+	
+	  it('should have the proper url', function(){
+	  	var post = new Post();
+	    chai.assert.equal(post.url(), '/api/posts');
+	  });
+	  
+	  it('should require a text', function(){
+	  	var post = new Post();
+	  	chai.assert.equal(post.isValid(), false);
+	  });
+
+		
+		
 	});
+	
+	
+	
 });
 
