@@ -28,9 +28,6 @@ define [
 					user : 
 						_id: "5006de43a836cb97c144ff81"
 						email: "email@service.com"
-											
-			it 'should be valid given valid attributes', ()->
-				assert.equal post.isValid(), true
 
 			it 'should have a user association', ()->
 				assert.ok post.get('user')

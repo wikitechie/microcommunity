@@ -3,7 +3,7 @@ define [
 	'cs!collections/comments'
 	'cs!models/wikipage'
 ], (Backbone, Comments, WikiPage) ->
-	class Revision extends Backbone.Model
+	class Revision extends Backbone.RelationalModel
 		defaults:
 			body: "Some body"
 			page:
