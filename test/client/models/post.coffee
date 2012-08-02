@@ -33,6 +33,10 @@ define [
 				assert.ok post.get('user')
 				assert.equal post.get('user').constructor.name, "User"
 				
+			it 'should be associated to the right user', ()->
+				assert.equal post.get('user').get('email'), "email@service.com"
+				assert.equal post.get('user').id, "5006de43a836cb97c144ff81"												
+				
 		describe 'Post-Comments association', ()->		
 			post = null
 			

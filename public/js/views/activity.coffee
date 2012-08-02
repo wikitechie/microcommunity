@@ -12,25 +12,28 @@ define [
 		template: _.template($('#activity-template').html())
 
 		initialize: ->
+
 			#@commentsThread = new CommentsThreadView 
 				#collection: @model.comments
 				#postId: @model.id
 
 			if @collection.length is 1
 				@singleMode = true
+
+			
 			
 			@model = @collection.at(0)
 	
-			@objectClass = @model.object.constructor.name
+			@objectClass = @model.get('object').constructor.name
 		
 			views_classes = 
 				#WikiPage : WikiPage.View
 				Post: Post.View
 				Revision: WikiPage.View
-		
+
 			@view = new views_classes[@objectClass]
-				model: @model.object
-				
+				model: @model.get('object')
+
 			if @singleMode			
 				if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
 					mydiff = new Diff
@@ -42,6 +45,7 @@ define [
 						model : mydiff
 			else
 				@diffViews = []
+				console.debug 'here?'									
 				@collection.each (model)=>
 					if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 						mydiff = new Diff
@@ -51,6 +55,8 @@ define [
 						diffView = new DiffView 
 							model : mydiff				
 						@diffViews.push diffView
+						
+
 						
 			_.bindAll @
 

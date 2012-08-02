@@ -1,0 +1,26 @@
+<div class="row-fluid">
+	<div class="span12">
+		<div class="avatar">
+			<a href="#">
+				<img class="avatar-img" src="<%= $.gravatar(user.email, { size: 50 }) %>" />
+			</a>
+		</div>
+		<div class="mainWrapper">
+			<p><a href="#" class='email'><%= user.email %></a></p>
+			<p class ='text'><%= nl2br(text, false) %></p>
+			<p><small><%= moment(created_at).fromNow() %></small>
+			</p>
+			<div class="row-fluid">
+				<div class="comments-thread">
+					<div>
+						<div class="row-fluid">
+							<div class="comments-list"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+
