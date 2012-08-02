@@ -1,13 +1,18 @@
 define [
 	'backbone'
 	'cs!collections/comments'
+	'cs!models/user'
 	'backbone-relational'
-], (Backbone, Comments) ->
+], (Backbone, Comments, User) ->
 	class Post extends Backbone.RelationalModel
 		defaults:
 			created_at: Date()
 
 		idAttribute: "_id"
+		
+		relations : [
+			{	type : Backbone.HasOne,	key : "user",	relatedModel : User	}
+		]
 		
 		validate : (attrs)->
 			unless attrs.text?
@@ -15,11 +20,11 @@ define [
 			unless attrs.user?
 				return "a Post should have a user"				
 
-		urlRoot: ->
-			"/api/posts"
+		urlRoot: "/api/posts"
 
-		initialize: (options)->
-			@comments = new Comments
-			if options? and options.comments? 
-				if options.comments.length > 0
-					@comments.add options.comments
+		initialize: ()->
+		
+			#@comments = new Comments
+			#if options? and options.comments? 
+				#if options.comments.length > 0
+					#@comments.add options.comments
