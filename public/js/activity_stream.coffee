@@ -25,10 +25,6 @@ define [
 		    @addPost post  
 		  window.mediator.bind "new-wikipage", (wikipage)=>
 		    @addWikipage wikipage
-		  window.mediator.bind "new-question", (question)=>
-		    @addQuestion question
-		  window.mediator.bind "new-link", (link)=>
-		    @addLink link
 		  window.mediator.bind "new-silent-activity", (activity)=>
 		    @addSilentActivity activity
 		  window.mediator.bind "new-activity", (activity)=>
@@ -39,7 +35,7 @@ define [
 		  #initializing posts rendered from the server
 
 		  init_activities = new Activity.Collection
-		  init_activities.add eval(activities)
+		  init_activities.add @options.activities
 		  @process init_activities
 		  
 		                  
@@ -131,7 +127,7 @@ define [
 						if (object_type == 'WikiPage') and (scanned.object.page.id is compared.object.page.id) and (verb == compared.get 'verb') and (actor._id is compared.actor._id)
 							aggr[collection.indexOf(compared)] = true
 				aggrs.push aggr	
-			
+							
 				arrgs = @refine aggrs
 				_.each arrgs, (group) =>
 					if true

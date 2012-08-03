@@ -10,6 +10,8 @@ define [
 			"" : "default"
 		default: ->		
 			window.current_user = eval(user)		
+			
 			if current_user?
 				publisher = new Publisher()			
-			socialStream = new ActivityStream()		
+			socialStream = new ActivityStream
+				activities: eval(activities)
