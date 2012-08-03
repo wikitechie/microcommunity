@@ -6,15 +6,14 @@ require([
 	'cs!/views/post',
 	'cs!/views/comment',
 	'cs!/views/comments_thread'	,
-	//'cs!/views/activity_stream'	
+	'cs!/views/activity'	,	
+	'cs!/views/activity_stream'
 	
 ], function(){
 	"use strict";
 	mocha
 		.run(function(){
 			$("#playarea").hide()
-		});
-		
-		
+		});		
 });
 
