@@ -3,13 +3,16 @@ define [
 	'backbone'
 	'cs!models/comment'
 	'cs!views/comment'
+	'text!templates/comments_thread.html'
 	'jquery.gravatar'
 	'general'
 	'moment'
-], ($, Backbone, Comment, CommentView) ->
+], ($, Backbone, Comment, CommentView, comment_thread_template) ->
 	class CommentsThreadView extends Backbone.View
+	
+		className : 'comments-thread'
 
-		template: _.template($('#comments-thread-template').html())
+		template: _.template(comment_thread_template)
 
 		events:
 			"keydown .comments-text": "newComment"
@@ -30,8 +33,6 @@ define [
 
 		injectView: (view) ->
 			$(@el).find('.comments-list').append(view.render().el)
-			$("#social-stream-table")
-			$("#content-stream-table")
 
 		newComment: (e) ->
 			keycode = if e.keyCode then e.keyCode else e.which

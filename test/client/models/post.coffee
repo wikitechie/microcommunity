@@ -48,10 +48,7 @@ define [
 					user : 
 						_id: "5006de43a836cb97c144ff81"
 						email: "email@service.com"
-					comments : [
-						{"text":"asdf","created_at":"Tue Jul 31 2012 07:34:59 GMT+0300 (EEST)"}
-						{"text":"asdf","created_at":"Tue Jul 31 2012 07:35:00 GMT+0300 (EEST)"}
-					]
+					comments : []
 					
 			it 'should have a comments association', ()->					
 				assert.ok post.get('comments')
