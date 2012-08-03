@@ -7,9 +7,11 @@ mongodb server
 sudo apt-get install mongodb-server
 ```
 
-then you can start it by :
+create a configuration file
+
 ```bash
-sudo mongod
+sudo mkdir -p /data/db/
+sudo chown `id -u` /data/db
 ```
 
 Running Microcommunity
@@ -24,3 +26,22 @@ cd microcommunity
 npm install
 node app.js
 ```
+
+Running Tests
+======================
+
+To run server-side tests, cd to the project main directory then, run the make test:
+
+```bash
+make test
+```
+
+Client-side tests are runned from the browser, so you need to start the application in Node test mode:
+
+```bash
+NODE_ENV=test node app.js
+```
+
+Then you can run the tests by visiting: http://localhost:3000/test
+
+

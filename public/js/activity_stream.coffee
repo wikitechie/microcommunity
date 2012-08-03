@@ -40,7 +40,6 @@ define [
 
 		  init_activities = new Activity.Collection
 		  init_activities.add eval(activities)
-		  console.debug eval(activities)
 		  @process init_activities
 		  
 		                  
@@ -123,7 +122,7 @@ define [
 			aggrs = []
 			collection.each (scanned)=>
 				verb = scanned.get 'verb'
-				actor = scanned.actor
+				actor = scanned.get 'actor'
 				object_type = scanned.get 'object_type'
 				aggr = {}
 				aggr[collection.indexOf(scanned)]	= true
