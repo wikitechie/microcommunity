@@ -5,11 +5,16 @@ require([
 	'cs!/models/activity',
 	'cs!/views/post',
 	'cs!/views/comment',
-	'cs!/views/comments_thread'	
+	'cs!/views/comments_thread'	,
+	//'cs!/views/activity_stream'	
 	
 ], function(){
 	"use strict";
 	mocha
-		.run();
+		.run(function(){
+			$("#playarea").hide()
+		});
+		
+		
 });
 

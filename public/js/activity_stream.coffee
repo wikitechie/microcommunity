@@ -2,10 +2,11 @@ define [
 	'jquery'
 	'backbone'
 	'cs!modules/activity'
-], ($, Backbone, Activity)->
+	'text!templates/activity_stream.html'
+], ($, Backbone, Activity, activity_stream_template)->
 	class ActivityStream extends Backbone.View
 		el: '#social-stream'
-		template: _.template($('#activity-stream-template').html())
+		template: _.template(activity_stream_template)
 	
 		events:
 			'click #load-more' : 'loadMore'
