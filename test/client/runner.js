@@ -3,7 +3,8 @@ require([
 	'cs!/models/user',
 	'cs!/models/comment',
 	'cs!/models/activity',
-	'cs!/views/post',
+	'cs!/views/post'
+	
 ], function(){
 	"use strict";
 	mocha.run();

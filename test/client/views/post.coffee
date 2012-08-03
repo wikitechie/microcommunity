@@ -32,8 +32,8 @@ define [
 				assert.equal postView.render(), postView
 				
 			it 'should contain the model data', ()->
-				#body
-				assert.equal el.find('.text').html(), 'Text'
-				#user email				
-				assert.equal el.find('.email').html(), 'email@service.com'
+				el.should.contain 'Text'
+				el.should.contain 'email@service.com'
+
+				
 					
