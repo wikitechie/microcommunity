@@ -9,6 +9,7 @@ require([
 	
 ], function(){
 	"use strict";
-	mocha.run();
+	mocha
+		.run();
 });
 

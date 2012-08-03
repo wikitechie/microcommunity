@@ -27,6 +27,8 @@ define [
 
 		render: ->
 			$(@el).html @template
+			unless current_user?
+				$(@el).find('.comments-text').hide()			
 			@collection.each (comment)=>
 				@injectComment comment
 			@

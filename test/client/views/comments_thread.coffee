@@ -6,6 +6,7 @@ define [
 	'cs!views/comments_thread'	
 ], ($, _, Comment, Comments, CommentsThread)->
 	describe 'Comments Thread View', ()->	
+	
 		user = null
 		comments = null
 		thread = null
@@ -22,10 +23,12 @@ define [
 			thread = new CommentsThread
 				collection : comments
 				
+			$("#playarea").append thread.render().el				
 			j = -1
 			mappedComments = thread.collection.map (item)->
 				j = j + 1
-				{ model: item, index: j}					
+				{ model: item, index: j}		
+							
 	
 		it 'should have a collection', ()->
 			thread.collection.should.be.ok
@@ -56,7 +59,11 @@ define [
 				_.each comments, (comment)->
 					$(thread.el).should.have comment.get 'text'
 			
-			it 'should render the textarea for logged in users'
-			it 'should not render the textarea for visitors'
+			it 'should not render the textarea for visitors', ()->
+				$(thread.el).find('.comments-text').should.be.hidden
+				
+			it 'should render the textarea for logged in users', ()->
+				window.current_user = user
+				$(thread.render().el).find('.comments-text').should.be.not.hidden
 					
 				

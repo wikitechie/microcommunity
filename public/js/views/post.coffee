@@ -20,7 +20,5 @@ define [
 		render: ->	
 			$(@el).html @template @model.toJSON()
 			$(@el).find('.comments-thread-area').html @commentsThread.render().el
-			unless window.current_user?
-				$(@el).find('.comments-text').hide()
 			@
 
