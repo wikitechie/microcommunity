@@ -37,8 +37,10 @@ define [
 		  @render()
 
 		  #initializing posts rendered from the server
+
 		  init_activities = new Activity.Collection
 		  init_activities.add eval(activities)
+		  console.debug eval(activities)
 		  @process init_activities
 		  
 		                  
@@ -120,20 +122,16 @@ define [
 		process : (collection)->
 			aggrs = []
 			collection.each (scanned)=>
-				if scanned.get 'object_type' is 'WikiPage'
-					verb = scanned.get 'verb'
-					actor = scanned.actor
-					object_type = scanned.get 'object_type'
-					#dangerous hack needs to be refactored, works only for wiki pages activities
-					object_id = scanned.object.page.id
-					aggr = {}
-					aggr[collection.indexOf(scanned)]	= true
-					collection.each (compared) =>				
-						if scanned.id isnt compared.id
-							#dangerous hack needs to be refactored, works only for wiki pages activities
-							if (object_type == 'WikiPage') and (object_id is compared.object.page.id) and (verb == compared.get 'verb') and (actor._id is compared.actor._id)
-								aggr[collection.indexOf(compared)] = true
-					aggrs.push aggr	
+				verb = scanned.get 'verb'
+				actor = scanned.actor
+				object_type = scanned.get 'object_type'
+				aggr = {}
+				aggr[collection.indexOf(scanned)]	= true
+				collection.each (compared) =>				
+					if scanned.id isnt compared.id
+						if (object_type == 'WikiPage') and (scanned.object.page.id is compared.object.page.id) and (verb == compared.get 'verb') and (actor._id is compared.actor._id)
+							aggr[collection.indexOf(compared)] = true
+				aggrs.push aggr	
 			
 				arrgs = @refine aggrs
 				_.each arrgs, (group) =>
