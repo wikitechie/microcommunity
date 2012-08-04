@@ -3,19 +3,25 @@ define [
 	'backbone'
 	'cs!models/activity'
 	'cs!views/comments_thread'
+	'text!templates/wikipage/show.html'
+	'text!templates/wikipage/edit-buttons.html'
+	'text!templates/wikipage/save-buttons.html'
+	'text!templates/wikipage/body-view.html'
+	'text!templates/wikipage/body-edit.html'
 	'jquery.gravatar'
 	'general'
 	'moment'
 	'diff'
-], ($, Backbone, Activity,CommentsThreadView) ->
+	
+], ($, Backbone, Activity,CommentsThreadView, show, edit_btns, save_btns, view_b, edit_b) ->
 	class WikiPageView extends Backbone.View
 		className : "wikipage"
 
-		normalTemplate: _.template($('#wikipage-template').html())
-		editButtons: _.template($('#wikipage-edit-buttons-template').html())
-		saveButtons: _.template($('#wikipage-save-buttons').html())
-		wikipageBodyView: _.template($('#wikipage-body-view').html())
-		wikipageBodyEdit: _.template($('#wikipage-body-edit').html())
+		normalTemplate: _.template(show)
+		editButtons: _.template(edit_btns)
+		saveButtons: _.template(save_btns)
+		wikipageBodyView: _.template(view_b)
+		wikipageBodyEdit: _.template(edit_b)
 
 		events:
 			"click .edit-button": "editButton"

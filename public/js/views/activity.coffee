@@ -1,15 +1,16 @@
 define [
 	'jquery'
 	'backbone'
+	'text!templates/activity.html'
 	'cs!modules/post'
 	'cs!modules/wikipage'
 	'cs!models/revision'
 	'cs!models/diff'
 	'cs!views/diff'
-], ($, Backbone, Post, WikiPage, Revision, Diff, DiffView) ->
+], ($, Backbone, template,Post, WikiPage, Revision, Diff, DiffView) ->
 	class ActivityView extends Backbone.View
 		className: "activity"
-		template: _.template($('#activity-template').html())
+		template: _.template(template)
 
 		initialize: ->
 

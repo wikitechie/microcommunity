@@ -1,0 +1,28 @@
+<div class="row-fluid">
+	<div class="span12">
+		<div class="avatar">
+			<a href="#">
+				<img class="avatar-img" src="<%= $.gravatar(user.email, { size: 50 }) %>" />
+			</a>
+		</div>
+		<div class="mainWrapper">
+		
+			<p>
+				<%= message %>
+				<small><%= moment(created_at).fromNow() %></small>
+				<div class="row-fluid attachements"></div>
+				<div class="row-fluid">
+					<div class="embeded-content">
+					</div>
+				</div>
+			</p>
+		
+			</div>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span12">
+	<hr/>
+	</div>
+</div>

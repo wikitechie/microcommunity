@@ -1,0 +1,25 @@
+<div class="span12">
+	<div class="diff">
+		<p>		
+				i <%= summary %> 			
+				<%  if( summary.length> 0) { %>
+				
+				<%= "--" %>
+				
+				<% } %>								
+				small
+					<%= "("+ moment(created_at).fromNow() +") "%>				
+					a.toggle-diff Show difference					
+					= " · "					
+					a.vote-up Vote-up
+					= " · "
+					a Comment		
+		</p>
+		
+		<p class="diff-content"><%= generate_diff(diff).html() %>	</p>
+		<hr />
+		
+	</div>
+</div>
+
+

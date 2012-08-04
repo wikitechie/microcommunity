@@ -1,10 +1,11 @@
 define [
 	'jquery'
 	'backbone'
-], ($, Backbone) ->
+	'text!templates/diff.html'
+], ($, Backbone, template) ->
 	class DiffView extends Backbone.View
 		className: "diff"
-		template: _.template($('#diff-template').html())
+		template: _.template(template)
 	
 		events:
 			'click .toggle-diff': 'toggleDiff'
