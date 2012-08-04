@@ -2,7 +2,7 @@ define [
 	'backbone'
 	'cs!collections/comments'
 ], (Backbone, Comments) ->
-	class WikiPage extends Backbone.Model
+	class WikiPage extends Backbone.RelationalModel
 		defaults:
 			title: "Backbone.js"
 

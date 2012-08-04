@@ -88,9 +88,9 @@ define [
 			name = @model.get('actor').get('email')
 			messages = 
 				Revision : 
-					edit: "#{name} edited a wikipage titled #{@model.get('object').page.get('title')}"
-					aggr_edit : "#{name} made several edits on the wikipage titled #{@model.get('object').page.get('title')}"
-					create: "#{name} created a wikipage titled #{@model.get('object').page.get('title')}"
+					edit: "#{name} edited a wikipage titled #{@model.get('object').get('page').get('title')}"
+					aggr_edit : "#{name} made several edits on the wikipage titled #{@model.get('object').get('page').get('title')}"
+					create: "#{name} created a wikipage titled #{@model.get('object').get('page').get('title')}"
 				Post: 
 					comment: "#{name} commented a post"
 					create: "#{name} created a new post"

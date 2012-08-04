@@ -37,7 +37,7 @@ define [
 			@commentsThread = new CommentsThreadView collection: @model.comments			
 
 		render: ->
-			$(@el).html @template _.extend(@model.attributes, {fullview: @fullview})
+			$(@el).html @template @model.toJSON()
 			$(@el).find('.comments-thread').html @commentsThread.render().el
 			unless window.current_user?
 				$(@el).find('.comments-text').hide()		

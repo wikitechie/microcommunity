@@ -4,16 +4,15 @@ define [
 	'cs!models/wikipage'
 ], (Backbone, Comments, WikiPage) ->
 	class Revision extends Backbone.RelationalModel
-		defaults:
-			body: "Some body"
-			page:
-				title : "Title"
-
+	
 		idAttribute: "_id"
+		
+		relations : [
+			{	type : Backbone.HasOne,	key : "page",	relatedModel : WikiPage	}
+		]		
 
 		initialize: (options)->
 			@comments = new Comments
-			@page = new WikiPage options.page
 
 
 
