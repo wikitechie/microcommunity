@@ -12,6 +12,7 @@ exports.index = function(req, res){
 var ObjectID = require('mongodb').ObjectID;
 
 exports.create = function(req, res){
+	console.log(req.body);
 	var activity = {
 		actor: new ObjectID(req.body.actor._id),
     verb: req.body.verb,
@@ -24,8 +25,9 @@ exports.create = function(req, res){
     
 	};
 	
-  
+
   provider.createActivity(activity, function(err, new_activity){
+	  console.log(new_activity)  
 	  return res.send(new_activity);     
   });	  
 };

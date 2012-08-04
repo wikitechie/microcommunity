@@ -7,6 +7,10 @@ define [
 	'cs!models/revision'
 	'cs!models/diff'
 	'cs!views/diff'
+	'jquery.gravatar'
+	'general'
+	'moment'
+	'diff'	
 ], ($, Backbone, template,Post, WikiPage, Revision, Diff, DiffView) ->
 	class ActivityView extends Backbone.View
 		className: "activity"
@@ -19,9 +23,7 @@ define [
 				#postId: @model.id
 
 			if @collection.length is 1
-				@singleMode = true
-
-			
+				@singleMode = true			
 			
 			@model = @collection.at(0)
 	
@@ -62,10 +64,11 @@ define [
 			_.bindAll @
 
 		render: ->
+			console.debug @model.toJSON().created_at
 			if @objectClass == "Post" && @model.get('verb') == 'create'
 				$(@el).html @view.render().el					
 			else		
-				$(@el).html @template(_.extend(@model.attributes, {message : @message(), actor : @model.actor}) )
+				$(@el).html @template _.extend(@model.toJSON(),  {message : @message()} )
 				#$(@el).find('.comments-thread').html @commentsThread.render().el
 				$(@el).find('.embeded-content').html @view.render().el
 				if @singleMode
@@ -82,12 +85,12 @@ define [
 		
 		message: ()->
 
-			name = @model.actor.email
+			name = @model.get('actor').get('email')
 			messages = 
 				Revision : 
-					edit: "#{name} edited a wikipage titled #{@model.object.page.get('title')}"
-					aggr_edit : "#{name} made several edits on the wikipage titled #{@model.object.page.get('title')}"
-					create: "#{name} created a wikipage titled #{@model.object.page.get('title')}"
+					edit: "#{name} edited a wikipage titled #{@model.get('object').page.get('title')}"
+					aggr_edit : "#{name} made several edits on the wikipage titled #{@model.get('object').page.get('title')}"
+					create: "#{name} created a wikipage titled #{@model.get('object').page.get('title')}"
 				Post: 
 					comment: "#{name} commented a post"
 					create: "#{name} created a new post"

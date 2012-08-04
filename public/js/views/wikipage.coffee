@@ -77,9 +77,10 @@ define [
 			old_text = @model.get('body')
 			@model.page.save({body: $(@el).find(".wikipage-body").val() },
 				success : (model, response)=>
+					console.debug model.toJSON().current_revision._id
 					activity = new Activity
 						actor : current_user
-						object: model.attributes.current_revision
+						object: model.toJSON().current_revision._id
 						object_type: "Revision"
 						verb: "edit"
 						diff: JsDiff.diffWords(old_text, model.get('current_revision').body)

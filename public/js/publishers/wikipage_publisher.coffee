@@ -42,6 +42,7 @@ define [
 			$("#wikipage-text").attr("rows","3")
 
 		post: ->
+			console.debug current_user
 			wikipage = new WikiPage
 			wikipage.set	{title: $("#wikipage-title").val(),	body: $("#wikipage-text").val()}
 			@disable()
@@ -54,7 +55,6 @@ define [
 						verb: "create"
 					activity.save(null,
 						success: (activity)=>
-							console.debug activity 
 							window.mediator.trigger("new-activity", activity)
 							@enable()
 							@reset()
