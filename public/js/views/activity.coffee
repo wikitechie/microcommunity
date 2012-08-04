@@ -17,7 +17,7 @@ define [
 		template: _.template(template)
 
 		initialize: ->
-
+		
 			#@commentsThread = new CommentsThreadView 
 				#collection: @model.comments
 				#postId: @model.id
@@ -34,6 +34,7 @@ define [
 				Post: Post.View
 				Revision: WikiPage.View
 
+			
 			@view = new views_classes[@objectClass]
 				model: @model.get('object')
 
@@ -48,7 +49,6 @@ define [
 						model : mydiff
 			else
 				@diffViews = []
-				console.debug 'here?'									
 				@collection.each (model)=>
 					if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 						mydiff = new Diff
@@ -64,7 +64,6 @@ define [
 			_.bindAll @
 
 		render: ->
-			console.debug @model.toJSON().created_at
 			if @objectClass == "Post" && @model.get('verb') == 'create'
 				$(@el).html @view.render().el					
 			else		

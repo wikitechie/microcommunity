@@ -75,9 +75,9 @@ define [
 		saveButton: ->
 			@disable()
 			old_text = @model.get('body')
-			@model.page.save({body: $(@el).find(".wikipage-body").val() },
+			@model.save({body: $(@el).find(".wikipage-body").val() },
 				success : (model, response)=>
-					console.debug model.toJSON().current_revision._id
+					console.debug model.toJSON().current_revision
 					activity = new Activity
 						actor : current_user
 						object: model.toJSON().current_revision._id
@@ -93,7 +93,7 @@ define [
 							$(@el).find(".buttons").html @editButtons						 						
 						) 			  		
 
-				url : "/api/wikipages/#{@model.page.id}"
+				url : "/api/wikipages/#{@model.get('page').id}"
 			)
 
 		cancelButton: ->
