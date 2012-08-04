@@ -2,7 +2,6 @@ define [
 	'jquery'
 	'backbone'
 	'cs!models/activity'
-	'cs!views/comments_thread'
 	'text!templates/wikipage/show.html'
 	'text!templates/wikipage/edit-buttons.html'
 	'text!templates/wikipage/save-buttons.html'
@@ -13,7 +12,7 @@ define [
 	'moment'
 	'diff'
 	
-], ($, Backbone, Activity,CommentsThreadView, show, edit_btns, save_btns, view_b, edit_b) ->
+], ($, Backbone, Activity, show, edit_btns, save_btns, view_b, edit_b) ->
 	class WikiPageView extends Backbone.View
 		className : "wikipage"
 
@@ -34,19 +33,12 @@ define [
 				@embeded = true
 			@fullview = false
 			@template = @normalTemplate
-			@commentsThread = new CommentsThreadView collection: @model.comments			
 
 		render: ->
 			$(@el).html @template @model.toJSON()
-			$(@el).find('.comments-thread').html @commentsThread.render().el
-			unless window.current_user?
-				$(@el).find('.comments-text').hide()		
-			else
-				$(@el).find(".buttons").html @editButtons
-		
-
+			if window.current_user?
+				$(@el).find(".buttons").html @editButtons		
 			$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get('body')
-		
 			@
 
 		expand: ->
