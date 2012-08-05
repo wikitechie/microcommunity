@@ -129,10 +129,10 @@ define [
 							aggr[collection.indexOf(compared)] = true
 				aggrs.push aggr	
 							
-				arrgs = @refine aggrs
-				_.each arrgs, (group) =>
-					if true
-						@appendAggr collection, _.keys(group)
+			arrgs = @refine aggrs
+			_.each arrgs, (group) =>
+				if true
+					@appendAggr collection, _.keys(group)
 
 		
 		refine : (array) ->
