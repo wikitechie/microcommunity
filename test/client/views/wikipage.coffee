@@ -26,15 +26,38 @@ define [
 			view = new WikiPageView
 				model : revision
 				
+			$("#playarea").append view.render().el								
+				
 		describe 'View Mode', ()->
 			it 'should have the proper model property', ()->
 				view.model.id.should.be.equal '501d3d264eada77e0a000002'
 				
 			it 'should render the model data', ()->
-				$(view.render().el).find('.wikipage-view-body').should.contain 'asdf'
-				$(view.render().el).find('.wikipage-title').should.contain 'WikiPage title'
+				$(view.el).find('.wikipage-view-body').should.contain 'asdf'
+				$(view.el).find('.wikipage-title').should.contain 'WikiPage title'
+			
+			it 'should not render edit buttons for visitors', ()->
+				$(view.el).find('.buttons').should.not.have('.edit-button')		
+			
+			it 'should render edit buttons for logged in users',()->
+				window.current_user = 
+					email : "email@service.com"
+				$(view.render().el).find('.buttons').should.have('.edit-button')	
+				window.current_user = null							
 
 		describe 'Edit Mode', ()->
-			it 'should render the model data'
+			before ()->
+				view.editButton()
+								
+			it 'should render the model data', ()->
+				$(view.el).find('textarea').should.have.text 'asdf'
+				
+			it 'should render the cancel and edit buttons', ()->
+				$(view.el).find('.buttons').should.have '.save-button'
+				$(view.el).find('.buttons').should.have '.cancel-button'			
+				
+		after ()->
+			$("#playarea").html ""
+
 				
 				
