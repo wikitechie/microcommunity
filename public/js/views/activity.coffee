@@ -5,22 +5,17 @@ define [
 	'cs!modules/post'
 	'cs!modules/wikipage'
 	'cs!models/revision'
-	'cs!models/diff'
 	'cs!views/diff'
 	'jquery.gravatar'
 	'general'
 	'moment'
 	'diff'	
-], ($, Backbone, template,Post, WikiPage, Revision, Diff, DiffView) ->
+], ($, Backbone, template,Post, WikiPage, Revision, DiffView) ->
 	class ActivityView extends Backbone.View
 		className: "activity"
 		template: _.template(template)
 
 		initialize: ->
-		
-			#@commentsThread = new CommentsThreadView 
-				#collection: @model.comments
-				#postId: @model.id
 
 			if @collection.length is 1
 				@singleMode = true			
@@ -30,33 +25,22 @@ define [
 			@objectClass = @model.get('object').constructor.name
 		
 			views_classes = 
-				#WikiPage : WikiPage.View
 				Post: Post.View
 				Revision: WikiPage.View
-
 			
 			@view = new views_classes[@objectClass]
 				model: @model.get('object')
 
 			if @singleMode			
 				if @objectClass == 'Revision' && @model.get('verb') == 'edit'
-					mydiff = new Diff
-						diff    : @model.get('object').get('diff')
-						summary : @model.get('object').get('summary')				
-						created_at : @model.get('object').get('created_at')
-				
 					@diffView = new DiffView 
-						model : mydiff
+						model : @model.get 'object'
 			else
 				@diffViews = []
 				@collection.each (model)=>
-					if @objectClass == 'Revision' && @model.get('verb') == 'edit'
-						mydiff = new Diff
-							diff    : model.get('object').get('diff')
-							summary : model.get('object').get('summary')
-							created_at : model.get('object').get('created_at')					
+					if @objectClass == 'Revision' && @model.get('verb') == 'edit'					
 						diffView = new DiffView 
-							model : mydiff				
+							model : model.get 'object'				
 						@diffViews.push diffView
 						
 

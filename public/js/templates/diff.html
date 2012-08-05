@@ -1,5 +1,6 @@
 <div class="span12">
 	<div class="diff">
+		<p class="diff-content"><%= generate_diff(diff).html() %>	</p>	
 		<p>		
 				<i><%= summary %></i>
 				<%  if( summary.length> 0) { %>				
@@ -11,7 +12,7 @@
 				</small>
 		</p>
 		
-		<p class="diff-content"><%= generate_diff(diff).html() %>	</p>
+
 		<hr />
 		
 	</div>

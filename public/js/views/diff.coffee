@@ -15,7 +15,7 @@ define [
 
 		render: ->	
 
-			$(@el).html @template @model.attributes
+			$(@el).html @template @model.toJSON()
 			@
 
 		toggleDiff : ->
