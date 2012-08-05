@@ -11,7 +11,6 @@ define [
 			'click .toggle-diff': 'toggleDiff'
 		
 		initialize: ->
-			console.debug 'diffff'				
 			_.bindAll @
 
 		render: ->	

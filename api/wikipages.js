@@ -26,15 +26,14 @@ exports.show = function(req, res){
 
 exports.update = function(req, res){	
 	var updated_wikipage = {
-		title: req.body.title, 
     body: req.body.body,
-    created_at : req.body.created_at,
-    current_revision: new ObjectID("501677e892b0ee87c6c98cc0")
-	};  
+    created_at : new Date()
+	};  	
 	
 	provider.updateWikiPage(req.params.wikipage, updated_wikipage, function(err, wikipage){
 		return res.send(wikipage); 	
-	});  
+	}); 
+	
 }
 
 

@@ -39,7 +39,7 @@ define [
 				model: @model.get('object')
 
 			if @singleMode			
-				if @objectClass == 'WikiPage' && @model.get('verb') == 'edit'
+				if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 					mydiff = new Diff
 						diff    : @model.get('diff')
 						summary : @model.get('summary')				

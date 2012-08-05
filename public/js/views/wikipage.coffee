@@ -67,12 +67,15 @@ define [
 		saveButton: ->
 			@disable()
 			old_text = @model.get('body')
-			@model.save({body: $(@el).find(".wikipage-body").val() },
+			@model.get('page').save({ body: $(@el).find(".wikipage-body").val() },
 				success : (model, response)=>
 					console.debug model.toJSON().current_revision
+					@model.set
+						body : model.toJSON().current_revision.body
+						_id : model.toJSON().current_revision._id
 					activity = new Activity
 						actor : current_user
-						object: model.toJSON().current_revision._id
+						object: model.toJSON().current_revision
 						object_type: "Revision"
 						verb: "edit"
 						diff: JsDiff.diffWords(old_text, model.get('current_revision').body)
@@ -81,8 +84,8 @@ define [
 						success: (activity)=>
 							@enable()
 							window.mediator.trigger("new-silent-activity", activity)
-							$(@el).find(".wikipage-body-area").html @wikipageBodyView body: model.get('current_revision').body
-							$(@el).find(".buttons").html @editButtons						 						
+							$(@el).find(".wikipage-body-area").html @wikipageBodyView body: model.get 'body'
+							$(@el).find(".buttons").html @editButtons							 						
 						) 			  		
 
 				url : "/api/wikipages/#{@model.get('page').id}"

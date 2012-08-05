@@ -46,6 +46,7 @@ define [
 				$(view.render().el).find('.buttons').should.have('.edit-button')	
 				window.current_user = null							
 
+		
 		describe 'Edit Mode', ()->
 			before ()->
 				view.editButton()
@@ -55,10 +56,30 @@ define [
 				
 			it 'should render the cancel and edit buttons', ()->
 				$(view.el).find('.buttons').should.have '.save-button'
-				$(view.el).find('.buttons').should.have '.cancel-button'			
+				$(view.el).find('.buttons').should.have '.cancel-button'		
 				
+			describe 'saving changes', ()->
+				xhr = null
+				requests = []
+				before (done)->
+					xhr = sinon.useFakeXMLHttpRequest()
+					sinon.spy(jQuery, "ajax");
+					xhr.onCreate = (xhr)->
+						requests.push xhr
+					$(view.el).find('textarea').html 'updated body...'
+					view.saveButton(done)				
+				
+				it 'should update the model', ()->
+					assert.ok jQuery.ajax.calledOnce
+					view.model.get('body').should.be.equal 'updated body...'
+			
+			after ()->
+				view.render()
+			
 		after ()->
 			$("#playarea").html ""
+			
+			
 
 				
 				
