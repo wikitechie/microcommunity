@@ -2,9 +2,10 @@ define [
 	'jquery'
 	'backbone'
 	'cs!models/wikipage'
+	'cs!models/revision'
 	'cs!models/activity'
 	'jquery.spin'	
-], ($, Backbone, WikiPage, Activity)->
+], ($, Backbone, WikiPage, Revision,Activity)->
 	class WikipagePublisher extends Backbone.View
 
 		button : '#wikipage-button'
@@ -46,10 +47,17 @@ define [
 			wikipage.set	{title: $("#wikipage-title").val(),	body: $("#wikipage-text").val()}
 			@disable()
 			wikipage.save(null,
-				success: (wikipage, response)=> 	
+				success: (wikipage, response)=> 
+				
+					
+					new_rev = new Revision
+					new_rev.set wikipage.get('current_revision')
+					
+					console.debug new_rev.toJSON()		
+					
 					activity = new Activity
-						actor : current_user
-						object: wikipage.attributes.current_revision
+						actor : current_user._id
+						object: new_rev.id.toString()
 						object_type: "Revision"
 						verb: "create"
 					activity.save(null,

@@ -1,6 +1,7 @@
 var provider = require('./../providers/activities-provider')
 	, schemas = require('./../providers/mongoose-schemas')
-	, mongoose = require('mongoose');
+	, mongoose = require('mongoose')
+	, database = require('./../providers/db');
 	
 exports.index = function(req, res){
 	provider.fetchActivities(req.query.from, req.query.to, function(err, activities){
@@ -13,20 +14,18 @@ var ObjectID = require('mongodb').ObjectID;
 
 exports.create = function(req, res){
 
+	console.log(req.body)
+
 	var activity = {
-		actor: req.body.actor._id,
+		actor: database.normalizeID(req.body.actor._id),
     verb: req.body.verb,
-    object: req.body.object,
+    object: database.normalizeID(req.body.object._id),
     object_type: req.body.object_type,
     //target: mongoose.Types.ObjectId(req.body.target._id),
     created_at : new Date(),
     diff: req.body.diff,
-    summary: req.body.summary
-    
+    summary: req.body.summary   
 	};
-	
-
-	
 
   provider.createActivity(activity, function(err, new_activity){
 	  return res.send(new_activity);     

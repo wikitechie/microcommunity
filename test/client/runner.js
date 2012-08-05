@@ -4,6 +4,7 @@ require([
 	'cs!/models/comment',
 	'cs!/models/activity',
 	'cs!/models/revision',	
+	'cs!/models/wikipage',
 	'cs!/views/post',
 	'cs!/views/wikipage',
 	'cs!/views/comment',

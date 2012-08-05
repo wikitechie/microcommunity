@@ -19,8 +19,6 @@ exports.setup = function (database){
 
 exports.createActivity = function(attr, callback){
 
-	console.log(attr)
-
 	db.collection('activities', function(err, collection){
 		collection.insert(attr, function(err, activity){
 			exports.fetchActivity(activity[0]._id, function(err, joined_activity){

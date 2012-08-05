@@ -53,11 +53,11 @@ define [
 			post.save(null,
 				success: (post, response)=> 	
 					activity = new Activity
-						actor : current_user
-						object: post.attributes
+						actor : current_user._id
+						object: post.id.toString()
 						object_type: "Post"
 						verb: "create"
-					activity.save(null,
+					activity.save({},
 						success: (activity)=> 
 							window.mediator.trigger("new-activity", activity)
 							@enable()
