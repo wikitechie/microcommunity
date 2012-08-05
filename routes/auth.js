@@ -1,8 +1,11 @@
 var flash = require('connect-flash')
 	, passport = require('passport')
-	, schemas = require('./../providers/mongoose-schemas') ;
+	, users_provider = require('./../providers/users-provider')
 
-exports.install = function(app){
+
+exports.install = function(app, db){
+
+	users_provider.setup(db)
 
 	app.get('/account', ensureAuthenticated, function(req, res){
 		res.render('account', { user: req.user });
@@ -21,18 +24,17 @@ exports.install = function(app){
 	app.post('/signup', function(req, res){
 
 		if(req.body.password == req.body.passwordconf) {
-			var user;
-			user = new schemas.User({
+			var user = {
 				email: req.body.email,
 				password: req.body.password
-
-			});
-			user.save(function(err) {
+			}
+			
+			users_provider.create(user, function(err,user){
 				if (!err) {
 				  console.log("user created");
 					return res.redirect('/');		    
-				}
-			});	
+				}				
+			});
 		}
 
 	});

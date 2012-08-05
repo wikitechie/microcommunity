@@ -15,6 +15,7 @@ var express = require('express')
   , async = require('async')
   , Resource = require('express-resource')
   , activities_provider = require('./providers/activities-provider')
+  , users_provider = require('./providers/users-provider')  
   , schemas = require('./providers/mongoose-schemas')
   , database = require('./providers/db');
 
@@ -24,6 +25,8 @@ var db;
 database.connectDB(function(err, database){
 	db = database;
 	activities_provider.setup(database);
+	users_provider.setup(database);	
+	console.log( 'Connection to database established...')
 });
 
 
@@ -37,7 +40,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-	schemas.User.findById(id, function(err, user) {
+	users_provider.fetch(id, function(err, user) {
 		done(err, user);
   });
 });
@@ -48,18 +51,18 @@ passport.deserializeUser(function(id, done) {
 //   with a user object.  In the real world, this would query a database;
 //   however, in this example we are using a baked-in set of users.
 passport.use(new LocalStrategy(
-  function(email, password, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {     
-		 	schemas.User.findOne({ email: email }, function(err, user){
-				  if (err) { return done(err); }
-				  if (!user) { return done(null, false, { message: 'Unknown email ' + email }); }
-				  if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
-				  return done(null, user);
-			});    	
-    });
-  }
-));
+	function(email, password, done) {
+  // asynchronous verification, for effect...
+		process.nextTick(function () {         
+			users_provider.fetchByEmail(email, function(err, user){
+				if (err) { return done(err); }
+				if (!user) { return done(null, false, { message: 'Unknown email ' + email }); }
+				if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+			return done(null, user);
+  	})
+	});    	
+}));
+
 
 
 var app = express.createServer();
@@ -94,7 +97,7 @@ app.resource('api/activities', require('./api/activities'));
 
 //authentication pages
 var auth = require('./routes/auth');
-auth.install(app);
+auth.install(app, db);
 
 //main app
 app.get('/', function(req, res){

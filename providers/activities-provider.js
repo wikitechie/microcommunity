@@ -38,7 +38,6 @@ exports.fetchActivity = function (activity, callback){
 		function(err, activity){
 			db.collection('users', function(err, users){
 				users.findOne({_id: database.normalizeID(activity.actor)}, function(err, actor){
-					console.log(actor)
 					var providers_index = {
 					WikiPage : wikipages_provider,
 					Revision : revisions_provider,
