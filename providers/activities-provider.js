@@ -13,11 +13,13 @@ exports.setup = function (database){
 	db = database;
 	wikipages_provider.setup(database);
 	revisions_provider.setup(database);	
-	//posts_provider.setup(database);	
+	posts_provider.setup(database);	
 	return db;
 };
 
 exports.createActivity = function(attr, callback){
+
+	console.log(attr)
 
 	db.collection('activities', function(err, collection){
 		collection.insert(attr, function(err, activity){
@@ -47,7 +49,7 @@ exports.fetchActivity = function (activity, callback){
 
 					var provider = providers_index[activity.object_type];
 
-					provider.fetch(activity.object, function(err, object){
+					provider.fetch(database.normalizeID(activity.object), function(err, object){
 					var joined_activity = {
 						_id : activity._id,
 						actor : actor,

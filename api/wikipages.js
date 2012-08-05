@@ -34,7 +34,6 @@ exports.update = function(req, res){
 	
 	
 	provider.updateWikiPage(req.params.wikipage, updated_wikipage, function(err, wikipage){
-		console.log(wikipage);
 		return res.send(wikipage); 	
 	}); 
 	

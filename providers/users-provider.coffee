@@ -4,8 +4,8 @@ database = require('./db')
 
 db = null
 
-exports.setup = (database) ->
-	db = database	
+exports.setup = (mydb) ->
+	db = mydb	
 	
 exports.fetch = (id, callback)->
 	id = database.normalizeID(id)

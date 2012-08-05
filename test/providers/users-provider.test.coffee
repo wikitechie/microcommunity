@@ -20,8 +20,8 @@ describe 'Users Provider', ()->
 	before (done)->
 		database.connectDB (err, database)->
 			db = database
-			users_provider.setup database
-			done()
+			users_provider.setup db
+			resetDB(done)
 			
 	describe 'create', ()->
 		created = null
@@ -71,6 +71,9 @@ describe 'Users Provider', ()->
 				
 		after (done)->
 			resetDB(done)
+			
+	after ()->
+		db.close()
 			
 			
 	

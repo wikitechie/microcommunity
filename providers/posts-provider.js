@@ -1,24 +1,32 @@
 var mongoose = require('mongoose')
   , async = require('async')
   , comments_provider = require('./comments-provider')
-  , schemas = require('./../providers/mongoose-schemas'); 
+  , users_provider = require('./users-provider')
+  , database = require('./db')
+  , schemas = require('./../providers/mongoose-schemas')
+  , _ = require('underscore'); 
 
-exports.fetch = function (post, callback){
-	schemas.Post.findById(post, function(err, post) {
-  	schemas.User.findById(post.user, function(err, user){
-  		comments_provider.fetchJoinedComments(post.comments, function(err, joined_comments){  		
-				var joined_post = {
-					_id  : post._id,
-					name : post.name,
-					text : post.text,
-					user : user,
-					created_at : post.created_at,
-					comments: joined_comments
-				};				
-				callback(null, joined_post);		  	 		
-  		})  
-  	})   	
-	});
+var db;
+
+exports.setup = function (database){
+	db = database;
+	users_provider.setup(database);
+};
+
+
+exports.fetch = function (id, callback){
+
+	var post = database.normalizeID(id);
+	db.collection('posts', function(err, posts){
+		posts.findOne( { _id : post }, function(err, post){
+			users_provider.fetch(post.user, function(err, user){
+	  		comments_provider.fetchJoinedComments(post.comments, function(err, joined_comments){
+	  			_.extend(post, { user : user, comments : joined_comments})	 
+	  			callback(err, post)
+	  		}) 						
+			})			
+		})	
+	})	
 }
 
 
@@ -60,14 +68,17 @@ exports.fetchPosts = function (callback){
 
 
 exports.createPost = function(attr, callback){
-  var post = new schemas.Post(attr);
-  post.save(function(err) {
-  	exports.fetch(post, function(err, post){
-  		callback(err, post);
-  	});
-  
-  	
-  });
+
+	_.extend(attr, {comments : []})
+
+	db.collection('posts', function(err, posts){
+		posts.insert(attr, function(err, docs){
+			exports.fetch(docs[0]._id, function(err, new_post){
+				callback(err, new_post);
+			})
+		});
+	});
+
 }
 
 exports.model = schemas.Post;

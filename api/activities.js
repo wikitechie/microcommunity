@@ -12,10 +12,11 @@ exports.index = function(req, res){
 var ObjectID = require('mongodb').ObjectID;
 
 exports.create = function(req, res){
+
 	var activity = {
-		actor: new ObjectID(req.body.actor._id),
+		actor: req.body.actor._id,
     verb: req.body.verb,
-    object: new ObjectID(req.body.object._id),
+    object: req.body.object,
     object_type: req.body.object_type,
     //target: mongoose.Types.ObjectId(req.body.target._id),
     created_at : new Date(),
@@ -23,6 +24,8 @@ exports.create = function(req, res){
     summary: req.body.summary
     
 	};
+	
+
 	
 
   provider.createActivity(activity, function(err, new_activity){
