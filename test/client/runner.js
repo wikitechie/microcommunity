@@ -14,7 +14,8 @@ require([
 ], function(){
 	"use strict";
 	mocha
-		.run(function(){			
+		.run(function(){
+			$('#playarea').html('')
 		});		
 });
 
