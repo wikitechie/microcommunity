@@ -83,7 +83,9 @@ exports.updateWikiPage = function(id, updated, callback){
 			var revision = {
 				page : wikipage._id,
 				body : updated.body,
-				created_at : new Date()						
+				created_at : new Date(),
+				summary : updated.summary,
+				diff : updated.diff									
 			};									
 							
 			

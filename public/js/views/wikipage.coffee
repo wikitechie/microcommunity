@@ -67,7 +67,7 @@ define [
 		saveButton: ->
 			@disable()
 			old_text = @model.get('body')
-			@model.get('page').save({ body: $(@el).find(".wikipage-body").val() },
+			@model.get('page').save({ body: $(@el).find(".wikipage-body").val(), summary : $(@el).find(".wikipage-summary").val(), diff : JsDiff.diffWords(old_text, $(@el).find(".wikipage-body").val() )  },
 				success : (model, response)=>
 					console.debug model.toJSON().current_revision
 					@model.set
@@ -78,8 +78,6 @@ define [
 						object: model.toJSON().current_revision
 						object_type: "Revision"
 						verb: "edit"
-						diff: JsDiff.diffWords(old_text, model.get('current_revision').body)
-						summary: $(@el).find(".wikipage-summary").val()
 					activity.save(null,
 						success: (activity)=>
 							@enable()

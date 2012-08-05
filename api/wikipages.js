@@ -27,10 +27,14 @@ exports.show = function(req, res){
 exports.update = function(req, res){	
 	var updated_wikipage = {
     body: req.body.body,
-    created_at : new Date()
+    created_at : new Date(),
+    summary : req.body.summary,
+    diff : req.body.diff
 	};  	
 	
+	
 	provider.updateWikiPage(req.params.wikipage, updated_wikipage, function(err, wikipage){
+		console.log(wikipage);
 		return res.send(wikipage); 	
 	}); 
 	

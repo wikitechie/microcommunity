@@ -41,9 +41,9 @@ define [
 			if @singleMode			
 				if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 					mydiff = new Diff
-						diff    : @model.get('diff')
-						summary : @model.get('summary')				
-						created_at : @model.get('created_at')
+						diff    : @model.get('object').get('diff')
+						summary : @model.get('object').get('summary')				
+						created_at : @model.get('object').get('created_at')
 				
 					@diffView = new DiffView 
 						model : mydiff
@@ -52,9 +52,9 @@ define [
 				@collection.each (model)=>
 					if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 						mydiff = new Diff
-							diff    : model.get('diff')
-							summary : model.get('summary')
-							created_at : model.get('created_at')					
+							diff    : model.get('object').get('diff')
+							summary : model.get('object').get('summary')
+							created_at : model.get('object').get('created_at')					
 						diffView = new DiffView 
 							model : mydiff				
 						@diffViews.push diffView
