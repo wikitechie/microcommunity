@@ -37,6 +37,7 @@ define [
 				$(view.el).find('.wikipage-title').should.contain 'WikiPage title'
 			
 			it 'should not render edit buttons for visitors', ()->
+				window.current_user = null
 				$(view.el).find('.buttons').should.not.have('.edit-button')		
 			
 			it 'should render edit buttons for logged in users',()->
