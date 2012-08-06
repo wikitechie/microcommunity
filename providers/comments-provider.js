@@ -15,7 +15,7 @@ exports.addComment = function (comment, collection, id, callback){
 	db.collection(collection, function(err, collection){
 		collection.update(
 			{ _id :  database.normalizeID(id) },
-			{ $push : {comments: comment } }, 
+			{ $push : { comments: comment } }, 
 			function(err) {			
 				exports.fetchJoinedComment(comment, function(err, joined_comment){
 					callback(err, joined_comment)							

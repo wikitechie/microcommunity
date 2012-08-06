@@ -3,6 +3,8 @@ process.env.NODE_ENV = 'test';
 assert = require("assert")
 database = require('./../../providers/db')
 posts_provider = require('./../../providers/posts-provider')
+wikipages_provider = require('./../../providers/wikipages-provider')
+revisions_provider = require('./../../providers/revisions-provider')
 users_provider = require('./../../providers/users-provider')
 comments_provider = require('./../../providers/comments-provider')
 
@@ -20,15 +22,21 @@ describe 'Comments Provider', ()->
 	post = null
 	user = null
 	comment = null
+	wikipage = null	
 	new_comment = null
 	returned_comment = null
+
 
 	before (done)->
 		database.connectDB (err, database)->
 			db = database
+			
 			users_provider.setup database
 			posts_provider.setup database
 			comments_provider.setup database			
+			wikipages_provider.setup database	
+			revisions_provider.setup database				
+			
 			resetDB ()->
 				user_attr = 
 					email : "email@service.com"
@@ -43,19 +51,24 @@ describe 'Comments Provider', ()->
 				
 					posts_provider.createPost post_attr, (err, p)->
 						post = p
-			
-						comment = 
-							text : "Hehe!"
-							user : user._id
-							created_at : new Date()							
-			
-						done()		
-			
-	describe 'Posts Comments', ()->
-
-	
-		describe 'creating a new comment', ()->
 						
+						wikipage_attr = 
+							title : "Title",
+							body  : "Body",
+							created_at : new Date()  		
+						
+				
+						wikipages_provider.createWikiPage wikipage_attr, (err, new_wikipage)->	
+							wikipage = new_wikipage		
+							comment = 
+								text : "Hehe!"
+								user : user._id
+								created_at : new Date()							
+			
+							done()		
+			
+	describe 'Posts Comments', ()->	
+		describe 'creating a new comment', ()->						
 			it 'should add the comment to the post object', (done)->								
 				comments_provider.addComment comment, 'posts', post._id, (err, c)->
 					returned_comment = c
@@ -80,6 +93,20 @@ describe 'Comments Provider', ()->
 					assert.ok joined.user._id
 					assert.equal joined.user._id.toString(), user._id.toString()
 					done()
-						
+					
+					
+	describe 'Revisions Comments', ()->
+		describe 'creating a new comment', ()->						
+			it 'should add the comment to the revision object', (done)->	
+				comment = 
+					text : "Hehe!"
+					user : user._id
+					created_at : new Date()					
+				comments_provider.addComment comment, 'revisions', wikipage.current_revision._id, (err, c)->
+					db.collection 'revisions', (err, collection)->
+						collection.findOne { _id : database.normalizeID(wikipage.current_revision._id)}, (err, new_revision)->
+							assert.ok new_revision.comments
+							assert.equal new_revision.comments.length, 1
+							done()											
 						
 
