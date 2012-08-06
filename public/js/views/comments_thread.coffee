@@ -18,10 +18,8 @@ define [
 			"keydown .comments-text": "newComment"
 
 		initialize: ->
-			_.bindAll @
-			
+			_.bindAll @			
 			@collection.bind 'add', @injectComment
-			@postId = @options.postId
 			@render()
 
 
@@ -56,7 +54,7 @@ define [
 			$(@el).find(".comments-text").val("")
 
 		addComment: (comment)->
-			comment.url = "api/posts/#{@postId}/comments/"
+			comment.url = "#{@model.urlRoot}/#{@model.id}/comments/"
 			comment.save()
 			@collection.add comment
 			$(@el).find(".comments-text").val("")

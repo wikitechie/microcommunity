@@ -14,7 +14,7 @@ define [
 		initialize: ->
 			@commentsThread = new CommentsThreadView 
 				collection: @model.get('comments')
-				postId: @model.id			
+				model: @model
 			_.bindAll @
 
 		render: ->	
