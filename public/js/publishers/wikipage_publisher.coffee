@@ -48,19 +48,12 @@ define [
 			@disable()
 			wikipage.save(null,
 				success: (wikipage, response)=> 
-				
-					
-					new_rev = new Revision
-					new_rev.set wikipage.get('current_revision')
-					
-					console.debug new_rev.toJSON()		
-					
 					activity = new Activity
-						actor : current_user._id
-						object: new_rev.id.toString()
+						actor : current_user
+						object: wikipage.attributes.current_revision					
 						object_type: "Revision"
 						verb: "create"
-					activity.save(null,
+					activity.save({},
 						success: (activity)=>
 							window.mediator.trigger("new-activity", activity)
 							@enable()

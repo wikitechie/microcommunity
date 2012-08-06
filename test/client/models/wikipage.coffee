@@ -14,4 +14,4 @@ define [
 					"summary":null,
 					"created_at":"2012-08-04T15:17:58.112Z"
 					"_id":"501d3d264eada77e0a000002"
-					"title":"asdf"
+				"title":"asdf"

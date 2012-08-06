@@ -14,13 +14,14 @@ define [
 		# call of the RelationalModel constructor, in order to push
 		# the proper relation depending on the right object_type in the
 		# JSON object passed to it	
-		constructor: (attributes, options)->		
+		constructor: (attributes, options)->	
 			model_classes = 
 				Post: Post
 				Revision : Revision						
-
+			
 			if attributes.object_type?
-				@relations.push 
+
+				@relations[1] = 
 					type : Backbone.HasOne
 					key : "object"
 					relatedModel : model_classes[attributes.object_type]
@@ -34,7 +35,5 @@ define [
 		url: ->
 			"/api/activities/"
 
-		initialize: ()->
-			@post = new Post
 
 

@@ -125,7 +125,7 @@ define [
 				aggr[collection.indexOf(scanned)]	= true
 				collection.each (compared) =>				
 					if scanned.id isnt compared.id
-						if (object_type == 'Revision') and (scanned.get('object').get('page').id is compared.get('object').get('page').id) and (verb == compared.get 'verb') and (actor.id is compared.get('actor').id)
+						if (object_type == 'Revision') and (compared.get('object_type') == 'Revision') and (scanned.get('object').get('page').id is compared.get('object').get('page')._id) and (verb == compared.get 'verb') and (actor.id is compared.get('actor').id)
 							aggr[collection.indexOf(compared)] = true
 				aggrs.push aggr	
 							

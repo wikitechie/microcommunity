@@ -66,11 +66,13 @@ define [
 							email:"actor@email.com"
 						object:
 							page:
+								_id:"501a18146affaaa50e000003"
 								title: "asdf"
-								body:"asdf"
-								summary:null
-								created_at:"2012-08-02T06:03:00.566Z"
-								_id:"501a18146affaaa50e000002"																								
+								created_at:"2012-08-02T06:03:00.566Z"								
+							body:"asdf"
+							summary: null
+							created_at:"2012-08-02T06:03:00.566Z"
+							_id:"501a18146affaaa50e000002"																								
 						object_type : "Revision"											
 						verb:"create"
 						created_at:"2012-08-02T05:27:16.831Z"		
@@ -78,6 +80,8 @@ define [
 				it 'should have an object association to a Revision model', ()->
 					assert.ok activity.get 'object'
 					assert.equal activity.get('object').constructor.name, 'Revision'
+					assert.equal activity.get('object').id, "501a18146affaaa50e000002"
+					
 						
 											
 		
