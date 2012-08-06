@@ -48,5 +48,13 @@ define [
 				assert.ok revision.get('comments')
 				revision.get('comments').each (comment)->
 					assert.equal comment.url(), "/api/revisions/501d3d264eada77e0a000002/comments"
-		
+					
+		describe 'Revision-User association', ()->			
+			it 'should have a user association', ()->
+				assert.ok revision.get('user')
+				assert.equal revision.get('user').constructor.name, "User"
+				
+			it 'should be associated to the right user', ()->
+				assert.equal revision.get('user').get('email'), "email@service.com"
+				assert.equal revision.get('user').id, "5006de43a836cb97c144ff81"			
 			

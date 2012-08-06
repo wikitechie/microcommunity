@@ -1,8 +1,9 @@
 define [
 	'backbone'
-	'cs!models/comment'
+	'cs!models/user'
+	'cs!models/comment'	
 	'cs!models/wikipage'
-], (Backbone, Comment, WikiPage) ->
+], (Backbone, User, Comment, WikiPage) ->
 	class Revision extends Backbone.RelationalModel
 	
 		idAttribute: "_id"
@@ -10,11 +11,11 @@ define [
 		relations : [
 			{	type : Backbone.HasOne,	key : "page",	relatedModel : WikiPage	}
 			{	type : Backbone.HasMany,	key : "comments",	relatedModel : Comment	}
+			{	type : Backbone.HasOne,	key : "user",	relatedModel : User	}			
 		]		
 
 		initialize: ()->
-			@get('comments').each (comment) ->
-				comment.url = "/api/revisions/#{@id}/comments"
+			@get('comments').url = "/api/revisions/#{@id}/comments"
 
 
 
