@@ -17,7 +17,10 @@ var express = require('express')
   , activities_provider = require('./providers/activities-provider')
   , users_provider = require('./providers/users-provider')  
   , schemas = require('./providers/mongoose-schemas')
-  , database = require('./providers/db');
+  , database = require('./providers/db')
+  
+  , comments_api = require('./api/comments')
+  ;
 
 
 
@@ -26,6 +29,7 @@ database.connectDB(function(err, database){
 	db = database;
 	activities_provider.setup(database);
 	users_provider.setup(database);	
+	comments_api.setup(database)
 	console.log( 'Connection to database established...')
 });
 
@@ -91,7 +95,7 @@ app.configure('development', function(){
 });
 
 app.resource('api/posts', require('./api/posts'));
-app.resource('api/:collection/:id/comments', require('./api/comments'));    
+app.resource('api/:collection/:id/comments', comments_api);    
 app.resource('api/wikipages', require('./api/wikipages'));
 app.resource('api/activities', require('./api/activities'));        
 
