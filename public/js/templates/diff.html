@@ -1,24 +1,35 @@
 <div class="span12">
 	<div class="diff">
-		<div class="diff-content">
 		
-		<p><%= generate_diff(diff).html() %>	</p>
-		<div class="row-fluid">
-			<div class="comments-thread-area">
-			</div>
-		</div>		
-		
-		</div>	
+		<div class="attachment">
 		<p>		
 				<i><%= summary %></i>
-				<%  if( summary.length> 0) { %>				
+				<%  if( summary.length > 0) { %>				
 				<%= "--" %>				
-				<% } %>								
-				<small>
-					<%= "("+ moment(created_at).fromNow() +") "%>				
-					<a class="toggle-diff">Show difference</a> · <a>Vote-up</a> · <a >Comment</a>
-				</small>
+				<% } %>
+				<a href="#" class="toggle-diff" >Show difference</a>
+
+				<ul class ='control-menu'>
+					<li class="vote-up"><a href="#">Vote-up</a>  · </li> 
+					<li class="toggle-comment"><a href="#">Comment</a> · </li>		
+					<li class="comments-summary">
+						<i class="icon-thumbs-up" /> 2
+						<i class="icon-pencil" /> <%= comments.length %> 	
+						<p><small><%= "("+ moment(created_at).fromNow() +") "%></small></p>						
+					</li>			
+				</ul>			
+
 		</p>
+		
+		<div class="diff-content">
+			<pre><%= generate_diff(diff).html() %>	</pre>	
+		</div>
+
+		</div>				
+		<div class="comments-thread-area">
+		</div>
+
+		
 		<hr />
 		
 	</div>

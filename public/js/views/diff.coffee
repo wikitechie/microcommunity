@@ -10,6 +10,7 @@ define [
 	
 		events:
 			'click .toggle-diff': 'toggleDiff'
+			'click .toggle-comment': 'toggleComment'
 		
 		initialize: ->
 			@commentsThread = new CommentsThreadView 
@@ -18,10 +19,17 @@ define [
 			_.bindAll @
 
 		render: ->	
-
 			$(@el).html @template @model.toJSON()
-			$(@el).find('.comments-thread-area').html @commentsThread.render().el			
+			$(@el).find('.comments-thread-area').html @commentsThread.render().el	
+			#$(@el).find('.toggle-comment').hide()
+			#$(@el).find('.vote-up').hide()
+			$(@el).find('.comments-thread-area').hide()	
 			@
 
 		toggleDiff : ->
-			$(@el).find('.diff-content').slideToggle()
+			#$(@el).find('.toggle-comment').toggle()		
+			#$(@el).find('.vote-up').toggle()						
+			$(@el).find('.diff-content').slideToggle()		
+
+		toggleComment : ->
+			$(@el).find('.comments-thread-area').slideToggle()			
