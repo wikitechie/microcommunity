@@ -16,8 +16,6 @@ exports.setup = function (database){
 
 exports.fetch = function (id, callback){
 
-
-
 	var post = database.normalizeID(id);
 	db.collection('posts', function(err, posts){
 		posts.findOne( { _id : post }, function(err, post){

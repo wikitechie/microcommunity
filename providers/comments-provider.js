@@ -1,6 +1,8 @@
-var mongoose = require('mongoose')
-  , database = require('./db')
-  , async = require('async');
+var database = require('./db')
+  , cs = require('coffee-script')
+  , users_provider = require('./users-provider')  
+  , async = require('async')
+  , _ = require('underscore');
 
 var db;
 
@@ -10,52 +12,26 @@ exports.setup = function (database){
 
 
 exports.addComment = function (comment, collection, id, callback){
-
 	db.collection(collection, function(err, collection){
 		collection.update(
 			{ _id :  database.normalizeID(id) },
 			{ $push : {comments: comment } }, 
-			function(err) {
-				callback(err)			
+			function(err) {			
+				exports.fetchJoinedComment(comment, function(err, joined_comment){
+					callback(err, joined_comment)							
+				})
 			}
 		);	
 	})
 	
 }
 
-
-var Post = mongoose.model('Post', new mongoose.Schema({
-	user: mongoose.Schema.ObjectId, 
-  name: String,
-  text: String,
-  comments : [Comments],
-  created_at : Date
-}));
-
-var Comments = new mongoose.Schema({
-    name     : String
-  , text      : String
-  , user : mongoose.Schema.ObjectId
-  , created_at : Date
-});
-
-
-var User = mongoose.model('User', new mongoose.Schema({
-	email: String,
-	password: String
-}));
-
 exports.fetchJoinedComment = function (comment, callback){
-		User.findById(comment.user, function(err, user){
-			var joinedcomment = {
-				text : comment.text,
-				name : comment.name,
-				_id  : comment._id,
-				user : user,
-				created_at: comment.created_at
-			};			
-			callback(null, joinedcomment);						
-		}); 
+	users_provider.fetch(comment.user, function(err, user){	
+		_.extend(comment, {user : user})
+		callback(null, comment)	
+	})
+	
 }
 
 exports.fetchJoinedComments = function (comments, callback){
