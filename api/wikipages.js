@@ -1,7 +1,4 @@
-var provider = require('./../providers/wikipages-provider')
-	, schemas = require('./../providers/mongoose-schemas')
-	, mongoose = require('mongoose')
-	, ObjectID = require('mongodb').ObjectID;
+var provider = require('./../providers/wikipages-provider');
 	
 exports.create = function(req, res){
 

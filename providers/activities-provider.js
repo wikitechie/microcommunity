@@ -1,7 +1,5 @@
-var mongoose = require('mongoose')
-	, schemas = require('./../providers/mongoose-schemas')
-	, wikipages_provider = require('./../providers/wikipages-provider')
-	, coffee = require('coffee-script')
+var coffee = require('coffee-script')
+	,	wikipages_provider = require('./../providers/wikipages-provider')
 	, revisions_provider = require('./../providers/revisions-provider')
 	, posts_provider = require('./../providers/posts-provider')
 	, async = require('async')
@@ -39,9 +37,9 @@ exports.fetchActivity = function (activity, callback){
 			db.collection('users', function(err, users){
 				users.findOne({_id: database.normalizeID(activity.actor)}, function(err, actor){
 					var providers_index = {
-					WikiPage : wikipages_provider,
-					Revision : revisions_provider,
-					Post : posts_provider
+						WikiPage : wikipages_provider,
+						Revision : revisions_provider,
+						Post : posts_provider
 					};
 					
 

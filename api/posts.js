@@ -1,6 +1,6 @@
 var provider = require('./../providers/posts-provider')
-	, schemas = require('./../providers/mongoose-schemas')
-	, mongoose = require('mongoose');
+	, database = require('./../providers/db')
+
 	
 exports.index = function(req, res){
 	provider.fetchPosts(function(err, posts){
@@ -9,11 +9,10 @@ exports.index = function(req, res){
 };
 
 exports.create = function(req, res){
-
 	var post = {
     text: req.body.text,
     name: req.body.name,
-    user: mongoose.Types.ObjectId(req.body.user._id),
+    user: database.normalizeID(req.body.user._id),
     created_at : Date()
 	};
   
@@ -21,7 +20,6 @@ exports.create = function(req, res){
 	  return res.send(new_post);     
   });	  
 };
-
 
 exports.show = function(req, res){
 	provider.fetch(req.params.post, function(err, joined_post){

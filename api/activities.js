@@ -1,6 +1,4 @@
 var provider = require('./../providers/activities-provider')
-	, schemas = require('./../providers/mongoose-schemas')
-	, mongoose = require('mongoose')
 	, database = require('./../providers/db');
 	
 exports.index = function(req, res){
@@ -10,12 +8,7 @@ exports.index = function(req, res){
 };
 
 
-var ObjectID = require('mongodb').ObjectID;
-
 exports.create = function(req, res){
-
-	console.log(req.body)
-
 	var activity = {
 		actor: database.normalizeID(req.body.actor._id),
     verb: req.body.verb,
