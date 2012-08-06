@@ -13,6 +13,9 @@ define [
 			{	type : Backbone.HasMany,	key : "comments",	relatedModel : Comment	}
 			{	type : Backbone.HasOne,	key : "user",	relatedModel : User	}			
 		]		
+		
+		
+		urlRoot : '/api/revisions'
 
 		initialize: ()->
 			@get('comments').url = "/api/revisions/#{@id}/comments"

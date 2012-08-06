@@ -12,7 +12,8 @@ exports.create = function(req, res){
 		created_at : new Date()
 	};		
 
-	comments_provider.addComment(comment, 'posts', req.params.id, function(err, c){
+	comments_provider.addComment(comment, req.params.collection, req.params.id, function(err, c){
+		console.log(c)
 		res.send(c)
 	})
 
