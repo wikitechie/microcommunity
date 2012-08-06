@@ -17,44 +17,42 @@ resetDB = (callback)->
 
 describe 'Comments Provider', ()->
 
+	post = null
+	user = null
+	comment = null
+	new_comment = null
+	returned_comment = null
+
 	before (done)->
 		database.connectDB (err, database)->
 			db = database
 			users_provider.setup database
 			posts_provider.setup database
 			comments_provider.setup database			
-			resetDB(done)
+			resetDB ()->
+				user_attr = 
+					email : "email@service.com"
+					password : "Password"
+
+				users_provider.create user_attr, (err, created_user)->
+					user = created_user
+					post_attr = 
+						text: "A Post"
+						user: created_user._id
+						created_at : Date()	
+				
+					posts_provider.createPost post_attr, (err, p)->
+						post = p
 			
+						comment = 
+							text : "Hehe!"
+							user : user._id
+							created_at : new Date()							
+			
+						done()		
 			
 	describe 'Posts Comments', ()->
 
-		post = null
-		user = null
-		comment = null
-		new_comment = null
-		returned_comment = null
-		
-		before (done)->
-			user_attr = 
-				email : "email@service.com"
-				password : "Password"
-
-			users_provider.create user_attr, (err, created_user)->
-				user = created_user
-				post_attr = 
-					text: "A Post"
-					user: created_user._id
-					created_at : Date()	
-						
-				posts_provider.createPost post_attr, (err, p)->
-					post = p
-					
-					comment = 
-						text : "Hehe!"
-						user : user._id
-						created_at : new Date()							
-					
-					done()		
 	
 		describe 'creating a new comment', ()->
 						
@@ -82,7 +80,6 @@ describe 'Comments Provider', ()->
 					assert.ok joined.user._id
 					assert.equal joined.user._id.toString(), user._id.toString()
 					done()
-				
 						
 						
 

@@ -1,9 +1,7 @@
-var mongoose = require('mongoose')
-  , async = require('async')
+var async = require('async')
   , comments_provider = require('./comments-provider')
   , users_provider = require('./users-provider')
   , database = require('./db')
-  , schemas = require('./../providers/mongoose-schemas')
   , _ = require('underscore'); 
 
 var db;
@@ -81,4 +79,3 @@ exports.createPost = function(attr, callback){
 
 }
 
-exports.model = schemas.Post;
