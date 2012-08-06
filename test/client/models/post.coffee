@@ -41,14 +41,20 @@ define [
 			post = null
 			
 			before ()->
+				user = 
+					_id: "5006de43a836cb97c144ff81"
+					email: "email@service.com"				
 				post = new Post 
 					_id : "5016b37f1c97f88c0f00002f"
 					text: "Text"
 					created_at :"2012-07-30T16:17:03.000Z"
-					user : 
-						_id: "5006de43a836cb97c144ff81"
-						email: "email@service.com"
-					comments : []
+					user : user
+					comments : [
+						{text : "this is a comment",	user : user }
+						{text : "this is a comment",	user : user }						
+						{text : "this is a comment",	user : user }						
+					]
+					
 					
 			it 'should have a comments association', ()->					
 				assert.ok post.get('comments')

@@ -21,7 +21,8 @@ define [
 		urlRoot: "/api/posts"
 
 		initialize: ()->
-			@get('comments').url = "/api/posts/#{@id}/comments"
+			@get('comments').each (comment) ->
+				comment.url = "/api/posts/#{@id}/comments"
 		
 			#@comments = new Comments
 			#if options? and options.comments? 
