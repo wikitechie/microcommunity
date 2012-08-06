@@ -33,4 +33,12 @@ define [
 			$(@el).find('.diff-content').slideToggle()		
 
 		toggleComment : ->
-			$(@el).find('.comments-thread-area').slideToggle()			
+			unless $(@el).find('.diff-content').is(":visible")
+				$(@el).find('.diff-content').slideToggle 'slow', ()=>
+					$(@el).find('.comments-thread-area').slideToggle()
+			else
+					$(@el).find('.comments-thread-area').slideToggle()	
+					
+					
+					
+					

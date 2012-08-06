@@ -1,12 +1,12 @@
 <div class ="row-fluid">
 	<div class='avatar'>
-		<a href='#'>
+		<a>
 		<img class="avatar-img" src="<%= $.gravatar(user.email, { size: 50 }) %>" />	
 		</a>		
 	</div>
 	<div class="mainWrapper comments">	
 		<p>
-			<a href="#"><%= user.email %> </a>
+			<a><%= user.email %> </a>
 			<%= text %>
 			<br />
 			<small><%= moment(created_at).fromNow() %></small>

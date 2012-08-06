@@ -50,7 +50,7 @@ body {
 }
 
 .mainWrapper .comments {
-  width: 520px;
+  width: 510px;
 }
 
 .avatar {
@@ -90,9 +90,14 @@ ins {
 
 .control-menu {
 	list-style-type:none;
-	margin:0;
+	margin: 4px 4px 6px 0px;
 	padding:0;
 }
+
+.control-menu p {
+	display:inline;
+}
+
 
 .control-menu li {
 	display:inline;
@@ -115,14 +120,10 @@ ins {
 	vertical-align: middle;
 }
 
-.control-menu p {
-	margin-left:4px;
-	display:inline;
-}
 
 .comments-thread {
 	background-color:rgb(245, 245, 245);
-	padding:5px ;
+	padding:5px 10px 5px 10px;
 	border : 1px solid rgba(0, 0, 0, 0.05);
 }
 
