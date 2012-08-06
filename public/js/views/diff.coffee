@@ -11,7 +11,8 @@ define [
 		events:
 			'click .toggle-diff': 'toggleDiff'
 			'click .toggle-comment': 'toggleComment'
-		
+			'click .comments-summary': 'toggleComment'
+								
 		initialize: ->
 			@commentsThread = new CommentsThreadView 
 				collection: @model.get('comments')

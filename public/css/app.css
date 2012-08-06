@@ -108,11 +108,14 @@ ins {
 	display:block;
 }
 
+.comments-summary:hover {
+	background-color:rgb(217, 237, 247);
+}
 .comments-summary i {
 	vertical-align: middle;
 }
 
-.comments-summary p {
+.control-menu p {
 	margin-left:4px;
 	display:inline;
 }
