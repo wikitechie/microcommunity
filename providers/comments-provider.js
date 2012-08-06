@@ -1,5 +1,28 @@
 var mongoose = require('mongoose')
+  , database = require('./db')
   , async = require('async');
+
+var db;
+
+exports.setup = function (database){
+	db = database;
+};
+
+
+exports.addComment = function (comment, collection, id, callback){
+
+	db.collection(collection, function(err, collection){
+		collection.update(
+			{ _id :  database.normalizeID(id) },
+			{ $push : {comments: comment } }, 
+			function(err) {
+				callback(err)			
+			}
+		);	
+	})
+	
+}
+
 
 var Post = mongoose.model('Post', new mongoose.Schema({
 	user: mongoose.Schema.ObjectId, 

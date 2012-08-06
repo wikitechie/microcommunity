@@ -4,19 +4,11 @@ var mongoose = require('mongoose')
   , _ = require('underscore')
   , LocalStrategy = require('passport-local').Strategy
   , async = require('async')
-  , schemas = require('./../providers/mongoose-schemas'); 
+  , schemas = require('./../providers/mongoose-schemas')
+  , comments_provider = require('./../providers/comments-provider'); 
 
 mongoose.connect('mongodb://localhost/microcommunity');
 
-exports.index = function(req, res){
-
-	schemas.Post.findById(req.params.id, function(err, post) {
-		if (!err) {
-			return res.send(post.comments);
-		}
-	});
-
-};
 
 exports.create = function(req, res){
 
