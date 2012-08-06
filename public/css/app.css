@@ -120,5 +120,13 @@ ins {
 	display:inline;
 }
 
+.comments-thread {
+	background-color:rgb(245, 245, 245);
+	padding:5px ;
+	border : 1px solid rgba(0, 0, 0, 0.05);
+}
 
+.comments-thread textarea {
+	margin: 0px;
+}
 
