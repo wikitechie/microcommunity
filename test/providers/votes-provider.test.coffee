@@ -74,6 +74,7 @@ describe 'Votes Provider', ()->
 						assert.ok votes_err		
 						done()
 						
+					
 	describe 'Down voting', ()->
 		it 'should vote it down, if the user votes for the first time', (done)->
 			votes_provider.down_vote user._id, revision._id, 'revisions', (votes_err)->
@@ -94,21 +95,28 @@ describe 'Votes Provider', ()->
 						assert.ok votes_err						
 						done()		
 						
-	describe 'fetch up votes', ()->
+	describe 'Fetching votes', ()->
 	
-		before ()->
-		it 'should fetch an array of up votes', (done)->
-			votes_provider.fetch_up_votes revision._id, 'revisions', (err, up_votes)->		
-				assert.ok up_votes
-				assert.ok up_votes.length
-				assert.equal up_votes.length, 1 
-				done()
+		describe 'fetch up votes', ()->	
+			it 'should fetch an array of up votes', (done)->
+				votes_provider.fetch_up_votes revision._id, 'revisions', (err, up_votes)->		
+					assert.ok up_votes
+					assert.ok up_votes.length
+					assert.equal up_votes.length, 1 
+					done()
 		
-	describe 'fetch down votes', ()->
-		it 'should fetch an array of down votes', (done)->
-			votes_provider.fetch_down_votes revision._id, 'revisions', (err, down_votes)->		
-				assert.ok down_votes
-				assert.ok down_votes.length
-				assert.equal down_votes.length, 1 
-				done()
+		describe 'fetch down votes', ()->
+			it 'should fetch an array of down votes', (done)->
+				votes_provider.fetch_down_votes revision._id, 'revisions', (err, down_votes)->		
+					assert.ok down_votes
+					assert.ok down_votes.length
+					assert.equal down_votes.length, 1 
+					done()
 				
+				
+	describe 'Reverse voting', ()->
+		describe 'Up-voting after down-voting', ()->
+			it 'should remove down-vote and add up-vote'
+	
+		describe 'Down-voting after up-voting', ()->
+			it 'should remove up-vote and add down-vote'	
