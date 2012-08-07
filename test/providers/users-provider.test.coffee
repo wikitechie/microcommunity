@@ -71,10 +71,5 @@ describe 'Users Provider', ()->
 				
 		after (done)->
 			resetDB(done)
-			
-	after ()->
-		db.close()
-			
-			
-	
+
 		

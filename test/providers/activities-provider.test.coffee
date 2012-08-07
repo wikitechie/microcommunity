@@ -3,6 +3,7 @@ process.env.NODE_ENV = 'test';
 assert = require("assert")
 activities_provider = require('./../../providers/activities-provider')
 wikipages_provider = require('./../../providers/wikipages-provider')
+users_provider = require('./../../providers/users-provider')
 database = require('./../../providers/db')
 
 db = null
@@ -16,11 +17,7 @@ resetDB = (done)->
 						docs.remove {}, ()->
 							db.collection 'revisions', (err, docs)->
 								docs.remove {}, ()->
-									db.close()
 									done()
-
-
-
 
 describe 'Activities provider', ()->
 
@@ -33,19 +30,21 @@ describe 'Activities provider', ()->
 			db = database
 			activities_provider.setup database
 			wikipages_provider.setup database
+			users_provider.setup database
+			
+			resetDB ()->
+				actor =		
+					email : "actor@email.com"
+					password : "Password"	
 
-			actor =		
-				email : "actor@email.com"
-				password : "Password"	
-
-			db.collection 'users', (err, users)->
-				users.insert actor, (err, user)->
-					actor = user[0]
+				users_provider.create actor, (err, user)->
+					actor = user
 					attr = 
 						title: "Title"
 						body: "Body"
+						user: actor._id
 						created_at : Date()
-				
+			
 					wikipages_provider.createWikiPage attr, (err, object)->
 						actor_id = actor._id
 						wikipage = object
@@ -58,7 +57,7 @@ describe 'Activities provider', ()->
 							activities.insert activity, (err, new_activity)->	
 								activity = new_activity[0]
 								done()						
-	
+
 	describe 'createActivity', ()->				
 		it 'should create a new activity object'
 
@@ -102,7 +101,5 @@ describe 'Activities provider', ()->
 		describe 'pagination', ()->
 			it 'should return the from the right point'
 			it 'should return the right number of objects'
-	
-	after (done)->
-		resetDB(done)		
+
 		

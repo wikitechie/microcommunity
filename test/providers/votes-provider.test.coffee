@@ -1,7 +1,8 @@
 process.env.NODE_ENV = 'test';
 
-assert = require("assert")
+assert = require "assert"
 database = require('./../../providers/db')
+votes_provider = require('./../../providers/votes-provider')
 wikipages_provider = require('./../../providers/wikipages-provider')
 revisions_provider = require('./../../providers/revisions-provider')
 users_provider = require('./../../providers/users-provider')
@@ -18,9 +19,8 @@ resetDB = (done)->
 							db.collection 'revisions', (err, docs)->
 								docs.remove {}, ()->
 									done()
-
-
-describe 'Revisions Provider', ()->
+									
+describe 'Votes Provider', ()->
 
 	revision = null
 	wikipage = null
@@ -32,8 +32,10 @@ describe 'Revisions Provider', ()->
 			wikipages_provider.setup database
 			revisions_provider.setup database
 			users_provider.setup database
+			votes_provider.setup database		
 			
-			resetDB ()->			
+			resetDB ()->	
+			
 				user_attr =
 					email : "isstaif@gmail.com"		
 					
@@ -51,20 +53,16 @@ describe 'Revisions Provider', ()->
 						wikipage = new_wikipage
 						done()
 
-	describe 'fetch', ()->
-		it 'should return the right revision', (done)->
-			revisions_provider.fetch revision._id, (err, right_revision)->
-				assert.equal right_revision._id.toString(), revision._id.toString()
-				done()
-			
-		it 'should return the revision joined to the right wikipage', (done)->
-			revisions_provider.fetch revision._id, (err, joined_revision)->
-				assert.equal joined_revision.page._id.toString(), wikipage._id.toString()
-				done()
-				
-		it 'should return the revision joined to the right user', (done)->
-			revisions_provider.fetch revision._id, (err, joined_revision)->
-				assert.equal joined_revision.user._id.toString(), user._id.toString()
-				done()
-		
 
+	describe 'Up voting', ()->
+		it 'should up vote it, if the user votes for the first time', ()->
+			votes_provider.up_vote user._id, revision._id, 'revisions', (err)->
+				db.collection 'revisions', (err, revisions)->
+					revisions.findOne { _id : revision._id }, (err, new_revision)->
+						assert.ok new_revision.up_votes
+						assert.equal new_revision.up_votes.length, 1
+						assert.equal new_revision.up_votes[0].user.toString(), user._id.toString()
+				
+		
+		
+		

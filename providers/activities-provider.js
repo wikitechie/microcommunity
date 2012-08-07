@@ -30,6 +30,7 @@ exports.createActivity = function(attr, callback){
 exports.fetchActivity = function (activity, callback){
 
 	activity = database.normalizeID(activity);
+	
 
 	db.collection('activities', function(err, collection){
 		collection.findOne({_id: activity},
@@ -45,17 +46,17 @@ exports.fetchActivity = function (activity, callback){
 
 					var provider = providers_index[activity.object_type];
 
-					provider.fetch(database.normalizeID(activity.object), function(err, object){
-					var joined_activity = {
-						_id : activity._id,
-						actor : actor,
-						object : object,
-						object_type : activity.object_type,
-						verb : activity.verb,
-						created_at: activity.created_at,
-						diff : activity.diff,
-						summary : activity.summary
-					};
+					provider.fetch(activity.object, function(err, object){
+						var joined_activity = {
+							_id : activity._id,
+							actor : actor,
+							object : object,
+							object_type : activity.object_type,
+							verb : activity.verb,
+							created_at: activity.created_at,
+							diff : activity.diff,
+							summary : activity.summary
+						};
 					callback(err, joined_activity);
 					}); 
 

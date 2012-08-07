@@ -53,8 +53,9 @@ describe 'Comments Provider', ()->
 						post = p
 						
 						wikipage_attr = 
-							title : "Title",
-							body  : "Body",
+							title : "Title"
+							body  : "Body"
+							user: created_user._id
 							created_at : new Date()  		
 						
 				

@@ -11,23 +11,25 @@ describe('WikiPages Provider', function(){
 	before(function(done){
 		database.connectDB(function(err, database){
 			db = database;
-			wikipages_provider.setup(database);
-			done()
+			wikipages_provider.setup(database);			
+			resetDatabase(done);
 		});
 	})
 
 
   
   describe('createWikipage', function(){
-  	before(function(done){
-  		var attr = {
-  			title : "Title",
-  			body  : "Body",
-  			created_at : new Date()  		
-  		} 		  		
-				
-			wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
-				done();
+  	before(function(done){  	
+			resetDatabase(function(){
+				var attr = {
+					title : "Title",
+					body  : "Body",
+					created_at : new Date()  		
+				} 		  		
+			
+				wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
+				resetDatabase(done);
+				});			
 			});
   	})
   
@@ -63,31 +65,30 @@ describe('WikiPages Provider', function(){
   			})
   		})  		
 		})
-		
-		
-		after(function(done){
-			resetDatabase(done);
-		});
+
   })
   
   describe('fetch', function(){
   	var wikipage_id, revision_id;
-  	before(function(done){
-  		var attr = {
-  			title : "Title",
-  			body  : "Body",
-  			created_at : new Date()  		
-  		} 		  		
+  	before(function(done){  		
+			resetDatabase(function(){
+				var attr = {
+					title : "Title",
+					body  : "Body",
+					created_at : new Date()  		
+				} 		  		
 		
-			wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
-				db.collection('wikipages', function(err, wikipages){
-					wikipages.findOne({}, function(err, wikipage){
-						wikipage_id = wikipage._id
-						revision_id = wikipage.current_revision
-						done()
+				wikipages_provider.createWikiPage(attr, function(err, new_wikipage){
+					db.collection('wikipages', function(err, wikipages){
+						wikipages.findOne({}, function(err, wikipage){
+							wikipage_id = wikipage._id
+							revision_id = wikipage.current_revision
+							done()
+						})
 					})
-				})
-			});
+				});					
+			
+			});  	  		
   	})
   	
   	it('should return a correct wikipage object', function(done){
@@ -119,10 +120,7 @@ describe('WikiPages Provider', function(){
 				done();
 			});
   	})
-  	
-		after(function(done){
-			resetDatabase(done);
-		});	
+
   })  
   
   
@@ -141,16 +139,17 @@ describe('WikiPages Provider', function(){
 			created_at : new Date()
 		}; 		
 
-  	before(function(done){
-
-			wikipages_provider.createWikiPage(attr, function(err, new_wikipage){		
-				wikipage_id = new_wikipage._id
-				first_revision = new_wikipage.current_revision._id		
-				wikipages_provider.updateWikiPage(new_wikipage._id.toString(), updated_wikipage, function(err, wikipage){
-					second_revision = wikipage.current_revision._id
-					done() 	
-				}); 					
-			})
+  	before(function(done){  	
+  		resetDatabase(function(){
+				wikipages_provider.createWikiPage(attr, function(err, new_wikipage){		
+					wikipage_id = new_wikipage._id
+					first_revision = new_wikipage.current_revision._id		
+					wikipages_provider.updateWikiPage(new_wikipage._id.toString(), updated_wikipage, function(err, wikipage){
+						second_revision = wikipage.current_revision._id
+						done() 	
+					}); 					
+				})  		  		
+  		})
   	})
   	
   	it('should create a new revision', function(done){
@@ -181,20 +180,11 @@ describe('WikiPages Provider', function(){
 	  		})
 	  	})
   	})  
-  	
-		after(function(done){
-			resetDatabase(done);
-		});        	
-   
+  	 
   
   })
   
-	after(function(done){
-		db.close()
-		done()
-
-	});  
-  
+ 
 	function resetDatabase(done){
 			db.collection('wikipages', function(err, wikipages){
 				wikipages.remove({})

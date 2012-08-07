@@ -1,5 +1,7 @@
 var  _ = require('underscore')
-  , database = require('./db');
+  , database = require('./db')
+  , revisions_provider = require('./revisions-provider')  
+  ;
 
 var db ;
 
@@ -13,13 +15,11 @@ exports.fetch = function (wikipage_id, callback){
 	wikipage_id = database.normalizeID(wikipage_id);
 
 	db.collection('wikipages', function(err, wikipages){
-		wikipages.findOne({_id: wikipage_id }, function(err, wikipage){
-			db.collection('revisions', function(err, revisions){
-				revisions.findOne( { _id: wikipage.current_revision }, function(err, revision){
-					_.extend(wikipage, {current_revision: revision});
-					callback(err, wikipage);			
-				});
-			});				
+		wikipages.findOne({_id: wikipage_id }, function(err, wikipage){		
+			revisions_provider.fetchWithoutPage( wikipage.current_revision , function(err, revision){
+				_.extend(wikipage, {current_revision: revision});
+				callback(err, wikipage);							
+			})		
 		});	
 
 	});	
@@ -60,7 +60,8 @@ exports.createWikiPage = function(attr, callback){
 					page : wikipage._id,
 					body : attr.body,
 					summary : attr.summary,
-					created_at : new Date()						
+					created_at : new Date()	,
+					user  : attr.user																	
 				};							
 				
 				exports.newRevision(wikipage, revision, function(err, new_wikipage){
@@ -85,7 +86,8 @@ exports.updateWikiPage = function(id, updated, callback){
 				body : updated.body,
 				created_at : new Date(),
 				summary : updated.summary,
-				diff : updated.diff									
+				diff : updated.diff,
+				user  : updated.user							
 			};									
 							
 			
