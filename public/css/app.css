@@ -92,6 +92,7 @@ ins {
 	list-style-type:none;
 	margin: 4px 4px 6px 0px;
 	padding:0;
+	display: block;
 }
 
 .control-menu p {
@@ -120,7 +121,6 @@ ins {
 	vertical-align: middle;
 }
 
-
 .comments-thread {
 	background-color:rgb(245, 245, 245);
 	padding:5px 10px 5px 10px;
@@ -130,4 +130,20 @@ ins {
 .comments-thread textarea {
 	margin: 0px;
 }
+
+.vote-controls-visual {
+	float: left;
+}
+
+.diff-comparison {
+	display: inline;
+	float: left;
+	background-color:rgb(245, 245, 245);
+	padding:5px 10px 5px 10px;
+	border : 1px solid rgba(0, 0, 0, 0.05);
+	margin : 0px 0px 10px 10px ;
+	clear: right;
+	width: 510px;	
+}
+
 

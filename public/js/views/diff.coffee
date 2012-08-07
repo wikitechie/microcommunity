@@ -22,15 +22,12 @@ define [
 		render: ->	
 			$(@el).html @template @model.toJSON()
 			$(@el).find('.comments-thread-area').html @commentsThread.render().el	
-			#$(@el).find('.toggle-comment').hide()
-			#$(@el).find('.vote-up').hide()
 			$(@el).find('.comments-thread-area').hide()	
+			$(@el).find('.vote-controls').hide()	
 			@
 
-		toggleDiff : ->
-			#$(@el).find('.toggle-comment').toggle()		
-			#$(@el).find('.vote-up').toggle()						
-			$(@el).find('.diff-content').slideToggle()		
+		toggleDiff : (callback)->			
+			$(@el).find('.diff-content').slideToggle()				
 
 		toggleComment : ->
 			unless $(@el).find('.diff-content').is(":visible")

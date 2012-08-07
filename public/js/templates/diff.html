@@ -2,11 +2,19 @@
 	<div class="diff">
 		
 		<div class="attachment">
+		
+		<div class ='row-fluid'>
 				
 		<div class="diff-content">
-			<pre><%= generate_diff(diff).html() %>	</pre>	
+			<div class="vote-controls-visual">
+				<i class="icon-chevron-up" /><br />
+				<i class="icon-chevron-down" />
+			</div>
+			<div class='diff-comparison'><%= generate_diff(diff).html() %></div>	
 		</div>
-				
+		
+		</div>
+
 		<ul class ='control-menu'>
 			<i><%= summary %></i>	
 			<%  if( summary.length > 0) { %>				
@@ -16,7 +24,8 @@
 				<i class="icon-thumbs-up" /> 2
 				<i class="icon-pencil" /> <%= comments.length %> 	
 			</li>
-			<li> · <a  class="toggle-diff" >Show difference</a> · </li>
+			<li> · <a class="toggle-diff" >Show difference</a> · </li>
+			
 			<li>
 				<p><small><%= "("+ moment(created_at).fromNow() +") "%></small></p>											
 			</li>
