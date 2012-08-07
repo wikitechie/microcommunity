@@ -55,14 +55,60 @@ describe 'Votes Provider', ()->
 
 
 	describe 'Up voting', ()->
-		it 'should up vote it, if the user votes for the first time', ()->
-			votes_provider.up_vote user._id, revision._id, 'revisions', (err)->
+		it 'should up vote it, if the user votes for the first time', (done)->
+			votes_provider.up_vote user._id, revision._id, 'revisions', (votes_err)->
 				db.collection 'revisions', (err, revisions)->
 					revisions.findOne { _id : revision._id }, (err, new_revision)->
 						assert.ok new_revision.up_votes
 						assert.equal new_revision.up_votes.length, 1
 						assert.equal new_revision.up_votes[0].user.toString(), user._id.toString()
+						done()
+						
+		it 'should not vote it, if the user has voted before', (done)->
+			votes_provider.up_vote user._id, revision._id, 'revisions', (votes_err)->
+				db.collection 'revisions', (err, revisions)->
+					revisions.findOne { _id : revision._id }, (err, new_revision)->
+						assert.ok new_revision.up_votes
+						assert.equal new_revision.up_votes.length, 1
+						assert.equal new_revision.up_votes[0].user.toString(), user._id.toString()
+						assert.ok votes_err		
+						done()
+						
+	describe 'Down voting', ()->
+		it 'should vote it down, if the user votes for the first time', (done)->
+			votes_provider.down_vote user._id, revision._id, 'revisions', (votes_err)->
+				db.collection 'revisions', (err, revisions)->
+					revisions.findOne { _id : revision._id }, (err, new_revision)->
+						assert.ok new_revision.down_votes
+						assert.equal new_revision.down_votes.length, 1
+						assert.equal new_revision.down_votes[0].user.toString(), user._id.toString()
+						done()
+						
+		it 'should not vote it, if the user has voted before', (done)->
+			votes_provider.down_vote user._id, revision._id, 'revisions', (votes_err)->
+				db.collection 'revisions', (err, revisions)->
+					revisions.findOne { _id : revision._id }, (err, new_revision)->
+						assert.ok new_revision.down_votes
+						assert.equal new_revision.down_votes.length, 1
+						assert.equal new_revision.down_votes[0].user.toString(), user._id.toString()
+						assert.ok votes_err						
+						done()		
+						
+	describe 'fetch up votes', ()->
+	
+		before ()->
+		it 'should fetch an array of up votes', (done)->
+			votes_provider.fetch_up_votes revision._id, 'revisions', (err, up_votes)->		
+				assert.ok up_votes
+				assert.ok up_votes.length
+				assert.equal up_votes.length, 1 
+				done()
+		
+	describe 'fetch down votes', ()->
+		it 'should fetch an array of down votes', (done)->
+			votes_provider.fetch_down_votes revision._id, 'revisions', (err, down_votes)->		
+				assert.ok down_votes
+				assert.ok down_votes.length
+				assert.equal down_votes.length, 1 
+				done()
 				
-		
-		
-		
