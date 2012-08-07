@@ -56,14 +56,16 @@ exports.createWikiPage = function(attr, callback){
 		wikipages_collection.insert(wikipage_attr, function(err, docs){
 				var wikipage = docs[0];
 				
+				var user_id = database.normalizeID(attr.user);				
+				
 				var revision = {
 					page : wikipage._id,
 					body : attr.body,
 					summary : attr.summary,
 					created_at : new Date()	,
-					user  : attr.user																	
+					user  : user_id																
 				};							
-				
+
 				exports.newRevision(wikipage, revision, function(err, new_wikipage){
 					callback(err, new_wikipage);
 				});				
@@ -76,10 +78,11 @@ exports.createWikiPage = function(attr, callback){
 exports.updateWikiPage = function(id, updated, callback){
 
 	var object =  database.normalizeID(id);
+	console.log(updated)
 
 	db.collection('wikipages', function(err, wikipages){
 		wikipages.findOne({_id: object }, function(err, wikipage){
-		
+			var user_id = database.normalizeID(updated.user);
 			
 			var revision = {
 				page : wikipage._id,
@@ -87,9 +90,8 @@ exports.updateWikiPage = function(id, updated, callback){
 				created_at : new Date(),
 				summary : updated.summary,
 				diff : updated.diff,
-				user  : updated.user							
-			};									
-							
+				user  : user_id							
+			};							
 			
 			exports.newRevision(wikipage, revision, function(err, wikipage){
 				callback(err, wikipage);

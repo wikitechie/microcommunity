@@ -5,7 +5,8 @@ exports.create = function(req, res){
 	var attr = {
 		title: req.body.title, 
     body: req.body.body,
-    created_at : Date()
+    created_at : Date(),
+    user : req.body.user
 	};
 	
 	provider.createWikiPage(attr, function(err, new_wikipage){
@@ -26,9 +27,9 @@ exports.update = function(req, res){
     body: req.body.body,
     created_at : new Date(),
     summary : req.body.summary,
-    diff : req.body.diff
+    diff : req.body.diff,
+    user : req.body.user
 	};  	
-	
 	
 	provider.updateWikiPage(req.params.wikipage, updated_wikipage, function(err, wikipage){
 		return res.send(wikipage); 	

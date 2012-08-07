@@ -44,7 +44,10 @@ define [
 
 		post: ->
 			wikipage = new WikiPage
-			wikipage.set	{title: $("#wikipage-title").val(),	body: $("#wikipage-text").val()}
+			wikipage.set	
+				title: $("#wikipage-title").val()
+				body: $("#wikipage-text").val()
+				user: current_user._id
 			@disable()
 			wikipage.save(null,
 				success: (wikipage, response)=> 
