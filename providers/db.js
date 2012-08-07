@@ -18,6 +18,8 @@ exports.connectDB = function(callback){
 
 exports.normalizeID = function(id){
 	var object;
+	if (id === undefined) 
+		throw new Error('undefined ID is given');
 	if(id.constructor.name != 'ObjectID'){
 		object = new ObjectID(id);
 	}	else {
