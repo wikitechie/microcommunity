@@ -94,7 +94,7 @@ describe 'Votes Provider', ()->
 						assert.equal new_revision.down_votes[0].user.toString(), user._id.toString()
 						assert.ok votes_err						
 						done()		
-						
+
 	describe 'Fetching votes', ()->
 	
 		describe 'fetch up votes', ()->	
@@ -112,6 +112,19 @@ describe 'Votes Provider', ()->
 					assert.ok down_votes.length
 					assert.equal down_votes.length, 1 
 					done()
+					
+
+						
+	describe 'Removing votes', ()->
+		
+		describe 'remove up votes', ()->	
+			it 'should remove the up vote', (done)->	
+				votes_provider.remove_up_vote user._id, revision._id, 'revisions', (votes_err)->
+					db.collection 'revisions', (err, revisions)->
+						revisions.findOne { _id : revision._id }, (err, new_revision)->
+							assert.ok new_revision.up_votes
+							assert.equal new_revision.up_votes.length, 0
+							done()						
 				
 				
 	describe 'Reverse voting', ()->

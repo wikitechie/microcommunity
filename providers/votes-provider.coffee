@@ -45,6 +45,17 @@ exports.fetch_votes = (vote_type, object_id, collection, callback)->
 		collection.findOne { _id : object_id }, (err, object)->
 			callback(err, object[field[vote_type]])
 
+exports.remove_up_vote = (user_id, object_id, collection, callback)->
+
+	
+	user_id = database.normalizeID(user_id)
+	object_id = database.normalizeID(object_id)
+
+	updating = { $pull : { up_votes : { user : user_id } } }
+		
+	db.collection collection, (err, collection)->						
+		collection.update { _id : object_id }, updating, (vote)->
+			callback(vote)	
 				
 exports.up_vote = (user_id, object_id, collection, callback)->
 	exports.vote('up', user_id, object_id, collection, callback)
