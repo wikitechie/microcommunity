@@ -28,8 +28,8 @@ exports.vote = (vote_type, user_id, object_id, collection, callback)->
 				else 
 					push =  { down_votes : vote }
 					
-				collection.update { _id : object_id }, { $push : push }, (err)->
-					callback(err)
+				collection.update { _id : object_id }, { $push : push }, (vote)->
+					callback(vote)
 		else
 			callback
 				error : "Already voted"

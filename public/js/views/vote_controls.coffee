@@ -14,22 +14,23 @@ define [
 			'click .down-vote-control' : 'downVote'
 			
 		initialize: ->
-			_.bindAll @		
+
 			@up_votes = @options.up_votes
 			@down_votes = @options.down_votes
 			@vote_state = new VoteState
 			
-			@vote_state.on 'change', @render
+			@vote_state.on 'change', @render, @
 			
-			#validation
-			@up_votes.each (vote)->
+			#initializing state
+			@model.get('up_votes').each (vote)=>
 				if vote.get('user').id is current_user._id
-					@vote_state.up_voted = vote
-					
+					@vote_state.set
+						up_voted : vote
+						
+			_.bindAll @		
 					
 		render: ->	
 			$(@el).html @template()			
-			@vote_state.toJSON()
 			if @vote_state.get 'up_voted'		
 				$(@el).find('.up-vote-control').addClass 'selected-vote-control'
 				$(@el).find('.up-vote-control').addClass 'icon-white'
@@ -48,11 +49,15 @@ define [
 			unless @vote_state.get type
 				vote = new Vote
 					user : current_user
+				vote.url = "#{@model.urlRoot}/#{@model.id}/votes/"
+				
+				vote.save()
+					#success : ()->
 				votes_collections[type].add vote
 				state = {}
 				state[type] = vote
 				@vote_state.set state
-								
+						
 			else			
 				d = @up_votes.find (vote)->
 					return vote.get('user').id is current_user._id

@@ -18,6 +18,7 @@ var express = require('express')
   , database = require('./providers/db')
   
   , comments_api = require('./api/comments')
+  , votes_api = require('./api/votes')  
   ;
 
 
@@ -28,6 +29,7 @@ database.connectDB(function(err, database){
 	activities_provider.setup(database);
 	users_provider.setup(database);	
 	comments_api.setup(database)
+	votes_api.setup(database)	
 	console.log( 'Connection to database established...')
 });
 
@@ -96,6 +98,7 @@ app.resource('api/posts', require('./api/posts'));
 app.resource('api/:collection/:id/comments', comments_api);    
 app.resource('api/wikipages', require('./api/wikipages'));
 app.resource('api/activities', require('./api/activities'));        
+app.resource('api/:collection/:id/votes', votes_api);        
 
 //authentication pages
 var auth = require('./routes/auth');

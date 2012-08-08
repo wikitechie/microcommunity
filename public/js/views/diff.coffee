@@ -21,6 +21,7 @@ define [
 				model: @model
 				
 			@voteControls = new VoteControls	
+				model : @model
 				up_votes: @model.get 'up_votes'
 				down_votes: @model.get 'down_votes'
 			

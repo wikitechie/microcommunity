@@ -34,10 +34,10 @@ define [
 					{text : "this is a comment",	user : user }						
 				]
 				up_votes : [
-					{ _id : "5016b37f1c97f88c0f00002f", created_at : new Date(),	user : user }
+					{ created_at : new Date(),	user : user }
 				]
 				down_votes : [
-					{ _id : "5016b37f1c97f88c0f00032r", created_at : new Date(),	user : another_user }
+					{ created_at : new Date(),	user : another_user }
 				]				
 						
 
@@ -79,6 +79,10 @@ define [
 					assert.ok vote.get('voted_object')				
 					assert.equal vote.get('voted_object').constructor.name, "Revision"
 					assert.equal vote.get('voted_object').id, "501d3d264eada77e0a000002"											
+										
+			it 'should initialize each comment with the right url', ()->	
+				revision.get('up_votes').each (vote)->
+					assert.equal vote.url(), "/api/revisions/501d3d264eada77e0a000002/votes"					
 			
 		describe 'Revision - Down-votes association', ()->		
 			it 'should have a down-votes association', ()->
