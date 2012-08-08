@@ -8,6 +8,9 @@ define [
 			user = 
 				_id: "5006de43a836cb97c144ff81"
 				email: "email@service.com"				
+			another_user = 
+				_id: "5006de43a836cb97cd44df81"
+				email: "anotheremail@service.com"
 				
 			revision = new Revision
 				"page":
@@ -29,8 +32,15 @@ define [
 					{text : "this is a comment",	user : user }
 					{text : "this is a comment",	user : user }						
 					{text : "this is a comment",	user : user }						
+				]
+				up_votes : [
+					{ _id : "5016b37f1c97f88c0f00002f", created_at : new Date(),	user : user }
+				]
+				down_votes : [
+					{ _id : "5016b37f1c97f88c0f00032r", created_at : new Date(),	user : another_user }
 				]				
-				
+						
+
 		describe 'Revision-Page association', ()->		
 			it 'should be associated to a page', ()->
 				revision.get('page').constructor.name.should.be.equal 'WikiPage'
@@ -58,9 +68,26 @@ define [
 				assert.equal revision.get('user').get('email'), "email@service.com"
 				assert.equal revision.get('user').id, "5006de43a836cb97c144ff81"		
 				
-		describe 'Revision-Up-votes association', ()->
-			it 'should have a votes-up association'
+		describe 'Revision - Up-votes association', ()->
+			it 'should have a votes-up association', ()->
+				assert.ok revision.get('up_votes')
+				revision.get('up_votes').each (vote)->
+					assert.equal vote.constructor.name, "Vote"			
+					
+			it 'all up-votes should be related back to the revision', ()->
+				revision.get('up_votes').each (vote)->
+					assert.ok vote.get('voted_object')				
+					assert.equal vote.get('voted_object').constructor.name, "Revision"
+					assert.equal vote.get('voted_object').id, "501d3d264eada77e0a000002"											
 			
-		describe 'Revision-Up-votes association', ()->		
-			it 'should have a votes-down association'
+		describe 'Revision - Down-votes association', ()->		
+			it 'should have a down-votes association', ()->
+				assert.ok revision.get('down_votes')
+				revision.get('down_votes').each (vote)->
+					assert.equal vote.constructor.name, "Vote"		
+			it 'all down-votes should be related back to the revision', ()->
+				revision.get('down_votes').each (vote)->
+					assert.ok vote.get('voted_object')				
+					assert.equal vote.get('voted_object').constructor.name, "Revision"
+					assert.equal vote.get('voted_object').id, "501d3d264eada77e0a000002"								
 			
