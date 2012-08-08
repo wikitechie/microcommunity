@@ -133,6 +133,19 @@ ins {
 
 .vote-controls-area {
 	float: left;
+
+}
+
+.selected-vote-control {
+	background-color:rgb(0, 136, 204);	
+}
+
+.unselected-vote-control {
+	visibility:hidden;
+}
+
+.vote-control:hover {
+	background-color:rgb(0, 136, 204);	
 }
 
 .diff-comparison {

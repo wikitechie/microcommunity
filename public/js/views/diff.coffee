@@ -20,6 +20,9 @@ define [
 				model: @model
 				
 			@voteControls = new VoteControls	
+				up_votes: @model.get 'up_votes'
+				down_votes: @model.get 'down_votes'
+												
 			_.bindAll @
 
 		render: ->	
