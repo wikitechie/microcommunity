@@ -2,8 +2,9 @@ define [
 	'jquery'
 	'backbone'
 	'cs!views/comments_thread'	
+	'cs!views/vote_controls'
 	'text!templates/diff.html'
-], ($, Backbone, CommentsThreadView,template) ->
+], ($, Backbone, CommentsThreadView, VoteControls, template) ->
 	class DiffView extends Backbone.View
 		className: "diff"
 		template: _.template(template)
@@ -17,13 +18,15 @@ define [
 			@commentsThread = new CommentsThreadView 
 				collection: @model.get('comments')
 				model: @model
+				
+			@voteControls = new VoteControls	
 			_.bindAll @
 
 		render: ->	
 			$(@el).html @template @model.toJSON()
 			$(@el).find('.comments-thread-area').html @commentsThread.render().el	
-			$(@el).find('.comments-thread-area').hide()	
-			$(@el).find('.vote-controls').hide()	
+			$(@el).find('.vote-controls-area').html @voteControls.render().el
+			$(@el).find('.comments-thread-area').hide()				
 			@
 
 		toggleDiff : (callback)->			
