@@ -3,8 +3,9 @@ define [
 	'backbone'
 	'cs!views/comments_thread'	
 	'cs!views/vote_controls'
+	'cs!views/post_summary'
 	'text!templates/diff.html'
-], ($, Backbone, CommentsThreadView, VoteControls, template) ->
+], ($, Backbone, CommentsThreadView,VoteControls, PostSummary, template) ->
 	class DiffView extends Backbone.View
 		className: "diff"
 		template: _.template(template)
@@ -12,7 +13,7 @@ define [
 		events:
 			'click .toggle-diff': 'toggleDiff'
 			'click .toggle-comment': 'toggleComment'
-			'click .comments-summary': 'toggleComment'
+			'click .post-summary': 'toggleComment'
 								
 		initialize: ->
 			@commentsThread = new CommentsThreadView 
@@ -22,6 +23,9 @@ define [
 			@voteControls = new VoteControls	
 				up_votes: @model.get 'up_votes'
 				down_votes: @model.get 'down_votes'
+			
+			@postSummary = new PostSummary
+				model : @model
 												
 			_.bindAll @
 
@@ -29,6 +33,7 @@ define [
 			$(@el).html @template @model.toJSON()
 			$(@el).find('.comments-thread-area').html @commentsThread.render().el	
 			$(@el).find('.vote-controls-area').html @voteControls.render().el
+			$(@el).find('.post-summary-area').html @postSummary.render().el
 			$(@el).find('.comments-thread-area').hide()				
 			@
 

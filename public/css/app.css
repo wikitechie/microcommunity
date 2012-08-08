@@ -110,14 +110,14 @@ ins {
 	border-left : 5px solid rgb(238, 238, 238);
 }
 
-.comments-summary {
-	display:block;
+.post-summary {
+	display:inline;
 }
 
-.comments-summary:hover {
+.post-summary:hover {
 	background-color:rgb(217, 237, 247);
 }
-.comments-summary i {
+.post-summary i {
 	vertical-align: middle;
 }
 
