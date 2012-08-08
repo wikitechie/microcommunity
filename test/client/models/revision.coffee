@@ -56,5 +56,11 @@ define [
 				
 			it 'should be associated to the right user', ()->
 				assert.equal revision.get('user').get('email'), "email@service.com"
-				assert.equal revision.get('user').id, "5006de43a836cb97c144ff81"			
+				assert.equal revision.get('user').id, "5006de43a836cb97c144ff81"		
+				
+		describe 'Revision-Up-votes association', ()->
+			it 'should have a votes-up association'
+			
+		describe 'Revision-Up-votes association', ()->		
+			it 'should have a votes-down association'
 			
