@@ -24,10 +24,18 @@ define [
 				@voteControls = new VoteControls	
 					model : @model
 					up_votes: @model.get 'up_votes'
-					down_votes: @model.get 'down_votes'
-			
+					down_votes: @model.get 'down_votes'					
+								
 			@postSummary = new PostSummary
 				model : @model
+				
+			@model.bind 'add:up_votes', @postSummary.render, @postSummary			
+			@model.bind 'remove:up_votes', @postSummary.render, @postSummary						
+			@model.bind 'add:down_votes', @postSummary.render, @postSummary			
+			@model.bind 'remove:down_votes', @postSummary.render, @postSummary
+			@model.bind 'add:comments', @postSummary.render, @postSummary			
+			@model.bind 'remove:comments', @postSummary.render, @postSummary							
+			
 												
 			_.bindAll @
 

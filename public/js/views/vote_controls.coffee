@@ -69,16 +69,14 @@ define [
 			else			
 				d = votes_collections[type].find (vote)->
 					return vote.get('user').id is current_user._id
-				#votes_collections[type].remove d
+
 				d.url = "#{@model.urlRoot}/#{@model.id}/#{type}/votes"
 				d.destroy
 					success : ()=>				
 						state = {}
 						state[type] = false				
 						@vote_state.set state
-						votes_collections[type].remove d
-						console.debug votes_collections[type].length
-				
+						votes_collections[type].remove d				
 					
 							
 		upVote : ()->

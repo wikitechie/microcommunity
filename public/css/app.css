@@ -140,9 +140,19 @@ ins {
 	background-color:rgb(70, 136, 71);	
 }
 
+.up-votes-count {
+	display: inline;
+	color:rgb(70, 136, 71);	
+}
+
 .selected-down-vote-control{
 	background-color:rgb(185, 74, 72);	
 }	
+
+.down-votes-count {
+	display: inline;
+	color:rgb(185, 74, 72);	
+}
 
 .unselected-vote-control {
 
