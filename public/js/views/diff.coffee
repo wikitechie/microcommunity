@@ -20,10 +20,11 @@ define [
 				collection: @model.get('comments')
 				model: @model
 				
-			@voteControls = new VoteControls	
-				model : @model
-				up_votes: @model.get 'up_votes'
-				down_votes: @model.get 'down_votes'
+			if current_user?
+				@voteControls = new VoteControls	
+					model : @model
+					up_votes: @model.get 'up_votes'
+					down_votes: @model.get 'down_votes'
 			
 			@postSummary = new PostSummary
 				model : @model
@@ -32,8 +33,9 @@ define [
 
 		render: ->	
 			$(@el).html @template @model.toJSON()
-			$(@el).find('.comments-thread-area').html @commentsThread.render().el	
-			$(@el).find('.vote-controls-area').html @voteControls.render().el
+			$(@el).find('.comments-thread-area').html @commentsThread.render().el
+			if current_user?				
+				$(@el).find('.vote-controls-area').html @voteControls.render().el
 			$(@el).find('.post-summary-area').html @postSummary.render().el
 			$(@el).find('.comments-thread-area').hide()				
 			@

@@ -25,53 +25,70 @@ define [
 			@model.get('up_votes').each (vote)=>
 				if vote.get('user').id is current_user._id
 					@vote_state.set
-						up_voted : vote
+						up : vote
+						
+			@model.get('down_votes').each (vote)=>
+				if vote.get('user').id is current_user._id
+					@vote_state.set
+						down : vote												
 						
 			_.bindAll @		
 					
 		render: ->	
 			$(@el).html @template()			
-			if @vote_state.get 'up_voted'		
-				$(@el).find('.up-vote-control').addClass 'selected-vote-control'
+			if @vote_state.get 'up'		
+				$(@el).find('.up-vote-control').addClass 'selected-up-vote-control'
 				$(@el).find('.up-vote-control').addClass 'icon-white'
 				$(@el).find('.down-vote-control').addClass 'unselected-vote-control'				
-			if @vote_state.get 'down_voted'		
-				$(@el).find('.down-vote-control').addClass 'selected-vote-control'
+				$(@el).find('.down-vote-control').removeClass 'vote-control'
+			if @vote_state.get 'down'		
+				$(@el).find('.down-vote-control').addClass 'selected-down-vote-control'
 				$(@el).find('.down-vote-control').addClass 'icon-white'
-				$(@el).find('.up-vote-control').addClass 'unselected-vote-control'								
+				$(@el).find('.up-vote-control').addClass 'unselected-vote-control'	
+				$(@el).find('.up-vote-control').removeClass 'vote-control'											
 			@			
 			
-		voteAction : (type)->					
+		voteAction : (type)->	
+		
 			votes_collections =
-				'up_voted'   : @up_votes
-				'down_voted' : @down_votes
+				'up'   : @up_votes
+				'down' : @down_votes
 	
 			unless @vote_state.get type
 				vote = new Vote
 					user : current_user
-				vote.url = "#{@model.urlRoot}/#{@model.id}/votes/"
-				
-				vote.save()
-					#success : ()->
-				votes_collections[type].add vote
-				state = {}
-				state[type] = vote
-				@vote_state.set state
+				vote.url = "#{@model.urlRoot}/#{@model.id}/#{type}/votes"
+
+				vote.save {},
+					success : ()=>						
+						votes_collections[type].add vote
+						state = {}
+						state[type] = vote
+						@vote_state.set state
 						
 			else			
-				d = @up_votes.find (vote)->
+				d = votes_collections[type].find (vote)->
 					return vote.get('user').id is current_user._id
-				votes_collections[type].remove d
-				state = {}
-				state[type] = false				
-				@vote_state.set state
+				#votes_collections[type].remove d
+				d.url = "#{@model.urlRoot}/#{@model.id}/#{type}/votes"
+				d.destroy
+					success : ()=>				
+						state = {}
+						state[type] = false				
+						@vote_state.set state
+						votes_collections[type].remove d
+						console.debug votes_collections[type].length
+				
+					
 							
 		upVote : ()->
-			@voteAction 'up_voted'
+			unless @vote_state.get 'down'
+				@voteAction 'up'
 
 		
 		downVote : ()-> 
-			@voteAction 'down_voted'		
+			unless @vote_state.get 'up'		
+				@voteAction 'down'		
 
 
 					

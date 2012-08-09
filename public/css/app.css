@@ -136,12 +136,16 @@ ins {
 
 }
 
-.selected-vote-control {
-	background-color:rgb(0, 136, 204);	
+.selected-up-vote-control {
+	background-color:rgb(70, 136, 71);	
 }
 
+.selected-down-vote-control{
+	background-color:rgb(185, 74, 72);	
+}	
+
 .unselected-vote-control {
-	visibility:hidden;
+
 }
 
 .vote-control:hover {
