@@ -28,7 +28,7 @@ exports.vote = (vote_type, user_id, object_id, collection, callback)->
 				else 
 					push =  { down_votes : vote }
 					
-				collection.update { _id : object_id }, { $push : push }, (vote)->
+				collection.update { _id : object_id }, { $push : push }, (err, vote)->
 					callback(vote)
 		else
 			callback
@@ -45,17 +45,29 @@ exports.fetch_votes = (vote_type, object_id, collection, callback)->
 		collection.findOne { _id : object_id }, (err, object)->
 			callback(err, object[field[vote_type]])
 
-exports.remove_up_vote = (user_id, object_id, collection, callback)->
 
-	
+exports.remove_vote = (vote_type, user_id, object_id, collection, callback)->
+
 	user_id = database.normalizeID(user_id)
 	object_id = database.normalizeID(object_id)
-
-	updating = { $pull : { up_votes : { user : user_id } } }
+	
+	field = 
+		up : "up_votes"
+		down : "down_votes"	
+	
+	if vote_type is 'up'
+		pull = { up_votes : { user : user_id } }
+	else 
+		pull = { down_votes : { user : user_id } }
+	
+	updating = { $pull : pull }
 		
 	db.collection collection, (err, collection)->						
 		collection.update { _id : object_id }, updating, (vote)->
 			callback(vote)	
+
+exports.remove_up_vote = (user_id, object_id, collection, callback)->
+	exports.remove_vote('up', user_id, object_id, collection, callback)
 				
 exports.up_vote = (user_id, object_id, collection, callback)->
 	exports.vote('up', user_id, object_id, collection, callback)
