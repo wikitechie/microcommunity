@@ -2,16 +2,12 @@ extends layout
 
 block content
 
-	!= "<script type='text/javascript'>"
-	!= "var user =" +JSON.stringify(user)  + ";"
-	!= "</script>"
-		
 	.row
 		.span10.offset1		
 			.row-fluid.page-header
 				.span12
-					h2(style='display:inline;')
-						= profile.email
+					h2(style='display:inline;') 
+						= user.email
 					.btn.btn-primary.pull-right Follow
 						
 			.row-fluid			
@@ -23,8 +19,9 @@ block content
 									<img src="http://www.gravatar.com/avatar/91d5ada2af741682c957f76d929969c0.jpg?s=160" />	
 								.well
 									center
-										h2 23	
-										p reputation						
+										h2 
+											= profile.reputation	
+										p Upvoted						
 							p 
 								i Write something about yourself
 							p 
@@ -52,12 +49,14 @@ block content
 									small following
 						.span3							
 							center
-								h2 23
+								h2
+									= profile.wikipages_count
 								p 
-									small edit count									
+									small created wikipages									
 						.span3							
 							center
-								h2 23
+								h2
+									= profile.edit_count
 								p 
 									small edit count						
 									

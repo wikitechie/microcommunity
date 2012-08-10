@@ -113,8 +113,8 @@ app.get('/', function(req, res){
 
 app.get('/profile/:id', function(req, res){
 	
-	users_provider.fetch( req.params.id, function(err, profile){
-		res.render('profile', { profile: profile, user: req.user});
+	users_provider.fetch( req.params.id, function(err, user){
+		res.render('profile', { profile: user.profile, user: user, current_user: req.user});
 	})
 	
 });

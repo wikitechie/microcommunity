@@ -11,7 +11,43 @@ exports.fetch = (id, callback)->
 	id = database.normalizeID(id)
 	db.collection 'users', (err, users)->
 		users.findOne { _id : id}, (err, user) ->
-			callback(err, user)
+			exports.fetch_user_data id, (err, data)->									
+				_.extend user, {profile	: data}
+				callback(err, user)
+						
+						
+exports.fetch_user_data = (id, callback)->
+	db.collection 'activities', (err, activities)->
+		match = 
+			verb : "create"
+			object_type : "Revision"
+			actor : id
+		activities.find(match).count (err, wikipages_count)->
+			match = 
+				verb : "edit"
+				object_type : "Revision"
+				actor : id					
+			activities.find(match).count (err, edit_count)->						
+		
+				exports.fetch_user_total_upvote id, (err, count)->
+					data = 
+						wikipages_count : wikipages_count	
+						edit_count : edit_count
+						reputation : count
+				
+					callback(null, data)
+							
+exports.fetch_user_total_upvote = (id, callback)->
+	db.collection 'revisions', (err, revisions)->
+		revisions.find({ user : id }).toArray (err, user_revisions)->
+			revisions_ids = _.pluck user_revisions, "_id"
+			db.collection 'activities', (err, activities)->
+				match = 
+					verb : 'upvote'
+					object_type : 'Revision'
+					object : { $in : revisions_ids }
+				activities.find(match).count callback
+
 			
 exports.create = (attr, callback)->
 	db.collection 'users', (err, users) ->
