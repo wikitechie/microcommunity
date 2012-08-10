@@ -17,10 +17,14 @@ define [
 
 		initialize: ->
 
-			if @collection.length is 1
+			if @collection? and (@collection.length is 1)
 				@singleMode = true			
 			
-			@model = @collection.at(0)
+			unless @model?
+				@model = @collection.at(0)
+			else
+				console.debug @model.toJSON()
+				@singleMode = true
 	
 			@objectClass = @model.get('object').constructor.name
 		
@@ -32,7 +36,7 @@ define [
 				model: @model.get('object')
 
 			if @singleMode			
-				if @objectClass == 'Revision' && @model.get('verb') == 'edit'
+				if @objectClass == 'Revision' && ((@model.get('verb') == 'edit') or (@model.get('verb') == 'upvote') or (@model.get('verb') == 'downvote'))
 					@diffView = new DiffView 
 						model : @model.get 'object'
 			else
@@ -42,9 +46,7 @@ define [
 						diffView = new DiffView 
 							model : model.get 'object'				
 						@diffViews.push diffView
-						
-
-						
+			
 			_.bindAll @
 
 		render: ->
@@ -55,7 +57,7 @@ define [
 				#$(@el).find('.comments-thread').html @commentsThread.render().el
 				$(@el).find('.embeded-content').html @view.render().el
 				if @singleMode
-					if @objectClass == 'Revision' && @model.get('verb') == 'edit'
+					if @objectClass == 'Revision' && ((@model.get('verb') == 'edit') or (@model.get('verb') == 'upvote') or (@model.get('verb') == 'downvote'))
 						$(@el).find('.attachements').append @diffView.render().el				
 						$(@el).find('.diff-content').hide()
 				else
@@ -74,6 +76,8 @@ define [
 					edit: "#{name} edited a wikipage titled #{@model.get('object').get('page').get('title')}"
 					aggr_edit : "#{name} made several edits on the wikipage titled #{@model.get('object').get('page').get('title')}"
 					create: "#{name} created a wikipage titled #{@model.get('object').get('page').get('title')}"
+					upvote: "#{name} upvoted a revision"
+					downvote: "#{name} downvoted a revision"					
 				Post: 
 					comment: "#{name} commented a post"
 					create: "#{name} created a new post"

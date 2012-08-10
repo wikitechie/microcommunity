@@ -64,6 +64,16 @@ describe 'Votes Provider', ()->
 						assert.equal new_revision.up_votes[0].user.toString(), user._id.toString()
 						done()
 						
+		it 'should create the corresponding activity object', (done)->
+			db.collection 'activities', (err, activities)->
+				match = 
+					object : revision._id
+					actor : user._id
+					verb : 'upvote'			
+				activities.find(match).count (err, count)->
+					assert count, 1
+					done()			
+						
 		it 'should not vote it, if the user has voted before', (done)->
 			votes_provider.up_vote user._id, revision._id, 'revisions', (votes_err)->
 				db.collection 'revisions', (err, revisions)->
@@ -84,6 +94,16 @@ describe 'Votes Provider', ()->
 						assert.equal new_revision.down_votes.length, 1
 						assert.equal new_revision.down_votes[0].user.toString(), user._id.toString()
 						done()
+						
+		it 'should create the corresponding activity object', (done)->
+			db.collection 'activities', (err, activities)->
+				match = 
+					object : revision._id
+					actor : user._id
+					verb : 'downvote'			
+				activities.find(match).count (err, count)->
+					assert count, 1
+					done()	
 						
 		it 'should not vote it, if the user has voted before', (done)->
 			votes_provider.down_vote user._id, revision._id, 'revisions', (votes_err)->
@@ -118,13 +138,24 @@ describe 'Votes Provider', ()->
 	describe 'Removing votes', ()->
 		
 		describe 'remove up votes', ()->	
-			it 'should remove the up vote', (done)->	
+			it 'should remove the up vote', (done)->
 				votes_provider.remove_vote 'up', user._id, revision._id, 'revisions', (votes_err)->
 					db.collection 'revisions', (err, revisions)->
 						revisions.findOne { _id : revision._id }, (err, new_revision)->
 							assert.ok new_revision.up_votes
 							assert.equal new_revision.up_votes.length, 0
 							done()	
+							
+			it 'should remove the corresponding activity object', (done)->
+				db.collection 'activities', (err, activities)->
+					match = 
+						object : revision._id
+						actor : user._id
+						verb : 'upvote'
+					activities.find(match).count (err, count)->
+						assert.equal count, 0
+						done()
+				
 							
 		describe 'remove down votes', ()->	
 			it 'should remove the down vote', (done)->	
@@ -133,7 +164,18 @@ describe 'Votes Provider', ()->
 						revisions.findOne { _id : revision._id }, (err, new_revision)->
 							assert.ok new_revision.down_votes
 							assert.equal new_revision.down_votes.length, 0
-							done()													
+							done()	
+							
+			it 'should remove the corresponding activity object', (done)->
+				db.collection 'activities', (err, activities)->
+					match = 
+						object : revision._id
+						actor : user._id
+						verb : 'downvote'
+					activities.find(match).count (err, count)->
+						assert.equal count, 0
+						done()
+																							
 				
 				
 	describe 'Reverse voting', ()->

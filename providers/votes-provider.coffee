@@ -1,10 +1,12 @@
 _ = require('underscore')
 database = require('./db')
+activities_provider = require './activities-provider'
 
 db = null
 
 exports.setup = (database) ->
 	db = database	
+	activities_provider.setup db
 	
 exports.vote = (vote_type, user_id, object_id, collection, callback)->
 	
@@ -25,11 +27,24 @@ exports.vote = (vote_type, user_id, object_id, collection, callback)->
 			db.collection collection, (err, collection)->
 				if vote_type is 'up'
 					push =  { up_votes : vote }
+					verb = 'upvote'
 				else 
 					push =  { down_votes : vote }
+					verb = 'downvote'					
 					
 				collection.update { _id : object_id }, { $push : push }, (err, vote)->
-					callback(vote)
+				
+
+					activity = 
+						actor: user_id
+						verb: verb
+						object: object_id
+						object_type: 'Revision'
+						created_at : new Date()
+												
+					activities_provider.createActivity activity, (err, new_activity)->
+						callback(vote)
+						
 		else
 			callback
 				error : "Already voted"
@@ -57,14 +72,26 @@ exports.remove_vote = (vote_type, user_id, object_id, collection, callback)->
 	
 	if vote_type is 'up'
 		pull = { up_votes : { user : user_id } }
+		verb = 'upvote'
 	else 
 		pull = { down_votes : { user : user_id } }
+		verb = 'downvote'		
 	
 	updating = { $pull : pull }
 		
 	db.collection collection, (err, collection)->						
-		collection.update { _id : object_id }, updating, (vote)->
-			callback(vote)	
+		collection.update { _id : object_id }, updating, (err)->
+			unless err
+				db.collection 'activities', (err, activities)->
+					match = 
+						object : object_id
+						actor : user_id
+						verb : verb				
+					activities.remove match, (err, object)->
+						callback(err)
+			else 
+				callback err
+
 
 exports.remove_up_vote = (user_id, object_id, collection, callback)->
 	exports.remove_vote('up', user_id, object_id, collection, callback)

@@ -60,10 +60,8 @@ define [
 		#injecting views
 		 
 		injectActivity: (activity)=>
-			collection = new Activity.Collection
-			collection.add activity
 			activityView = new Activity.View 
-				collection: collection
+				model: activity
 			@injectView activityView
 
 		appendActivity: (activity)=>
