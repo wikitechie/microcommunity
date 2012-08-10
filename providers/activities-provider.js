@@ -107,8 +107,23 @@ exports.fetchActivities = function (from, to, callback){
 			
 		});
 	});	
-		
+}
 
-
+exports.fetchUserActivities = function (user_id, from, to, callback){
+	
+	user_id = database.normalizeID(user_id);	
+	
+	db.collection('activities', function(err, collection){
+		collection.find( { actor : user_id } )
+		.sort({created_at: -1})
+		.skip(parseInt(from))
+		.limit(parseInt(to))
+		.toArray(function(err, result){
+			exports.fetchJoinedActivities(result, function(err, result){
+				callback(err, result);
+			});
+			
+		});
+	});	
 }
 

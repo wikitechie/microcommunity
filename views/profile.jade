@@ -1,9 +1,14 @@
 extends layout
 
 block content
+	!= "<script type='text/javascript'>"
+	!= "var activities =" + JSON.stringify(activities) + ";"
+	!= "var user =" +JSON.stringify(user)  + ";"
+	!= "var current_user =" +JSON.stringify(current_user)  + ";"			
+	!= "</script>"
 
 	.row
-		.span10.offset1		
+		.span12	
 			.row-fluid.page-header
 				.span12
 					h2(style='display:inline;') 
@@ -11,7 +16,7 @@ block content
 					.btn.btn-primary.pull-right Follow
 						
 			.row-fluid			
-				.span5						
+				.span5			
 					.row-fluid				
 						.span12
 							.floating-avatar
@@ -63,7 +68,7 @@ block content
 					.row-fluid
 						hr
 
-												
+											
 				.span7
 					
 					.row-fluid
@@ -72,4 +77,6 @@ block content
 							hr
 							#social-stream
 
+block jsbootstrap
+		script(src='/js/profile.js')
 
