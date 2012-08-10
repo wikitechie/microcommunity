@@ -9,7 +9,6 @@ define [
 	_.extend(window.mediator, Backbone.Events);
 	appRouter = new router()
 	Backbone.history.start()
-	Backbone.emulateHTTP = true
 
 
 
