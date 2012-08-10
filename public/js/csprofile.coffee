@@ -11,3 +11,4 @@ define [
 	
 	socialStream = new ActivityStream
 		activities: eval(activities)
+		user : eval(user)._id

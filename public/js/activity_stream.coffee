@@ -98,10 +98,14 @@ define [
 		loadMore: ()->  	
 			if @loadable is true
 				@pendingLoading()
+				data = 
+					from: @current_index
+					to: 5  
+				#filtering activities by user		
+				if @options.user
+					_.extend data, {user : @options.user}			
 				@activities.fetch
-					data:
-						from: @current_index
-						to: 5  			
+					data : data	
 					success: (collection, response)=>
 						@current_index = @current_index + 5
 						if collection.length == 0

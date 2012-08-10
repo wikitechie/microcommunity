@@ -2,9 +2,17 @@ var provider = require('./../providers/activities-provider')
 	, database = require('./../providers/db');
 	
 exports.index = function(req, res){
-	provider.fetchActivities(req.query.from, req.query.to, function(err, activities){
-		return res.send(activities);	
-	});
+
+	if(req.query.user){
+		provider.fetchUserActivities(req.query.user, req.query.from, req.query.to, function(err, activities){
+				return res.send(activities);	
+		});	
+	} else {
+		provider.fetchActivities(req.query.from, req.query.to, function(err, activities){
+				return res.send(activities);	
+		});		
+	}
+	
 };
 
 
