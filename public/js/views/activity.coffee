@@ -70,7 +70,7 @@ define [
 		
 		message: ()->
 
-			name = @model.get('actor').get('email')
+			name = "<a href='/profile/#{@model.get('actor').id}'>#{@model.get('actor').get('email')}</a>"
 			messages = 
 				Revision : 
 					edit: "#{name} edited a wikipage titled #{@model.get('object').get('page').get('title')}"

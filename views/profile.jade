@@ -3,14 +3,15 @@ extends layout
 block content
 
 	!= "<script type='text/javascript'>"
-	!= "var user =" +JSON.stringify(user)  + ";"	
+	!= "var user =" +JSON.stringify(user)  + ";"
 	!= "</script>"
 		
 	.row
 		.span10.offset1		
 			.row-fluid.page-header
 				.span12
-					h2(style='display:inline;') Profile Name
+					h2(style='display:inline;')
+						= profile.email
 					.btn.btn-primary.pull-right Follow
 						
 			.row-fluid			
