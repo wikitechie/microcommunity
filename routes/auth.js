@@ -8,17 +8,17 @@ exports.install = function(app, db){
 	users_provider.setup(db)
 
 	app.get('/account', ensureAuthenticated, function(req, res){
-		res.render('account', { user: req.user });
+		res.render('account', { current_user: req.user });
 	});
 
 
 	app.get('/login', function(req, res){
-		res.render('login', { user: req.user, message: req.flash('error') });
+		res.render('login', { current_user: req.user, message: req.flash('error') });
 	});
 
 
 	app.get('/signup', function(req, res){
-		res.render('signup', { user: req.user, message: req.flash('error') });
+		res.render('signup', { current_user: req.user, message: req.flash('error') });
 	});
 
 	app.post('/signup', function(req, res){

@@ -5,7 +5,7 @@ block content
 	!= "var activities =" + JSON.stringify(activities) + ";"
 	!= "var user =" +JSON.stringify(user)  + ";"
 	!= "var current_user =" +JSON.stringify(current_user)  + ";"			
-	!= "</script>"
+	!= "</script>"	
 
 	.row
 		.span12	
@@ -13,7 +13,7 @@ block content
 				.span12
 					h2(style='display:inline;') 
 						= user.email
-					.btn.btn-primary.pull-right Follow
+					.pull-right.follow-button-area
 						
 			.row-fluid			
 				.span5			

@@ -12,7 +12,7 @@ html
 			.navbar-inner
 				.container
 					a(href='#').brand MicroCommunity
-					- if (!user)
+					- if (!current_user)
 						<ul class="nav pull-right">
 						<li>
 						<a href="/login">Log in</a>
@@ -23,7 +23,7 @@ html
 						div.btn-group.pull-right
 							a.btn.dropdown-toggle(href="#", data-toggle="dropdown")
 								i.icon-user
-								= user.email
+								= current_user.email
 								span.caret
 							ul.dropdown-menu
 								li

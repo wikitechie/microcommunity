@@ -107,7 +107,7 @@ auth.install(app, db);
 //main app
 app.get('/', function(req, res){
 	activities_provider.fetchActivities(0,5,function(err, activities){	
-		res.render('index', { activities: activities, user: req.user});
+		res.render('index', { activities: activities, current_user: req.user});
 	});
 });
 
@@ -125,6 +125,15 @@ app.get('/profile/:id', function(req, res){
 	})
 	
 });
+
+app.post('/api/users/:id/follows', function(req, res){
+	console.log('follow!')
+});
+
+app.delete('/api/users/:id/follows', function(req, res){
+	console.log('unfollow!')
+});
+
 
 
 if(app.get('env') == 'test'){

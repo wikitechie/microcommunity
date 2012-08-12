@@ -9,7 +9,7 @@ define [
 		routes:
 			"" : "default"
 		default: ->		
-			window.current_user = eval(user)		
+			window.current_user = eval(current_user)		
 			
 			if current_user?
 				publisher = new Publisher()			
