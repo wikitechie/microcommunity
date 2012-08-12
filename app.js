@@ -116,6 +116,7 @@ app.get('/profile/:id', function(req, res){
 	
 	users_provider.fetch( req.params.id, function(err, user){
 		activities_provider.fetchUserActivities(req.params.id, 0,5,function(err, activities){	
+			console.log (user)
 			res.render('profile', { 
 				activities: activities, 
 				profile: user.profile, 

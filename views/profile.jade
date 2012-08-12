@@ -43,13 +43,15 @@ block content
 					.row-fluid
 						.span3							
 							center
-								h2 23
+								h2 
+									= profile.followers
 								p 									
 									small follower
 
 						.span3							
 							center
-								h2 23
+								h2 
+									= user.follows ? user.follows.length : 0
 								p 
 									small following
 						.span3							

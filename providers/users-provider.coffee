@@ -29,13 +29,15 @@ exports.fetch_user_data = (id, callback)->
 				actor : id					
 			activities.find(match).count (err, edit_count)->						
 		
-				exports.fetch_user_total_upvote id, (err, count)->
-					data = 
-						wikipages_count : wikipages_count	
-						edit_count : edit_count
-						reputation : count
+				exports.fetch_user_total_upvote id, (err, upvote)->
+					exports.fetch_user_followers id, (err, followers)->
+						data = 
+							wikipages_count : wikipages_count	
+							edit_count : edit_count
+							reputation : upvote
+							followers : followers
 				
-					callback(null, data)
+						callback(null, data)
 							
 exports.fetch_user_total_upvote = (id, callback)->
 	db.collection 'revisions', (err, revisions)->
@@ -47,6 +49,11 @@ exports.fetch_user_total_upvote = (id, callback)->
 					object_type : 'Revision'
 					object : { $in : revisions_ids }
 				activities.find(match).count callback
+				
+exports.fetch_user_followers = (id, callback)->
+	id = database.normalizeID(id)	
+	db.collection 'users', (err, users) ->
+		users.find({ "follows" : id }).count callback
 
 			
 exports.create = (attr, callback)->
