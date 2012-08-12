@@ -2,8 +2,7 @@ define [
 	'jquery'
 	'backbone'
 	'text!templates/follow_button.html'
-	'cs!models/follows'
-], ($, Backbone,template, Follow) ->
+], ($, Backbone,template) ->
 	class FollowButton extends Backbone.View
 	
 		className: "follow-button"
@@ -16,11 +15,24 @@ define [
 			'mouseout .btn-follow' : 'removeAskToUnfollow'
 
 		initialize: ()->		
-			@url =  @model.urlRoot + '/' + @model.id + '/follows'
+			@follower = @options.follower
+			@followed = @options.followed
+			
+			@isFollowing = false
+			_.each @follower.get('follows'), (followed) =>
+				if @followed.id is followed
+					@isFollowing = true
+				
+			
+			@url =  @follower.urlRoot + '/' + @follower.id + '/follows'
 			_.bindAll @		
 					
 		render: ->	
 			$(@el).html @template()
+			
+			if @isFollowing
+				@setFollowing()
+			
 			unless window.current_user
 				$(@el).find('.btn').addClass 'disabled'
 				$(@el).find('.btn').removeClass 'btn-follow'
@@ -52,24 +64,26 @@ define [
 		
 		follow : (options) ->
 			params = 
-				url   : @url
+				url   : @url + '/' + @followed.id
 				type  : "POST"
 			$.ajax _.extend params, options
 		
 		unfollow : (options) ->
 			params = 
-				url   : @url
+				url   : @url + '/' + @followed.id
 				type  : "DELETE"
 			$.ajax _.extend params, options			
 			
 		toggleFollow :->
 			unless @isFollowing
-				@follow()
-				@setFollowing()
-				@isFollowing = true
+				@follow
+					success : ()=>
+						@setFollowing()
+						@isFollowing = true
 			else
-				@unfollow()
-				@setUnfollowed()
-				@isFollowing = false
+				@unfollow
+					success : ()=>
+						@setUnfollowed()
+						@isFollowing = false
 				
 			

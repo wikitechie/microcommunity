@@ -11,13 +11,9 @@ define [
 
 	window.current_user = eval(current_user)	
 
-
-	
-	myuser = new User window.current_user
-
-	
 	followButton = new FollowButton
-		model : myuser
+		follower : new User window.current_user
+		followed : new User window.user
 		
 		
 	$('.follow-button-area').html followButton.render().el

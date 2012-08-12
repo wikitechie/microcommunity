@@ -15,8 +15,8 @@ var express = require('express')
   , Resource = require('express-resource')
   , activities_provider = require('./providers/activities-provider')
   , users_provider = require('./providers/users-provider')  
+  , follows_provider = require('./providers/follows-provider')    
   , database = require('./providers/db')
-  
   , comments_api = require('./api/comments')
   , votes_api = require('./api/votes')  
   ;
@@ -28,6 +28,7 @@ database.connectDB(function(err, database){
 	db = database;
 	activities_provider.setup(database);
 	users_provider.setup(database);	
+	follows_provider.setup(database);		
 	comments_api.setup(database)
 	votes_api.setup(database)	
 	console.log( 'Connection to database established...')
@@ -126,12 +127,20 @@ app.get('/profile/:id', function(req, res){
 	
 });
 
-app.post('/api/users/:id/follows', function(req, res){
-	console.log('follow!')
+app.post('/api/users/:follower/follows/:followed', function(req, res){
+	follows_provider.follow(req.params.follower, req.params.followed, function(err){
+		res.send({success : true})		
+		console.log(err)		
+	})
+	
 });
 
-app.delete('/api/users/:id/follows', function(req, res){
-	console.log('unfollow!')
+app.delete('/api/users/:follower/follows/:followed', function(req, res){
+	follows_provider.unfollow(req.params.follower, req.params.followed, function(err){
+		res.send({success : true})		
+		console.log(err)		
+	})
+	
 });
 
 
