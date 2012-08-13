@@ -3,7 +3,8 @@ define [
 	'backbone'
 	'cs!publisher'
 	'cs!activity_stream'
-], ($, Backbone, Publisher, ActivityStream) ->
+	'cs!views/notification_menu'
+], ($, Backbone, Publisher, ActivityStream, NotificationMenu) ->
 	"use strict"
 	Backbone.Router.extend
 		routes:
@@ -15,3 +16,8 @@ define [
 				publisher = new Publisher()			
 			socialStream = new ActivityStream
 				activities: eval(activities)
+				
+			notifications = new NotificationMenu
+			$('.main-nav').append notifications.render().el
+				
+			

@@ -173,4 +173,11 @@ ins {
 	width: 510px;	
 }
 
+.notification-body {
+	width: 400px;
+}
+
+.notifications-menu {
+	color : rgb(51, 51, 51);
+}
 
