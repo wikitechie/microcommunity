@@ -53,13 +53,13 @@ define [
 		        
 
 		render: ->
-			$(@el).html @template posts: JSON.stringify(@posts)				
-					
+			$(@el).html @template posts: JSON.stringify(@posts)					
 			@
 		        
 		#injecting views
 		 
 		injectActivity: (activity)=>
+			console.debug 'new activity'
 			activityView = new Activity.View 
 				model: activity
 			@injectView activityView

@@ -23,7 +23,6 @@ define [
 			unless @model?
 				@model = @collection.at(0)
 			else
-				console.debug @model.toJSON()
 				@singleMode = true
 	
 			@objectClass = @model.get('object').constructor.name
