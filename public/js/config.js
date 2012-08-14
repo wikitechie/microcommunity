@@ -16,7 +16,8 @@ require.config({
     'md5' : 'lib/md5',
     'general' : 'lib/general',
     'moment' : 'lib/moment.min',
-    'diff' : 'lib/diff'
+    'diff' : 'lib/diff',
+    'bootstrap-notify' : 'lib/bootstrap-notify'
   },
   
   shim: {
@@ -37,6 +38,7 @@ require.config({
   	'general' : ['jquery'],
   	'moment' : [],
   	'diff' : [],
+  	'bootstrap-notify': [],
   	'backbone-relational' : ['backbone'],
 
   	'bootstrap' : {

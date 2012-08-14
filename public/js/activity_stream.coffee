@@ -37,8 +37,7 @@ define [
 
 		  init_activities = new Activity.Collection
 		  init_activities.add @options.activities
-		  @process init_activities
-		  
+		  @process init_activities		  
 		                  
 		  #wikipage = new WikiPage
 		  #wikipageView = new WikiPageView        model: wikipage
@@ -54,7 +53,8 @@ define [
 		        
 
 		render: ->
-			$(@el).html @template posts: JSON.stringify(@posts)
+			$(@el).html @template posts: JSON.stringify(@posts)				
+					
 			@
 		        
 		#injecting views

@@ -164,6 +164,19 @@ if(app.get('env') == 'test'){
 // Backbone.io backends
 
 app = app.listen(3000);
+var io = require('socket.io').listen(app);
 
 //backboneio.listen(app, require('./providers/backends-provider.js'));
+
+io.sockets.on('connection', function (socket) {
+
+  socket.on('new-activity', function (data) {
+  	console.log(data.activity)
+    socket.broadcast.emit('new-activity', { message: "New activity" });
+  });
+
+
+});
+
+
 

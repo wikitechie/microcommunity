@@ -34,6 +34,9 @@ define [
 
 		url: ->
 			"/api/activities/"
+			
+		message : ()->
+			"Custom message"
 
 
 

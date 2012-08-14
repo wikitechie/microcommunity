@@ -39,13 +39,17 @@ html
 			.row
 				.span12
 					block content
+			.notifications.bottom-left			
 
 			footer
 				hr
 				p MicroCommunity 2012
+			
 
-		include shared/templates
 
+		include shared/templates		
+		
+		script(src='/socket.io/socket.io.js')
 		script(src='/js/lib/require/require.min.js')
 		script(src='/js/config.js')		
 		block jsbootstrap
