@@ -32,7 +32,10 @@ exports.install = function(app, db){
 			users_provider.create(user, function(err,user){
 				if (!err) {
 				  console.log("user created");
-					return res.redirect('/');		    
+					req.logIn(user, function(err) {
+						if (err) { return next(err); }
+						return res.redirect('/');
+					});    
 				}				
 			});
 		}
