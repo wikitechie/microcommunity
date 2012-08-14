@@ -6,7 +6,9 @@
 			</a>
 		</div>
 		<div class="mainWrapper">
-			<p><a href="#" class='email'><%= user.email %></a></p>
+			<p><a href="/profile/<%= user._id %>" class='email'>
+				<%= user.profile.displayName %>
+			</a></p>
 			<p class ='text'><%= nl2br(text, false) %></p>
 			<p><small><%= moment(created_at).fromNow() %></small>
 			</p>

@@ -6,7 +6,13 @@ block content
 			form.form-horizontal(action="/signup", method="post")
 				.fieldset
 					legend Sign up
-					
+
+					.control-group
+						label.control-label Your name
+						.controls
+							input.input-xlarge(type="text", name="displayName")
+							p.help-block Please enter your real name		
+
 					.control-group
 						label.control-label Email
 						.controls

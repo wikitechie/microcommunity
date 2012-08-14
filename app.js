@@ -69,11 +69,15 @@ passport.use(new GoogleStrategy({
 			if (!user) {
 				var user = {
 					email: email,
-					openId: identifier
+					openId: identifier,
+					profile : {
+						displayName : profile.displayName
+					}
 				}
 							
 				users_provider.create(user, function(err,user){
 					if (!err) {
+						console.log(user);
 						console.log("user created");
 						return done(null, user);
 					}				

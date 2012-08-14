@@ -11,8 +11,8 @@ exports.fetch = (id, callback)->
 	id = database.normalizeID(id)
 	db.collection 'users', (err, users)->
 		users.findOne { _id : id}, (err, user) ->
-			exports.fetch_user_data id, (err, data)->									
-				_.extend user, {profile	: data}
+			exports.fetch_user_data id, (err, data)->	
+				_.extend user.profile, data
 				callback(err, user)
 						
 						

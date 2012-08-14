@@ -26,7 +26,10 @@ exports.install = function(app, db){
 		if(req.body.password == req.body.passwordconf) {
 			var user = {
 				email: req.body.email,
-				password: req.body.password
+				password: req.body.password, 
+				profile : {
+					displayName : req.body.displayName
+				}				
 			}
 			
 			users_provider.create(user, function(err,user){
