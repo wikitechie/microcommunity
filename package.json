@@ -13,6 +13,7 @@
     "jade": ">= 0.12.1",
     "passport": "*",
     "passport-local": "*",
+    "passport-google": "*",
     "connect-flash": "*",
     "underscore": "*",
     "async": "*",

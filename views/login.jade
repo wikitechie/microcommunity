@@ -6,6 +6,14 @@ block content
 			= message
 				
 			form.form-horizontal(action="/login", method="post")
+			
+				.fieldset
+					legend Log in using your favourite service
+					
+					.control-group
+						label.control-label 				
+							a(href='/auth/google') Google
+			
 				.fieldset
 					legend Log in
 					
@@ -19,7 +27,7 @@ block content
 						label.control-label Password
 						.controls
 							input.input-xlarge(type="password", name="password")
-							p.help-block Your password
+							p.help-block Your password	
 					
 					.form-actions
 						button.btn.btn-primary(type="submit") Log in

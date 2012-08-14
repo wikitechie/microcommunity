@@ -62,6 +62,13 @@ exports.install = function(app, db){
 		req.logout();
 		res.redirect('/');
 	});
+	
+	//Google OpenID
+	app.get('/auth/google', passport.authenticate('google'));
+	app.get('/auth/google/return', 
+		passport.authenticate('google', { successRedirect: '/',
+		                                  failureRedirect: '/login' }));
+	
 
 
 };
@@ -77,3 +84,5 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login');
 }
+
+
