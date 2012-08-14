@@ -38,7 +38,7 @@ require.config({
   	'general' : ['jquery'],
   	'moment' : [],
   	'diff' : [],
-  	'bootstrap-notify': [],
+  	'bootstrap-notify': ['jquery'],
   	'backbone-relational' : ['backbone'],
 
   	'bootstrap' : {

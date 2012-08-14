@@ -108,6 +108,7 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(__dirname + '/public')); 
   app.use(express.static(__dirname + '/test/client'));   
+  app.use(express.static(__dirname + '/shared'));     
   
 });
 
@@ -191,13 +192,14 @@ if(app.get('env') == 'test'){
 
 app = app.listen(3000);
 var io = require('socket.io').listen(app);
-
+var activityMessage = require('./shared/activity-message')
 //backboneio.listen(app, require('./providers/backends-provider.js'));
 
 io.sockets.on('connection', function (socket) {
   socket.on('new-activity', function (data) {
   	console.log(data.activity)
-    socket.broadcast.emit('new-activity', { message: "New activity" });
+  	var message = activityMessage.message(data.activity, true)
+    socket.broadcast.emit('new-activity', { message: message });
   });
 });
 
