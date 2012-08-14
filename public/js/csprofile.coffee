@@ -17,6 +17,9 @@ define [
 		
 		
 	$('.follow-button-area').html followButton.render().el
+	src = $.gravatar(window.user.email, { size: 100 })
+	img = "<img src='#{src}'/>"
+	$('.profile-photo').html(img)
 	
 	socialStream = new ActivityStream
 		activities: eval(activities)
