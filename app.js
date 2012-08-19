@@ -26,11 +26,13 @@ var express = require('express')
 var db;
 database.connectDB(function(err, database){
 	db = database;
+	if (database === null || database === undefined)
+		throw new Error("cannot establish database connection, is mongo server running ?!");
 	activities_provider.setup(database);
 	users_provider.setup(database);	
 	follows_provider.setup(database);		
 	comments_api.setup(database)
-	votes_api.setup(database)	
+	votes_api.setup(database)
 	console.log( 'Connection to database established...')
 });
 
