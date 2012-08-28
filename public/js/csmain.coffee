@@ -3,7 +3,7 @@ define [
 	'underscore'
 	'backbone'
 	'cs!router'
-	'bootstrap-notify'	
+	'bootstrap-notify'
 ], ($, _, Backbone, router) ->
 	'use strict'
 	window.mediator = {}

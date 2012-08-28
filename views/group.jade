@@ -1,0 +1,42 @@
+extends layout
+
+block content	
+	!= "<script type='text/javascript'>"
+	!= "var group =" +JSON.stringify(group)  + ";"		
+	!= "var current_user =" +JSON.stringify(current_user)  + ";"	
+	!= "</script>"
+
+	.row
+		.span3
+			.well.sidebar-nav
+				ul.nav.nav-list
+					li.nav-header Basic
+					li.active
+						a(href="#") Home
+					li
+						a(href="#") Close friends			
+			.well.sidebar-nav
+				ul.nav.nav-list
+					li.nav-header Groups
+					li
+						a(href="#") Group 1
+					li
+						a(href="#") Group 2									
+				
+		.span7
+			.row-fluid
+				.span12 
+					h1.page-header
+						= group.name
+					p 
+						= group.description
+					
+			include shared/publisher
+			hr
+			#social-stream
+
+block jsbootstrap
+		script(src='/js/main.js')
+
+					
+

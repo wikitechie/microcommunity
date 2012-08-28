@@ -16,6 +16,7 @@ var express = require('express')
   , Resource = require('express-resource')
   , activities_provider = require('./providers/activities-provider')
   , users_provider = require('./providers/users-provider')  
+  , groups_provider = require('./providers/groups-provider')  
   , follows_provider = require('./providers/follows-provider')    
   , database = require('./providers/db')
   , comments_api = require('./api/comments')
@@ -33,6 +34,7 @@ database.connectDB(function(err, database){
 	follows_provider.setup(database);		
 	comments_api.setup(database)
 	votes_api.setup(database)
+	groups_provider.setup(database)
 	console.log( 'Connection to database established...')
 });
 
@@ -148,6 +150,26 @@ app.get('/profile/:id', function(req, res){
 });
 
 
+//group app
+
+app.get('/groups/:id', function(req, res){
+	groups_provider.fetch(req.params.id, function(err, group){
+		console.log(group)
+		res.render('group', { group: group, current_user: req.user});	
+	})
+
+});
+
+app.post('/groups', function(req, res){
+	
+	groups_provider.create(req.body, req.body.creator, function(err, new_group){
+		res.redirect('/groups/'+ new_group._id)
+	})
+
+	
+
+	
+});
 
 //loading api
 app.resource('api/posts', require('./api/posts'));

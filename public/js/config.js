@@ -10,6 +10,7 @@ require.config({
     'backbone-relational' : 'lib/backbone-relational',    
     underscore: 'lib/underscore.min',
     bootstrap: 'lib/bootstrap.min',
+    bootbox: 'lib/bootbox.min',
     'jquery.gravatar': 'lib/jquery.gravatar',
     'jquery.spin': 'lib/jquery.spin',
     'spin': 'lib/spin.min',
@@ -39,6 +40,7 @@ require.config({
   	'moment' : [],
   	'diff' : [],
   	'bootstrap-notify': ['jquery'],
+  	'bootbox' : ['bootstrap'],
   	'backbone-relational' : ['backbone'],
 
   	'bootstrap' : {
