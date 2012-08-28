@@ -74,8 +74,16 @@ describe 'Groups Provider', ()->
 			assert.ok fetched_group
 			assert.equal created_group._id.toString(), fetched_group._id.toString()
 			
-		it 'should fetch the group with joined members'
-		it 'should fetch the group with joined admins'
+		it 'should fetch the group with joined members', ()->
+			assert.ok fetched_group.members
+			assert.equal fetched_group.members.length, 1
+			assert.ok fetched_group.members[0]._id
+			
+		it 'should fetch the group with joined admins', ()->
+			assert.ok fetched_group.admins
+			assert.equal fetched_group.admins.length, 1
+			assert.ok fetched_group.admins[0]._id
+					
 
 				
 		

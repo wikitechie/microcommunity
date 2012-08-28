@@ -1,6 +1,7 @@
 require 'coffee-script'
 _ = require('underscore')
 database = require('./db')
+async = require 'async'
 
 db = null
 
@@ -67,3 +68,21 @@ exports.fetchByEmail = (email, callback)->
 	db.collection 'users', (err, users)->
 		users.findOne { email : email}, (err, user) ->
 			callback(err, user)
+			
+exports.fetchJoinedUsers = (users, callback)->
+	functions = []
+	joined_users = []
+	j = 0
+	for user in users 
+		myfunction = (callback)->
+			user = users[j]
+			j++
+			exports.fetch user, (err, joined_user)->
+				joined_users.push joined_user
+				callback(null)
+		functions.push(myfunction)
+			
+	async.waterfall functions, (err, result)->
+		callback(null, joined_users)			
+			
+			

@@ -19,5 +19,10 @@ exports.fetch = (group_id, callback)->
 	group_id = database.normalizeID(group_id)
 	db.collection 'groups', (err, groups)->
 		groups.findOne { _id : group_id }, (err, group)->
-			callback(err, group)
+			users_provider.fetchJoinedUsers group.members, (err, members)->
+				users_provider.fetchJoinedUsers group.admins, (err, admins)->
+					_.extend group, 
+						members : members
+						admins : admins
+					callback(err, group)
 	
