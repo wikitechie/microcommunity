@@ -8,21 +8,8 @@ block content
 
 	.row
 		.span3
-			.well.sidebar-nav
-				ul.nav.nav-list
-					li.nav-header Basic
-					li.active
-						a(href="#") Home
-					li
-						a(href="#") Close friends			
-			.well.sidebar-nav
-				ul.nav.nav-list
-					li.nav-header Groups			
-					- for(var i = 0; i < groups.length; i++) {
-					li
-						a(href="#") 
-							= groups[i].name				
-					-}									
+			include shared/sidebar
+								
 		.span7
 			include shared/publisher
 			hr

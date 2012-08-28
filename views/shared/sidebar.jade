@@ -1,0 +1,15 @@
+.well.sidebar-nav
+	ul.nav.nav-list
+		li.nav-header Basic
+		li
+			a(href="/") Home
+		li
+			a(href="#") Close friends			
+.well.sidebar-nav
+	ul.nav.nav-list
+		li.nav-header Groups			
+		- for(var i = 0; i < groups.length; i++) {
+		!= "<li><a href='/groups/" + groups[i]._id  + "'>"						
+		= groups[i].name				
+		!= "</a></li>"					
+		-}	
