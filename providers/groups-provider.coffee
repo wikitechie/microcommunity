@@ -15,3 +15,9 @@ exports.create = (attr, creator_id, callback)->
 		groups.insert attr, (err, docs)->
 			callback(err, docs[0])
 
+exports.fetch = (group_id, callback)->
+	group_id = database.normalizeID(group_id)
+	db.collection 'groups', (err, groups)->
+		groups.findOne { _id : group_id }, (err, group)->
+			callback(err, group)
+	

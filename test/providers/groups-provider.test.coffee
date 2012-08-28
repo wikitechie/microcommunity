@@ -16,6 +16,9 @@ resetDB = (callback)->
 
 
 describe 'Groups Provider', ()->
+	user = null
+	group = null
+	created_group = null
 
 	before (done)->
 		database.connectDB (err, database)->
@@ -24,12 +27,7 @@ describe 'Groups Provider', ()->
 			users_provider.setup database
 			resetDB(done)
 
-
-	describe 'create', ()->
-	
-		user = null
-		group = null
-		created_group = null
+	describe 'create', ()->	
 		
 		before (done)->		
 			user_attr = 
@@ -63,7 +61,22 @@ describe 'Groups Provider', ()->
 		it 'should add the creator to group admins', ()->
 			assert.ok created_group.admins
 			assert.equal created_group.admins.length, 1
-			assert.equal created_group.admins[0].toString(), user._id.toString()	
+			assert.equal created_group.admins[0].toString(), user._id.toString()
+			
+	describe 'fetch', ()->
+		fetched_group = null
+		before (done)->
+			groups_provider.fetch created_group._id, (err, fetched)->
+				fetched_group = fetched
+				done()
+							
+		it 'should fetch the right group', ()->
+			assert.ok fetched_group
+			assert.equal created_group._id.toString(), fetched_group._id.toString()
+			
+		it 'should fetch the group with joined members'
+		it 'should fetch the group with joined admins'
+
 				
 		
 		
