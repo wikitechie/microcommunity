@@ -12,6 +12,8 @@ exports.fetch = (id, callback)->
 	db.collection 'users', (err, users)->
 		users.findOne { _id : id}, (err, user) ->
 			exports.fetch_user_data id, (err, data)->	
+				unless user.profile
+					user.profile = {}
 				_.extend user.profile, data
 				callback(err, user)
 						
