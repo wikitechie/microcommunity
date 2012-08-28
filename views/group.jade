@@ -17,11 +17,13 @@ block content
 						a(href="#") Close friends			
 			.well.sidebar-nav
 				ul.nav.nav-list
-					li.nav-header Groups
+					li.nav-header Groups			
+					- for(var i = 0; i < groups.length; i++) {
 					li
-						a(href="#") Group 1
-					li
-						a(href="#") Group 2									
+						a(href="#") 
+							= groups[i].name				
+					-}		
+								
 				
 		.span7
 			.row-fluid
