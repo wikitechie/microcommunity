@@ -3,7 +3,7 @@ define [
 	'backbone'
 	'cs!publisher'
 	'cs!activity_stream'
-	'cs!views/follow_button'
+	'cs!views/buttons/follow_button'
 	'cs!models/user'
 ], ($, Backbone, Publisher, ActivityStream, FollowButton, User) ->
 	window.mediator = {}

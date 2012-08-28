@@ -59,7 +59,6 @@ define [
 		#injecting views
 		 
 		injectActivity: (activity)=>
-			console.debug 'new activity'
 			activityView = new Activity.View 
 				model: activity
 			@injectView activityView

@@ -7,8 +7,7 @@ define([], function () {
   return {
   
   	message : function(model, singleMode){
-  		console.log(model)
-  	
+  	  	
 			//var name = "<a href='/profile/" + model.actor.id + '>'+ model.actor.profile.displayName + "</a>";
 			var name = model.actor.profile.displayName;	
 			

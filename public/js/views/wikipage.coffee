@@ -80,7 +80,6 @@ define [
 			old_text = @model.get('body')
 			@model.get('page').save({ body: $(@el).find(".wikipage-body").val(), summary : $(@el).find(".wikipage-summary").val(), diff : JsDiff.diffWords(old_text, $(@el).find(".wikipage-body").val() ), user:  current_user._id },
 				success : (model, response)=>
-					console.debug model.toJSON().current_revision
 					@model.set
 						body : model.toJSON().current_revision.body
 						_id : model.toJSON().current_revision._id

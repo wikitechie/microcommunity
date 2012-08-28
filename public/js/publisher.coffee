@@ -3,15 +3,11 @@ define [
 	'backbone'
 	'cs!publishers/post_publisher'
 	'cs!publishers/wikipage_publisher'	
-	'cs!views/new_group_box'
 	'bootbox'
-], ($, Backbone, PostPublisher, WikipagePublisher, NewGroupBox) ->
+], ($, Backbone, PostPublisher, WikipagePublisher) ->
 	class PublisherContainer extends Backbone.View
 		el: '#publisher'
 		template: _.template($('#publisher-container-template').html())
-		
-		events : 
-			'click .group-create' : 'newGroup'
 
 		initialize: ->
 			@render()
@@ -33,13 +29,4 @@ define [
 		render: ->
 			$(@el).html @template
 			@
-			
-		newGroup : ()->
-			box = new NewGroupBox
-				callback : (result)->
-					if result	
-						console.debug 'hey'
-					else
-						console.debug 'no'		
-
 
