@@ -32,6 +32,7 @@ define [
 			"mouseleave p": "hideEditButton"
 			"click .quick-edit-button": "openQuickEditBox"
 			"keypress .quick-edit-box": "onQuickEditBoxKeypress"
+			"keyup .quick-edit-box": "onQuickEditBoxKeyup"
 		initialize: (options)->
 			_.bindAll @
 			if options.embeded
@@ -138,6 +139,7 @@ define [
 			if (e.toElement isnt @quickEditButton[0])
 				$(@quickEditButton).hide()
 		openQuickEditBox: ->
+			this.cancelQuickEdit()
 			@selectedParagraph = @hoveredParagraph
 			p_width = $(@selectedParagraph).width()
 			p_height= $(@selectedParagraph).height()
@@ -159,6 +161,13 @@ define [
 				$(@selectedParagraph).show()
 				new_text = $(@el).find('.wikipage-view-body').html()
 				@save(new_text,old_text,'partial edit')
-				
+		onQuickEditBoxKeyup: (e) ->
+			code = e.keyCode or e.which
+			if (code == 27) # for the escape key
+				@cancelQuickEdit()
+		cancelQuickEdit: ->
+			$(@quickEditBox).hide()
+			$(@quickEditBox).remove()
+			$(@selectedParagraph).show()
 		getBody: ->
 			return @model.get('page').attributes.current_revision.body
