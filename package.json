@@ -1,6 +1,10 @@
 {
   "name": "microcommunity",
   "version": "0.0.1-9",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wikitechie/microcommunity.git"
+  },
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -18,7 +22,8 @@
     "underscore": "*",
     "async": "*",
     "amdefine" : "*",
-    "express-resource": "git://github.com/visionmedia/express-resource.git#add/express3x-support"
+    "express-resource": "git://github.com/visionmedia/express-resource.git#add/express3x-support",
+	"ability-js": "*"
   },
   
   "devDependencies":{
