@@ -1,6 +1,8 @@
 var coffee = require('coffee-script')
 	,	wikipages_provider = require('./../providers/wikipages-provider')
 	, revisions_provider = require('./../providers/revisions-provider')
+	, groups_provider = require('./../providers/groups-provider')	
+	, users_provider = require('./../providers/users-provider')	
 	, posts_provider = require('./../providers/posts-provider')
 	, async = require('async')
 	, database = require('./db');
@@ -11,7 +13,9 @@ exports.setup = function (database){
 	db = database;
 	wikipages_provider.setup(database);
 	revisions_provider.setup(database);	
-	posts_provider.setup(database);	
+	posts_provider.setup(database);
+	users_provider.setup(database);
+	groups_provider.setup(database);	
 	return db;
 };
 
@@ -40,24 +44,54 @@ exports.fetchActivity = function (activity, callback){
 					var providers_index = {
 						WikiPage : wikipages_provider,
 						Revision : revisions_provider,
-						Post : posts_provider
+						Post : posts_provider,
+						groups : groups_provider,
+						users  : users_provider
 					};
 					
 
-					var provider = providers_index[activity.object_type];
+					var object_provider = providers_index[activity.object_type];
 
-					provider.fetch(activity.object, function(err, object){
-						var joined_activity = {
-							_id : activity._id,
-							actor : actor,
-							object : object,
-							object_type : activity.object_type,
-							verb : activity.verb,
-							created_at: activity.created_at,
-							diff : activity.diff,
-							summary : activity.summary
-						};
-					callback(err, joined_activity);
+					object_provider.fetch(activity.object, function(err, object){
+					
+						if (activity.target) {
+							var target_provider = providers_index[activity.target_type];
+							
+							target_provider.fetch(activity.target, function(err, target){
+								var joined_activity = {
+									_id : activity._id,
+									actor : actor,
+									object : object,
+									object_type : activity.object_type,
+									target : target,
+									target_type : activity.target_type,									
+									verb : activity.verb,
+									created_at: activity.created_at,
+									diff : activity.diff,
+									summary : activity.summary
+								};
+							
+								callback(err, joined_activity);	
+							
+							});
+							
+						
+						} else {
+						
+							var joined_activity = {
+								_id : activity._id,
+								actor : actor,
+								object : object,
+								object_type : activity.object_type,
+								verb : activity.verb,
+								created_at: activity.created_at,
+								diff : activity.diff,
+								summary : activity.summary
+							};
+							
+							callback(err, joined_activity);						
+						}						
+						
 					}); 
 
 				});
@@ -124,6 +158,25 @@ exports.fetchUserActivities = function (user_id, from, to, callback){
 			});
 			
 		});
-	});	
+	});		
 }
 
+/*
+exports.fetchGroupActivities = function (group_id, from, to, callback){
+	
+	group_id = database.normalizeID(group_id);	
+	
+	db.collection('activities', function(err, collection){
+		collection.find( { actor : group_id } )
+		.sort({created_at: -1})
+		.skip(parseInt(from))
+		.limit(parseInt(to))
+		.toArray(function(err, result){
+			exports.fetchJoinedActivities(result, function(err, result){
+				callback(err, result);
+			});
+			
+		});
+	});	
+}
+*/

@@ -12,6 +12,8 @@ define [
 		initialize: ->
 			@render()
 			@addPublisher "post", "Post", new PostPublisher
+					parent : @options.parent
+					parent_type : @options.parent_type	
 			@addPublisher "wikipage", "Wiki", new WikipagePublisher
 			#@addPublisher "question", "Question", new QuestionPublisher
 			#@addPublisher "link", "Link", new LinkPublisher

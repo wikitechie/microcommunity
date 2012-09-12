@@ -129,6 +129,7 @@ auth.install(app, db);
 app.get('/', function(req, res){
 	groups_provider.fetchAll(0, 5, function(err, groups){
 		activities_provider.fetchActivities(0,5,function(err, activities){	
+			console.log(activities)
 			res.render('index', { groups: groups, activities: activities, current_user: req.user});
 		});	
 	})
@@ -155,12 +156,14 @@ app.get('/profile/:id', function(req, res){
 //group app
 
 app.get('/groups/:id', function(req, res){
-	groups_provider.fetchAll(0, 5, function(err, groups){
-		groups_provider.fetch(req.params.id, function(err, group){
-			res.render('group', { groups: groups, group: group, current_user: req.user});	
-		})
+
+	activities_provider.fetchActivities(0,5,function(err, activities){	
+		groups_provider.fetchAll(0, 5, function(err, groups){
+			groups_provider.fetch(req.params.id, function(err, group){
+				res.render('group', { activities: activities, groups: groups, group: group, current_user: req.user});	
+			})
+		})	
 	})
-	
 
 });
 

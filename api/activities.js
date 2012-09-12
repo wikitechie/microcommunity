@@ -22,7 +22,8 @@ exports.create = function(req, res){
     verb: req.body.verb,
     object: database.normalizeID(req.body.object._id),
     object_type: req.body.object_type,
-    //target: mongoose.Types.ObjectId(req.body.target._id),
+    target: database.normalizeID(req.body.target),
+    target_type: req.body.target_type,    
     created_at : new Date(),
     diff: req.body.diff,
     summary: req.body.summary   

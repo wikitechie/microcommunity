@@ -13,7 +13,9 @@ exports.create = function(req, res){
     text: req.body.text,
     name: req.body.name,
     user: database.normalizeID(req.body.user._id),
-    created_at : Date()
+    created_at : Date(),
+    parent : database.normalizeID(req.body.parent),
+    parent_type : req.body.parent_type
 	};
   
   provider.createPost(post, function(err, new_post){

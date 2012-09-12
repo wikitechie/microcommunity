@@ -8,7 +8,9 @@
 		<div class="mainWrapper">
 			<p><a href="/profile/<%= user._id %>" class='email'>
 				<%= user.profile.displayName %>
-			</a></p>
+			</a>
+						
+			</p>
 			<p class ='text'><%= nl2br(text, false) %></p>
 			<p><small><%= moment(created_at).fromNow() %></small>
 			</p>

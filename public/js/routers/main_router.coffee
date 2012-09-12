@@ -14,7 +14,9 @@ define [
 			window.current_user = eval(current_user)		
 			
 			if current_user?
-				publisher = new Publisher()
+				publisher = new Publisher
+					parent : current_user._id
+					parent_type : "users"					
 			
 			btn = new NewGroupButton()	
 			

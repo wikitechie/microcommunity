@@ -2,6 +2,7 @@ extends layout
 
 block content	
 	!= "<script type='text/javascript'>"
+	!= "var activities =" + JSON.stringify(activities) + ";"	
 	!= "var group =" +JSON.stringify(group)  + ";"		
 	!= "var current_user =" +JSON.stringify(current_user)  + ";"	
 	!= "</script>"

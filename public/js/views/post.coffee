@@ -18,6 +18,7 @@ define [
 			_.bindAll @
 
 		render: ->	
+			#console.debug @model.target
 			$(@el).html @template @model.toJSON()
 			$(@el).find('.comments-thread-area').html @commentsThread.render().el
 			@

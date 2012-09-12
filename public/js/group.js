@@ -1,1 +1,1 @@
-require(['cs!csmain'])
+require(['cs!csgroup'])

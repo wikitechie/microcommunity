@@ -11,9 +11,11 @@ define [
 			"" : "default"
 		default: ->		
 			window.current_user = eval(current_user)		
-			
+
 			if current_user?
-				publisher = new Publisher()
+				publisher = new Publisher
+					parent : group._id
+					parent_type : "groups"							
 			
 			socialStream = new ActivityStream
 				activities: eval(activities)				

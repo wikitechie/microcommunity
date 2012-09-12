@@ -11,7 +11,9 @@ define [
 		
 			user = 
 				_id: "5006de43a836cb97c144ff81"
-				email: "email@service.com"			
+				email: "email@service.com"
+				profile:
+					displayName : "User name"		
 			post = new Post 
 				_id : "5016b37f1c97f88c0f00002f"
 				text: "Text"
