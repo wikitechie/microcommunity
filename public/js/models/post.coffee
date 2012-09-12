@@ -10,7 +10,7 @@ define [
 		
 		constructor : (attributes, options)->
 			if attributes.parent_type?
-				if (attributes.parent_type == 'users')
+				if (attributes.parent_type is 'users')
 					parent_model = User
 				else
 					parent_model = Group

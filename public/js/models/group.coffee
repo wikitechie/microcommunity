@@ -4,3 +4,4 @@ define [
 ], (Backbone) ->
 	class Group extends Backbone.RelationalModel
 		idAttribute: "_id"		
+		urlRoot: "/api/groups"

@@ -9,14 +9,14 @@ exports.index = function(req, res){
 };
 
 exports.create = function(req, res){
+
 	var post = {
     text: req.body.text,
-    name: req.body.name,
     user: database.normalizeID(req.body.user._id),
     created_at : Date(),
-    parent : database.normalizeID(req.body.parent),
+    parent : database.normalizeID(req.body.parent._id),
     parent_type : req.body.parent_type
-	};
+	};	
   
   provider.createPost(post, function(err, new_post){
 	  return res.send(new_post);     

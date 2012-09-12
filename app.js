@@ -81,7 +81,6 @@ passport.use(new GoogleStrategy({
 							
 				users_provider.create(user, function(err,user){
 					if (!err) {
-						console.log(user);
 						console.log("user created");
 						return done(null, user);
 					}				
@@ -228,7 +227,6 @@ var activityMessage = require('./shared/activity-message')
 
 io.sockets.on('connection', function (socket) {
   socket.on('new-activity', function (data) {
-  	console.log(data.activity)
   	var message = activityMessage.message(data.activity, true)
     socket.broadcast.emit('new-activity', { message: message });
   });

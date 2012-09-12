@@ -11,11 +11,13 @@ define [
 		routes:
 			"" : "default"
 		default: ->		
-			window.current_user = eval(current_user)		
+			window.current_user = eval(current_user)
+			
+					
 			
 			if current_user?
 				publisher = new Publisher
-					parent : current_user._id
+					parent : current_user
 					parent_type : "users"					
 			
 			btn = new NewGroupButton()	

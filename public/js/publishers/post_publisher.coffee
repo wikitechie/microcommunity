@@ -45,7 +45,6 @@ define [
 
 		newpost: ->
 			post = new Post
-			post.set
 				text: $("#publisher-text").val()
 				comments: []
 				user: current_user
