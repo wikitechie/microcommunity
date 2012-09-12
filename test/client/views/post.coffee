@@ -23,6 +23,8 @@ define [
 					{"text":"Comment 1", user:user,"created_at":"Tue Jul 31 2012 07:34:59 GMT+0300 (EEST)"}
 					{"text":"Comment 2", user:user,"created_at":"Tue Jul 31 2012 07:35:00 GMT+0300 (EEST)"}
 				]
+				parent : user
+				parent_type : "users"
 					
 			postView = new PostView
 				model : post	

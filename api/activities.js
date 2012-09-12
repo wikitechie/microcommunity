@@ -17,7 +17,6 @@ exports.index = function(req, res){
 
 
 exports.create = function(req, res){
-	console.log(req.body)
 	
 	var activity = {
 		actor: database.normalizeID(req.body.actor._id),

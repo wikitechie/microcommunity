@@ -161,13 +161,13 @@ exports.fetchUserActivities = function (user_id, from, to, callback){
 	});		
 }
 
-/*
+
 exports.fetchGroupActivities = function (group_id, from, to, callback){
 	
 	group_id = database.normalizeID(group_id);	
 	
 	db.collection('activities', function(err, collection){
-		collection.find( { actor : group_id } )
+		collection.find( { target_type : 'groups', target : group_id } )
 		.sort({created_at: -1})
 		.skip(parseInt(from))
 		.limit(parseInt(to))
@@ -179,4 +179,4 @@ exports.fetchGroupActivities = function (group_id, from, to, callback){
 		});
 	});	
 }
-*/
+

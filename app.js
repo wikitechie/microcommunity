@@ -156,7 +156,7 @@ app.get('/profile/:id', function(req, res){
 
 app.get('/groups/:id', function(req, res){
 
-	activities_provider.fetchActivities(0,5,function(err, activities){	
+	activities_provider.fetchGroupActivities(req.params.id, 0,5,function(err, activities){	
 		groups_provider.fetchAll(0, 5, function(err, groups){
 			groups_provider.fetch(req.params.id, function(err, group){
 				res.render('group', { activities: activities, groups: groups, group: group, current_user: req.user});	

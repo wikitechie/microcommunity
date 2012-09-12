@@ -88,6 +88,8 @@ define [
 						object: model.toJSON().current_revision
 						object_type: "Revision"
 						verb: "edit"
+						target : model.get('parent').id
+						target_type : model.get('parent_type')
 					activity.save(null,
 						success: (activity)=>
 							@enable()

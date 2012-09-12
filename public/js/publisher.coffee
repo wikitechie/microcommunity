@@ -15,6 +15,8 @@ define [
 					parent : @options.parent
 					parent_type : @options.parent_type	
 			@addPublisher "wikipage", "Wiki", new WikipagePublisher
+					parent : @options.parent
+					parent_type : @options.parent_type				
 			#@addPublisher "question", "Question", new QuestionPublisher
 			#@addPublisher "link", "Link", new LinkPublisher
 
