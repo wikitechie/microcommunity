@@ -16,6 +16,7 @@ var express = require('express')
   , Resource = require('express-resource')
   , activities_provider = require('./providers/activities-provider')
   , users_provider = require('./providers/users-provider')  
+  , groups_provider = require('./providers/groups-provider')  
   , follows_provider = require('./providers/follows-provider')    
   , database = require('./providers/db')
   , comments_api = require('./api/comments')
@@ -33,6 +34,7 @@ database.connectDB(function(err, database){
 	follows_provider.setup(database);		
 	comments_api.setup(database)
 	votes_api.setup(database)
+	groups_provider.setup(database)
 	console.log( 'Connection to database established...')
 });
 
@@ -79,7 +81,6 @@ passport.use(new GoogleStrategy({
 							
 				users_provider.create(user, function(err,user){
 					if (!err) {
-						console.log(user);
 						console.log("user created");
 						return done(null, user);
 					}				
@@ -125,9 +126,13 @@ auth.install(app, db);
 
 //main app
 app.get('/', function(req, res){
-	activities_provider.fetchActivities(0,5,function(err, activities){	
-		res.render('index', { activities: activities, current_user: req.user});
-	});
+	groups_provider.fetchAll(0, 5, function(err, groups){
+		activities_provider.fetchActivities(0,5,function(err, activities){	
+			console.log(activities)
+			res.render('index', { groups: groups, activities: activities, current_user: req.user});
+		});	
+	})
+
 });
 
 //profile app
@@ -135,7 +140,6 @@ app.get('/profile/:id', function(req, res){
 	
 	users_provider.fetch( req.params.id, function(err, user){
 		activities_provider.fetchUserActivities(req.params.id, 0,5,function(err, activities){	
-			console.log (user)
 			res.render('profile', { 
 				activities: activities, 
 				profile: user.profile, 
@@ -148,6 +152,30 @@ app.get('/profile/:id', function(req, res){
 });
 
 
+//group app
+
+app.get('/groups/:id', function(req, res){
+
+	activities_provider.fetchGroupActivities(req.params.id, 0,5,function(err, activities){	
+		groups_provider.fetchAll(0, 5, function(err, groups){
+			groups_provider.fetch(req.params.id, function(err, group){
+				res.render('group', { activities: activities, groups: groups, group: group, current_user: req.user});	
+			})
+		})	
+	})
+
+});
+
+app.post('/groups', function(req, res){
+	
+	groups_provider.create(req.body, req.body.creator, function(err, new_group){
+		res.redirect('/groups/'+ new_group._id)
+	})
+
+	
+
+	
+});
 
 //loading api
 app.resource('api/posts', require('./api/posts'));
@@ -199,7 +227,6 @@ var activityMessage = require('./shared/activity-message')
 
 io.sockets.on('connection', function (socket) {
   socket.on('new-activity', function (data) {
-  	console.log(data.activity)
   	var message = activityMessage.message(data.activity, true)
     socket.broadcast.emit('new-activity', { message: message });
   });

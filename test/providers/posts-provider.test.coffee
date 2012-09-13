@@ -37,6 +37,8 @@ describe 'Posts Provider', ()->
 					text: "A Post"
 					user: created_user._id
 					created_at : Date()	
+					parent_type : "User"
+					parent : created_user._id
 							
 				posts_provider.createPost post_attr, (err, post)->
 					returned_post = post

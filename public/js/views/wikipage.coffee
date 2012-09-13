@@ -83,7 +83,6 @@ define [
 			old_text = @model.get('body')
 			@model.get('page').save({ body: $(@el).find(".wikipage-body").val(), summary : $(@el).find(".wikipage-summary").val(), diff : JsDiff.diffWords(old_text, $(@el).find(".wikipage-body").val() ), user:  current_user._id },
 				success : (model, response)=>
-					console.debug model.toJSON().current_revision
 					@model.set
 						body : model.toJSON().current_revision.body
 						_id : model.toJSON().current_revision._id
@@ -92,6 +91,8 @@ define [
 						object: model.toJSON().current_revision
 						object_type: "Revision"
 						verb: "edit"
+						target : model.get('parent').id
+						target_type : model.get('parent_type')
 					activity.save(null,
 						success: (activity)=>
 							@enable()
@@ -171,3 +172,4 @@ define [
 			$(@selectedParagraph).show()
 		getBody: ->
 			return @model.get('page').attributes.current_revision.body
+

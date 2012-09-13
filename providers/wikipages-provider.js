@@ -50,7 +50,9 @@ exports.createWikiPage = function(attr, callback){
 	db.collection('wikipages', function(err, wikipages_collection){
 		var wikipage_attr = {
 			title: attr.title,
-			created_at : new Date()
+			created_at : new Date(),
+			parent : attr.parent,
+			parent_type : attr.parent_type
 		};
 
 		wikipages_collection.insert(wikipage_attr, function(err, docs){

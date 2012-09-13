@@ -54,5 +54,8 @@ exports.fetch = (follower_id, callback)->
 	
 	db.collection 'users', (err, users)->
 		users.findOne { _id : follower_id }, (err, follower)->
-			callback(err, follower.follows)
+			if follower.follows?
+				callback(err, follower.follows)
+			else 
+				callback(err, [])
 		

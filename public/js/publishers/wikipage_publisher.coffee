@@ -44,10 +44,11 @@ define [
 
 		post: ->
 			wikipage = new WikiPage
-			wikipage.set	
 				title: $("#wikipage-title").val()
 				body: $("#wikipage-text").val()
 				user: current_user._id
+				parent : @options.parent
+				parent_type : @options.parent_type
 			@disable()
 			wikipage.save(null,
 				success: (wikipage, response)=> 
@@ -56,6 +57,8 @@ define [
 						object: wikipage.attributes.current_revision					
 						object_type: "Revision"
 						verb: "create"
+						target : @options.parent
+						target_type : @options.parent_type
 					activity.save({},
 						success: (activity)=>
 							window.mediator.trigger("new-activity", activity)

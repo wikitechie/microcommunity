@@ -4,8 +4,9 @@ define [
 	'cs!models/post'
 	'cs!models/wikipage'
 	'cs!models/revision'
+	'cs!models/group'	
 	'backbone-relational'
-], (Backbone, User, Post, WikiPage, Revision) ->
+], (Backbone, User, Post, WikiPage, Revision, Group) ->
 	class Activity extends Backbone.RelationalModel
 		idAttribute: "_id"
 		
@@ -25,6 +26,17 @@ define [
 					type : Backbone.HasOne
 					key : "object"
 					relatedModel : model_classes[attributes.object_type]
+
+			if attributes.target_type?
+				if (attributes.target_type == 'users')
+					target_model = User
+				else
+					target_model = Group
+
+				@relations[2] = 
+					type : Backbone.HasOne
+					key : "target"
+					relatedModel : target_model
 					
 			Backbone.RelationalModel.prototype.constructor.apply(this, arguments)
 		
