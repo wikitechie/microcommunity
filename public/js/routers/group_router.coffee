@@ -18,7 +18,8 @@ define [
 					parent_type : "groups"							
 			
 			socialStream = new ActivityStream
-				activities: eval(activities)				
+				activities: eval(activities)	
+				group : eval(group)._id			
 				
 			notifications = new NotificationMenu
 			$('.main-nav').append notifications.render().el

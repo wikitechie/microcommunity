@@ -7,6 +7,10 @@ exports.index = function(req, res){
 		provider.fetchUserActivities(req.query.user, req.query.from, req.query.to, function(err, activities){
 				return res.send(activities);	
 		});	
+	} if (req.query.group) {
+		provider.fetchGroupActivities(req.query.group, req.query.from, req.query.to, function(err, activities){
+				return res.send(activities);	
+		});		
 	} else {
 		provider.fetchActivities(req.query.from, req.query.to, function(err, activities){
 				return res.send(activities);	
