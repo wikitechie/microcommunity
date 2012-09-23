@@ -3,9 +3,6 @@ define [
 ], (Post)->
 	describe 'Post Model', ()->	
 		describe 'Validation', ()->	
-			it 'should have the proper url', ()->
-				post = new Post()
-				assert.equal post.url(), '/api/posts'
 			
 			it 'should require a text', ()->
 				post = new Post
@@ -65,6 +62,59 @@ define [
 				assert.ok post.get('comments')
 				post.get('comments').each (comment)->
 					assert.equal comment.url(), "/api/posts/5016b37f1c97f88c0f00002f/comments"
+					
+		describe 'Post-Parent association', ()->
+		
+			describe 'User as a parent case', ()->		
+				post = null			
+				before ()->
+					user = 
+						_id: "5006de43a836cb97c144ff81"
+						email: "email@service.com"				
+					post = new Post 
+						_id : "5016b37f1c97f88c0f00002f"
+						text: "Text"
+						created_at :"2012-07-30T16:17:03.000Z"
+						user : user
+						parent : user
+						parent_type : 'users'
+						comments : [
+							{text : "this is a comment",	user : user }
+							{text : "this is a comment",	user : user }						
+							{text : "this is a comment",	user : user }						
+						]				
+					
+				it 'should have a parent association with a user model', ()->					
+					assert.ok post.get('parent')
+					assert.equal post.get('parent').constructor.name, "User"					
+					assert.equal post.get('parent').id, "5006de43a836cb97c144ff81"
+					
+			describe 'Group as a parent case', ()->		
+				post = null			
+				before ()->
+					user = 
+						_id: "5006de43a836cb97c144ff81"
+						email: "email@service.com"				
+					post = new Post 
+						_id : "5016b37f1c97f88c0f00002f"
+						text: "Text"
+						created_at :"2012-07-30T16:17:03.000Z"
+						user : user
+						parent : 
+							_id : "5006dedfa836cb97c144ff81"
+							name : "A trivial group"
+						parent_type : 'groups'
+						comments : [
+							{text : "this is a comment",	user : user }
+							{text : "this is a comment",	user : user }						
+							{text : "this is a comment",	user : user }						
+						]				
+					
+				it 'should have a parent association with a group model', ()->					
+					assert.ok post.get('parent')
+					assert.equal post.get('parent').constructor.name, "Group"					
+					assert.equal post.get('parent').id, "5006dedfa836cb97c144ff81"					
+	
 												
 															
 			

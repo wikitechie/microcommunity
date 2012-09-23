@@ -45,10 +45,11 @@ define [
 
 		newpost: ->
 			post = new Post
-			post.set
 				text: $("#publisher-text").val()
 				comments: []
 				user: current_user
+				parent : @options.parent
+				parent_type : @options.parent_type
 			@disable()
 			post.save(null,
 				success: (post, response)=> 	
@@ -57,6 +58,8 @@ define [
 						object: post.id.toString()
 						object_type: "Post"
 						verb: "create"
+						target : @options.parent
+						target_type: @options.parent_type
 					activity.save({},
 						success: (activity)=> 
 							window.mediator.trigger("new-activity", activity)

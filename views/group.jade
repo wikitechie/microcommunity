@@ -1,0 +1,31 @@
+extends layout
+
+block content	
+	!= "<script type='text/javascript'>"
+	!= "var activities =" + JSON.stringify(activities) + ";"	
+	!= "var group =" +JSON.stringify(group)  + ";"		
+	!= "var current_user =" +JSON.stringify(current_user)  + ";"	
+	!= "</script>"
+
+	.row
+		.span3
+			include shared/sidebar								
+				
+		.span7
+			.row-fluid
+				.span12 
+				.page-header
+						h1
+							= group.name
+						p 
+							= group.description
+					
+			include shared/publisher
+			hr
+			#social-stream
+
+block jsbootstrap
+		script(src='/js/group.js')
+
+					
+

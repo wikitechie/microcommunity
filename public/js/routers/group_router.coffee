@@ -13,9 +13,13 @@ define [
 			window.current_user = eval(current_user)		
 			
 			if current_user?
-				publisher = new Publisher()			
+				publisher = new Publisher
+					parent : eval(group)
+					parent_type : "groups"							
+			
 			socialStream = new ActivityStream
-				activities: eval(activities)
+				activities: eval(activities)	
+				group : eval(group)._id			
 				
 			notifications = new NotificationMenu
 			$('.main-nav').append notifications.render().el

@@ -8,21 +8,13 @@ block content
 
 	.row
 		.span3
-			.well.sidebar-nav
-				ul.nav.nav-list
-					li.nav-header Basic
-					li.active
-						a(href="#") Home
-					li
-						a(href="#") Close friends			
-			.well.sidebar-nav
-				ul.nav.nav-list
-					li.nav-header Groups
-					li
-						a(href="#") Group 1
-					li
-						a(href="#") Group 2									
+			include shared/sidebar
+								
 		.span7
+			<div class="row-fluid">
+			<div class="span12 new-group-button-area">
+			</div>
+			</div>		
 			include shared/publisher
 			hr
 			#social-stream

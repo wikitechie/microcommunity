@@ -11,7 +11,9 @@ define [
 		
 			user = 
 				_id: "5006de43a836cb97c144ff81"
-				email: "email@service.com"			
+				email: "email@service.com"
+				profile:
+					displayName : "User name"		
 			post = new Post 
 				_id : "5016b37f1c97f88c0f00002f"
 				text: "Text"
@@ -21,6 +23,8 @@ define [
 					{"text":"Comment 1", user:user,"created_at":"Tue Jul 31 2012 07:34:59 GMT+0300 (EEST)"}
 					{"text":"Comment 2", user:user,"created_at":"Tue Jul 31 2012 07:35:00 GMT+0300 (EEST)"}
 				]
+				parent : user
+				parent_type : "users"
 					
 			postView = new PostView
 				model : post	

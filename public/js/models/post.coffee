@@ -2,15 +2,30 @@ define [
 	'backbone'
 	'cs!models/comment'
 	'cs!models/user'
+	'cs!models/group'
 	'backbone-relational'
-], (Backbone, Comment, User) ->
+], (Backbone, Comment, User, Group) ->
 	class Post extends Backbone.RelationalModel
 		idAttribute: "_id"
+		
+		constructor : (attributes, options)->
+			if attributes.parent_type?
+				if (attributes.parent_type is 'users')
+					parent_model = User
+				else
+					parent_model = Group
+
+				@relations[2] = 
+					type : Backbone.HasOne
+					key : "parent"
+					relatedModel : parent_model		
+			Backbone.RelationalModel.prototype.constructor.apply(this, arguments)	
 		
 		relations : [
 			{	type : Backbone.HasOne,	key : "user",	relatedModel : User	}
 			{	type : Backbone.HasMany, key : "comments",	relatedModel : Comment	}
 		]
+		
 		
 		validate : (attrs)->
 			unless attrs.text?

@@ -59,7 +59,6 @@ define [
 		#injecting views
 		 
 		injectActivity: (activity)=>
-			console.debug 'new activity'
 			activityView = new Activity.View 
 				model: activity
 			@injectView activityView
@@ -103,7 +102,9 @@ define [
 					to: 5  
 				#filtering activities by user		
 				if @options.user
-					_.extend data, {user : @options.user}			
+					_.extend data, {user : @options.user}	
+				if @options.group
+					_.extend data, {group : @options.group}			
 				@activities.fetch
 					data : data	
 					success: (collection, response)=>
