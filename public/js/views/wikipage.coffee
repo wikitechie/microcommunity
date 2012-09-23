@@ -11,6 +11,11 @@ define [
 	'general'
 	'moment'
 	'diff'
+	'lib/markdown.converter'
+	'lib/markdown.editor'
+	'lib/markdown.sanitizer'
+	'lib/htmldomparser'
+	'lib/html2markdown'
 
 ], ($, Backbone, Activity, show, edit_btns, save_btns, view_b, edit_b) ->
 	class WikiPageView extends Backbone.View
@@ -40,9 +45,10 @@ define [
 			@fullview = false
 			@template = @normalTemplate
 			@quickEditButton = $("<button class='btn btn-info btn-mini quick-edit-button' style='position: absolute;'>Edit</button>")
-			@quickEditBox = $("<textarea class='quick-edit-box'></textarea>")
+			@quickEditBox = $("<textarea class='quick-edit-box floating_panel'></textarea>")
 			$(@quickEditBox).hide()
 			$(@quickEditButton).hide()
+			this.converter = new Markdown.Converter()
 
 		render: ->
 			$(@el).html @template @model.toJSON()
@@ -136,38 +142,47 @@ define [
 			p_pos.left += ($(current_p).innerWidth() - $(@quickEditButton).outerWidth())
 			$(@quickEditButton).offset(p_pos)
 		hideEditButton: (e) ->
-			if (e.toElement isnt @quickEditButton[0])
+			targetElement = e.toElement || e.relatedTarget
+			if (targetElement isnt @quickEditButton[0])
+				console.debug(e)
 				$(@quickEditButton).hide()
 		openQuickEditBox: ->
 			this.cancelQuickEdit()
+			
 			@selectedParagraph = @hoveredParagraph
 			p_width = $(@selectedParagraph).width()
 			p_height= $(@selectedParagraph).height()
 			$(@quickEditButton).hide()
-			$(@selectedParagraph).after(@quickEditBox)
-			$(@selectedParagraph).hide()
-			$(@quickEditBox).html($(@selectedParagraph).html())
+			markdown_text = HTML2Markdown($(@selectedParagraph).html());
+			$(@quickEditBox).html(markdown_text)
 			$(@quickEditBox).show()
+			editbox_pos = {
+				x : $(@selectedParagraph).offset().left 
+				y : $(@selectedParagraph).offset().top + p_height 
+			}
+			$(@quickEditBox).css(editbox_pos);
 			$(@quickEditBox).width(p_width)
 			$(@quickEditBox).height(p_height+ 15)
 		onQuickEditBoxKeypress: (e) ->
 			code = e.keyCode or e.which
 			if (code == 13 && !e.shiftKey)
 				old_text = @getBody()
-				new_text = $(@quickEditBox).val()
-				$(@selectedParagraph).html(new_text)
+				#new_text = $(@quickEditBox).val()
+				#$(@selectedParagraph).html(new_text)
 				$(@quickEditBox).hide()
-				$(@quickEditBox).remove()
-				$(@selectedParagraph).show()
-				new_text = $(@el).find('.wikipage-view-body').html()
+				new_text = HTML2Markdown($(@el).find('.wikipage-view-body').html())
 				@save(new_text,old_text,'partial edit')
+			else
+				html_data = this.converter.makeHtml($(@quickEditBox).val())
+				$(@selectedParagraph).html(html_data)
 		onQuickEditBoxKeyup: (e) ->
 			code = e.keyCode or e.which
 			if (code == 27) # for the escape key
 				@cancelQuickEdit()
+			else
+				html_data = this.converter.makeHtml($(@quickEditBox).val())
+				$(@selectedParagraph).html(html_data)
 		cancelQuickEdit: ->
 			$(@quickEditBox).hide()
-			$(@quickEditBox).remove()
-			$(@selectedParagraph).show()
 		getBody: ->
 			return @model.get('page').attributes.current_revision.body

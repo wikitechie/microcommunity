@@ -21,6 +21,9 @@ body {
 	float: left;
 }
 
+.floating_panel {
+  position: absolute;
+}
 
 /* when content embeded */
 .embeded-content .mainWrapper{
