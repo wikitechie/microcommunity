@@ -6,6 +6,7 @@ html
 		link(href='/css/bootstrap.min.css', rel='stylesheet')
 		link(href='/css/bootstrap-responsive.min.css', rel='stylesheet')		
 		link(href='/css/app.css', rel='stylesheet')
+		<script data-main="/client/apps/wikipage/main" src="/client/lib/require/require.min.js"></script>		
 
 	body
 		.navbar.navbar-fixed-top
@@ -50,8 +51,6 @@ html
 		include shared/templates		
 		
 		script(src='/socket.io/socket.io.js')
-		script(src='/js/lib/require/require.min.js')
-		script(src='/js/config.js')		
 		block jsbootstrap
 
 

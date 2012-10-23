@@ -1,0 +1,23 @@
+extends layout
+
+block content	
+	.row
+		.span5
+			.row-fluid
+				.span12 
+					.page-header 
+						h1 hey!										
+				
+		.span7					
+			include shared/publisher
+			hr
+			#social-stream
+
+block jsbootstrap
+	!= "<script type='text/javascript'>"
+	!= "var activities =" + JSON.stringify(activities) + ";"
+	!= "var current_user =" +JSON.stringify(current_user)  + ";"
+	!= "</script>"
+
+
+

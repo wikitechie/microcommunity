@@ -1,8 +1,8 @@
 define [
 	'jquery'
 	'backbone'
-	'cs!publisher'
-	'cs!activity_stream'
+	'cs!views/publisher'
+	'cs!views/activity_stream'
 	'cs!views/notification_menu'
 	'cs!views/buttons/new_group_button'
 ], ($, Backbone, Publisher, ActivityStream, NotificationMenu, NewGroupButton) ->

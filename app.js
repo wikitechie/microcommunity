@@ -109,7 +109,9 @@ app.configure(function(){
   app.use(passport.initialize());
   app.use(passport.session());  
   app.use(app.router);
-  app.use(express.static(__dirname + '/public')); 
+  app.use(express.static(__dirname + '/public'));
+  app.use('/client', express.static(__dirname + '/client'));    
+  app.use('/client-built', express.static(__dirname + '/client-built'));      
   app.use(express.static(__dirname + '/test/client'));   
   app.use(express.static(__dirname + '/shared'));     
   
@@ -166,16 +168,20 @@ app.get('/groups/:id', function(req, res){
 
 });
 
-app.post('/groups', function(req, res){
-	
+app.post('/groups', function(req, res){	
 	groups_provider.create(req.body, req.body.creator, function(err, new_group){
 		res.redirect('/groups/'+ new_group._id)
-	})
-
-	
-
-	
+	})	
 });
+
+//wikipage app
+
+app.get('/wikipages/:id', function(req, res){
+		activities_provider.fetchActivities(0,5,function(err, activities){	
+			console.log(activities)
+			res.render('wikipage', { activities: activities, current_user: req.user});
+		});	
+})
 
 //loading api
 app.resource('api/posts', require('./api/posts'));
@@ -197,8 +203,7 @@ app.delete('/api/users/:follower/follows/:followed', function(req, res){
 	follows_provider.unfollow(req.params.follower, req.params.followed, function(err){
 		res.send({success : true})		
 		console.log(err)		
-	})
-	
+	})	
 });
 
 
