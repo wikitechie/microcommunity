@@ -1,5 +1,5 @@
 {
-    appDir: '../client',
+//    appDir: '../',
     baseUrl: ".",
     mainConfigFile: 'common.js',
     dir: '../client-built',
@@ -11,26 +11,22 @@
             //List common dependencies here. Only need to list
             //top level dependencies, "include" will find
             //nested dependencies.
+            include: ['jquery']
         },
 
-        //Now set up a build layer for each main layer, but exclude
+        //Now set up a build layer for each page, but exclude
         //the common one. "exclude" will exclude nested
         //the nested, built dependencies from "common". Any
         //"exclude" that includes built modules should be
         //listed before the build layer that wants to exclude it.
-        //The "page1" and "page2" modules are **not** the targets of
-        //the optimization, because shim config is in play, and
-        //shimmed dependencies need to maintain their load order.
-        //In this example, common.js will hold jquery, so backbone
-        //needs to be delayed from loading until common.js finishes.
-        //That loading sequence is controlled in page1.js.
+        //"include" the appropriate "app/main*" module since by default
+        //it will not get added to the build since it is loaded by a nested
+        //require in the page*.js files.
         {
             //module names are relative to baseUrl/paths config
-            name: 'apps/wikipage/main',
+            name: 'home',
             exclude: ['common']
-        },
-
-
+        }
 
     ]
 }

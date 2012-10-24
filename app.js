@@ -109,7 +109,7 @@ app.configure(function(){
   app.use(passport.initialize());
   app.use(passport.session());  
   app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/static'));
   app.use('/client', express.static(__dirname + '/client'));    
   app.use('/client-built', express.static(__dirname + '/client-built'));      
   app.use(express.static(__dirname + '/test/client'));   
@@ -126,12 +126,15 @@ app.configure('development', function(){
 var auth = require('./routes/auth');
 auth.install(app, db);
 
+//middleware for initializing app variable
+app.locals.app = false;
+
 //main app
 app.get('/', function(req, res){
 	groups_provider.fetchAll(0, 5, function(err, groups){
 		activities_provider.fetchActivities(0,5,function(err, activities){	
 			console.log(activities)
-			res.render('index', { groups: groups, activities: activities, current_user: req.user});
+			res.render('index', { app: 'home', groups: groups, activities: activities, current_user: req.user});
 		});	
 	})
 
@@ -142,7 +145,8 @@ app.get('/profile/:id', function(req, res){
 	
 	users_provider.fetch( req.params.id, function(err, user){
 		activities_provider.fetchUserActivities(req.params.id, 0,5,function(err, activities){	
-			res.render('profile', { 
+			res.render('profile', {
+				app : 'profile', 
 				activities: activities, 
 				profile: user.profile, 
 				user: user, 
@@ -161,7 +165,14 @@ app.get('/groups/:id', function(req, res){
 	activities_provider.fetchGroupActivities(req.params.id, 0,5,function(err, activities){	
 		groups_provider.fetchAll(0, 5, function(err, groups){
 			groups_provider.fetch(req.params.id, function(err, group){
-				res.render('group', { activities: activities, groups: groups, group: group, current_user: req.user});	
+				res.render('group', 
+				{ 
+					app : 'group',
+					activities: activities, 
+					groups: groups, 
+					group: group, 
+					current_user: req.user
+				});	
 			})
 		})	
 	})
@@ -179,7 +190,7 @@ app.post('/groups', function(req, res){
 app.get('/wikipages/:id', function(req, res){
 		activities_provider.fetchActivities(0,5,function(err, activities){	
 			console.log(activities)
-			res.render('wikipage', { activities: activities, current_user: req.user});
+			res.render('wikipage', { app: 'wikipage', activities: activities, current_user: req.user});
 		});	
 })
 

@@ -1,8 +1,8 @@
 define [
 	'jquery'
 	'backbone'
-	'cs!publishers/post_publisher'
-	'cs!publishers/wikipage_publisher'	
+	'cs!views/publishers/post_publisher'
+	'cs!views/publishers/wikipage_publisher'	
 	'bootbox'
 ], ($, Backbone, PostPublisher, WikipagePublisher) ->
 	class PublisherContainer extends Backbone.View

@@ -6,7 +6,8 @@ html
 		link(href='/css/bootstrap.min.css', rel='stylesheet')
 		link(href='/css/bootstrap-responsive.min.css', rel='stylesheet')		
 		link(href='/css/app.css', rel='stylesheet')
-		<script data-main="/client/apps/wikipage/main" src="/client/lib/require/require.min.js"></script>		
+		- if (app != false)
+			<script data-main="/client/#{app}" src="/client/lib/require/require.min.js"></script>		
 
 	body
 		.navbar.navbar-fixed-top

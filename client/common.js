@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: "/client",
+	baseUrl: "../client",
 
   paths: {
     cs: 'cs',

@@ -27,6 +27,10 @@ npm install
 node app.js
 ```
 
+
+Optimizing client
+======================
+
 Running Tests
 ======================
 

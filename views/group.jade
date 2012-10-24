@@ -1,12 +1,6 @@
 extends layout
 
 block content	
-	!= "<script type='text/javascript'>"
-	!= "var activities =" + JSON.stringify(activities) + ";"	
-	!= "var group =" +JSON.stringify(group)  + ";"		
-	!= "var current_user =" +JSON.stringify(current_user)  + ";"	
-	!= "</script>"
-
 	.row
 		.span3
 			include shared/sidebar								
@@ -24,8 +18,9 @@ block content
 			hr
 			#social-stream
 
-block jsbootstrap
-		script(src='/js/group.js')
-
-					
-
+block jsbootstrap					
+	!= "<script type='text/javascript'>"
+	!= "var activities =" + JSON.stringify(activities) + ";"	
+	!= "var group =" +JSON.stringify(group)  + ";"		
+	!= "var current_user =" +JSON.stringify(current_user)  + ";"	
+	!= "</script>"
