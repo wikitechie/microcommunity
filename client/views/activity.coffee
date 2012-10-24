@@ -6,7 +6,7 @@ define [
 	'cs!modules/wikipage'
 	'cs!models/revision'
 	'cs!views/diff'
-	'/activity-message.js'	
+	'/shared/activity-message.js'	
 	'jquery.gravatar'
 	'general'
 	'moment'
