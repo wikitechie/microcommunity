@@ -11,7 +11,6 @@
             //List common dependencies here. Only need to list
             //top level dependencies, "include" will find
             //nested dependencies.
-            include: ['jquery']
         },
 
         //Now set up a build layer for each page, but exclude
@@ -25,7 +24,7 @@
         {
             //module names are relative to baseUrl/paths config
             name: 'home',
-            exclude: ['common']
+            include: ['cs!pages/home/main']
         }
 
     ]
