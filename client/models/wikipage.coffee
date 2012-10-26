@@ -29,5 +29,6 @@ define [
 	
 		initialize: ->
 			@comments = new Comments
+			@set('type','WikiPage')
 
 

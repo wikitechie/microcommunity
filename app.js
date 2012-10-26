@@ -110,8 +110,8 @@ app.configure(function(){
   app.use(passport.session());  
   app.use(app.router);
   app.use(express.static(__dirname + '/static'));
-  app.use('/client', express.static(__dirname + '/client'));    
   app.use('/client', express.static(__dirname + '/client-built'));      
+  app.use('/client', express.static(__dirname + '/client'));      
   app.use(express.static(__dirname + '/test/client'));   
   app.use('/shared', express.static(__dirname + '/shared'));     
   

@@ -30,6 +30,11 @@ node app.js
 
 Optimizing client
 ======================
+Running this command will generate 'client-built' folder which could be served instead of 'client'.
+
+```bash
+r.js -o client/build.js
+```
 
 Running Tests
 ======================

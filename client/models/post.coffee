@@ -37,6 +37,7 @@ define [
 
 		initialize: ()->
 			@get('comments').url = "/api/posts/#{@id}/comments"
+			@set('type','Post')
 		
 			#@comments = new Comments
 			#if options? and options.comments? 

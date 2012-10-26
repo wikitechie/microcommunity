@@ -2,7 +2,7 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'cs!pages/home/router',
+	'cs!pages/group/router',
 	'bootstrap-notify'
 ], function($, _, Backbone, router){
 	'use strict'
@@ -15,23 +15,16 @@ define([
 	socket.on( 'new-activity', function(data){
 	  $('.bottom-left').notify({message : {text : data.message } }).show()
 	})
-  
 
   window.mediator.bind("new-silent-activity", function(activity){
 	  socket.emit('new-activity', { activity : activity.toJSON() })
   })
-  
-  
   	
   window.mediator.bind( "new-activity", function(activity){
 		socket.emit('new-activity', { activity : activity.toJSON() })  
   })
-  	    
-	
+  
 	var appRouter = new router()
 	Backbone.history.start()
-
-
-
 })
 

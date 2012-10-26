@@ -7,7 +7,12 @@ html
 		link(href='/css/bootstrap-responsive.min.css', rel='stylesheet')		
 		link(href='/css/app.css', rel='stylesheet')
 		- if (app != false)
-			<script data-main="/client/#{app}" src="/client/lib/require/require.min.js"></script>		
+			<script src="/client/lib/require/require.min.js"></script>
+			<script type="text/javascript">
+			!= "var app = '" + app  + "';"
+			!= "require(['/client/common.js'], function(){"
+			!= "require(['pages/'+ app +'/main'])});"
+			</script>						
 
 	body
 		.navbar.navbar-fixed-top

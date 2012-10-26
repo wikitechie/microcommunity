@@ -2,11 +2,11 @@ define [
 	'jquery'
 	'backbone'
 	'text!templates/activity.html'
-	'cs!modules/post'
-	'cs!modules/wikipage'
+	'cs!views/post'
+	'cs!views/wikipage'
 	'cs!models/revision'
 	'cs!views/diff'
-	'/shared/activity-message.js'	
+	'../../shared/activity-message.js'
 	'jquery.gravatar'
 	'general'
 	'moment'
@@ -26,11 +26,11 @@ define [
 			else
 				@singleMode = true
 	
-			@objectClass = @model.get('object').constructor.name
+			@objectClass = @model.get('object').get('type')
 		
 			views_classes = 
-				Post: Post.View
-				Revision: WikiPage.View
+				Post: Post
+				Revision: WikiPage
 			
 			@view = new views_classes[@objectClass]
 				model: @model.get('object')

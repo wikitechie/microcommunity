@@ -22,6 +22,7 @@ define [
 		initialize: ()->
 			@get('comments').url = "/api/revisions/#{@id}/comments"
 			@get('up_votes').url = "/api/revisions/#{@id}/votes"
+			@set('type','Revision')			
 
 
 
