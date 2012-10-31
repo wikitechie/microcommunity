@@ -180,3 +180,23 @@ exports.fetchGroupActivities = function (group_id, from, to, callback){
 	});	
 }
 
+
+exports.fetchWikiPageActivities = function (wikipage_id, from, to, callback){
+	
+	wikipage_id = database.normalizeID(wikipage_id);	
+	
+	db.collection('activities', function(err, collection){
+		collection.find( { target_type : 'WikiPage', target : wikipage_id } )
+		.sort({created_at: -1})
+		.skip(parseInt(from))
+		.limit(parseInt(to))
+		.toArray(function(err, result){
+			exports.fetchJoinedActivities(result, function(err, result){
+				callback(err, result);
+			});
+			
+		});
+	});	
+}
+
+

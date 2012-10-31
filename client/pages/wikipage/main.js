@@ -2,7 +2,7 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'cs!pages/home/router',
+	'cs!pages/wikipage/router',
 	'bootstrap-notify'
 ], function($, _, Backbone, router){
 	'use strict'

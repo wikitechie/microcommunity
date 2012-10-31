@@ -7,6 +7,7 @@ var db ;
 
 exports.setup = function (database){
 	db = database;
+	revisions_provider.setup(database);		
 	return db;
 };
 
@@ -80,7 +81,6 @@ exports.createWikiPage = function(attr, callback){
 exports.updateWikiPage = function(id, updated, callback){
 
 	var object =  database.normalizeID(id);
-	console.log(updated)
 
 	db.collection('wikipages', function(err, wikipages){
 		wikipages.findOne({_id: object }, function(err, wikipage){

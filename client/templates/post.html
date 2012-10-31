@@ -12,7 +12,7 @@
 			<% if(parent_type == 'users'){ %>
 			on his wall
 			<% } else { %>
-			on <%= parent.name %>			
+			on <%= parent.name ? parent.name : parent.title%>			
 			<% }  %>			
 			</p>
 			<p class ='text'><%= nl2br(text, false) %></p>

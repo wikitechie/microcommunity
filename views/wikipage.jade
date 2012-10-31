@@ -6,7 +6,12 @@ block content
 			.row-fluid
 				.span12 
 					.page-header 
-						h1 hey!										
+						.wikipage-area
+						h1 
+							= wikipage.title
+						p
+							= wikipage.current_revision.body
+																
 				
 		.span7					
 			include shared/publisher
@@ -16,6 +21,7 @@ block content
 block jsbootstrap
 	!= "<script type='text/javascript'>"
 	!= "var activities =" + JSON.stringify(activities) + ";"
+	!= "var wikipage =" + JSON.stringify(wikipage) + ";"	
 	!= "var current_user =" +JSON.stringify(current_user)  + ";"
 	!= "</script>"
 

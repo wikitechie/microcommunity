@@ -100,11 +100,13 @@ define [
 				data = 
 					from: @current_index
 					to: 5  
-				#filtering activities by user		
+				#filtering activities by user, group or wikipage
 				if @options.user
 					_.extend data, {user : @options.user}	
 				if @options.group
-					_.extend data, {group : @options.group}			
+					_.extend data, {group : @options.group}		
+				if @options.wikipage
+					_.extend data, {wikipage : @options.wikipage}								
 				@activities.fetch
 					data : data	
 					success: (collection, response)=>

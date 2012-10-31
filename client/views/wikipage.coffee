@@ -97,8 +97,8 @@ define [
 						object: model.toJSON().current_revision
 						object_type: "Revision"
 						verb: "edit"
-						target : model.get('parent').id
-						target_type : model.get('parent_type')
+						target : model
+						target_type : "WikiPage"
 					activity.save(null,
 						success: (activity)=>
 							@enable()

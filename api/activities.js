@@ -7,10 +7,14 @@ exports.index = function(req, res){
 		provider.fetchUserActivities(req.query.user, req.query.from, req.query.to, function(err, activities){
 				return res.send(activities);	
 		});	
-	} if (req.query.group) {
+	} else if (req.query.group) {
 		provider.fetchGroupActivities(req.query.group, req.query.from, req.query.to, function(err, activities){
 				return res.send(activities);	
 		});		
+	} else if (req.query.wikipage) {
+		provider.fetchWikiPageActivities(req.query.wikipage, req.query.from, req.query.to, function(err, activities){
+				return res.send(activities);	
+		});				
 	} else {
 		provider.fetchActivities(req.query.from, req.query.to, function(err, activities){
 				return res.send(activities);	
@@ -18,7 +22,6 @@ exports.index = function(req, res){
 	}
 	
 };
-
 
 exports.create = function(req, res){
 	
@@ -31,14 +34,11 @@ exports.create = function(req, res){
     target_type: req.body.target_type,    
     created_at : new Date() 
 	};
-	
-
 
   provider.createActivity(activity, function(err, new_activity){
 	  return res.send(new_activity);     
   });	  
 };
-
 
 exports.show = function(req, res){
 	provider.fetchActivity(new ObjectID(req.params.activitie), function(err, activity){

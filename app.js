@@ -16,6 +16,7 @@ var express = require('express')
   , Resource = require('express-resource')
   , activities_provider = require('./providers/activities-provider')
   , users_provider = require('./providers/users-provider')  
+  , wikipages_provider = require('./providers/wikipages-provider')    
   , groups_provider = require('./providers/groups-provider')  
   , follows_provider = require('./providers/follows-provider')    
   , database = require('./providers/db')
@@ -31,6 +32,7 @@ database.connectDB(function(err, database){
 		throw new Error("cannot establish database connection, is mongo server running ?!");
 	activities_provider.setup(database);
 	users_provider.setup(database);	
+	wikipages_provider.setup(database);		
 	follows_provider.setup(database);		
 	comments_api.setup(database)
 	votes_api.setup(database)
@@ -133,7 +135,6 @@ app.locals.app = false;
 app.get('/', function(req, res){
 	groups_provider.fetchAll(0, 5, function(err, groups){
 		activities_provider.fetchActivities(0,5,function(err, activities){	
-			console.log(activities)
 			res.render('index', { app: 'home', groups: groups, activities: activities, current_user: req.user});
 		});	
 	})
@@ -188,10 +189,12 @@ app.post('/groups', function(req, res){
 //wikipage app
 
 app.get('/wikipages/:id', function(req, res){
-		activities_provider.fetchActivities(0,5,function(err, activities){	
-			console.log(activities)
-			res.render('wikipage', { app: 'wikipage', activities: activities, current_user: req.user});
-		});	
+	wikipages_provider.fetch(req.params.id, function(err, wikipage){
+		activities_provider.fetchWikiPageActivities(req.params.id, 0,5,function(err, activities){	
+			res.render('wikipage', { app: 'wikipage', wikipage: wikipage, activities: activities, current_user: req.user});
+		});
+	})
+		
 })
 
 //loading api
