@@ -18,7 +18,7 @@ define [
 			_.bindAll @
 
 		render: ->	
-			$(@el).html @template @model.toJSON()
+			$(@el).html @template _.extend(@model.toJSON(), { author : @model.get('author').toJSON() })
 			$(@el).find('.comments-thread-area').html @commentsThread.render().el
 			@
 

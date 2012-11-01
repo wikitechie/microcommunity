@@ -18,6 +18,7 @@ define [
 
 		initialize: ->
 
+
 			if @collection? and (@collection.length is 1)
 				@singleMode = true			
 			
@@ -26,10 +27,10 @@ define [
 			else
 				@singleMode = true
 	
-			@objectClass = @model.get('object').get('type')
+			@objectClass = @model.get('object').get('objectType')
 		
 			views_classes = 
-				Post: Post
+				post: Post
 				Revision: WikiPage
 			
 			@view = new views_classes[@objectClass]
@@ -49,11 +50,12 @@ define [
 						diffView = new DiffView 
 							model : model.get 'object'				
 						@diffViews.push diffView
-						
+												
 			_.bindAll @
 
 		render: ->
-			if @objectClass == "Post" && @model.get('verb') == 'create'
+
+			if @objectClass == "post" && @model.get('verb') == 'create'
 				$(@el).html @view.render().el					
 			else
 				message = @message(@model.toJSON(), @singleMode)
@@ -70,7 +72,8 @@ define [
 					_.each @diffViews, (diffView)=>
 						if @objectClass == 'Revision' && @model.get('verb') == 'edit'
 							$(@el).find('.attachements').append diffView.render().el				
-							$(@el).find('.diff-content').hide()				
+							$(@el).find('.diff-content').hide()			
+								
 			@
 				
 		

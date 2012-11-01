@@ -45,11 +45,10 @@ define [
 
 		newpost: ->
 			post = new Post
-				text: $("#publisher-text").val()
-				comments: []
-				user: current_user
+				content: $("#publisher-text").val()
+				author: current_user				
 				parent : @options.parent
-				parent_type : @options.parent_type
+				
 			@disable()
 			post.save(null,
 				success: (post, response)=> 	

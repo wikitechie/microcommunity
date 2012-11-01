@@ -39,12 +39,11 @@ define [
 			#if enter preseed
 			if keycode == 13
 				e.preventDefault()
-				comment = new Comment
-				comment.set 
+				attr = 
 					text: $(@el).find(".comments-text").val()
 					user: current_user
 					created_at : Date()
-				@addComment comment
+				@addComment attr
 
 		injectComment: (comment) =>
 			commentView = new CommentView model: comment
@@ -53,10 +52,8 @@ define [
 		clearText: ->
 			$(@el).find(".comments-text").val("")
 
-		addComment: (comment)->
-			comment.url = "#{@model.urlRoot}/#{@model.id}/comments/"
-			comment.save()
-			@collection.add comment
+		addComment: (attr)->
+			@collection.create attr, { wait : true }
 			$(@el).find(".comments-text").val("")
 			$(@el).find(".comments-text").setCursorPosition(0)
 

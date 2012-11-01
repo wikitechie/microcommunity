@@ -11,20 +11,41 @@ exports.setup = function (database){
 	users_provider.setup(database);
 };
 
-
 exports.fetch = function (id, callback){
 
-	var post = database.normalizeID(id);
+	var id = database.normalizeID(id);
+	
 	db.collection('posts', function(err, posts){
-		posts.findOne( { _id : post }, function(err, post){
-			users_provider.fetch(post.user, function(err, user){
+		posts.findOne( { _id : id }, function(err, post){
+			users_provider.fetch(post.author, function(err, author){
 	  		comments_provider.fetchJoinedComments(post.comments, function(err, joined_comments){
-	  			_.extend(post, { user : user, comments : joined_comments})	 
+	  			_.extend(post, { 
+	  				author : author, 
+	  				comments : joined_comments
+  				})	 
 	  			callback(err, post)
 	  		}) 						
 			})			
 		})	
 	})	
+}
+
+
+exports.create = function(attr, callback){
+
+	attr.author = database.normalizeID(attr.author)
+	attr.parent._id = database.normalizeID(attr.parent._id)
+
+	_.extend(attr, {comments : []})
+	
+	db.collection('posts', function(err, posts){
+		posts.insert(attr, function(err, docs){
+			exports.fetch(docs[0]._id, function(err, new_post){
+				callback(err, new_post);
+			})
+		});
+	});
+
 }
 
 
@@ -53,29 +74,4 @@ exports.fetchJoinedPosts = function (posts, callback){
 	});
 }
 
-exports.fetchPosts = function (callback){
-  schemas.Post.find(function(err, posts) {	
-		if(!err){
-			exports.fetchJoinedPosts(posts, function(err, joined_posts){
-				callback(err, joined_posts);											
-			});
-		}
-});
-
-}
-
-
-exports.createPost = function(attr, callback){
-
-	_.extend(attr, {comments : []})
-
-	db.collection('posts', function(err, posts){
-		posts.insert(attr, function(err, docs){
-			exports.fetch(docs[0]._id, function(err, new_post){
-				callback(err, new_post);
-			})
-		});
-	});
-
-}
 

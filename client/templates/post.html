@@ -2,21 +2,21 @@
 	<div class="span12">
 		<div class="avatar">
 			<a href="#">
-				<img class="avatar-img" src="<%= $.gravatar(user.email, { size: 50 }) %>" />
+				<img class="avatar-img" src="<%= $.gravatar(author.email, { size: 50 }) %>" />
 			</a>
 		</div>
 		<div class="mainWrapper">
-			<p><a href="/profile/<%= user._id %>" class='email'>
-				<%= user.profile.displayName %>
+			<p><a href="/profile/<%= author._id %>" class='email'>
+				<%= author.profile.displayName %>
 			</a>
-			<% if(parent_type == 'users'){ %>
+			<% if(parent.objectType == 'User'){ %>
 			on his wall
 			<% } else { %>
 			on <%= parent.name ? parent.name : parent.title%>			
 			<% }  %>			
 			</p>
-			<p class ='text'><%= nl2br(text, false) %></p>
-			<p><small><%= moment(created_at).fromNow() %></small>
+			<p class ='text'><%= nl2br(content, false) %></p>
+			<p><small><%= moment(published).fromNow() %></small>
 			</p>
 			<div class="row-fluid">
 				<div class="comments-thread-area">
