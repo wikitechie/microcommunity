@@ -76,9 +76,7 @@ passport.use(new GoogleStrategy({
 				var user = {
 					email: email,
 					openId: identifier,
-					profile : {
-						displayName : profile.displayName
-					}
+					displayName : profile.displayName
 				}
 							
 				users_provider.create(user, function(err,user){

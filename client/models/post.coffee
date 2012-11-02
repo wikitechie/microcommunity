@@ -12,7 +12,7 @@ define [
 		
 		constructor : (attributes, options)->
 			if attributes.parent.objectType?
-				if (attributes.parent.objectType is 'User')
+				if (attributes.parent.objectType is 'user')
 					parent_model = User
 				else
 					parent_model = Group
@@ -33,5 +33,7 @@ define [
 		urlRoot: "/api/posts"
 
 		initialize: ()->
-			@get('comments').url = "#{@url()}/comments"
+			@get('comments').url = ()=>
+				url = @url()
+				"#{url}/comments"
 

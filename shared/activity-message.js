@@ -9,7 +9,7 @@ define([], function () {
   	message : function(model, singleMode){
   	  	
 			//var name = "<a href='/profile/" + model.actor.id + '>'+ model.actor.profile.displayName + "</a>";
-			var name = model.actor.profile.displayName;	
+			var name = model.actor.displayName;	
 			
 			var phrases = {}
 			

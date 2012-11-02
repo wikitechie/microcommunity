@@ -36,7 +36,11 @@ exports.create = function(attr, callback){
 	attr.author = database.normalizeID(attr.author)
 	attr.parent._id = database.normalizeID(attr.parent._id)
 
-	_.extend(attr, {comments : []})
+	_.extend(attr, {
+    published : Date(),
+    objectType : 'post',	
+		comments : []
+	})
 	
 	db.collection('posts', function(err, posts){
 		posts.insert(attr, function(err, docs){

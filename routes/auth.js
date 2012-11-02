@@ -27,9 +27,7 @@ exports.install = function(app, db){
 			var user = {
 				email: req.body.email,
 				password: req.body.password, 
-				profile : {
-					displayName : req.body.displayName
-				}				
+				displayName : req.body.displayName
 			}
 			
 			users_provider.create(user, function(err,user){
@@ -71,12 +69,7 @@ exports.install = function(app, db){
 	app.get('/auth/google/return', 
 		passport.authenticate('google', { successRedirect: '/',
 		                                  failureRedirect: '/login' }));
-	
-
-
 };
-
-
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If

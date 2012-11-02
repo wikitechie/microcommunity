@@ -13,11 +13,16 @@ exports.fetch = (id, callback)->
 	db.collection 'users', (err, users)->
 		users.findOne { _id : id}, (err, user) ->
 			exports.fetch_user_data id, (err, data)->	
-				unless user.profile
-					user.profile = {}
-				_.extend user.profile, data
+				_.extend user, data
 				callback(err, user)
-						
+
+			
+exports.create = (attr, callback)->
+	_.extend attr, { objectType : 'user',	published : Date()}
+	db.collection 'users', (err, users) ->
+		users.insert attr, (err, docs)->
+			callback(err, docs[0])
+									
 						
 exports.fetch_user_data = (id, callback)->
 	db.collection 'activities', (err, activities)->
@@ -58,12 +63,6 @@ exports.fetch_user_followers = (id, callback)->
 	db.collection 'users', (err, users) ->
 		users.find({ "follows" : id }).count callback
 
-			
-exports.create = (attr, callback)->
-	db.collection 'users', (err, users) ->
-		users.insert attr, (err, docs)->
-			callback(err, docs[0])
-			
 exports.fetchByEmail = (email, callback)->
 	db.collection 'users', (err, users)->
 		users.findOne { email : email}, (err, user) ->
