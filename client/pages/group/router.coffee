@@ -21,7 +21,4 @@ define [
 				activities: eval(activities)	
 				group : eval(group)._id			
 				
-			notifications = new NotificationMenu
-			$('.main-nav').append notifications.render().el
-				
 			

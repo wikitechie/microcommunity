@@ -9,10 +9,10 @@
 			<p><a href="/profile/<%= author._id %>" class='email'>
 				<%= author.displayName %>
 			</a>
-			<% if(parent.objectType == 'User'){ %>
-			on his wall
+			<% if(parent.objectType == 'user'){ %>
+			posted on his wall
 			<% } else { %>
-			on <%= parent.name ? parent.name : parent.title%>			
+			posted on <a href='#'><%= parent.displayName %></a>	wall		
 			<% }  %>			
 			</p>
 			<p class ='text'><%= nl2br(content, false) %></p>

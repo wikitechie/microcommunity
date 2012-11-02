@@ -16,8 +16,7 @@ define [
 					parent : current_user
 					parent_type : "users"					
 								
-			btn = new NewGroupButton()	
-			
+			btn = new NewGroupButton()				
 			el = btn.render().el
 			$(el).addClass 'pull-right'
 			$('.new-group-button-area').html el
@@ -25,7 +24,7 @@ define [
 			socialStream = new ActivityStream
 				activities: eval(activities)				
 				
-			notifications = new NotificationMenu
-			$('.main-nav').append notifications.render().el
+			#notifications = new NotificationMenu
+			#$('.main-nav').append notifications.render().el
 				
 			

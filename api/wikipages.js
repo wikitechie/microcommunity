@@ -3,8 +3,6 @@ var provider = require('./../providers/wikipages-provider')
 	
 exports.create = function(req, res){
 
-	console.log(req.body)
-
 	var attr = {
 		title: req.body.title, 
     body: req.body.body,

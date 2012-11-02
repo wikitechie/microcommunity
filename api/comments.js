@@ -13,7 +13,6 @@ exports.create = function(req, res){
 	};		
 
 	comments_provider.addComment(comment, req.params.collection, req.params.id, function(err, c){
-		console.log(c)
 		res.send(c)
 	})
 

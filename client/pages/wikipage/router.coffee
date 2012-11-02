@@ -19,21 +19,16 @@ define [
 					parent_type : "WikiPage"					
 								
 			btn = new NewGroupButton()	
-			
-			#rev = new Revision wikipage.current_revision
-			#wikipageView = new WikiPageView
-				#model : rev
-			#$('.wikipage-area').html rev			
-			
 			el = btn.render().el
 			$(el).addClass 'pull-right'
 			$('.new-group-button-area').html el
-			
+
 			socialStream = new ActivityStream
 				activities: eval(activities)	
 				wikipage : wikipage._id			
 				
-			notifications = new NotificationMenu
-			$('.main-nav').append notifications.render().el
-				
+			#rev = new Revision wikipage.current_revision
+			#wikipageView = new WikiPageView
+				#model : rev
+			#$('.wikipage-area').html rev			
 			

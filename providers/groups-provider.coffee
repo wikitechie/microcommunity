@@ -37,7 +37,6 @@ exports.fetchAll = (from, to, callback)->
 		.skip(parseInt(from))
 		.limit(parseInt(to))
 		.toArray (err, result)->
-			console.log(result)
 			exports.fetchJoinedGroups result, (err, result)->
 				callback(err, result)
 				
