@@ -54,16 +54,16 @@ define [
 			$(@el).html @template @model.toJSON()
 			if window.current_user?
 				$(@el).find(".buttons").html @editButtons
-			$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get('body')
+			$(@el).find(".wikipage-body-area").html @wikipageBodyView content: @model.get('content')
 			$(@el).append(@quickEditButton)
 			$(@el).append(@quickEditBox)
 			@
 
 		expand: ->
-			$(@el).find(".wikipage-body-area").html @wikipageBodyView {body: @model.get('body'), fullview: true}
+			$(@el).find(".wikipage-body-area").html @wikipageBodyView {content: @model.get('content'), fullview: true}
 
 		collapse: ->
-			$(@el).find(".wikipage-body-area").html @wikipageBodyView {body: @model.get('body')}
+			$(@el).find(".wikipage-body-area").html @wikipageBodyView {content: @model.get('content')}
 
 		disable: ->
 			$(@el).find(".wikipage-body-area").spin()
@@ -79,18 +79,18 @@ define [
 
 		editButton: ->
 			page_hieght = $($(@el).find(".wikipage-view-body")).outerHeight()
-			$(@el).find(".wikipage-body-area").html @wikipageBodyEdit body: @model.get('body')
+			$(@el).find(".wikipage-body-area").html @wikipageBodyEdit content: @model.get('content')
 			$(@el).find(".wikipage-body").height(page_hieght + 20)
 			#$(@el).find(".wikipage-body").attr("rows", 3 + (@model.get('body').length/100) )
 			$(@el).find(".buttons").html @saveButtons
 
 		saveButton: ->
 			@disable()
-			old_text = @model.get('body')
-			@model.get('page').save({ body: $(@el).find(".wikipage-body").val(), summary : $(@el).find(".wikipage-summary").val(), diff : JsDiff.diffWords(old_text, $(@el).find(".wikipage-body").val() ), user:  current_user._id },
+			old_text = @model.get('content')
+			@model.get('page').save({ content: $(@el).find(".wikipage-body").val(), summary : $(@el).find(".wikipage-summary").val(), diff : JsDiff.diffWords(old_text, $(@el).find(".wikipage-body").val() ), author:  current_user._id },
 				success : (model, response)=>
 					@model.set
-						body : model.toJSON().current_revision.body
+						content : model.toJSON().current_revision.content
 						_id : model.toJSON().current_revision._id
 					activity = new Activity
 						actor : current_user
@@ -103,17 +103,17 @@ define [
 						success: (activity)=>
 							@enable()
 							window.mediator.trigger("new-silent-activity", activity)
-							$(@el).find(".wikipage-body-area").html @wikipageBodyView body: model.get 'body'
+							$(@el).find(".wikipage-body-area").html @wikipageBodyView content: model.get 'content'
 							$(@el).find(".buttons").html @editButtons
 						)
 
 				url : "/api/wikipages/#{@model.get('page').id}"
 			)
 		save: (new_text, old_text, summary='', success) ->
-			@model.get('page').save({ body: new_text, summary : summary, diff : JsDiff.diffWords(old_text, new_text ), user:  current_user._id },
+			@model.get('page').save({ content: new_text, summary : summary, diff : JsDiff.diffWords(old_text, new_text ), author:  current_user._id },
 				success : (model, response)=>
 					@model.set
-						body : model.toJSON().current_revision.body
+						content : model.toJSON().current_revision.content
 						_id : model.toJSON().current_revision._id
 					activity = new Activity
 						actor : current_user
@@ -124,7 +124,7 @@ define [
 						success: (activity)=>
 							@enable()
 							window.mediator.trigger("new-silent-activity", activity)
-							$(@el).find(".wikipage-body-area").html @wikipageBodyView body: model.get 'body'
+							$(@el).find(".wikipage-body-area").html @wikipageBodyView content: model.get 'content'
 							$(@el).find(".buttons").html @editButtons
 						)
 					success(model, response) if success
@@ -132,7 +132,7 @@ define [
 				url : "/api/wikipages/#{@model.get('page').id}"
 			)
 		cancelButton: ->
-			$(@el).find(".wikipage-body-area").html @wikipageBodyView body: @model.get('body')
+			$(@el).find(".wikipage-body-area").html @wikipageBodyView content: @model.get('content')
 			$(@el).find(".buttons").html @editButtons
 		showEditButton: (e) ->
 			$(@quickEditButton).fadeIn('fast');
@@ -184,5 +184,5 @@ define [
 		cancelQuickEdit: ->
 			$(@quickEditBox).hide()
 		getBody: ->
-			return @model.get('page').attributes.current_revision.body
+			return @model.get('page').attributes.current_revision.content
 

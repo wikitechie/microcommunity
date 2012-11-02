@@ -5,21 +5,20 @@ define [
 	'cs!collections/comments'
 ], (Backbone, User, Group, Comments) ->
 	class WikiPage extends Backbone.RelationalModel
-		defaults:
-			title: "Backbone.js"
 
 		constructor : (attributes, options)->
-			if attributes.parent_type?
-				if (attributes.parent_type is 'users')
+			if attributes.parent.objectType?
+				if (attributes.parent.objectType is 'users')
 					parent_model = User
 				else
-					parent_model = Group
-					
+					parent_model = Group					
 
 				@relations[0] = 
 					type : Backbone.HasOne
 					key : "parent"
-					relatedModel : parent_model		
+					relatedModel : parent_model
+					includeInJSON : ['_id', 'objectType']
+							
 			Backbone.RelationalModel.prototype.constructor.apply(this, arguments)	
 			
 		relations : []	

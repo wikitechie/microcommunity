@@ -16,10 +16,10 @@ define [
 					parent : current_user
 					parent_type : "users"					
 								
-			btn = new NewGroupButton()				
-			el = btn.render().el
-			$(el).addClass 'pull-right'
-			$('.new-group-button-area').html el
+				btn = new NewGroupButton()				
+				el = btn.render().el
+				$(el).addClass 'pull-right'
+				$('.new-group-button-area').html el
 			
 			socialStream = new ActivityStream
 				activities: eval(activities)				

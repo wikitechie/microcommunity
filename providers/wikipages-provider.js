@@ -26,8 +26,50 @@ exports.fetch = function (wikipage_id, callback){
 	});	
 }
 
+exports.createWikiPage = function(attr, callback){
+
+	db.collection('wikipages', function(err, wikipages_collection){
+	
+		attr.parent._id = database.normalizeID(attr.parent._id)
+		
+		var wikipage_attr = {
+			displayName: attr.displayName,
+			objectType : 'wikipage',
+			published : new Date(),
+			parent : attr.parent
+		};						
+		
+
+		wikipages_collection.insert(wikipage_attr, function(err, docs){
+				var wikipage = docs[0];			
+				
+				var revision = {
+					page : wikipage._id,
+					content : attr.content,
+					summary : attr.summary,
+					author  : attr.author																
+				};							
+
+				exports.newRevision(wikipage, revision, function(err, new_wikipage){
+					callback(err, new_wikipage);
+				});				
+
+		});
+	});
+
+}
+
 
 exports.newRevision = function (wikipage, revision, callback){
+
+	_.extend(revision, {
+		objectType : 'revision',
+		published : new Date()	
+	})
+	
+	revision.author = database.normalizeID(revision.author);	
+	revision.page = database.normalizeID(revision.page);		
+
 
 	db.collection('revisions', function(err, revisions){		
 		revisions.insert(revision, function(err, docs){
@@ -46,37 +88,7 @@ exports.newRevision = function (wikipage, revision, callback){
 	});
 }
 
-exports.createWikiPage = function(attr, callback){
 
-	db.collection('wikipages', function(err, wikipages_collection){
-		var wikipage_attr = {
-			title: attr.title,
-			created_at : new Date(),
-			parent : attr.parent,
-			parent_type : attr.parent_type
-		};
-
-		wikipages_collection.insert(wikipage_attr, function(err, docs){
-				var wikipage = docs[0];
-				
-				var user_id = database.normalizeID(attr.user);				
-				
-				var revision = {
-					page : wikipage._id,
-					body : attr.body,
-					summary : attr.summary,
-					created_at : new Date()	,
-					user  : user_id																
-				};							
-
-				exports.newRevision(wikipage, revision, function(err, new_wikipage){
-					callback(err, new_wikipage);
-				});				
-
-		});
-	});
-
-}
 
 exports.updateWikiPage = function(id, updated, callback){
 
@@ -84,15 +96,13 @@ exports.updateWikiPage = function(id, updated, callback){
 
 	db.collection('wikipages', function(err, wikipages){
 		wikipages.findOne({_id: object }, function(err, wikipage){
-			var user_id = database.normalizeID(updated.user);
 			
 			var revision = {
 				page : wikipage._id,
-				body : updated.body,
-				created_at : new Date(),
+				content : updated.content,
 				summary : updated.summary,
 				diff : updated.diff,
-				user  : user_id							
+				author  : updated.author						
 			};							
 			
 			exports.newRevision(wikipage, revision, function(err, wikipage){

@@ -44,11 +44,11 @@ define [
 
 		post: ->
 			wikipage = new WikiPage
-				title: $("#wikipage-title").val()
-				body: $("#wikipage-text").val()
-				user: current_user._id
+				displayName: $("#wikipage-title").val()
+				content: $("#wikipage-text").val()
+				author : current_user._id
 				parent : @options.parent
-				parent_type : @options.parent_type
+				
 			@disable()
 			wikipage.save(null,
 				success: (wikipage, response)=> 
