@@ -10,6 +10,6 @@
 		li.nav-header Groups			
 		- for(var i = 0; i < groups.length; i++) {
 		!= "<li><a href='/groups/" + groups[i]._id  + "'>"						
-		= groups[i].name				
+		= groups[i].displayName				
 		!= "</a></li>"					
 		-}	

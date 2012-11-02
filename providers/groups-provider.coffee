@@ -14,7 +14,7 @@ exports.create = (attr, creator_id, callback)->
 	_.extend attr, 
 		members : [creator_id]
 		admins : [creator_id]
-		created_at : Date()
+		published : Date()
 	db.collection 'groups', (err, groups)->
 		groups.insert attr, (err, docs)->
 			callback(err, docs[0])

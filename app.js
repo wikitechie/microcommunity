@@ -179,6 +179,7 @@ app.get('/groups/:id', function(req, res){
 });
 
 app.post('/groups', function(req, res){	
+	console.log(req.body.creator)
 	groups_provider.create(req.body, req.body.creator, function(err, new_group){
 		res.redirect('/groups/'+ new_group._id)
 	})	
