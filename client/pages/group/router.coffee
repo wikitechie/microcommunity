@@ -10,15 +10,14 @@ define [
 		routes:
 			"" : "default"
 		default: ->		
-			window.current_user = eval(current_user)		
 			
 			if current_user?
 				publisher = new Publisher
-					parent : eval(group)
+					parent : app.data.group
 					parent_type : "groups"							
 			
 			socialStream = new ActivityStream
-				activities: eval(activities)	
-				group : eval(group)._id			
+				activities: app.data.activities
+				group : app.data.group._id			
 				
 			

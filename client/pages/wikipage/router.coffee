@@ -15,7 +15,7 @@ define [
 		default: ->					
 			if current_user?
 				publisher = new Publisher
-					parent : wikipage
+					parent : app.data.wikipage
 					parent_type : "WikiPage"					
 								
 			btn = new NewGroupButton()	
@@ -24,8 +24,8 @@ define [
 			$('.new-group-button-area').html el
 
 			socialStream = new ActivityStream
-				activities: eval(activities)	
-				wikipage : wikipage._id			
+				activities: app.data.activities
+				wikipage : app.data.wikipage._id			
 				
 			#rev = new Revision wikipage.current_revision
 			#wikipageView = new WikiPageView

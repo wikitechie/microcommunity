@@ -8,7 +8,7 @@ define([
 	'use strict'
 	window.mediator = {}
 	_.extend(window.mediator, Backbone.Events);
-	window.current_user = eval(current_user)						
+	window.current_user = app.current_user
 	
 	window.socket = io.connect('http://localhost')
 	

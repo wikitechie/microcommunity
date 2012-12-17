@@ -96,6 +96,21 @@ passport.use(new GoogleStrategy({
 var app = express.createServer();
 
 app.configure(function(){
+
+  //a middleware for rendering pages while passing js data to the client
+  app.use(function(req, res, next){
+		res.loadPage = function (app, data){
+			res.render(app, { 
+				app : {
+					name: app,
+					data: data,
+					current_user: req.user			
+				}
+			});
+		}	
+		next()
+	})     
+	
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -113,7 +128,8 @@ app.configure(function(){
   app.use('/client', express.static(__dirname + '/client-built'));      
   app.use('/client', express.static(__dirname + '/client'));      
   app.use(express.static(__dirname + '/test/client'));   
-  app.use('/shared', express.static(__dirname + '/shared'));     
+  app.use('/shared', express.static(__dirname + '/shared'));
+
   
 });
 
@@ -129,28 +145,32 @@ auth.install(app, db);
 //middleware for initializing app variable
 app.locals.app = false;
 
+
 //main app
 app.get('/', function(req, res){
 	groups_provider.fetchAll(0, 5, function(err, groups){
-		activities_provider.fetchActivities(0,5,function(err, activities){	
-			res.render('index', { app: 'home', groups: groups, activities: activities, current_user: req.user});
+		activities_provider.fetchActivities(0,5,function(err, activities){
+			res.loadPage('home', {
+				groups: groups,
+				activities: activities
+			})
 		});	
 	})
-
 });
+
+
 
 //profile app
 app.get('/profile/:id', function(req, res){
 	
 	users_provider.fetch( req.params.id, function(err, user){
 		activities_provider.fetchUserActivities(req.params.id, 0,5,function(err, activities){	
-			res.render('profile', {
-				app : 'profile', 
+			res.loadPage('profile', {
 				activities: activities, 
-				profile: user.profile, 
-				user: user, 
-				current_user: req.user
-			});
+				profile: user, 
+				user: user		
+			})		
+
 		})
 	})
 	
@@ -164,14 +184,13 @@ app.get('/groups/:id', function(req, res){
 	activities_provider.fetchGroupActivities(req.params.id, 0,5,function(err, activities){	
 		groups_provider.fetchAll(0, 5, function(err, groups){
 			groups_provider.fetch(req.params.id, function(err, group){
-				res.render('group', 
-				{ 
-					app : 'group',
+					
+				res.loadPage('group', {
 					activities: activities, 
 					groups: groups, 
 					group: group, 
-					current_user: req.user
-				});	
+				})				
+				
 			})
 		})	
 	})
@@ -189,8 +208,12 @@ app.post('/groups', function(req, res){
 
 app.get('/wikipages/:id', function(req, res){
 	wikipages_provider.fetch(req.params.id, function(err, wikipage){
+		console.log(wikipage)
 		activities_provider.fetchWikiPageActivities(req.params.id, 0,5,function(err, activities){	
-			res.render('wikipage', { app: 'wikipage', wikipage: wikipage, activities: activities, current_user: req.user});
+			res.loadPage('wikipage', { 
+				wikipage: wikipage, 
+				activities: activities,
+			});
 		});
 	})
 		

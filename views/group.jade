@@ -10,17 +10,11 @@ block content
 				.span12 
 				.page-header
 						h1
-							= group.displayName
+							= app.data.group.displayName
 						p 
-							= group.description
+							= app.data.group.description
 					
 			include shared/publisher
 			hr
 			#social-stream
 
-block jsbootstrap					
-	!= "<script type='text/javascript'>"
-	!= "var activities =" + JSON.stringify(activities) + ";"	
-	!= "var group =" +JSON.stringify(group)  + ";"		
-	!= "var current_user =" +JSON.stringify(current_user)  + ";"	
-	!= "</script>"

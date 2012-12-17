@@ -9,21 +9,21 @@ define([
 	window.mediator = {}
 	_.extend(window.mediator, Backbone.Events)
 
-	window.current_user = eval(current_user)	
+	window.current_user = app.current_user
 
 	var followButton = new FollowButton({
 		follower : new User(window.current_user),
-		followed : new User(window.user)
+		followed : new User(app.data.user)
 	})		
 		
 	$('.follow-button-area').html(followButton.render().el)
-	var src = $.gravatar(window.user.email, { size: 100 })
+	var src = $.gravatar(app.data.user.email, { size: 100 })
 	var img = "<img src='#{src}'/>"
 	$('.profile-photo').html(img)
 	
 	socialStream = new ActivityStream({
-		activities: eval(activities),
-		user : eval(user)._id
+		activities: app.data.activities,
+		user : app.data.user._id
 	})
 	
 })

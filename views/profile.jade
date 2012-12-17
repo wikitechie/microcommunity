@@ -1,18 +1,12 @@
 extends layout
 
 block content
-	!= "<script type='text/javascript'>"
-	!= "var activities =" + JSON.stringify(activities) + ";"
-	!= "var user =" +JSON.stringify(user)  + ";"
-	!= "var current_user =" +JSON.stringify(current_user)  + ";"			
-	!= "</script>"	
-
 	.row
 		.span12	
 			.row-fluid.page-header
 				.span12
 					h2(style='display:inline;') 
-						= profile.displayName
+						= app.data.profile.displayName
 					.pull-right.follow-button-area
 						
 			.row-fluid
@@ -24,7 +18,7 @@ block content
 								.well
 									center
 										h2 
-											= profile.reputation	
+											= app.data.profile.reputation	
 										p Upvoted						
 							p 
 								i Write something about yourself
@@ -43,26 +37,26 @@ block content
 						.span3							
 							center
 								h2 
-									= profile.followers
+									= app.data.profile.followers
 								p 									
 									small follower
 
 						.span3							
 							center
 								h2 
-									= user.follows ? user.follows.length : 0
+									= app.data.user.follows ? app.data.user.follows.length : 0
 								p 
 									small following
 						.span3							
 							center
 								h2
-									= profile.wikipages_count
+									= app.data.profile.wikipages_count
 								p 
 									small created wikipages									
 						.span3							
 							center
 								h2
-									= profile.edit_count
+									= app.data.profile.edit_count
 								p 
 									small edit count						
 									

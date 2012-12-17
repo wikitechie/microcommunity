@@ -8,8 +8,8 @@
 .well.sidebar-nav
 	ul.nav.nav-list
 		li.nav-header Groups			
-		- for(var i = 0; i < groups.length; i++) {
-		!= "<li><a href='/groups/" + groups[i]._id  + "'>"						
-		= groups[i].displayName				
+		- for(var i = 0; i < app.data.groups.length; i++) {
+		!= "<li><a href='/groups/" + app.data.groups[i]._id  + "'>"						
+		= app.data.groups[i].displayName				
 		!= "</a></li>"					
 		-}	

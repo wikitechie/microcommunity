@@ -8,7 +8,7 @@ define [
 
 		constructor : (attributes, options)->
 			if attributes.parent.objectType?
-				if (attributes.parent.objectType is 'users')
+				if (attributes.parent.objectType is 'user')
 					parent_model = User
 				else
 					parent_model = Group					

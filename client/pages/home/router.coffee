@@ -20,9 +20,10 @@ define [
 				el = btn.render().el
 				$(el).addClass 'pull-right'
 				$('.new-group-button-area').html el
-			
+				
+
 			socialStream = new ActivityStream
-				activities: eval(activities)				
+				activities: app.data.activities
 				
 			#notifications = new NotificationMenu
 			#$('.main-nav').append notifications.render().el

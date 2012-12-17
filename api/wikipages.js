@@ -16,13 +16,6 @@ exports.create = function(req, res){
 	});	  	
 };
 
-
-exports.show = function(req, res){
-	provider.fetch(req.params.wikipage, function(err, wikipage){
-		return res.send(wikipage); 	
-	});  
-}
-
 exports.update = function(req, res){	
 	var updated_wikipage = {
     content: req.body.content,

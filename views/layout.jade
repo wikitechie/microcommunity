@@ -9,9 +9,9 @@ html
 		- if (app != false)
 			<script src="/client/lib/require/require.min.js"></script>
 			<script type="text/javascript">
-			!= "var app = '" + app  + "';"
+			!= "var app = " + JSON.stringify(app)  + ";"
 			!= "require(['/client/common.js'], function(){"
-			!= "require(['pages/'+ app +'/main'])});"
+			!= "require(['pages/"+ app.name +"/main'])});"
 			</script>						
 
 	body
@@ -19,7 +19,7 @@ html
 			.navbar-inner
 				.container
 					a(href='/').brand MicroCommunity
-					- if (!current_user)
+					- if (!app.current_user)
 						<ul class="nav pull-right">
 						<li>
 						<a href="/login">Log in</a>
@@ -30,7 +30,7 @@ html
 						div.btn-group.pull-right
 							a.btn.dropdown-toggle(href="#", data-toggle="dropdown")
 								i.icon-user
-								= " " + current_user.email + " "
+								= " " + app.current_user.email + " "
 								span.caret
 							ul.dropdown-menu
 								li

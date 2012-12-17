@@ -4,26 +4,16 @@ block content
 	.row
 		.span5
 			.row-fluid
-				.span12 
-					.page-header 
+				.span12 					 
 						.wikipage-area
-						h1 
-							= wikipage.title
+						h1.page-header
+							= app.data.wikipage.displayName
 						p
-							= wikipage.current_revision.body
+							= app.data.wikipage.current_revision.content
 																
 				
 		.span7					
 			include shared/publisher
 			hr
 			#social-stream
-
-block jsbootstrap
-	!= "<script type='text/javascript'>"
-	!= "var activities =" + JSON.stringify(activities) + ";"
-	!= "var wikipage =" + JSON.stringify(wikipage) + ";"	
-	!= "var current_user =" +JSON.stringify(current_user)  + ";"
-	!= "</script>"
-
-
 
