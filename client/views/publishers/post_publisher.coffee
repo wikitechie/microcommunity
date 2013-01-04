@@ -44,27 +44,32 @@ define [
 			$("#publisher-text").attr("rows","1")
 
 		newpost: ->
-			post = new Post
+
+			attrs =
 				content: $("#publisher-text").val()
 				author: current_user				
 				parent : @options.parent
+			post = new Post attrs				
 				
-			@disable()
-			post.save(null,
-				success: (post, response)=> 	
-					activity = new Activity
-						actor : current_user._id
-						object: post.id.toString()
-						object_type: "Post"
-						verb: "create"
-						target : @options.parent
-						target_type: @options.parent_type
-					activity.save({},
-						success: (activity)=> 
-							window.mediator.trigger("new-activity", activity)
-							@enable()
-							@reset()
-						)	  	
-				)	
+			if post.isValid()	
+				@disable()
+				callbacks =
+					success : (model, response, options)=> 
+						activity = new Activity model.get('activity')
+						window.mediator.trigger("new-activity", activity)
+						@enable()
+						@reset()
+													
+					error : ()=> 
+						console.debug 'error'
+						@enable()
+						@reset()						
+
+				post.save(attrs, callbacks)
+
+				
+						
+				
+					
 
 

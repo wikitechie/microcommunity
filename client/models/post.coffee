@@ -31,6 +31,10 @@ define [
 		]				
 
 		urlRoot: "/api/posts"
+		
+		validate : (attrs)->
+			if attrs.content is ''
+				return "error"
 
 		initialize: ()->
 			@get('comments').url = ()=>
