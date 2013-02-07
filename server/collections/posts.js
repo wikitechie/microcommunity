@@ -4,14 +4,16 @@ var Collection = require('./../collection')
 	, async = require('async')
 
 function Posts(db){
-	var options = {
-	
+	var options = {	
 		//direct references fields in the collection documents
 		singleRefs : [ 
 			{ field: 'author', collection: 'users' }, 
 			{ field: 'wall', collection: 'users' }
+		],				
+		//array of references		
+		multiRefs : [
+			{ field : 'follows', collection : 'users' }
 		],		
-		
 		//references in arrays of embeded documents 
 		arrayDescriptors : [
 			{ field : 'comments', singleRefs : [
@@ -20,9 +22,9 @@ function Posts(db){
 			{ field : 'jokes', singleRefs : [
 				{ field : 'author', collection : 'users' }
 			]}			
-		]	
-
+		]
 	} 
+	
 	Collection.call(this, db, 'posts', options)	
 }
 
@@ -40,6 +42,13 @@ Posts.prototype.addJoke = function(id, joke, callback){
 		if(err) throw err		
 		callback(null)
 	})
+}
+
+Posts.prototype.follow = function(id, stream, callback){
+	this.update({ _id : ObjectId(id) }, { $push : { follows: ObjectId(stream) } }, function(err, nb){
+		if(err) throw err		
+		callback(null)
+	})	
 }
 
 //Posts.prototype.fetchById

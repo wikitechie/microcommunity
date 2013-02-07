@@ -9,32 +9,63 @@ function Collection(db, collectionName, options){
 	this.container = require('./container')
 	MongoCollection.call(this, db, collectionName)	 
 	this.db = db					
-	if(options && options.singleRefs){
+	if(options){
 		this.singleRefs = options.singleRefs
+		this.multiRefs = options.multiRefs				
 		this.arrayDescriptors = options.arrayDescriptors
 	}
 }
 
 Collection.prototype = MongoCollection.prototype
 
+Collection.prototype.applyRefs = function (doc, refs, callback){
+	var extension = {}
+	refs.forEach(function(ref){
+		if(ref)
+			extension[ref.field] = ref.doc							
+	})
+	_.extend(doc, extension)				
+	callback(null, doc)
+}
+
+Collection.prototype.resolveRef = function(doc, ref, callback){
+	this.getCollection(ref.collection)
+		.findOne({ _id : doc[ref.field] }, function(err, doc){
+			if(err) throw err			
+			_.extend(ref, { doc : doc })
+			callback(null, ref)			
+	})
+}
+
 Collection.prototype.resolveSingleRefs = function(doc, singleRefs, callback){
 	var self = this
 	async.map( singleRefs, 
 		function(singleRef, callback){
-			self.getCollection(singleRef.collection)
-				.findOne({ _id : doc[singleRef.field] }, function(err, joined_doc){	
-					if(err) throw err			
-					_.extend(singleRef, { doc : joined_doc })
-					callback(null, singleRef)			
-			})				
+			self.resolveRef(doc, singleRef, callback)
 		}, function(err, singleRefs){
-			var extension = {}	
-			singleRefs.forEach(function(singleRef){
-					extension[singleRef.field] = singleRef.doc							
-			})
-			_.extend(doc, extension)				
-			callback(err, doc)					
+			self.applyRefs(doc, singleRefs, callback)				
 		})
+}
+
+Collection.prototype.resolveMultiRefs = function(doc, multiRefs, callback){
+	var self = this	
+	async.map(multiRefs, 
+		function(multiRef, multiRefCallback){
+			ids = doc[multiRef.field]		
+			async.map(ids, 
+				function(id, idCallback){				
+					self.getCollection(multiRef.collection)
+						.findOne({ _id : id }, function(err, doc){
+							idCallback(null, doc) 					
+						})						
+				}, function(err, docsArray){
+					_.extend(multiRef, {doc : docsArray})
+					multiRefCallback(null, multiRef)		
+				})						
+		}, function(err, multiRefs){
+			self.applyRefs(doc, multiRefs, callback)							
+		}
+	)	
 }
 
 Collection.prototype.fetchArrayEmbededDocsJoins = function(doc, arrayDescriptors, callback){
@@ -55,38 +86,48 @@ Collection.prototype.fetchArrayEmbededDocsJoins = function(doc, arrayDescriptors
 		}	else {
 			arrayDescriptorCallback(null, null)								
 		}																			
-	}, function(err, arrayDescriptors){	
-			var extension = {}	
-			arrayDescriptors.forEach(function(arrayDescriptor){
-				if(arrayDescriptor){
-					extension[arrayDescriptor.field] = arrayDescriptor.doc							
-			}})
-			_.extend(doc, extension)				
-			callback(err, doc)		
+	}, function(err, arrayDescriptors){		
+		self.applyRefs(doc, arrayDescriptors, callback)							
 	})	
 }
+
+
 
 Collection.prototype.hasSingleRefs = function(){
 	return (this.singleRefs.length > 0)
 }
 
+Collection.prototype.hasMultiRefs = function(){
+	return (this.multiRefs.length > 0)
+}
+
+Collection.prototype.hasArrayDescriptors = function(){
+	return (this.arrayDescriptors.length > 0)
+}
+
 Collection.prototype.findById = function(id, callback){
-	obj = ObjectId(id)
+	doc = ObjectId(id)
 	var self = this	
-	this.findOne({ _id : obj }, function(err, obj){	
+	this.findOne({ _id : doc }, function(err, doc){	
 		if(err) throw err
 		if( self.hasSingleRefs() ){	
-			self.resolveSingleRefs(obj, self.singleRefs, function(err, joined_doc){
-				if (joined_doc.comments){
-					self.fetchArrayEmbededDocsJoins(joined_doc, self.arrayDescriptors, function(err, joined_doc){
-						callback(err, joined_doc)
+			self.resolveSingleRefs(doc, self.singleRefs, function(err, doc){
+				if ( self.hasArrayDescriptors() ){
+					self.fetchArrayEmbededDocsJoins(doc, self.arrayDescriptors, function(err, doc){
+						if (doc.follows) {						
+							self.resolveMultiRefs(doc, self.multiRefs, function(err, doc){
+								callback(err, doc)
+							})							
+						} else {
+							callback(err, doc)
+						}
 					})								
 				} else {
-					callback(err, joined_doc)				
+					callback(err, doc)				
 				}
 			})						
 		} else {		
-			callback(err, obj)			
+			callback(err, doc)			
 		}				
 	})
 }

@@ -17,7 +17,7 @@ database.connect(function(err, db){
 		content : "hey!!"
 	}, function(err, post){
 		posts.findById( post._id.toString() , function(err, post){
-			//console.log(post)			
+			console.log(post)			
 			posts.addComment ( post._id.toString(), 
 				{ 
 					author : ObjectId('5112c06e3e5a312815000001'), 
@@ -30,9 +30,17 @@ database.connect(function(err, db){
 						text : 'this is a real joke!!!! :D' 
 					}, function(err){
 					
-						posts.findById( post._id.toString() , function(err, post){
-							console.log(post)
-						})											
+						posts.follow( post._id.toString(), '5112c06e3e5a312815000001', function(err){
+						
+							posts.findById( post._id.toString() , function(err, post){
+								console.log(post)
+							})											
+						
+						
+						})
+					
+					
+						
 					})											
 			})
 		})		
