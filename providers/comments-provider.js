@@ -22,8 +22,7 @@ exports.addComment = function (comment, collection, id, callback){
 				})
 			}
 		);	
-	})
-	
+	})	
 }
 
 exports.fetchJoinedComment = function (comment, callback){
