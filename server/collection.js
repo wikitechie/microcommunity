@@ -91,8 +91,6 @@ Collection.prototype.fetchArrayEmbededDocsJoins = function(doc, arrayDescriptors
 	})	
 }
 
-
-
 Collection.prototype.hasSingleRefs = function(){
 	return (this.singleRefs.length > 0)
 }
@@ -106,30 +104,38 @@ Collection.prototype.hasArrayDescriptors = function(){
 }
 
 Collection.prototype.findById = function(id, callback){
+
 	doc = ObjectId(id)
 	var self = this	
-	this.findOne({ _id : doc }, function(err, doc){	
-		if(err) throw err
-		if( self.hasSingleRefs() ){	
-			self.resolveSingleRefs(doc, self.singleRefs, function(err, doc){
-				if ( self.hasArrayDescriptors() ){
-					self.fetchArrayEmbededDocsJoins(doc, self.arrayDescriptors, function(err, doc){
-						if (doc.follows) {						
-							self.resolveMultiRefs(doc, self.multiRefs, function(err, doc){
-								callback(err, doc)
-							})							
-						} else {
-							callback(err, doc)
-						}
-					})								
-				} else {
-					callback(err, doc)				
-				}
-			})						
-		} else {		
+	
+	this.findOne({ _id : doc }, function(err, doc){
+			
+		async.waterfall([
+			function(callback){
+				if (self.hasSingleRefs())
+					self.resolveSingleRefs(doc, self.singleRefs, callback)
+				else
+					callback(null, doc)		
+			},
+
+			function(doc, callback){
+				if (doc.follows)
+					self.resolveMultiRefs(doc, self.multiRefs, callback)
+				else
+					callback(null, doc)		
+			},
+			function(doc, callback){
+				if (self.hasArrayDescriptors())
+					self.fetchArrayEmbededDocsJoins(doc, self.arrayDescriptors, callback)
+				else
+					callback(null, doc)	
+			}
+		], 
+		function(err, results){		
 			callback(err, doc)			
-		}				
-	})
+		})		
+	})		
+
 }
 
 Collection.prototype.create = function(attr, callback){
