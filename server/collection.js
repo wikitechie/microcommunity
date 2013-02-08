@@ -7,14 +7,22 @@ var mongodb = require('mongodb')
 	, ObjectId = mongodb.ObjectID
 
 function Collection(db, collectionName, options){	
-	this.container = require('./container')
+
+	container = require('./db').container
+	if(!container) throw new Error('Cannot create a collection, container is not ready')
+	this.container = container
+	
+	if(!db) throw new Error('Cannot create a collection without a mongodb Db object')
+	if(!collectionName) throw new Error('Cannot create a collection without a collection name')		
 	MongoCollection.call(this, db, collectionName)	 
 	this.db = db					
+	
 	if(options){
 		this.singleRefs = options.singleRefs
 		this.multiRefs = options.multiRefs				
 		this.arrayDescriptors = options.arrayDescriptors
 	}
+	
 }
 
 Collection.prototype = MongoCollection.prototype
@@ -33,7 +41,6 @@ Collection.prototype.findById = function(id, callback){
 				else
 					callback(null, doc)		
 			},
-
 			function(doc, callback){
 				if (doc.follows)
 					self.resolveMultiRefs(doc, self.multiRefs, callback)

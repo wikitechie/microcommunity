@@ -1,35 +1,33 @@
 var Db = require('mongodb').Db
   , Server = require('mongodb').Server
-  , Collection = require('./collection')
+  , Container = require('./container')
 
-function Database(){}
-
-Database.prototype.setup = function(){	
+function Database(){
 	var connection	
 	if (process.env.NODE_ENV == 'test') {	
 		connection = new Db('microcommunity_test', new Server("127.0.0.1", 27017)	)
 	} else {
 		connection = new Db('test', new Server("127.0.0.1", 27017))	
-	}
+	}	
 	this.connection = connection	
 }
 
 Database.prototype.connect = function(callback){
 	var self = this	
-	this.setup()
 	this.connection.open(function(err, db){
 		self.db = db
-		if(callback) { callback(err, db) }		
+		self.container = new Container(db)
+		self.container.setup()
+		
+		if(callback) { callback(err, self.container) }		
 	})	
 }
 
-Database.prototype.collection = function(name){
-	return new Collection(this.db, name)
+Database.prototype.getCollection = function(name){
+	collection = this.container.collections[name]
+	return collection
 }
-
 var database = module.exports = new Database()
-
-database.Collection = Collection
 
 
 

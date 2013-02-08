@@ -1,13 +1,11 @@
 var database = require('./db')
-	, container = require('./container')
-	
 	
 var mongodb = require('mongodb')
 	, ObjectId = mongodb.ObjectID
 
 
-database.connect(function(err, db){
-	container.setup(db)	
+database.connect(function(err, container){
+//	console.log(container)
 	
 	var posts = container.collections.posts
 	

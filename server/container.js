@@ -1,16 +1,17 @@
 var Users = require('./collections/users')
 	, Posts = require('./collections/posts')	
 
-function Container(){
-	this.collections = {}
+function Container(db){
+	if(!db) throw new Error('Creating a container requires a mongodb Db object')
+	this.db = db
 }
 
-Container.prototype.setup = function(db_conection){
-	this.db = db_conection
+Container.prototype.setup = function(){
 	this.collections = {
-		users : new Users(db_conection),
-		posts : new Posts(db_conection),		
+		users : new Users(this.db),
+		posts : new Posts(this.db),		
 	}
 }
 
-module.exports = new Container()
+
+module.exports = Container
