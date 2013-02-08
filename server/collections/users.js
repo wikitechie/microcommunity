@@ -11,4 +11,6 @@ Users.prototype.findByEmail = function(email, callback){
 	this.findOne({ email : email }, callback)
 }
 
+
 module.exports = Users
+

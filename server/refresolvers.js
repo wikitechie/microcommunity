@@ -77,15 +77,15 @@ RefResolvers.prototype.fetchArrayEmbededDocsJoins = function(doc, arrayDescripto
 }
 
 RefResolvers.prototype.hasSingleRefs = function(){
-	return (this.singleRefs.length > 0)
+	return (this.singleRefs && this.singleRefs.length > 0)
 }
 
 RefResolvers.prototype.hasMultiRefs = function(){
-	return (this.multiRefs.length > 0)
+	return (this.multiRefs && this.multiRefs.length > 0)
 }
 
 RefResolvers.prototype.hasArrayDescriptors = function(){
-	return (this.arrayDescriptors.length > 0)
+	return (this.multiRefs && this.arrayDescriptors.length > 0)
 }
 
 RefResolvers.mixin = function(destObject){

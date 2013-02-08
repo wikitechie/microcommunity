@@ -1,5 +1,6 @@
 var Users = require('./collections/users')
 	, Posts = require('./collections/posts')	
+	, Walls = require('./collections/walls')		
 
 function Container(db){
 	if(!db) throw new Error('Creating a container requires a mongodb Db object')
@@ -10,6 +11,7 @@ Container.prototype.setup = function(){
 	this.collections = {
 		users : new Users(this.db),
 		posts : new Posts(this.db),		
+		walls : new Walls(this.db),				
 	}
 }
 

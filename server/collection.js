@@ -67,6 +67,17 @@ Collection.prototype.create = function(attr, callback){
 	})		
 }
 
+Collection.prototype.updateAttr = function(id, field, value, callback){
+	//update = { field : value }
+	update = {} 
+	update[field] = value
+	
+	this.update({ _id : ObjectId(id) }, { $set : update }, function(err, nb){
+		if(err) throw err		
+		callback(null)
+	})
+}
+
 Collection.prototype.getCollection = function(name){
 	collection = this.container.collections[name]
 	return collection

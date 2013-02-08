@@ -9,7 +9,9 @@ function Database(){
 	} else {
 		connection = new Db('test', new Server("127.0.0.1", 27017))	
 	}	
-	this.connection = connection	
+	this.connection = connection
+	this.DB_SETUP = false 
+
 }
 
 Database.prototype.connect = function(callback){
@@ -18,16 +20,22 @@ Database.prototype.connect = function(callback){
 		self.db = db
 		self.container = new Container(db)
 		self.container.setup()
-		
+		self.DB_SETUP = true	
 		if(callback) { callback(err, self.container) }		
 	})	
 }
 
 Database.prototype.getCollection = function(name){
+
+	if (!this.DB_SETUP) throw new Error('Cannot get collection, database not setup yet')
+	
 	collection = this.container.collections[name]
+	if(!collection) throw new Error('Collection \'' + name + '\' ordered does not exist')	
+	
 	return collection
 }
 var database = module.exports = new Database()
+
 
 
 
