@@ -5,24 +5,24 @@ var Collection = require('./../collection')
 
 function Posts(db){
 	var options = {	
+	
 		//direct references fields in the collection documents
 		singleRefs : [ 
 			{ field: 'author', collection: 'users' }, 
-			{ field: 'wall', collection: 'users' }
-		],				
-		//array of references		
-		multiRefs : [
-			{ field : 'follows', collection : 'users' }
 		],		
+		
 		//references in arrays of embeded documents 
 		arrayDescriptors : [
 			{ field : 'comments', singleRefs : [
 				{ field : 'author', collection : 'users' }
-			]},
-			{ field : 'jokes', singleRefs : [
-				{ field : 'author', collection : 'users' }
-			]}			
-		]
+			]}		
+		]				
+		//array of references		
+		/*
+		multiRefs : [
+			{ field : 'follows', collection : 'users' }
+		],		
+		*/
 	} 
 	
 	Collection.call(this, db, 'posts', options)	

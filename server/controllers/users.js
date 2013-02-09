@@ -45,6 +45,21 @@ exports.create = function(attr, controllerCallback){
 	], function(err, user){	
 		controllerCallback(err, user)	
 	})
-
-
 }
+
+exports.findById = function(id, callback){
+
+	db.getCollection('users').findById(id, callback)
+	
+}
+
+exports.fetchWall = function(user_id, callback){
+	exports.findById(user_id, function(err, user){
+		wall_id = user.wall		
+		db.getCollection('wallItems').fetchWall( user.wall, function(err, wallItems){
+			callback(null, wallItems)		
+		})	
+	})
+}
+
+

@@ -36,6 +36,8 @@ Database.prototype.getCollection = function(name){
 }
 var database = module.exports = new Database()
 
+database.mongo = require('mongodb')
+
 
 
 
