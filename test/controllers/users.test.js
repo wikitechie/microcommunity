@@ -1,15 +1,16 @@
 process.env.NODE_ENV = 'test'
 
 var db = require('./../../db/db')
-	, usersController = require('./../../controllers/users')
 	, should = require('should')
+	, helpers = require('./../helpers')
+	, factories = require('./../factories')
+	
+var usersController = require('./../../controllers/users')	
 
 describe('Users Controller', function(){
 
 	var collection = null
-	var test_user = {
-		email : 'test@email.com'
-	}		
+	var test_user = factories.create('user')
 	var created_user = null	
 	
 	before(function(done){
@@ -35,7 +36,7 @@ describe('Users Controller', function(){
 		it( 'should create a new wall object with the right association', function(done){
 			db.getCollection('walls').find().toArray(function(err, walls){
 				walls.length.should.equal(1)
-				walls[0]._id.toString().should.equal(created_user.wall.toString())
+				helpers.sameID(walls[0]._id, created_user.wall)
 				done()			
 			})
 		})
