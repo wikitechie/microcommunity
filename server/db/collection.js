@@ -8,7 +8,7 @@ var mongodb = require('mongodb')
 
 function Collection(db, collectionName, options){	
 
-	container = require('./db').container
+	var container = require('./db').container
 	if(!container) throw new Error('Cannot create a collection, container is not ready')
 	this.container = container
 	
@@ -17,7 +17,7 @@ function Collection(db, collectionName, options){
 	MongoCollection.call(this, db, collectionName)	 
 	this.db = db		
 	this.collectionName			
-	
+
 	if(options){
 		this.singleRefs = options.singleRefs
 		this.multiRefs = options.multiRefs				
@@ -30,7 +30,7 @@ function Collection(db, collectionName, options){
 Collection.prototype = MongoCollection.prototype
 
 Collection.prototype.resolveAllDocJoins = function(doc, callback){
-	self = this	
+	var self = this	
 	async.waterfall([
 		function(callback){
 			if (self.hasSingleRefs())
@@ -63,7 +63,7 @@ Collection.prototype.resolveAllDocJoins = function(doc, callback){
 }
 
 Collection.prototype.resolveArrayJoins = function(array, callback){
-	self = this
+	var self = this
 	async.map(array, 
 		function(item, callback){
 			self.resolveAllDocJoins(item, callback)			
@@ -75,7 +75,7 @@ Collection.prototype.resolveArrayJoins = function(array, callback){
 
 Collection.prototype.findById = function(id, callback){
 
-	doc = ObjectId(id)
+	var doc = ObjectId(id)
 	var self = this	
 	
 	this.findOne({ _id : doc }, function(err, doc){			
@@ -86,7 +86,7 @@ Collection.prototype.findById = function(id, callback){
 }
 
 Collection.prototype.create = function(attr, callback){
-	self = this
+	var self = this
 	self.insert( attr, function(err, docs){
 		self.resolveAllDocJoins(docs[0], callback)
 	})		
@@ -101,7 +101,7 @@ Collection.prototype.updateAttr = function(id, updated, callback){
 }
 
 Collection.prototype.getCollection = function(name){
-	collection = this.container.collections[name]
+	var collection = this.container.collections[name]
 	return collection
 }
 

@@ -21,7 +21,7 @@ Database.prototype.connect = function(callback){
 		self.container = new Container(db)
 		self.container.setup()
 		self.DB_SETUP = true	
-		if(callback) { callback(err, self.db, self.container) }		
+		if(callback) { callback(err) }		
 	})	
 }
 
@@ -29,7 +29,7 @@ Database.prototype.getCollection = function(name){
 
 	if (!this.DB_SETUP) throw new Error('Cannot get collection, database not setup yet')
 	
-	collection = this.container.collections[name]
+	var collection = this.container.collections[name]
 	if(!collection) throw new Error('Collection \'' + name + '\' ordered does not exist')	
 	
 	return collection

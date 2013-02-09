@@ -3,7 +3,7 @@ var Collection = require('./../collection')
 	, async = require('async')
 
 function WallItems(db){
-	options = {
+	var options = {
 		DBRefs : [
 			{ field : 'object' }
 		]

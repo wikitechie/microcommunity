@@ -5,15 +5,18 @@ var db = require('./../db/db')
 	users controller
 */
 
-exports.create = function(attr, controllerCallback){
+exports.create = function(email, controllerCallback){
 
 	async.waterfall([
 		//creating the user document if the user does not already exist
 		function (callback){		
-			db.getCollection('users').findByEmail(attr.email, function(err, user){			
+			db.getCollection('users').findByEmail(email, function(err, user){			
 				if(user) {
 				callback(new Error('user already exists'))
 				} else {
+					var attr = {
+						email : email
+					}
 					db.getCollection('users').create(attr, function(err, user){
 						if (!err){
 							callback(null, user)

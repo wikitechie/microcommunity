@@ -10,6 +10,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+  	"should" : "*",
     "express": "3.0.0alpha1",
     "mongoose": "*",
     "mongodb": "*",
