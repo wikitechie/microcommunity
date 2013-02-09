@@ -2,7 +2,13 @@ var Collection = require('./../collection')
 	, ObjectId = require('mongodb').ObjectID
 
 function WallItems(db){
-	Collection.call(this, db, 'wall_items') 
+	options = {
+		DBRefs : [
+			{ field : 'object' }
+		]
+	}
+
+	Collection.call(this, db, 'wall_items', options) 
 }
 
 WallItems.prototype = Collection.prototype

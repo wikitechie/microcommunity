@@ -22,6 +22,7 @@ function Collection(db, collectionName, options){
 		this.singleRefs = options.singleRefs
 		this.multiRefs = options.multiRefs				
 		this.arrayDescriptors = options.arrayDescriptors
+		this.DBRefs = options.DBRefs
 	}
 	
 }
@@ -41,7 +42,13 @@ Collection.prototype.findById = function(id, callback){
 					self.resolveSingleRefs(doc, self.singleRefs, callback)
 				else
 					callback(null, doc)		
-			},
+			},			
+			function(doc, callback){				
+				if (self.hasDBRefs())
+					self.resolveDBRefs(doc, self.DBRefs, callback)				
+				else
+					callback(null, doc)		
+			},			
 			function(doc, callback){
 				if (doc.follows)
 					self.resolveMultiRefs(doc, self.multiRefs, callback)

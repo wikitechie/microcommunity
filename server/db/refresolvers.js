@@ -76,8 +76,28 @@ RefResolvers.prototype.fetchArrayEmbededDocsJoins = function(doc, arrayDescripto
 	})	
 }
 
+RefResolvers.prototype.resolveDBRefs = function(doc, DBRefs, callback){
+	self = this	
+	async.map(DBRefs, 
+		function(DBRef, callback){		
+			collectionName = doc[DBRef.field].namespace
+			id = doc[DBRef.field].oid.toString()
+	
+			self.getCollection(collectionName).findById(id, function(err, object){
+				_.extend(DBRef, { doc : object })
+				callback(null, DBRef)		
+			})			
+	}, function(err, resolvedDBRefs){
+		self.applyRefs(doc, resolvedDBRefs, callback)	
+	})
+}
+
 RefResolvers.prototype.hasSingleRefs = function(){
 	return (this.singleRefs && this.singleRefs.length > 0)
+}
+
+RefResolvers.prototype.hasDBRefs = function(){
+	return (this.DBRefs && this.DBRefs.length > 0)
 }
 
 RefResolvers.prototype.hasMultiRefs = function(){

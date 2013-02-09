@@ -33,7 +33,10 @@ exports.create = function(
 			}
 				
 			db.getCollection('posts').create(post, function(err, new_post){
-				callback(err, new_post)			
+				db.getCollection('posts').findById(new_post._id.toString(), function(err, new_post){
+					callback(err, new_post)			
+				})
+				
 			})							
 		},
 		
@@ -45,11 +48,10 @@ exports.create = function(
 				object : object,
 				wall : wall_id			
 			}				
-			db.getCollection('wallItems').create(wall_item, function(err, wallItem){		
-				db.db.dereference(wallItem.object, function(err, object){
-					wallItem.object = object
+			db.getCollection('wallItems').create(wall_item, function(err, wallItem){
+				db.getCollection('wallItems').findById(wall_item._id.toString(), function(err, wallItem){
 					callback(null, wallItem)
-				})				
+				})		
 			})				
 		},
 	
