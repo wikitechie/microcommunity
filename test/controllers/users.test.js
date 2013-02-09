@@ -1,7 +1,7 @@
 process.env.NODE_ENV = 'test'
 
-var db = require('./../../server/db/db')
-	, usersController = require('./../../server/controllers/users')
+var db = require('./../../db/db')
+	, usersController = require('./../../controllers/users')
 	, should = require('should')
 
 describe('Users Controller', function(){
