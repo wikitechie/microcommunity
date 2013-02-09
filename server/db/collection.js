@@ -86,8 +86,9 @@ Collection.prototype.findById = function(id, callback){
 }
 
 Collection.prototype.create = function(attr, callback){
-	this.insert( attr, function(err, docs){
-		callback(err, docs[0])
+	self = this
+	self.insert( attr, function(err, docs){
+		self.resolveAllDocJoins(docs[0], callback)
 	})		
 }
 

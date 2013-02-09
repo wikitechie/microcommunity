@@ -48,9 +48,7 @@ exports.create = function(attr, controllerCallback){
 }
 
 exports.findById = function(id, callback){
-
-	db.getCollection('users').findById(id, callback)
-	
+	db.getCollection('users').findById(id, callback)	
 }
 
 exports.fetchWall = function(user_id, callback){
