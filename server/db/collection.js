@@ -15,7 +15,8 @@ function Collection(db, collectionName, options){
 	if(!db) throw new Error('Cannot create a collection without a mongodb Db object')
 	if(!collectionName) throw new Error('Cannot create a collection without a collection name')		
 	MongoCollection.call(this, db, collectionName)	 
-	this.db = db					
+	this.db = db		
+	this.collectionName			
 	
 	if(options){
 		this.singleRefs = options.singleRefs
@@ -54,11 +55,10 @@ Collection.prototype.findById = function(id, callback){
 					callback(null, doc)	
 			}
 		], 
-		function(err, results){		
+		function(err, results){	
 			callback(err, doc)			
 		})		
 	})		
-
 }
 
 Collection.prototype.create = function(attr, callback){
@@ -67,12 +67,9 @@ Collection.prototype.create = function(attr, callback){
 	})		
 }
 
-Collection.prototype.updateAttr = function(id, field, value, callback){
-	//update = { field : value }
-	update = {} 
-	update[field] = value
-	
-	this.update({ _id : ObjectId(id) }, { $set : update }, function(err, nb){
+Collection.prototype.updateAttr = function(id, updated, callback){
+
+	this.update({ _id : ObjectId(id) }, { $set : updated }, function(err, nb){
 		if(err) throw err		
 		callback(null)
 	})

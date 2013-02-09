@@ -21,7 +21,7 @@ Database.prototype.connect = function(callback){
 		self.container = new Container(db)
 		self.container.setup()
 		self.DB_SETUP = true	
-		if(callback) { callback(err, self.container) }		
+		if(callback) { callback(err, self.db, self.container) }		
 	})	
 }
 

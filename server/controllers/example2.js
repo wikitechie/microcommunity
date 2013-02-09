@@ -2,7 +2,8 @@ usersController = require('./users')
 
 usersController.create({
 	name : 'foobar',
-	email: 'foo@bar.com'
+	email: 'asdf@bar.com'
 }, function(err, user){
+	if(err) { console.log(err); return; }
 	console.log(user)
 })
