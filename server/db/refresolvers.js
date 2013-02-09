@@ -79,7 +79,7 @@ RefResolvers.prototype.fetchArrayEmbededDocsJoins = function(doc, arrayDescripto
 RefResolvers.prototype.resolveDBRefs = function(doc, DBRefs, callback){
 	self = this	
 	async.map(DBRefs, 
-		function(DBRef, callback){		
+		function(DBRef, callback){	
 			collectionName = doc[DBRef.field].namespace
 			id = doc[DBRef.field].oid.toString()
 	
@@ -91,6 +91,7 @@ RefResolvers.prototype.resolveDBRefs = function(doc, DBRefs, callback){
 		self.applyRefs(doc, resolvedDBRefs, callback)	
 	})
 }
+
 
 RefResolvers.prototype.hasSingleRefs = function(){
 	return (this.singleRefs && this.singleRefs.length > 0)

@@ -16,8 +16,8 @@ usersController.findById('51163fccd64c81320f000001', function(err, user){
 		console.log('wallItem')
 		console.log(wallItem)				
 		usersController.fetchWall('51163fccd64c81320f000001', function(err, wall){
-			//console.log('user wall')
-			//console.log(wall)
+			console.log('user wall')
+			console.log(wall)
 		})
 	
 	})	

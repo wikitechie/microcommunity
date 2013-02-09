@@ -29,42 +29,59 @@ function Collection(db, collectionName, options){
 
 Collection.prototype = MongoCollection.prototype
 
+Collection.prototype.resolveAllDocJoins = function(doc, callback){
+	self = this	
+	async.waterfall([
+		function(callback){
+			if (self.hasSingleRefs())
+				self.resolveSingleRefs(doc, self.singleRefs, callback)
+			else
+				callback(null, doc)		
+		},			
+		function(doc, callback){				
+			if (self.hasDBRefs())
+				self.resolveDBRefs(doc, self.DBRefs, callback)				
+			else
+				callback(null, doc)		
+		},			
+		function(doc, callback){
+			if (doc.follows)
+				self.resolveMultiRefs(doc, self.multiRefs, callback)
+			else
+				callback(null, doc)		
+		},
+		function(doc, callback){
+			if (self.hasArrayDescriptors())
+				self.fetchArrayEmbededDocsJoins(doc, self.arrayDescriptors, callback)
+			else
+				callback(null, doc)	
+		}
+	], 
+	function(err, results){	
+		callback(err, doc)			
+	})	
+}
+
+Collection.prototype.resolveArrayJoins = function(array, callback){
+	self = this
+	async.map(array, 
+		function(item, callback){
+			self.resolveAllDocJoins(item, callback)			
+		}, function(err, array){
+			callback(null, array)			
+		})
+}
+
+
 Collection.prototype.findById = function(id, callback){
 
 	doc = ObjectId(id)
 	var self = this	
 	
-	this.findOne({ _id : doc }, function(err, doc){
-			
-		async.waterfall([
-			function(callback){
-				if (self.hasSingleRefs())
-					self.resolveSingleRefs(doc, self.singleRefs, callback)
-				else
-					callback(null, doc)		
-			},			
-			function(doc, callback){				
-				if (self.hasDBRefs())
-					self.resolveDBRefs(doc, self.DBRefs, callback)				
-				else
-					callback(null, doc)		
-			},			
-			function(doc, callback){
-				if (doc.follows)
-					self.resolveMultiRefs(doc, self.multiRefs, callback)
-				else
-					callback(null, doc)		
-			},
-			function(doc, callback){
-				if (self.hasArrayDescriptors())
-					self.fetchArrayEmbededDocsJoins(doc, self.arrayDescriptors, callback)
-				else
-					callback(null, doc)	
-			}
-		], 
-		function(err, results){	
-			callback(err, doc)			
-		})		
+	this.findOne({ _id : doc }, function(err, doc){			
+		self.resolveAllDocJoins(doc, function(err, doc){
+			callback(err, doc)
+		})
 	})		
 }
 
