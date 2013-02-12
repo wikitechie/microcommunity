@@ -9,7 +9,7 @@ var usersController = require('./../../controllers/users')
 describe('Users Controller', function(){
 	
 	helpers.dbBefore()
-			
+	
 	describe ('create action', function(){
 	
 		before (function(done){		
@@ -41,10 +41,8 @@ describe('Users Controller', function(){
 				done()			
 			})
 		})
-
 	
 		it( 'should create a new stream object with the right association')
-
 		
 	})
 	
