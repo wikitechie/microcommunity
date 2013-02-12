@@ -94,10 +94,7 @@ Collection.prototype.create = function(attr, callback){
 
 Collection.prototype.updateAttr = function(id, updated, callback){
 
-	this.update({ _id : ObjectId(id) }, { $set : updated }, function(err, nb){
-		if(err) throw err		
-		callback(null)
-	})
+	this.findAndModify({ _id : ObjectId(id) }, [['_id','asc']], { $set : updated }, { new : true }, callback)
 }
 
 Collection.prototype.getCollection = function(name){

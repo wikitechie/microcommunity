@@ -11,39 +11,29 @@ exports.create = function(email, controllerCallback){
 		//creating the user document if the user does not already exist
 		function (callback){		
 			db.getCollection('users').findByEmail(email, function(err, user){			
-				if(user) {
+				if (user) {
 				callback(new Error('user already exists'))
 				} else {
 					var attr = {
 						email : email
 					}
-					db.getCollection('users').create(attr, function(err, user){
-						if (!err){
-							callback(null, user)
-						}
+					db.getCollection('users').create(attr, function(err, new_user){
+						callback(err, new_user)
 					})
 				}			
 			})	
 		},
 		//creating the wall document and updating the user document accordingly
-		function(user, callback){
+		function(created_user, callback){
 			db.getCollection('walls').create({}, function(err, wall){
-				if (!err){
-					db.getCollection('users').updateAttr( 
-						user._id.toString(), { 'wall' : wall._id },
-						function(err){
-							if(!err)
-							callback(null, user)
-						})				
+				if (err){
+					callback(err)
+				} else {
+					db.getCollection('users').updateAttr( created_user._id.toString(), { 'wall' : wall._id },
+						callback)				
 				}
 			})		
 		},
-		//fetching the updated user document
-		function ( user, callback){
-			db.getCollection('users').findById(user._id.toString(), function(err, user){
-				callback(err, user)
-			})			
-		}	
 	//returning final result		
 	], function(err, user){	
 		controllerCallback(err, user)	
