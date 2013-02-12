@@ -3,14 +3,14 @@ process.env.NODE_ENV = 'test'
 var db = require('./../../db/db')
 	, should = require('should')
 	, helpers = require('./../helpers')
-	, factories = require('./../factories')
+	, fixtures = require('./../fixtures')
 	
 var usersController = require('./../../controllers/users')	
 
 describe('Users Controller', function(){
 
 	var collection = null
-	var test_user = factories.create('user')
+	var test_user = fixtures.create('user')
 	var created_user = null	
 	
 	before(function(done){

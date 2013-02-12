@@ -1,24 +1,23 @@
-function Factories(){
-	this.factories = {}	
+function Fixtures(){
+	this.fixtures = {}	
 	this.add('user', 'users', { email : 'test@email.com' })	
 	
 }
 
-Factories.prototype.add = function(name, collection, obj){
-	this.factories[name] = {
+Fixtures.prototype.add = function(name, collection, obj){
+	this.fixtures[name] = {
 		attr : obj,
 		collection : collection
 	}
 }
 
-Factories.prototype.create = function(name){
-	console.log(this.factories[name].attr)
-	return new Object(this.factories[name].attr)
+Fixtures.prototype.create = function(name){
+	return new Object(this.fixtures[name].attr)
 }
 
 
-var factories = new Factories()
-module.exports = factories
+var fixtures = new Fixtures()
+module.exports = fixtures
 
 
 /*
