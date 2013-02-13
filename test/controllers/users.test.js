@@ -14,23 +14,25 @@ describe('Users Controller', function(){
 	
 		before (function(done){		
 			this.collection = this.db.getCollection('users')	
-			this.test_user = fixtures.create('user')		
+			this.test_user = fixtures.create('user')					
+			
 			//the actual operation
 			var self = this
 			usersController.create(this.test_user, function(err, user){
 				should.not.exist(err)
 				self.created_user = user
 				done()
-			})					
+			})
+								
 		})
 	
-		it ('should create a new user object with the right association', function(done){	
-			var self = this
-			this.collection.count(function(err, count){
-				count.should.equal(1)
-				should.exist(self.created_user.wall)
-				done()
-			})
+		it ('should return a new user object with an id', function(){	
+			should.exist(this.created_user)
+			should.exist(this.created_user._id)
+		})		
+		
+		it ('should return a new user object referenced to a wall object', function(){	
+			should.exist(this.created_user.wall)
 		})		
 		
 		it( 'should create a new wall object with the right association', function(done){
