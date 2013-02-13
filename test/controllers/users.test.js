@@ -46,8 +46,6 @@ describe('Users Controller', function(){
 		
 	})
 	
-	helpers.dbAfter()
-	
 	
 })
 

@@ -17,16 +17,16 @@ exports.create = function(
 				} else {
 					callback(new Error("User does not exist"))
 				}
-				})
+			})
 		},
 				
 		//creating post
 		function(callback){
 			//manipulating parameters
-			author_id = db.mongo.ObjectID(author_id)
+			var author_id = db.mongo.ObjectID(author_id)
 
-			wall_id = db.mongo.ObjectID(wall_id)	
-			post = {
+			var wall_id = db.mongo.ObjectID(wall_id)	
+			var post = {
 				content : content,
 				author : author_id,
 				wall : wall_id
@@ -39,19 +39,19 @@ exports.create = function(
 		
 		//creating wall item
 		function(new_post, callback){		
-			object = db.mongo.DBRef('posts', new_post._id)			
-			wall_item = {
+			var object = db.mongo.DBRef('posts', new_post._id)			
+			var wall_item = {
 				updated: new Date(),
 				object : object,
 				wall : wall_id			
 			}				
 			db.getCollection('wallItems').create(wall_item, function(err, wallItem){
-				callback(null, wallItem)
+				callback(err, wallItem)
 			})				
 		},
 	
 	], function(err, wallItem){	
-		controllerCallback(null, wallItem)	
+		controllerCallback(err, wallItem)	
 	})
 		
 	

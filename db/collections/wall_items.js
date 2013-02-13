@@ -15,7 +15,7 @@ WallItems.prototype = Collection.prototype
 
 
 WallItems.prototype.fetchWall = function(wall_id, callback){
-	self = this
+	var self = this
 	self.find({ wall : wall_id }).limit(3).toArray(function(err, items){
 		self.resolveArrayJoins(items, callback)
 	})

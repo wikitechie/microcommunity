@@ -77,11 +77,11 @@ RefResolvers.prototype.fetchArrayEmbededDocsJoins = function(doc, arrayDescripto
 }
 
 RefResolvers.prototype.resolveDBRefs = function(doc, DBRefs, callback){
-	self = this	
+	var self = this	
 	async.map(DBRefs, 
 		function(DBRef, callback){	
-			collectionName = doc[DBRef.field].namespace
-			id = doc[DBRef.field].oid.toString()
+			var collectionName = doc[DBRef.field].namespace
+			var id = doc[DBRef.field].oid.toString()
 	
 			self.getCollection(collectionName).findById(id, function(err, object){
 				_.extend(DBRef, { doc : object })

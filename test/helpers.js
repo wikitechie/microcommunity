@@ -6,14 +6,22 @@ exports.sameID = function(id1, id2){
 }
 
 exports.dbBefore = function(){
+
+	function drop(db, callback){
+		db.dropDatabase(function(err){
+			callback()
+		})	
+	}
+
 	before(function(done){
 		this.db = require('./../db/db')
 		if (!this.db.db){
-			this.db.connect(function(err){		
-				done()		
+			var self = this
+			this.db.connect(function(err){	
+				drop(self.db.db, done)			
 			})	
 		} else {
-			done()
+			drop(this.db.db, done)			
 		}		
 	})		
 }

@@ -16,7 +16,6 @@ function Collection(db, collectionName, options){
 	if(!collectionName) throw new Error('Cannot create a collection without a collection name')		
 	MongoCollection.call(this, db, collectionName)	 
 	this.db = db		
-	this.collectionName			
 
 	if(options){
 		this.singleRefs = options.singleRefs
@@ -33,31 +32,35 @@ Collection.prototype.resolveAllDocJoins = function(doc, callback){
 	var self = this	
 	async.waterfall([
 		function(callback){
-			if (self.hasSingleRefs())
+			if (self.hasSingleRefs()){
 				self.resolveSingleRefs(doc, self.singleRefs, callback)
-			else
+			}	else {
 				callback(null, doc)		
+			}				
 		},			
 		function(doc, callback){				
-			if (self.hasDBRefs())
-				self.resolveDBRefs(doc, self.DBRefs, callback)				
-			else
-				callback(null, doc)		
+			if (self.hasDBRefs()){
+				self.resolveDBRefs(doc, self.DBRefs, callback)
+			}	else {
+				callback(null, doc)
+			}				
 		},			
 		function(doc, callback){
-			if (doc.follows)
+			if (doc.follows){
 				self.resolveMultiRefs(doc, self.multiRefs, callback)
-			else
+			}	else {
 				callback(null, doc)		
+			}				
 		},
 		function(doc, callback){
-			if (self.hasArrayDescriptors())
+			if (self.hasArrayDescriptors()){
 				self.fetchArrayEmbededDocsJoins(doc, self.arrayDescriptors, callback)
-			else
+			}	else {
 				callback(null, doc)	
+			}				
 		}
 	], 
-	function(err, results){	
+	function(err, doc){	
 		callback(err, doc)			
 	})	
 }
