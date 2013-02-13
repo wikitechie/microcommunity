@@ -9,7 +9,7 @@ exports.create = function(attr, controllerCallback){
 
 	async.waterfall([
 		//creating the user document if the user does not already exist
-		function (callback){		
+		function (callback){
 			db.getCollection('users').findByEmail(attr.email, function(err, user){			
 				if (user) {
 				callback(new Error('user already exists'))

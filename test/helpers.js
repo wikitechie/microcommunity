@@ -34,9 +34,9 @@ exports.userSetup = function( user ){
 	before(function(done){
 		var self = this
 		var usersController = require('./../controllers/users')	
-		usersController.create(user.email, function(err, user){
+		usersController.create(user, function(err, user){
 			self.created_user = user
-			done()
+			done(err)
 		})			
 	})
 	
