@@ -7,7 +7,7 @@ function Database(){
 	if (process.env.NODE_ENV == 'test') {	
 		connection = new Db('microcommunity_test', new Server("127.0.0.1", 27017)	)
 	} else {
-		connection = new Db('test', new Server("127.0.0.1", 27017))	
+		connection = new Db('microcommunity', new Server("127.0.0.1", 27017))	
 	}	
 	this.connection = connection
 	this.DB_SETUP = false 

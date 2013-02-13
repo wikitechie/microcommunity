@@ -5,18 +5,15 @@ var db = require('./../db/db')
 	users controller
 */
 
-exports.create = function(email, controllerCallback){
+exports.create = function(attr, controllerCallback){
 
 	async.waterfall([
 		//creating the user document if the user does not already exist
 		function (callback){		
-			db.getCollection('users').findByEmail(email, function(err, user){			
+			db.getCollection('users').findByEmail(attr.email, function(err, user){			
 				if (user) {
 				callback(new Error('user already exists'))
 				} else {
-					var attr = {
-						email : email
-					}
 					db.getCollection('users').create(attr, function(err, new_user){
 						callback(err, new_user)
 					})
@@ -42,6 +39,10 @@ exports.create = function(email, controllerCallback){
 
 exports.findById = function(id, callback){
 	db.getCollection('users').findById(id, callback)	
+}
+
+exports.findByEmail = function(email, callback){
+	db.getCollection('users').findByEmail(email, callback)	
 }
 
 exports.fetchWall = function(user_id, callback){

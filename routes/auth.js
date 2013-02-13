@@ -1,11 +1,10 @@
 var flash = require('connect-flash')
 	, passport = require('passport')
 	, users_provider = require('./../providers/users-provider')
+	, usersController = require('./../controllers/users')
 
 
 exports.install = function(app, db){
-
-	users_provider.setup(db)
 
 	app.get('/account', ensureAuthenticated, function(req, res){
 		res.render('account', { current_user: req.user });
@@ -30,7 +29,7 @@ exports.install = function(app, db){
 				displayName : req.body.displayName
 			}
 			
-			users_provider.create(user, function(err,user){
+			usersController.create(user, function(err,user){
 				if (!err) {
 				  console.log("user created");
 					req.logIn(user, function(err) {

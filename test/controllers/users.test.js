@@ -17,7 +17,7 @@ describe('Users Controller', function(){
 			this.test_user = fixtures.create('user')		
 			//the actual operation
 			var self = this
-			usersController.create(this.test_user.email, function(err, user){
+			usersController.create(this.test_user, function(err, user){
 				should.not.exist(err)
 				self.created_user = user
 				done()

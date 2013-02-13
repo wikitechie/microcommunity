@@ -10,8 +10,6 @@ var express = require('express')
   , passport = require('passport')  
   , flash = require('connect-flash')
   , _ = require('underscore')
-  , LocalStrategy = require('passport-local').Strategy
-  , GoogleStrategy = require('passport-google').Strategy
   , async = require('async')
   , Resource = require('express-resource')
   , activities_provider = require('./providers/activities-provider')
@@ -40,57 +38,15 @@ database.connectDB(function(err, database){
 	console.log( 'Connection to database established...')
 });
 
-//passport setup
-passport.serializeUser(function(user, done) {
-  done(null, user._id);
-});
+//setting up database
+d = require('./db/db')
+usersController = require('./controllers/users')
+d.connect(function(){
+	console.log('db object connected')
+})
 
-passport.deserializeUser(function(id, done) {
-	users_provider.fetch(id, function(err, user) {
-		done(err, user);
-  });
-});
-
-passport.use(new LocalStrategy(
-	function(email, password, done) {
-		process.nextTick(function () {         
-			users_provider.fetchByEmail(email, function(err, user){
-				if (err) { return done(err); }
-				if (!user) { return done(null, false, { message: 'Unknown email ' + email }); }
-				if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
-			return done(null, user);
-  		})
-	});    	
-}));
-
-
-passport.use(new GoogleStrategy({
-    returnURL: 'http://localhost:3000/auth/google/return',
-    realm: 'http://localhost:3000'
-  },
-  function(identifier, profile, done) {
-  
-  	var email = profile.emails[0].value;
-		users_provider.fetchByEmail(email, function(err, user){
-			if (!user) {
-				var user = {
-					email: email,
-					openId: identifier,
-					displayName : profile.displayName
-				}
-							
-				users_provider.create(user, function(err,user){
-					if (!err) {
-						console.log("user created");
-						return done(null, user);
-					}				
-				});				
-			}			
-			return done(null, user);
-		})
-  }
-));
-
+//setting up passport before app configuration
+require('./passport')
 
 //app setup and configuration
 var app = express.createServer();
