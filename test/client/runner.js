@@ -14,7 +14,8 @@ require([
 	'cs!/views/activity'	,	
 	'cs!/views/activity_stream',
 	*/
-	'/sinon_test.js'
+	'/collections/items.js',
+	'/models/item.js'
 	
 ], function(){
 	"use strict";
