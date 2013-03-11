@@ -1,4 +1,5 @@
 require([
+	/*
 	'cs!/models/post',
 	'cs!/models/user',
 	'cs!/models/comment',
@@ -11,7 +12,9 @@ require([
 	'cs!/views/comment',
 	'cs!/views/comments_thread'	,
 	'cs!/views/activity'	,	
-	'cs!/views/activity_stream'
+	'cs!/views/activity_stream',
+	*/
+	'/sinon_test.js'
 	
 ], function(){
 	"use strict";
