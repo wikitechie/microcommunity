@@ -1,11 +1,21 @@
 define([
 	'models/item',
-], function(Item){
+	'collections/items',	
+], function(Item, Items){
 	describe('Item Model', function(){
-		it('should work', function(){
-			var item = new Item
-			item.should.be.ok
-		})
+	
+		describe('Item subtypes', function(){			
+			before(function(){
+				this.items = new Items([
+					{ id : 1, type : 'post' }
+				])					
+			})			
+			it ('should support PostItem subtype', function(){
+				var post = this.items.get(1) 
+				var test = post instanceof PostItem
+				test.should.equal(true)
+			})			
+		})				
 	})
 
 })

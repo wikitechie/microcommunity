@@ -21,7 +21,9 @@ define([
 		},
 	
 		initialize : function(models, options){
-			this.id = options.id
+			if (options){
+				this.id = options.id
+			}			
 		}, 
 		
 		model : Item,

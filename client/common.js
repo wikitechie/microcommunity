@@ -18,7 +18,7 @@ require.config({
     'general' : 'lib/general',
     'moment' : 'lib/moment.min',
     'diff' : 'lib/diff',
-    'bootstrap-notify' : 'lib/bootstrap-notify'
+    'bootstrap-notify' : 'lib/bootstrap-notify',
   },
   
   shim: {
@@ -42,7 +42,6 @@ require.config({
   	'bootstrap-notify': ['jquery'],
   	'bootbox' : ['bootstrap'],
   	'backbone-relational' : ['backbone'],
-
   	'bootstrap' : {
   		exports: ''
   	}  	
