@@ -22,10 +22,10 @@ define([
 				key : 'owner',
 				relatedModel : 'User',
 				includeInJSON : Backbone.Model.prototype.idAttribute,				
-				/* reverseRelation : {
+				reverseRelation : {
 					key : 'wall',
 					includeInJSON : Backbone.Model.prototype.idAttribute,														
-				}*/
+				}
 			}, 			
 		]
 				

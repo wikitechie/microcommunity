@@ -3,14 +3,14 @@ define([
 	'backbone-relational'
 ], function(Backbone){
 
-	Activity = Backbone.RelationalModel.extend({	
-		
+	Activity = Backbone.RelationalModel.extend({
+	
 		constructor: function (attributes, options){
 			var objectTypes = {
 				'post' : 'Item',
 				'wikipage' : 'WikiPage'
 			}		
-			var type = attributes.type
+			var type = attributes.subtype
 			if (type){
 				this.relations[1] = {
 					type : Backbone.HasOne,				

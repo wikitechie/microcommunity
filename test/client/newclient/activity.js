@@ -60,8 +60,9 @@ define([
 			var page = new WikiPage({
 				id : 'wikipage-1',
 				title : "Node.js",
-				objectType : 'wikipage'
+				objectType : 'wikipage',			
 			})
+			var wikipageWall = new Wall({	id : 'wall-4'	})		
 			
 			var stream = new Stream([
 				{ id : 'activity-1', subtype : 'post', actor : yaser , object : post1 },
@@ -69,11 +70,18 @@ define([
 				{ id : 'activity-3', subtype : 'post', actor : yaser , object : post3 },
 				{ id : 'activity-4', subtype : 'wikipage', actor : yaser, object : page  },
 //{ id : 'activity-5', type : 'revision', actor : yaser , item : wikipage ? item },
-			])			
+			])
+			
+			wikipageWall.get('items').add({
+				id : 'item-0',
+				subtype : 'activity'
+			})						
 			
 			stream.forEach(function(item){
 				console.log(item.msg())
-				console.log(item.toJSON())
+				//console.log(JSON.stringify( item.toJSON()))
+				console.log(item.get('object').toJSON())
+
 			})
 	
 			
