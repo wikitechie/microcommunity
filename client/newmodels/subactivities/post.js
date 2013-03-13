@@ -12,14 +12,14 @@ define([
 			
 			var msg
 			
-			if ( this.get('item').get('wall').id == this.get('actor').get('wall').id )	
+			if ( this.get('object').get('wall').id == this.get('actor').get('wall').id )	
 				msg = ' posted on his wall '
 			else
-				msg = ' posted on ' + this.get('item').get('wall').get('owner').get('name') + '\'s wall '
+				msg = ' posted on ' + this.get('object').get('wall').get('owner').get('name') + '\'s wall '
 				
 			return this.get('actor').get('name') 
 				+ msg 
-				+ this.get('item').get('content')
+				+ this.get('object').get('content')
 		
 		}
 	})	

@@ -4,32 +4,45 @@ define([
 ], function(Backbone){
 
 	Activity = Backbone.RelationalModel.extend({	
-	
-		defaults : {
-			created : Date()
+		
+		constructor: function (attributes, options){
+			var objectTypes = {
+				'post' : 'Item',
+				'wikipage' : 'WikiPage'
+			}		
+			var type = attributes.type
+			if (type){
+				this.relations[1] = {
+					type : Backbone.HasOne,				
+					key : "object",
+					relatedModel : objectTypes[type],
+					includeInJSON : [ Backbone.Model.prototype.idAttribute, 'objectType' ]
+				}
+			}						
+			Backbone.RelationalModel.prototype.constructor.apply(this, arguments)		
 		},
 	
+		defaults : {
+			created : Date(),
+			objectType : 'activity',
+		},
+		
+		subModelTypeAttribute : 'subtype',
+			
 		relations : [
 			{
 				type : Backbone.HasOne,
 				key : 'actor',
 				relatedModel : 'User',
 				includeInJSON : Backbone.Model.prototype.idAttribute
-			},
-			{
-				type : Backbone.HasOne,
-				key : 'item',
-				relatedModel : 'PostItem',
-				includeInJSON : Backbone.Model.prototype.idAttribute
-			},
-			
+			}			
 		],
 		
 		subModelTypes : {
 			'post' : 'PostActivity',
-			'revision' : 'RevisionActivity',
-			'wikipage' : 'WikipageActivity'
+			'wikipage' : 'WikiPageActivity'
 		}
+		
 	})
 	
 	return Activity

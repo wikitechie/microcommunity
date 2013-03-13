@@ -6,12 +6,13 @@ define([
 	'newmodels/wall',
 	'newmodels/activity',
 	'newmodels/subactivities/post',
+	'newmodels/subactivities/wikipage',	
 	'newmodels/stream',			
 	'backbone',
 	'backbone-relational',	
 ], function(User, 
 						Item, PostItem, Items, Wall,
-						Activity, PostActivity, Stream, 
+						Activity, PostActivity, WikiPageActivity, Stream, 
 						Backbone){
 	
 	describe('Activity Model', function(){	
@@ -25,9 +26,7 @@ define([
 			var ahmadWall = new Wall({	id : 'wall-2', owner : 'user-2'	})			
 			
 			var yaser = new User({name : 'Yaser', id : 'user-3' , wall : 'wall-3' })	
-			var yaserWall = new Wall({	id : 'wall-3', owner : 'user-3'	})									
-			
-			
+			var yaserWall = new Wall({	id : 'wall-3', owner : 'user-3'	})					
 						
 			//var post = new PostItem({ content : 'hello, world!' })
 			
@@ -35,35 +34,46 @@ define([
 			amjadWall.get('items').add({ 
 				id : 'item-1', 
 				content : 'Hey Amjad, How are you!', 
-				type : 'post' 
+				subtype : 'post' 
 			})
 			
 			ahmadWall.get('items').add({ 
 				id : 'item-2', 
 				content : 'Hello Ahmad!', 
-				type : 'post' 
+				subtype : 'post' 
 			})					
 			
 			yaserWall.get('items').add({ 
 				id : 'item-3', 
 				content : 'Hello Myself!', 
-				type : 'post' 
+				subtype : 'post' 
 			})			
 						
 			
 			var post1 = amjadWall.get('items').last()
 			var post2 = ahmadWall.get('items').last()		
-			var post3 = yaserWall.get('items').last()		
+			var post3 = yaserWall.get('items').last()	
+			
+			
+			WikiPage = Backbone.RelationalModel.extend()	
+			
+			var page = new WikiPage({
+				id : 'wikipage-1',
+				title : "Node.js",
+				objectType : 'wikipage'
+			})
 			
 			var stream = new Stream([
-				{ id : 'activity-1', type : 'post', actor : yaser , item : post1 },
-				{ id : 'activity-2', type : 'post', actor : yaser , item : post2 },	
-				{ id : 'activity-3', type : 'post', actor : yaser , item : post3 },											
+				{ id : 'activity-1', subtype : 'post', actor : yaser , object : post1 },
+				{ id : 'activity-2', subtype : 'post', actor : yaser , object : post2 },	
+				{ id : 'activity-3', subtype : 'post', actor : yaser , object : post3 },
+				{ id : 'activity-4', subtype : 'wikipage', actor : yaser, object : page  },
+//{ id : 'activity-5', type : 'revision', actor : yaser , item : wikipage ? item },
 			])			
 			
 			stream.forEach(function(item){
 				console.log(item.msg())
-				//console.log(item.toJSON())
+				console.log(item.toJSON())
 			})
 	
 			
