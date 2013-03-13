@@ -13,7 +13,7 @@ define([
 				collectionType : 'Items',
 				includeInJSON : Backbone.Model.prototype.idAttribute,				
 				reverseRelation : {
-					key : 'wall',
+					key : 'parentWall',
 					includeInJSON : Backbone.Model.prototype.idAttribute,														
 				}
 			}, 			

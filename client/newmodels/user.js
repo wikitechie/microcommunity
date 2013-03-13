@@ -4,14 +4,14 @@ define([
 ], function(Backbone){
 
 	User = Backbone.RelationalModel.extend({
-		relations : [
+		/* relations : [
 			{
 				type : Backbone.HasOne,
 				key : 'wall',
 				relatedModel : 'Wall',
 				includeInJSON : Backbone.Model.prototype.idAttribute
 			}
-		]
+		] */
 	})
 	
 	return User
