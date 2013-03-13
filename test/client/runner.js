@@ -14,8 +14,9 @@ require([
 	'cs!/views/activity'	,	
 	'cs!/views/activity_stream',
 	*/
-	'/collections/items.js',
-	'/models/item.js'
+	'/newclient/items.js',
+	'/newclient/item.js',
+	'/newclient/activity.js',
 	
 ], function(){
 	"use strict";
