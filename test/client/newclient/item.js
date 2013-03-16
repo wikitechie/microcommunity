@@ -1,22 +1,22 @@
 define([
-	'newmodels/item',
-	'newmodels/items',	
-], function(Item, Items){
-	describe('Item Model', function(){
-	
-		describe('Item subtypes', function(){			
-			before(function(){
-				this.items = new Items([
-					{ id : 1, type : 'post' }
-				])					
-			})			
-			it ('should support PostItem subtype', function(){
-				var post = this.items.get(1) 
-				var test = post instanceof PostItem
-				post.postfunc()
-				test.should.equal(true)
-			})			
-		})				
-	})
-
+	'modelsdraft/user',
+	'modelsdraft/item'	
+], function(User, Item) {	
+	describe ('Item Model', function(){	
+		var user, item
+		before(function(){
+			user = new User({ id : 'user-1', name : 'User'})
+			item = new Item({ id : 'item-1', author : 'user-1' })
+		})
+		after(function(){
+				Backbone.Relational.store.reset()
+			})
+		it ('should have an author relation', function(){
+			item.get('author').should.be.ok
+		})
+		it ('should have an objectType property \'item\'', function(){
+			item.get('objectType').should.equal('item')
+		})	
+	})							
+						
 })

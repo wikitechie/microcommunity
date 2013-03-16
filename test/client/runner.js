@@ -14,9 +14,11 @@ require([
 	'cs!/views/activity'	,	
 	'cs!/views/activity_stream',
 	*/
+	'/newclient/item.js',	
 	'/newclient/items.js',
-	'/newclient/item.js',
-	'/newclient/activity.js',
+	'/newclient/post.js',	
+	'/newclient/stream.js',	
+	'/newclient/wall.js'
 	
 ], function(){
 	"use strict";
