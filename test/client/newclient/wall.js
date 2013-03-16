@@ -1,7 +1,8 @@
 define([
 	'modelsdraft/user',
-	'modelsdraft/wall'
-], function(User, Wall) {						
+	'modelsdraft/wall',
+	'modelsdraft/post',	
+], function(User, Wall, Post) {						
 	describe('Wall model', function(){
 		describe ('Wall belonging to a user', function(){
 			var user, wall
@@ -28,7 +29,7 @@ define([
 			})
 			after(function(){
 				Backbone.Relational.store.reset()
-			})
+			})	
 			
 			describe ('Adding a new post to the wall', function(){
 				before(function(){
@@ -37,11 +38,16 @@ define([
 						author : this.user,
 						itemType : 'post'							
 					}, { at : 0 })						
-				})					
+				})
+				after(function(){
+					Backbone.Relational.store.reset()
+				})
+									
 				it ('should have the new post inserted correctly', function(){
 					wall.get('items').length.should.equal(1)
 				})
-				it ('should insert an item which is an instance of Post model', function(){						
+				it ('should insert an item which is an instance of Post model', function(){		
+					console.log(wall.get('items').first().toJSON())
 					assert.equal(wall.get('items').first() instanceof Post, true)
 				})
 				it ('should insert an item associated with the wall', function(){

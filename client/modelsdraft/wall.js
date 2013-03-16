@@ -1,9 +1,9 @@
 define([
-	'backbone',
 	'modelsdraft/item',	
-	'modelsdraft/items',				
+	'modelsdraft/items',	
+	'backbone',
 	'backbone-relational'
-], function(Backbone, Item){
+], function(Item, Items, Backbone){
 
 	return Wall = Backbone.RelationalModel.extend({
 		urlRoot : '/api/walls',
