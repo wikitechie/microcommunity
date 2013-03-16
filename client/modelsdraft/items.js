@@ -1,11 +1,10 @@
 define([
-	'backbone',
 	'modelsdraft/item',	
+	'backbone',		
 	'backbone-relational'
-], function(Backbone, Item){
-
-	return Items = Backbone.Collection.extend({
+], function(Item, Backbone){
+	var Items = Backbone.Collection.extend({
 		model : Item
-	})
-
+	})	
+	return Items
 })

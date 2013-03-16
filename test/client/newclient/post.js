@@ -2,8 +2,7 @@ define([
 	'modelsdraft/user',
 	'modelsdraft/post',		
 	'modelsdraft/wall',
-	'modelsdraft/stream'	
-], function(User, Post, Wall, Stream) {							
+], function(User, Post, Wall) {							
 	describe('Post model', function(){			
 		describe('A post on author\'s own wall', function(){
 			before(function(){
@@ -16,9 +15,9 @@ define([
 				}, { at : 0 })										
 			})
 			after(function(){
-				Backbone.Relational.store.reset()
 				this.user = null
 				this.wall = null
+				Backbone.Relational.store.reset()
 			}) 
 			it ('should be associated back to its wall', function(){
 				this.wall.get('items').first().get('wall').should.be.ok
@@ -32,7 +31,6 @@ define([
 		
 		describe('A post on another user\'s wall', function(){
 			before(function(){
-				Backbone.Relational.store.reset()
 				this.user1 = new User({name : 'User 1', id : 'user-1' , wall : 'wall-1' })
 				this.user2 = new User({name : 'User 2', id : 'user-2' , wall : 'wall-2' })							
 				this.wall1 = new Wall({id : 'wall-1', owner : 'user-1'	})	
@@ -44,11 +42,11 @@ define([
 				}, { at : 0 })										
 			})				
 			after(function(){
-				Backbone.Relational.store.reset()
 				this.user1 = null
 				this.user2 = null
 				this.wall1 = null
 				this.wall2 = null
+				Backbone.Relational.store.reset()
 			})
 			it ('should display the right message', function(){
 				this.wall2.get('items').first().msg()

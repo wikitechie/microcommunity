@@ -7,20 +7,17 @@
 
   <script src="/chai"></script>
   <script src="/mocha"></script>
-  <script>
-  mocha.setup({
-  	ui : 'bdd',
-  	globals : ['current_user']
-  })
-  					
-	</script>
-  <script>assert = chai.assert</script>
-  <script>should = chai.should()</script>
 	<script src="/client/lib/jquery.min.js"></script>  
   <script src="/chai-jquery.js"></script>
   <script src="/sinon.js"></script>  
   
-
+  <script>assert = chai.assert</script>
+  <script>should = chai.should()</script>   
+  <script>
+  mocha.setup({
+  	ui : 'bdd'
+  })  					
+	</script>
   
   <script src="/client/lib/require/require.min.js"></script>   
   <script src="/client/common.js"></script>

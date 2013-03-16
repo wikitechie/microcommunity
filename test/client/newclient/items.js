@@ -8,8 +8,8 @@ define([
 				this.items = new Items()
 			})
 			after(function(){
-				Backbone.Relational.store.reset()
 				this.items = null
+				Backbone.Relational.store.reset()
 			})								
 			it ('should support Post subtype', function(){
 				this.items.add({

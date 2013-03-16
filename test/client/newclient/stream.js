@@ -15,9 +15,9 @@ define([
 				})
 			})
 			after(function(){
-				Backbone.Relational.store.reset()
 				this.user = null
 				this.stream = null
+				Backbone.Relational.store.reset()
 			})
 			it ('should add the items to the stream', function(){
 				this.stream.get('items').length.should.equal(3)

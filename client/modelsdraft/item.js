@@ -1,31 +1,27 @@
 define([
+	'modelsdraft/user',		
 	'backbone',
 	'backbone-relational'
-], function(Backbone){
+], function(User, Backbone){
 
-	Item = Backbone.RelationalModel.extend({
-		urlRoot : '/api/items',	
-		
-		subModelTypeAttribute : 'itemType',	
-						
+	var Item = Backbone.RelationalModel.extend({
+		urlRoot : '/api/items',			
+		subModelTypeAttribute : 'itemType',							
 		subModelTypes : {
 			'post' : 'Post',
-		},
-		
+		},		
 		defaults : {
 			objectType : 'item'
-		},
-		
+		},		
 		relations : [
 			{
 				type : Backbone.HasOne,
 				key : 'author',
-				relatedModel : 'User',
+				relatedModel : User,
 				includeInJSON : Backbone.Model.prototype.idAttribute
 			}			
-		]	
-								
+		]									
 	})
-	
+		
 	return Item
 })

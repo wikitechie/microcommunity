@@ -3,7 +3,7 @@ define([
 	'backbone-relational'
 ], function(Backbone){
 
-	return Stream = Backbone.RelationalModel.extend({
+	var Stream = Backbone.RelationalModel.extend({
 	
 		relations : [
 			{
@@ -20,6 +20,8 @@ define([
 		]
 				
 	})
+	
+	return Stream
 	
 	
 })

@@ -8,10 +8,10 @@ define([
 			this.item = new Item({ id : 'item-1', author : 'user-1' })
 		})
 		after(function(){
-				Backbone.Relational.store.reset()
-				this.user = null
-				this.item = null
-			})
+			this.user = null
+			this.item = null
+			Backbone.Relational.store.reset()
+		})
 		it ('should have an author relation', function(){
 			this.item.get('author').should.be.ok
 		})

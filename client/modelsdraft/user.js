@@ -3,7 +3,7 @@ define([
 	'backbone-relational'
 ], function(Backbone){
 
-	User = Backbone.RelationalModel.extend({
+	var User = Backbone.RelationalModel.extend({
 	})
 	
 	return User
