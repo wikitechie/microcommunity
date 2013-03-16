@@ -18,6 +18,7 @@ define([
 				includeInJSON : Backbone.Model.prototype.idAttribute,				
 				reverseRelation : {
 					key : 'wall',
+					type : Backbone.HasOne,					
 					includeInJSON : Backbone.Model.prototype.idAttribute,														
 				}
 			},
@@ -35,6 +36,7 @@ define([
 		]
 				
 	})
+	
 	
 	return Wall
 	

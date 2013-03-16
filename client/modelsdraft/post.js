@@ -1,8 +1,6 @@
 define([
-	'modelsdraft/item',
-	'backbone',		
-	'backbone-relational'
-], function(Item, Backbone){
+	'modelsdraft/item'
+], function(Item){
 
 	Post = Item.extend({
 		urlRoot : '/api/posts',		

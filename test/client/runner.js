@@ -16,9 +16,9 @@ require([
 	*/
 	'/newclient/item.js',	
 	'/newclient/items.js',
-	'/newclient/post.js',	
-	//'/newclient/stream.js',	
-	//'/newclient/wall.js'
+	//'/newclient/post.js',	
+	'/newclient/stream.js',	
+	'/newclient/wall.js'
 	
 ], function(){
 	mocha

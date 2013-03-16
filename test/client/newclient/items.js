@@ -1,21 +1,21 @@
 define([
 	'modelsdraft/items',
-	'modelsdraft/post'
-], function(Items, Post) {
+	'modelsdraft/item'
+], function(Items, Item) {
 	describe ('Items Collection', function(){		
 		describe ('Supporting Item subtypes', function(){
+			var items
 			before(function(){
-				this.items = new Items()
+				items = new Items()
 			})
 			after(function(){
-				this.items = null
 				Backbone.Relational.store.reset()
 			})								
 			it ('should support Post subtype', function(){
-				this.items.add({
+				items.add({
 					itemType : 'post'
 				})					
-				assert.equal(this.items.first() instanceof Post, true)				
+				assert.equal(items.first() instanceof Item.Post, true)				
 			})
 		})
 	})								

@@ -1,7 +1,9 @@
 define([
+	'modelsdraft/item',	
+	'modelsdraft/items',	
 	'backbone',
 	'backbone-relational'
-], function(Backbone){
+], function(Item, Items, Backbone){
 
 	var Stream = Backbone.RelationalModel.extend({
 	
@@ -9,8 +11,8 @@ define([
 			{
 				type : Backbone.HasMany,
 				key : 'items',
-				relatedModel : 'Item',
-				collectionType : 'Items',
+				relatedModel : Item,
+				collectionType : Items,
 				includeInJSON : Backbone.Model.prototype.idAttribute,				
 				/* reverseRelation : {
 					key : 'stream',

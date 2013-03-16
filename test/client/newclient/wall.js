@@ -1,49 +1,53 @@
 define([
 	'modelsdraft/user',
-	'modelsdraft/wall',
-	'modelsdraft/post',	
-], function(User, Wall, Post) {						
+	'modelsdraft/wall',	
+	'modelsdraft/item',	
+], function(User, Wall, Item) {						
 	describe('Wall model', function(){
 		describe ('Wall belonging to a user', function(){
-			before(function(){
-				this.user = new User({name : 'Name', id : 'user-1' , wall : 'wall-1' })	
-				this.wall = new Wall({id : 'wall-1', owner : 'user-1'	})					
+			var user, wall			
+			before(function(){		
+				user = new User({name : 'Name', id : 'user-1' })	
+				wall = new Wall({id : 'wall-1', owner : 'user-1'	})						
 			})
+
 			after(function(){
-				this.user = null
-				this.wall = null
 				Backbone.Relational.store.reset()			
 			})						
 			it ('should have an owner association to the user', function(){
-				this.wall.get('owner').should.be.ok
-				this.wall.get('owner').id.should.equal(this.user.id)
+				wall.get('owner').should.be.ok
+				wall.get('owner').id.should.equal( user.id)
 			})			
 		})
 		
 		describe ('Wall having a post', function(){
+			var user, wall				
 			describe ('Adding a new post to the wall', function(){
-				before(function(){
-					this.user = new User({name : 'Name', id : 'user-1' , wall : 'wall-1' })	
-					this.wall = new Wall({id : 'wall-1', owner : 'user-1'	})					
-					this.wall.get('items').add({
-						content : "Hello, World!",
-						author : this.user,
-						itemType : 'post'							
-					}, { at : 0 })						
-				})				
+				before(function(){			
+					user = new User({name : 'Name', id : 'user-1'  })	
+					wall = new Wall({ 
+						id : 'wall-1', 
+						owner : 'user-1',
+						items : [{
+							content : "Hello, World!",
+							author : this.user,
+							itemType : 'post'
+						}] 
+					})							
+				})		
+		
 				after(function(){
-					this.user = null
-					this.wall = null
 					Backbone.Relational.store.reset()
 				})										
 				it ('should have the new post inserted correctly', function(){
-					this.wall.get('items').length.should.equal(1)
+					wall.get('items').length.should.equal(1)
 				})
-				it ('should insert an item which is an instance of Post model', function(){		
-					assert.equal(this.wall.get('items').first() instanceof Post, true)
+				it ('should insert an item which is an instance of Post model', function(){	
+					assert.equal(wall.get('items').first() instanceof Item.Post, true)
 				})
 				it ('should insert an item associated with the wall', function(){
-					this.wall.get('items').first().get('wall').id.should.equal(this.wall.id)						
+					assert.ok(wall.get('items').first().get('wall'))
+					wall.get('items').first().get('wall').id.should.equal(wall.id)						
 				})
 								
 			})

@@ -20,12 +20,12 @@ define([
 				Backbone.Relational.store.reset()
 			}) 
 			it ('should be associated back to its wall', function(){
-				this.wall.get('items').first().get('wall').should.be.ok
-				this.wall.get('items').first().get('wall').id.should.equal(this.wall.id)
+				assert.ok(this.wall.get('items').first().get('wall'))
+				assert.ok(this.wall.get('items').first().get('wall').id)				
+				assert.equal(this.wall.get('items').first().get('wall').id, this.wall.id)
 			})			
 			it ('should display the right message', function(){
-				this.wall.get('items').first().msg()
-					.should.equal("Name posted on his wall Hello, World!")
+				assert.equal(this.wall.get('items').first().msg(), "Name posted on his wall Hello, World!")				
 			})			
 		})
 		
