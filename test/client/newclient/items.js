@@ -4,18 +4,18 @@ define([
 ], function(Items, Post) {
 	describe ('Items Collection', function(){		
 		describe ('Supporting Item subtypes', function(){
-			var items
 			before(function(){
-				items = new Items()
+				this.items = new Items()
 			})
 			after(function(){
 				Backbone.Relational.store.reset()
+				this.items = null
 			})								
 			it ('should support Post subtype', function(){
-				items.add({
+				this.items.add({
 					itemType : 'post'
 				})					
-				assert.equal(items.first() instanceof Post, true)				
+				assert.equal(this.items.first() instanceof Post, true)				
 			})
 		})
 	})								

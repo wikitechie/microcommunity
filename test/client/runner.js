@@ -21,7 +21,6 @@ require([
 	'/newclient/wall.js'
 	
 ], function(){
-	"use strict";
 	mocha
 		.run(function(){
 			$('#playarea').html('')
