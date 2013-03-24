@@ -4,7 +4,7 @@ define([
 	'modelsdraft/user',		
 	'backbone',
 	'backbone-relational'
-], function(Item, Items, User, Backbone){
+], function(ItemModule, Items, User, Backbone){
 
 	var Wall = Backbone.RelationalModel.extend({
 		urlRoot : '/api/walls',
@@ -13,13 +13,12 @@ define([
 			{
 				type : Backbone.HasMany,
 				key : 'items',
-				relatedModel : Item,
+				relatedModel : ItemModule.Item,
 				collectionType : Items,
 				includeInJSON : Backbone.Model.prototype.idAttribute,				
 				reverseRelation : {
 					key : 'wall',
-					type : Backbone.HasOne,					
-					includeInJSON : Backbone.Model.prototype.idAttribute,														
+					includeInJSON : Backbone.Model.prototype.idAttribute,																			
 				}
 			},
 			{

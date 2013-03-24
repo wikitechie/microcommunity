@@ -2,8 +2,9 @@ define([
 	'modelsdraft/user',
 	'modelsdraft/wall',	
 	'modelsdraft/item',	
-], function(User, Wall, Item) {						
+], function(User, Wall, ItemModule) {						
 	describe('Wall model', function(){
+	
 		describe ('Wall belonging to a user', function(){
 			var user, wall			
 			before(function(){		
@@ -20,18 +21,21 @@ define([
 			})			
 		})
 		
+		
+		
 		describe ('Wall having a post', function(){
 			var user, wall				
 			describe ('Adding a new post to the wall', function(){
 				before(function(){			
-					user = new User({name : 'Name', id : 'user-1'  })	
+					user = new User({name : 'Name', id : 'user-1'  })
 					wall = new Wall({ 
 						id : 'wall-1', 
 						owner : 'user-1',
 						items : [{
+							id : 'item-1',
 							content : "Hello, World!",
-							author : this.user,
-							itemType : 'post'
+							author : user,
+							itemType : 'post',
 						}] 
 					})							
 				})		
@@ -42,16 +46,22 @@ define([
 				it ('should have the new post inserted correctly', function(){
 					wall.get('items').length.should.equal(1)
 				})
+				
 				it ('should insert an item which is an instance of Post model', function(){	
-					assert.equal(wall.get('items').first() instanceof Item.Post, true)
+					assert.equal(wall.get('items').first() instanceof ItemModule.Post, true)
 				})
+				
+				/*
 				it ('should insert an item associated with the wall', function(){
-					assert.ok(wall.get('items').first().get('wall'))
+					//console.log(JSON.stringify(wall.get('items').first().get('wall').get('items').toJSON()))
 					wall.get('items').first().get('wall').id.should.equal(wall.id)						
-				})
+				}) */
 								
 			})
-		})			
+		})
+		
+					
 	})
+	
 						
 })

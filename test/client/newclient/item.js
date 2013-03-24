@@ -1,12 +1,12 @@
 define([
 	'modelsdraft/user',
 	'modelsdraft/item'	
-], function(User, Item) {	
+], function(User, ItemModule) {	
 	describe ('Item Model', function(){	
 		var user, item
 		before(function(){
 			user = new User({ id : 'user-1', name : 'User'})
-			item = new Item({ id : 'item-1', author : 'user-1' })
+			item = new ItemModule.Item({ id : 'item-1', author : 'user-1' })
 		})
 		after(function(){
 			user = null

@@ -1,5 +1,5 @@
 define([
-	'modelsdraft/user',		
+	'modelsdraft/user',	
 	'backbone',
 	'backbone-relational'
 ], function(User, Backbone){
@@ -8,7 +8,7 @@ define([
 		urlRoot : '/api/items',			
 		subModelTypeAttribute : 'itemType',							
 		subModelTypes : {
-			'post' : 'Item.Post',
+			'post' : 'Post',
 		},		
 		defaults : {
 			objectType : 'item'
@@ -19,11 +19,11 @@ define([
 				key : 'author',
 				relatedModel : User,
 				includeInJSON : Backbone.Model.prototype.idAttribute
-			}				
+			}	
 		]									
 	})	
 	
-	Item.Post = Item.extend({
+	Post = Item.extend({
 		urlRoot : '/api/posts',		
 		msg : function(){			
 			var msg						
@@ -40,5 +40,5 @@ define([
 		}						
 	})	
 		
-	return Item
+	return { Item : Item, Post : Post}
 })

@@ -1,8 +1,8 @@
 define([
 	'modelsdraft/user',
-	'modelsdraft/post',		
+	'modelsdraft/item',		
 	'modelsdraft/wall',
-], function(User, Post, Wall) {							
+], function(User, ItemModule, Wall) {							
 	describe('Post model', function(){			
 		describe('A post on author\'s own wall', function(){
 			before(function(){

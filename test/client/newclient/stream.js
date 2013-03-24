@@ -2,7 +2,7 @@ define([
 	'modelsdraft/user',
 	'modelsdraft/stream',
 	'modelsdraft/item'
-], function(User, Stream, Item) {						
+], function(User, Stream, ItemModule) {						
 	describe('Stream Model', function(){		
 		describe ('Default stream', function(){
 			var user, stream
@@ -10,9 +10,9 @@ define([
 				user = new User({name : 'Name', id : 'user-1' }) 
 				stream = new Stream({
 					items : [
-						{ id : 'item-1', content : "Post1", author : this.user, itemType : 'post' },
-						{ id : 'item-2', content : "Post1", author : this.user, itemType : 'post' },
-						{ id : 'item-3', content : "Post1", author : this.user, itemType : 'post' }
+						{ id : 'item-1', content : "Post1", author : user, itemType : 'post' },
+						{ id : 'item-2', content : "Post1", author : user, itemType : 'post' },
+						{ id : 'item-3', content : "Post1", author : user, itemType : 'post' }
 					]
 				})
 			})
@@ -20,8 +20,9 @@ define([
 				Backbone.Relational.store.reset()
 			})
 			it ('should add the items to the stream', function(){
+				console.log(JSON.stringify(stream.get('items').toJSON()))
 				stream.get('items').length.should.equal(3)
-				assert.equal(stream.get('items').at(0) instanceof Item.Post, true)
+				assert.equal(stream.get('items').at(0) instanceof ItemModule.Post, true)
 			})	
 			
 		})
