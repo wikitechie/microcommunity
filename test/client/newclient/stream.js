@@ -20,7 +20,6 @@ define([
 				Backbone.Relational.store.reset()
 			})
 			it ('should add the items to the stream', function(){
-				console.log(JSON.stringify(stream.get('items').toJSON()))
 				stream.get('items').length.should.equal(3)
 				assert.equal(stream.get('items').at(0) instanceof ItemModule.Post, true)
 			})	
