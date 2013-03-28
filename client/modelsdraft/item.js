@@ -39,6 +39,10 @@ define([
 				+ this.get('content')		
 		}						
 	})	
+	
+	Items = Backbone.Collection.extend({
+		model : Item
+	})		
 		
 	return { Item : Item, Post : Post}
 })

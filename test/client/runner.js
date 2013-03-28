@@ -14,11 +14,12 @@ require([
 	'cs!/views/activity'	,	
 	'cs!/views/activity_stream',
 	*/
-	'/newclient/item.js',	
-	'/newclient/items.js',
+	//'/newclient/item.js',	
+	//'/newclient/items.js',
 	//'/newclient/post.js',	
-	'/newclient/stream.js',	
-	'/newclient/wall.js'
+	//'/newclient/stream.js',	
+	//'/newclient/wall.js',
+	'/newclient/core.js'
 	
 ], function(){
 	mocha
