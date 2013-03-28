@@ -6,28 +6,30 @@ define([
 	User = Backbone.RelationalModel.extend({
 	})
 
-	Item = Backbone.RelationalModel.extend({
+	Item = Backbone.RelationalModel.extend({	
+		constructor : function(){
+		
+			/* a small  hack in order to prevent the model from 
+				 overriding the 'wall' reverseRelation which 
+				 is set in the wall model */
+				 
+			this.relations.push({
+				type : Backbone.HasOne,
+				key : 'author',
+				relatedModel : 'User',
+				includeInJSON : Backbone.Model.prototype.idAttribute	
+			})
+			
+			Backbone.RelationalModel.prototype.constructor.apply(this, arguments)
+		},
+		
 		subModelTypeAttribute : 'itemType',
 		subModelTypes : {
 			'post' : 'Post'
 		},
 		defaults : {
 			objectType : 'item'
-		},
-		relations : [
-			{
-				type : Backbone.HasOne,
-				key : 'author',
-				relatedModel : 'User',
-				includeInJSON : Backbone.Model.prototype.idAttribute
-			},
-			{
-				type : Backbone.HasOne,
-				key : 'wall',
-				relatedModel : 'Wall',
-				includeInJSON : Backbone.Model.prototype.idAttribute
-			}				
-		]						
+		}				
 	})
 
 	Items = Backbone.Collection.extend({
@@ -49,9 +51,10 @@ define([
 				+ this.get('content')		
 		}	
 	})
+	
 	//building an instance in order to setup relations	
 	var post = new Post()
-	Backbone.Relational.store.reset()							
+	Backbone.Relational.store.reset()						
 
 	Wall = Backbone.RelationalModel.extend({
 		relations : [
@@ -60,7 +63,12 @@ define([
 				key : 'items',
 				relatedModel : 'Item',
 				collectionType : 'Items',
-				includeInJSON : Backbone.Model.prototype.idAttribute,
+				includeInJSON : Backbone.Model.prototype.idAttribute,				
+				reverseRelation : {
+					key : 'wall',
+					type : Backbone.HasOne,					
+					includeInJSON : Backbone.Model.prototype.idAttribute,														
+				}			
 			},
 			{
 				type : Backbone.HasOne,
