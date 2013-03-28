@@ -3,40 +3,50 @@ define([
 	'backbone-relational'
 ], function(Backbone){
 
-	User = Backbone.RelationalModel.extend({
+	Core = {}
+
+	Core.User = Backbone.RelationalModel.extend({
 	})
 
-	Item = Backbone.RelationalModel.extend({	
+	Core.Item = Backbone.RelationalModel.extend({	
 		constructor : function(){
 		
 			/* a small  hack in order to prevent the model from 
 				 overriding the 'wall' reverseRelation which 
 				 is set in the wall model */
 				 
-			this.relations.push({
-				type : Backbone.HasOne,
-				key : 'author',
-				relatedModel : 'User',
-				includeInJSON : Backbone.Model.prototype.idAttribute	
+			var setup = true	 
+			_.each(this.relations, function(relation){
+				if (relation.key == 'author')
+					setup = false			
 			})
+			
+			if (setup) {
+				this.relations.push({
+					type : Backbone.HasOne,
+					key : 'author',
+					relatedModel : 'Core.User',
+					includeInJSON : Backbone.Model.prototype.idAttribute	
+				})			
+			}		
 			
 			Backbone.RelationalModel.prototype.constructor.apply(this, arguments)
 		},
 		
 		subModelTypeAttribute : 'itemType',
 		subModelTypes : {
-			'post' : 'Post'
+			'post' : 'Core.Post'
 		},
 		defaults : {
 			objectType : 'item'
 		}				
 	})
 
-	Items = Backbone.Collection.extend({
-		model : Item
+	Core.Items = Backbone.Collection.extend({
+		model : Core.Item
 	})
 
-	Post = Item.extend({
+	Core.Post = Core.Item.extend({
 		msg : function(){			
 			var msg						
 			if ( this.get('wall').id == this.get('author').get('wall').id )	
@@ -53,16 +63,16 @@ define([
 	})
 	
 	//building an instance in order to setup relations	
-	var post = new Post()
-	Backbone.Relational.store.reset()						
+	var post = new Core.Post()
 
-	Wall = Backbone.RelationalModel.extend({
+	
+	Core.Wall = Backbone.RelationalModel.extend({
 		relations : [
 			{
 				type : Backbone.HasMany,
 				key : 'items',
-				relatedModel : 'Item',
-				collectionType : 'Items',
+				relatedModel : 'Core.Item',
+				collectionType : 'Core.Items',
 				includeInJSON : Backbone.Model.prototype.idAttribute,				
 				reverseRelation : {
 					key : 'wall',
@@ -73,7 +83,7 @@ define([
 			{
 				type : Backbone.HasOne,
 				key : 'owner',
-				relatedModel : 'User',
+				relatedModel : 'Core.User',
 				includeInJSON : Backbone.Model.prototype.idAttribute,				
 				reverseRelation : {
 					key : 'wall',
@@ -84,13 +94,13 @@ define([
 		]	
 	})
 
-	Stream = Backbone.RelationalModel.extend({	
+	Core.Stream = Backbone.RelationalModel.extend({	
 		relations : [
 			{
 				type : Backbone.HasMany,
 				key : 'items',
-				relatedModel : 'Item',
-				collectionType : 'Items',
+				relatedModel : 'Core.Item',
+				collectionType : 'Core.Items',
 				includeInJSON : Backbone.Model.prototype.idAttribute,				
 				reverseRelation : {
 					key : 'stream',
@@ -99,5 +109,7 @@ define([
 			}						
 		]				
 	})
+	
+	return Core
 	
 })
