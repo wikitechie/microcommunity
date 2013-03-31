@@ -27,14 +27,14 @@ define([
 		},		
 		newPost : function(data){
 		
-			var post = new Item({
+			/* var post = new Item({
 				content : this.ui.input.val(),
 				itemType : 'post',
 				author : 'user-1',
 				wall : 'wall-1'
 			})
 			
-			post.save()
+			post.save() */
 		
 			App.vent.trigger('post:new', {
 				content : this.ui.input.val(),
