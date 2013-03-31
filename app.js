@@ -57,8 +57,8 @@ app.configure(function(){
   app.use(function(req, res, next){
 		res.loadPage = function (app, data){
 			res.render(app, { 
-				app : {
-					name: app,
+				server : {
+					appName: app,
 					data: data,
 					current_user: req.user			
 				}
@@ -68,7 +68,7 @@ app.configure(function(){
 	})     
 	
   app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
+  app.set('views', __dirname + '/templates');
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.logger('dev'));
@@ -82,7 +82,7 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(__dirname + '/static'));
   app.use('/client', express.static(__dirname + '/client-built'));      
-  app.use('/client', express.static(__dirname + '/client'));      
+  app.use('/client', express.static(__dirname + '/js'));      
   app.use(express.static(__dirname + '/test/client'));   
   app.use('/shared', express.static(__dirname + '/shared'));
 
@@ -106,10 +106,36 @@ app.locals.app = false;
 app.get('/', function(req, res){
 	groups_provider.fetchAll(0, 5, function(err, groups){
 		activities_provider.fetchActivities(0,5,function(err, activities){
-			res.loadPage('home', {
+		
+			/* res.loadPage('home', {
 				groups: groups,
 				activities: activities
+			}) */
+			
+			//just a stub
+			
+			res.loadPage('home', {
+				wall : { 
+					id : 'wall-1', 
+					owner : 'user-1',
+					items : [
+						{
+							id : 'item-1',
+							content : "Hello, World!",
+							author : 'user-1',
+							itemType : 'post',
+							createdAt : Date()
+						}
+					] 
+				},
+				user : { 
+					name : 'Name', 
+					id : 'user-1',
+					email : 'isstaif@gmail.com'
+				}
 			})
+			
+			
 		});	
 	})
 });
@@ -204,6 +230,11 @@ if(app.get('env') == 'test'){
 	app.get('/test', function(req, res){
 		fs.createReadStream(__dirname + '/test/client/runner.html').pipe(res);
 	});
+
+	app.get('/sandbox', function(req, res){
+		fs.createReadStream(__dirname + '/test/client/sandbox.html').pipe(res);
+	});
+
 
 	app.get('/mocha', function(req, res){
 		fs.createReadStream(__dirname + '/node_modules/mocha/mocha.js').pipe(res);

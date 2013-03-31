@@ -1,5 +1,5 @@
 define([
-	'modelsdraft/core',
+	'models/core',
 	'backbone',
 	'backbone-relational'
 ], function(Core) {		

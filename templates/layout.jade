@@ -1,0 +1,53 @@
+!!!
+html
+	head
+		title MicroCommunity
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		link(href='/css/bootstrap.min.css', rel='stylesheet')
+		link(href='/css/bootstrap-responsive.min.css', rel='stylesheet')		
+		link(href='/css/app.css', rel='stylesheet')
+		<script type="text/javascript">
+		!= "server = " + JSON.stringify(server)  + ";"
+		</script>
+		<script data-main='/client/common.js' src="/client/lib/require/require.min.js"></script>
+
+					
+	body
+		.navbar.navbar-fixed-top
+			.navbar-inner
+				.container
+					a(href='/').brand MicroCommunity
+					- if (!app.current_user)
+						<ul class="nav pull-right">
+						<li>
+						<a href="/login">Log in</a>
+						</li>
+						<li><a href="/signup">Sign up</a></li>
+						</ul>						
+					- else
+						div.btn-group.pull-right
+							a.btn.dropdown-toggle(href="#", data-toggle="dropdown")
+								i.icon-user
+								= " " + app.current_user.email + " "
+								span.caret
+							ul.dropdown-menu
+								li
+									a(href="#") 
+										= "Account"
+								li.divider
+								li
+									a(href="/logout") Log out						
+
+					ul.nav.main-nav		
+
+		div.container
+			.row
+				.span12
+					block content
+			.notifications.bottom-left			
+
+			footer
+				hr
+				p MicroCommunity 2012
+
+

@@ -1,0 +1,45 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sandbox</title>
+  
+  <script src="/client/lib/require/require.min.js"></script>   
+  <script src="/client/common.js"></script>
+   
+</head>
+<body>	
+	
+	<div id="sandbox" ></div>
+	
+	<script id="item-template" type="text/html">
+		<tr>
+			<td><%= author.name %></td>
+			<td><%= content %> <br /><small><%= createdAt %></small></td>
+		</tr>
+	</script>
+	
+	<script id="items-template" type="text/html">
+		<table border=1>
+			<tbody>			
+			</tbody>
+		</table>
+	</script>			
+	
+	
+	<script id="publisher-template" type="text/html">
+		<textarea id='new-post'></textarea><br />
+		<input id='publish-button' type='submit' />
+	</script>		
+	
+	<script id="layout-template" type="text/html">
+		<h1>My Layout!</h1>
+		<h2>Publisher</h2>
+		<div id='publisher'></div>
+		<h2>Items</h2>
+		<div id='items'></div>
+	</script>	
+	
+	<script src="/sandbox.js"></script>  
+	 		
+</body>
+</html>

@@ -1,9 +1,9 @@
 define([
-	'modelsdraft/item'
-], function(Item){
+	'bb',
+	'models/item',	
+],function(Backbone, Item){
 
-	Post = Item.extend({
-		urlRoot : '/api/posts',		
+	var Post = Item.extend({
 		msg : function(){			
 			var msg						
 			if ( this.get('wall').id == this.get('author').get('wall').id )	
@@ -12,13 +12,13 @@ define([
 				msg = ' posted on ' 
 					+ this.get('wall').get('owner').get('name') 
 					+ '\'s wall '
-			
+		
 			return this.get('author').get('name') 
 				+ msg 
 				+ this.get('content')		
-		}						
+		}	
 	})
 	
-	return Post		
+	return Post
 
 })
