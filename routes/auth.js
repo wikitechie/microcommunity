@@ -12,12 +12,20 @@ exports.install = function(app, db){
 
 
 	app.get('/login', function(req, res){
-		res.render('login', { current_user: req.user, message: req.flash('error') });
+	
+		res.loadPage('login', {
+			message : req.flash('error')
+		})
+		//res.render('login', { current_user: req.user, message: req.flash('error') });
 	});
 
 
 	app.get('/signup', function(req, res){
-		res.render('signup', { current_user: req.user, message: req.flash('error') });
+		res.loadPage('signup', {
+			message : req.flash('error')
+		})
+	
+		// res.render('signup', { current_user: req.user, message: req.flash('error') });
 	});
 
 	app.post('/signup', function(req, res){
@@ -30,13 +38,17 @@ exports.install = function(app, db){
 			}
 			
 			usersController.create(user, function(err,user){
+				console.log(err)
 				if (!err) {
 				  console.log("user created");
 					req.logIn(user, function(err) {
 						if (err) { return next(err); }
 						return res.redirect('/');
 					});    
-				}				
+				} else {
+					req.flash('error', err );
+					res.redirect('/signup')					
+				}			
 			});
 		}
 
@@ -54,7 +66,7 @@ exports.install = function(app, db){
 		    if (err) { return next(err); }
 		    return res.redirect('/');
 		  });
-		})(req, res, next);
+		} ) (req, res, next);
 	});
 
 		

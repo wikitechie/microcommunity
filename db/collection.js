@@ -45,13 +45,13 @@ Collection.prototype.resolveAllDocJoins = function(doc, callback){
 				callback(null, doc)
 			}				
 		},			
-		function(doc, callback){
+		/* function(doc, callback){
 			if (doc.follows){
 				self.resolveMultiRefs(doc, self.multiRefs, callback)
 			}	else {
 				callback(null, doc)		
 			}				
-		},
+		},*/
 		function(doc, callback){
 			if (self.hasArrayDescriptors()){
 				self.fetchArrayEmbededDocsJoins(doc, self.arrayDescriptors, callback)

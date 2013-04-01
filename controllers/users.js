@@ -47,8 +47,9 @@ exports.findByEmail = function(email, callback){
 
 exports.fetchWall = function(user_id, callback){
 	exports.findById(user_id, function(err, user){
-		wall_id = user.wall		
-		db.getCollection('wallItems').fetchWall( user.wall, function(err, wallItems){
+		console.log(user.wall.constructor.name)
+		var wall_id = user.wall.toString()	
+		db.getCollection('wallItems').fetchWall( wall_id, function(err, wallItems){
 			callback(null, wallItems)		
 		})	
 	})

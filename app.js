@@ -104,40 +104,28 @@ app.locals.app = false;
 
 //main app
 app.get('/', function(req, res){
-	groups_provider.fetchAll(0, 5, function(err, groups){
-		activities_provider.fetchActivities(0,5,function(err, activities){
+	//groups_provider.fetchAll(0, 5, function(err, groups){
+		//activities_provider.fetchActivities(0,5,function(err, activities){
 		
 			/* res.loadPage('home', {
 				groups: groups,
 				activities: activities
 			}) */
 			
-			//just a stub
+			//just a stub			
+			usersController.fetchWall('51594b68fdea47a50d000001', function(err, items){
+				console.log(items)
+				res.loadPage('home', {
+					wall : { 
+						id : '51594b68fdea47a50d000002', 
+						owner : '5093489b5c707a300e000001',
+						items : [	] 
+					}
+				})
+			})		
 			
-			res.loadPage('home', {
-				wall : { 
-					id : 'wall-1', 
-					owner : 'user-1',
-					items : [
-						{
-							id : 'item-1',
-							content : "Hello, World!",
-							author : 'user-1',
-							itemType : 'post',
-							createdAt : Date()
-						}
-					] 
-				},
-				user : { 
-					name : 'Name', 
-					id : 'user-1',
-					email : 'isstaif@gmail.com'
-				}
-			})
-			
-			
-		});	
-	})
+		//});	
+	//})
 });
 
 

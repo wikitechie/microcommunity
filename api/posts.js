@@ -2,6 +2,7 @@ var provider = require('./../providers/posts-provider')
 	,	activity_provider = require('./../providers/activities-provider')
 	, database = require('./../providers/db')
 
+var postsController = require('./../controllers/posts')
 
 var validate = function(attr){
 	if (attr.content === ""){
@@ -12,25 +13,25 @@ var validate = function(attr){
 var count = 1
 	 
 exports.create = function(req, res){
-
-	console.log(req.body)
 	
 	var post = {
 		id : count++,
 		content : req.body.content,
-		author : {
-			id : 'user-1',
-			name : 'Server',
-			wall : 'wall-1'
-		},
-		wall : 'wall-1',
+		author : req.body.author,
+		wall : req.body.wall,
 		createdAt : Date()		
 	}
 	
-	setTimeout(function(){
-		res.send(post)
-	}, 500)
+	postsController.create(
+			post.content,
+			post.author._id,
+			post.wall,
+	function(err, wallItem){
+		console.log(wallItem)	
+	})
 	
+	res.send(post)
+		
 }
 
 exports.update = function(req, res){
