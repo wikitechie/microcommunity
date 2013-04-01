@@ -1,10 +1,8 @@
 var flash = require('connect-flash')
 	, passport = require('passport')
-	, users_provider = require('./../providers/users-provider')
 	, usersController = require('./../controllers/users')
 
-
-exports.install = function(app, db){
+exports.install = function(app){
 
 	app.get('/account', ensureAuthenticated, function(req, res){
 		res.render('account', { current_user: req.user });
