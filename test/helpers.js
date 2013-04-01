@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'test'
+
 var should = require('should')
 	, fixtures = require('./fixtures')
 

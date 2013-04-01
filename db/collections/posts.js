@@ -4,6 +4,29 @@ var Collection = require('./../collection')
 	, async = require('async')
 
 function Posts(db){
+
+	var options = {	
+		relations : [		
+			{
+				type : 'singleRef',
+				field: 'author', 
+				collection: 'users' 
+			}, 			
+			{
+				type : 'arrayDescriptors',
+				field : 'comments', 
+				singleRefs : [
+					{ field : 'author', collection : 'users' }
+				]
+			},
+			{
+				type : 'multiRefs', 
+				field : 'follows', 
+				collection : 'users' 
+			}		
+		]
+	}
+
 	var options = {	
 	
 		//direct references fields in the collection documents
@@ -30,27 +53,25 @@ function Posts(db){
 
 Posts.prototype = Collection.prototype
 
-Posts.prototype.addComment = function(id, comment, callback){
-	this.update({ _id : ObjectId(id) }, { $push : { comments: comment } }, function(err, nb){
-		if(err) throw err		
-		callback(null)
-	})
-}
-
-Posts.prototype.addJoke = function(id, joke, callback){
-	this.update({ _id : ObjectId(id) }, { $push : { jokes: joke } }, function(err, nb){
-		if(err) throw err		
-		callback(null)
-	})
-}
-
-Posts.prototype.follow = function(id, stream, callback){
-	this.update({ _id : ObjectId(id) }, { $push : { follows: ObjectId(stream) } }, function(err, nb){
-		if(err) throw err		
-		callback(null)
-	})	
-}
-
-//Posts.prototype.fetchById
+_.extend(Posts.prototype, {
+	addComment : function(id, comment, callback){
+		this.update({ _id : ObjectId(id) }, { $push : { comments: comment } }, function(err, nb){
+			if(err) throw err		
+			callback(null)
+		})
+	},
+	addJoke : function(id, joke, callback){
+		this.update({ _id : ObjectId(id) }, { $push : { jokes: joke } }, function(err, nb){
+			if(err) throw err		
+			callback(null)
+		})
+	},
+	follow : function(id, stream, callback){
+		this.update({ _id : ObjectId(id) }, { $push : { follows: ObjectId(stream) } }, function(err, nb){
+			if(err) throw err		
+			callback(null)
+		})	
+	}
+})
 
 module.exports = Posts
