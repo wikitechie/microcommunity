@@ -4,6 +4,7 @@ define([
 ], function(Backbone){
 
 	var Item = Backbone.RelationalModel.extend({	
+		urlRoot : 'api/posts',	
 		constructor : function(){
 		
 			/* a small  hack in order to prevent the model from 

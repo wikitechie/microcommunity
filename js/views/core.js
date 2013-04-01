@@ -11,7 +11,11 @@ define([
 		template : '#items-template',
 		itemView : ItemView,
 		appendHtml : function(collectionView, itemView){
-			collectionView.$('tbody').prepend(itemView.el)	
+			//some models are added automatically by BackboneRelational before they are actually saved
+			//so we just check if the model is new or not
+			if (!itemView.model.isNew()) {
+				collectionView.$('tbody').prepend(itemView.el)	
+			}		
 		}
 	})
 	
@@ -25,26 +29,23 @@ define([
 		events : {
 			'click #publish-button' : 'newPost'
 		},		
-		newPost : function(data){
-		
-			/* var post = new Item({
-				content : this.ui.input.val(),
-				itemType : 'post',
-				author : 'user-1',
-				wall : 'wall-1'
+		newPost : function(data){			
+			var self = this			
+			self.disable()		
+			App.wall.createPost ( 'user-1', this.ui.input.val(), function(err, model) {
+				self.reset()
+				self.enable()											
 			})
-			
-			post.save() */
-		
-			App.vent.trigger('post:new', {
-				content : this.ui.input.val(),
-				author : 'user-1'				
-			})			
-			this.reset()
 		},
 		reset : function(){
 			this.ui.input.val("")
-		}
+		},
+		disable : function(){
+			this.ui.input.prop("disabled", true)
+		},
+		enable : function(){
+			this.ui.input.prop("disabled", false)
+		}		
 	})
 	
 	var Layout = Backbone.Marionette.Layout.extend({

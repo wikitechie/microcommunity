@@ -21,7 +21,8 @@ define([
 		MyApp.wall = new Core.Wall(options.wall)	
 		
 		MyApp.vent.on('post:new', function(post){
-			MyApp.wall.get('items').add(post)
+			console.log(post)		
+			//MyApp.wall.get('items').create(post)
 		})				
 		MyApp.initializeLayout()		
 	})	

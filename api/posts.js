@@ -8,7 +8,36 @@ var validate = function(attr){
 		return false
 	}
 }
+ 
+var count = 1
+	 
+exports.create = function(req, res){
 
+	console.log(req.body)
+	
+	var post = {
+		id : count++,
+		content : req.body.content,
+		author : {
+			id : 'user-1',
+			name : 'Server',
+			wall : 'wall-1'
+		},
+		wall : 'wall-1',
+		createdAt : Date()		
+	}
+	
+	setTimeout(function(){
+		res.send(post)
+	}, 500)
+	
+}
+
+exports.update = function(req, res){
+	console.log(req.body)
+}
+ 
+/* 
 exports.create = function(req, res){
 
 	var post = {
@@ -42,5 +71,5 @@ exports.create = function(req, res){
 	  res.send(500, 'Something broke!');
 	}
   
-};
+}; */
 

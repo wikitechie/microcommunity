@@ -4,6 +4,7 @@ define([
 ],function(Backbone, Item){
 
 	var Post = Item.extend({
+
 		msg : function(){			
 			var msg						
 			if ( this.get('wall').id == this.get('author').get('wall').id )	

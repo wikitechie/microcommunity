@@ -53,11 +53,16 @@ requirejs.config({
 
 //Here we load the main app and start it by passing data from the server
 //You SHOULD always refer to your app with the global App variable
-
-requirejs(['apps/' + server.appName + '/main'], function(app){	
-	App = app
-	App.start(server.data)
-})	
+if (typeof server != 'undefined' ){
+	if (server.appName){
+		requirejs(['apps/' + server.appName + '/main'], function(app){	
+			if (app){
+				App = app
+				App.start(server.data)	
+			}	
+		})	
+	}	
+}
 
 
 
