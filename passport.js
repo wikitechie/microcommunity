@@ -34,7 +34,7 @@ passport.use(new GoogleStrategy({
   function(identifier, profile, done) {
   
   	var email = profile.emails[0].value;
-		usersController.fetchByEmail(email, function(err, user){
+		usersController.findByEmail(email, function(err, user){
 			if (!user) {
 				var user = {
 					email: email,

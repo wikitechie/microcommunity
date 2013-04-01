@@ -3,11 +3,11 @@ define([
 	'backbone',
 	'backbone-relational'
 ], function(Core) {		
-	
+
 	describe('User Model', function(){
 		var user, wall			
 		before(function(){		
-			user = new Core.User({name : 'Name', id : 'user-1' })	
+			user = new Core.User({name : 'Name', _id : 'user-1' })	
 			wall = new Core.Wall({id : 'wall-1', owner : 'user-1'	})						
 		})
 		
@@ -23,7 +23,7 @@ define([
 	describe ('Item Model', function(){	
 		var user, item
 		before(function(){
-			user = new Core.User({ id : 'user-1', name : 'User'})
+			user = new Core.User({ _id : 'user-1', name : 'User'})
 			item = new Core.Item({ id : 'item-1', author : 'user-1' })
 		})
 		after(function(){
@@ -62,7 +62,7 @@ define([
 		describe ('Default stream', function(){
 			var user, stream
 			before(function(){
-				user = new Core.User({name : 'Name', id : 'user-1' }) 
+				user = new Core.User({name : 'Name', _id : 'user-1' }) 
 				stream = new Core.Stream({
 					items : [
 						{ id : 'item-1', content : "Post1", author : user, itemType : 'post' },
@@ -86,7 +86,7 @@ define([
 			var user, wall				
 			describe ('Adding a new post to the wall', function(){
 				before(function(){			
-					user = new Core.User({name : 'Name', id : 'user-1'  })
+					user = new Core.User({name : 'Name', _id : 'user-1'  })
 					wall = new Core.Wall({ 
 						id : 'wall-1', 
 						owner : 'user-1',
@@ -120,7 +120,7 @@ define([
 		describe ('Wall belonging to a user', function(){
 			var user, wall			
 			before(function(){		
-				user = new Core.User({name : 'Name', id : 'user-1' })	
+				user = new Core.User({name : 'Name', _id : 'user-1' })	
 				wall = new Core.Wall({id : 'wall-1', owner : 'user-1'	})						
 			})
 
@@ -137,7 +137,7 @@ define([
 	describe('Post model', function(){			
 		describe('A post on author\'s own wall', function(){
 			before(function(){
-				this.user = new Core.User({name : 'Name', id : 'user-1' , wall : 'wall-1' })	
+				this.user = new Core.User({name : 'Name', _id : 'user-1' , wall : 'wall-1' })	
 				this.wall = new Core.Wall({id : 'wall-1', owner : 'user-1'	})	
 				this.wall.get('items').add({
 					content : "Hello, World!",
@@ -162,8 +162,8 @@ define([
 		
 		describe('A post on another user\'s wall', function(){
 			before(function(){
-				this.user1 = new Core.User({name : 'User 1', id : 'user-1' , wall : 'wall-1' })
-				this.user2 = new Core.User({name : 'User 2', id : 'user-2' , wall : 'wall-2' })							
+				this.user1 = new Core.User({name : 'User 1', _id : 'user-1' , wall : 'wall-1' })
+				this.user2 = new Core.User({name : 'User 2', _id : 'user-2' , wall : 'wall-2' })							
 				this.wall1 = new Core.Wall({id : 'wall-1', owner : 'user-1'	})	
 				this.wall2 = new Core.Wall({id : 'wall-2', owner : 'user-2'	})											
 				this.wall2.get('items').add({

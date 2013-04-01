@@ -1,30 +1,6 @@
 require([
-	/*
-	'cs!/models/post',
-	'cs!/models/user',
-	'cs!/models/comment',
-	'cs!/models/activity',
-	'cs!/models/revision',	
-	'cs!/models/wikipage',
-	'cs!/models/vote',	
-	'cs!/views/post',
-	'cs!/views/wikipage',
-	'cs!/views/comment',
-	'cs!/views/comments_thread'	,
-	'cs!/views/activity'	,	
-	'cs!/views/activity_stream',
-	*/
-	//'/newclient/item.js',	
-	//'/newclient/items.js',
-	//'/newclient/post.js',	
-	//'/newclient/stream.js',	
-	//'/newclient/wall.js',
-	'/newclient/core.js'
-	
+	'/test/models/core.js'	
 ], function(){
-	mocha
-		.run(function(){
-			$('#playarea').html('')
-		});		
+	mocha.run();		
 });
 

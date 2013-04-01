@@ -59,7 +59,7 @@ app.configure(function(){
   app.use(express.static(__dirname + '/static'));
   app.use('/client', express.static(__dirname + '/client-built'));      
   app.use('/client', express.static(__dirname + '/js'));      
-  app.use(express.static(__dirname + '/test/client'));   
+  app.use('/test',express.static(__dirname + '/test/client'));   
   app.use('/shared', express.static(__dirname + '/shared'))  
 })
 
