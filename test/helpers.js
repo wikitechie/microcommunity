@@ -8,7 +8,6 @@ exports.sameID = function(id1, id2){
 }
 
 exports.dbBefore = function(){
-
 	function drop(db, callback){
 		db.dropDatabase(function(err){
 			callback()
@@ -17,20 +16,20 @@ exports.dbBefore = function(){
 
 	before(function(done){
 		this.db = require('./../db/db')
-		if (!this.db.db){
+		if (!this.db.instance){
 			var self = this
 			this.db.connect(function(err){	
-				drop(self.db.db, done)			
+				drop(self.db.instance, done)			
 			})	
 		} else {
-			drop(this.db.db, done)			
+			drop(this.db.instance, done)			
 		}		
 	})		
 }
 
 exports.dbAfter = function(){
 	after(function(done){
-		this.db.db.dropDatabase(function(err){
+		this.db.instance.dropDatabase(function(err){
 			done()
 		})
 	})	

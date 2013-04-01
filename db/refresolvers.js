@@ -14,7 +14,7 @@ RefResolvers.prototype.applyRefs = function (doc, refs, callback){
 }
 
 RefResolvers.prototype.resolveRef = function(doc, ref, callback){
-	this.getCollection(ref.collection)
+	this.database.getCollection(ref.collection)
 		.findOne({ _id : doc[ref.field] }, function(err, doc){
 			if(err) throw err			
 			_.extend(ref, { doc : doc })
@@ -36,17 +36,21 @@ RefResolvers.prototype.resolveMultiRefs = function(doc, multiRefs, callback){
 	var self = this	
 	async.map(multiRefs, 
 		function(multiRef, multiRefCallback){
-			ids = doc[multiRef.field]		
-			async.map(ids, 
-				function(id, idCallback){				
-					self.getCollection(multiRef.collection)
-						.findOne({ _id : id }, function(err, doc){
-							idCallback(null, doc) 					
-						})						
-				}, function(err, docsArray){
-					_.extend(multiRef, {doc : docsArray})
-					multiRefCallback(null, multiRef)		
-				})						
+			var ids = doc[multiRef.field]
+			if(ids){
+				async.map(ids, 
+					function(id, idCallback){				
+						self.database.getCollection(multiRef.collection)
+							.findOne({ _id : id }, function(err, doc){
+								idCallback(null, doc) 					
+							})						
+					}, function(err, docsArray){
+						_.extend(multiRef, {doc : docsArray})
+						multiRefCallback(null, multiRef)		
+					})				
+			} else {
+				multiRefCallback(null, null)
+			}					
 		}, function(err, multiRefs){
 			self.applyRefs(doc, multiRefs, callback)							
 		}
@@ -56,7 +60,7 @@ RefResolvers.prototype.resolveMultiRefs = function(doc, multiRefs, callback){
 RefResolvers.prototype.fetchArrayEmbededDocsJoins = function(doc, arrayDescriptors, callback){
 	var self = this	
 	async.map(arrayDescriptors, function(arrayDescriptor, arrayDescriptorCallback){
-		array = doc[arrayDescriptor.field]			
+		var array = doc[arrayDescriptor.field]			
 		if(array){
 			async.map(array, 
 				function(arrayElement, arrayElementCallback){
@@ -83,7 +87,7 @@ RefResolvers.prototype.resolveDBRefs = function(doc, DBRefs, callback){
 			var collectionName = doc[DBRef.field].namespace
 			var id = doc[DBRef.field].oid.toString()
 	
-			self.getCollection(collectionName).findById(id, function(err, object){
+			self.database.getCollection(collectionName).findById(id, function(err, object){
 				_.extend(DBRef, { doc : object })
 				callback(null, DBRef)		
 			})			
@@ -106,7 +110,7 @@ RefResolvers.prototype.hasMultiRefs = function(){
 }
 
 RefResolvers.prototype.hasArrayDescriptors = function(){
-	return (this.multiRefs && this.arrayDescriptors.length > 0)
+	return (this.arrayDescriptors && this.arrayDescriptors.length > 0)
 }
 
 RefResolvers.mixin = function(destObject){

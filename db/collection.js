@@ -6,24 +6,18 @@ var mongodb = require('mongodb')
 	, MongoCollection = mongodb.Collection
 	, ObjectId = mongodb.ObjectID
 
-function Collection(db, collectionName, options){	
-
-	var container = require('./db').container
-	if(!container) throw new Error('Cannot create a collection, container is not ready')
-	this.container = container
-	
-	if(!db) throw new Error('Cannot create a collection without a mongodb Db object')
+function Collection(db, collectionName, options){
+	if(!db.instance) throw new Error('Cannot create a collection without a mongodb Db object')
 	if(!collectionName) throw new Error('Cannot create a collection without a collection name')		
-	MongoCollection.call(this, db, collectionName)	 
-	this.db = db		
+	MongoCollection.call(this, db.instance, collectionName)	 
+	this.database = db
 
 	if(options){
 		this.singleRefs = options.singleRefs
 		this.multiRefs = options.multiRefs				
 		this.arrayDescriptors = options.arrayDescriptors
 		this.DBRefs = options.DBRefs
-	}
-	
+	}	
 }
 
 Collection.prototype = MongoCollection.prototype
@@ -45,13 +39,13 @@ Collection.prototype.resolveAllDocJoins = function(doc, callback){
 				callback(null, doc)
 			}				
 		},			
-		/* function(doc, callback){
-			if (doc.follows){
+		function(doc, callback){
+			if (self.hasMultiRefs()){
 				self.resolveMultiRefs(doc, self.multiRefs, callback)
 			}	else {
 				callback(null, doc)		
 			}				
-		},*/
+		},
 		function(doc, callback){
 			if (self.hasArrayDescriptors()){
 				self.fetchArrayEmbededDocsJoins(doc, self.arrayDescriptors, callback)
@@ -90,20 +84,15 @@ Collection.prototype.findById = function(id, callback){
 
 Collection.prototype.create = function(attr, callback){
 	var self = this
-	self.insert( attr, function(err, docs){
+	this.insert( attr, function(err, docs){
 		self.resolveAllDocJoins(docs[0], callback)
-	})		
+	})
 }
 
 Collection.prototype.updateAttr = function(id, updated, callback){
-
 	this.findAndModify({ _id : ObjectId(id) }, [['_id','asc']], { $set : updated }, { new : true }, callback)
 }
 
-Collection.prototype.getCollection = function(name){
-	var collection = this.container.collections[name]
-	return collection
-}
 
 RefResolvers.mixin(Collection)
 module.exports = Collection
