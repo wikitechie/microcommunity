@@ -3,9 +3,12 @@ var Collection = require('./../collection')
 	, async = require('async')
 
 function WallItems(db){
-	var options = {
-		DBRefs : [
-			{ field : 'object' }
+	var options = {	
+		relations : [		
+			{
+				type : 'DBRef',
+				field: 'object'
+			},
 		]
 	}
 	Collection.call(this, db, 'wall_items', options) 

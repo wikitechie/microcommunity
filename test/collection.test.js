@@ -6,12 +6,16 @@ describe('Database Collection', function(){
 	
 	describe('Relations', function(){
 	
-		describe('Single References', function(){
+		describe('Single reference as a field in the document', function(){
 			before(function(){
 				this.db.addCollection('collection1', {
-					singleRefs : [ 
-						{ field: 'ref', collection: 'collection2' }, 
-					],					
+					relations : [
+						{
+							type : 'singleRef',
+							field: 'ref', 
+							collection: 'collection2' 
+						}, 						
+					]					
 				})
 				this.db.addCollection('collection2')			
 			})
@@ -30,13 +34,17 @@ describe('Database Collection', function(){
 			})	
 		})
 		
-		describe('Single References inside an array of embeded documents', function(){
+		describe('Single reference as a field in an array member', function(){
 			before(function(){
 				this.db.addCollection('posts', {
-					arrayDescriptors : [
-						{ field : 'comments', singleRefs : [
-							{ field : 'author', collection : 'users' }
-						]}		
+					relations : [
+						{
+							type : 'arrayDescriptor',
+							field : 'comments', 
+							singleRefs : [
+								{ field : 'author', collection : 'users' }
+							]
+						},					
 					]						
 				})
 				this.db.addCollection('users')			
@@ -66,12 +74,16 @@ describe('Database Collection', function(){
 			})	
 		})
 		
-		describe('Multi References in an array of ObjectIds', function(){
+		describe('Array of references as a field in the document', function(){
 			before(function(){
 				this.db.addCollection('users', {
-					multiRefs : [
-						{ field : 'follows', collection : 'users' }
-					],						
+					relations : [
+						{
+							type : 'multiRef', 
+							field : 'follows', 
+							collection : 'users' 
+						}							
+					]					
 				})
 			})
 			after(function(){
@@ -96,12 +108,15 @@ describe('Database Collection', function(){
 			})
 		})
 		
-		describe('DBRefs', function(){
+		describe('DBRefs as a field in the document', function(){
 			before(function(){
 				this.db.addCollection('collection', {
-					DBRefs : [
-						{ field : 'object' }
-					]					
+					relations : [
+						{ 
+							type : 'DBRef',
+							field : 'object'							
+						}					
+					]			
 				})
 				this.db.addCollection('objects')
 			})

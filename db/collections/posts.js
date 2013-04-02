@@ -13,41 +13,20 @@ function Posts(db){
 				collection: 'users' 
 			}, 			
 			{
-				type : 'arrayDescriptors',
+				type : 'arrayDescriptor',
 				field : 'comments', 
 				singleRefs : [
 					{ field : 'author', collection : 'users' }
 				]
 			},
 			{
-				type : 'multiRefs', 
+				type : 'multiRef', 
 				field : 'follows', 
 				collection : 'users' 
 			}		
 		]
 	}
 
-	var options = {	
-	
-		//direct references fields in the collection documents
-		singleRefs : [ 
-			{ field: 'author', collection: 'users' }, 
-		],		
-		
-		//references in arrays of embeded documents 
-		arrayDescriptors : [
-			{ field : 'comments', singleRefs : [
-				{ field : 'author', collection : 'users' }
-			]}		
-		]				
-		//array of references		
-		/*
-		multiRefs : [
-			{ field : 'follows', collection : 'users' }
-		],		
-		*/
-	} 
-	
 	Collection.call(this, db, 'posts', options)	
 }
 

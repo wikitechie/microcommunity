@@ -12,47 +12,64 @@ function Collection(db, collectionName, options){
 	MongoCollection.call(this, db.instance, collectionName)	 
 	this.database = db
 
-	if(options){
-		this.singleRefs = options.singleRefs
-		this.multiRefs = options.multiRefs				
-		this.arrayDescriptors = options.arrayDescriptors
-		this.DBRefs = options.DBRefs
-	}	
+	this._relations = {}
+	var self = this
+	if (options && options.relations){		
+		options.relations.forEach(function(relation){
+			if (!self._relations.hasOwnProperty(relation.type)){
+				self._relations[relation.type] = []
+			}
+			self._relations[relation.type].push(relation)			
+		})		
+	}
+	
 }
 
 Collection.prototype = MongoCollection.prototype
 
+Collection.prototype.resolveRelationType = function(doc, type, callback){
+	switch(type) {
+		case "singleRef":
+			this.resolveSingleRefs(doc, this._relations[type], callback)
+			break;
+		case "DBRef":
+			this.resolveDBRefs(doc, this._relations[type], callback)
+			break;		
+		case "multiRef":
+			this.resolveMultiRefs(doc, this._relations[type], callback)
+			break;
+		case "arrayDescriptor":
+			this.fetchArrayEmbededDocsJoins(doc, this._relations[type], callback)
+			break;							
+	}
+}
+
 Collection.prototype.resolveAllDocJoins = function(doc, callback){
 	var self = this	
-	async.waterfall([
-		function(callback){
-			if (self.hasSingleRefs()){
-				self.resolveSingleRefs(doc, self.singleRefs, callback)
-			}	else {
-				callback(null, doc)		
-			}				
-		},			
-		function(doc, callback){				
-			if (self.hasDBRefs()){
-				self.resolveDBRefs(doc, self.DBRefs, callback)
-			}	else {
-				callback(null, doc)
-			}				
-		},			
-		function(doc, callback){
-			if (self.hasMultiRefs()){
-				self.resolveMultiRefs(doc, self.multiRefs, callback)
-			}	else {
-				callback(null, doc)		
-			}				
-		},
-		function(doc, callback){
-			if (self.hasArrayDescriptors()){
-				self.fetchArrayEmbededDocsJoins(doc, self.arrayDescriptors, callback)
-			}	else {
-				callback(null, doc)	
-			}				
+	
+	function processRelation(type, options){		
+		if (options && options.first){
+			return function(callback){
+				if (self.hasRelationType(type)){
+					self.resolveRelationType(doc, type, callback)
+				}	else {
+					callback(null, doc)		
+				}				
+			}		
+		} else {
+			return function(doc, callback){
+				if (self.hasRelationType(type)){
+					self.resolveRelationType(doc, type, callback)
+				}	else {
+					callback(null, doc)		
+				}				
+			}		
 		}
+	}
+	
+	async.waterfall([
+		processRelation('singleRef', {first : true}),	
+		processRelation('DBRef'), processRelation('multiRef'), processRelation('arrayDescriptor'),
 	], 
 	function(err, doc){	
 		callback(err, doc)			

@@ -97,23 +97,12 @@ RefResolvers.prototype.resolveDBRefs = function(doc, DBRefs, callback){
 }
 
 
-RefResolvers.prototype.hasSingleRefs = function(){
-	return (this.singleRefs && this.singleRefs.length > 0)
-}
-
-RefResolvers.prototype.hasDBRefs = function(){
-	return (this.DBRefs && this.DBRefs.length > 0)
-}
-
-RefResolvers.prototype.hasMultiRefs = function(){
-	return (this.multiRefs && this.multiRefs.length > 0)
-}
-
-RefResolvers.prototype.hasArrayDescriptors = function(){
-	return (this.arrayDescriptors && this.arrayDescriptors.length > 0)
+RefResolvers.prototype.hasRelationType = function(type){
+	return (this._relations.hasOwnProperty(type) && this._relations[type].length > 0) 
 }
 
 RefResolvers.mixin = function(destObject){
+	var property
 	for( property in RefResolvers.prototype ){
     destObject.prototype[property] = RefResolvers.prototype[property];	
 	}
