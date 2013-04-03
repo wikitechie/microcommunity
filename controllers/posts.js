@@ -40,18 +40,18 @@ exports.create = function(
 		//creating wall item
 		function(new_post, callback){		
 			var object = db.mongo.DBRef('posts', new_post._id)			
-			var wall_item = {
+			var item = {
 				updated: new Date(),
 				object : object,
 				wall : wall_id			
 			}				
-			db.getCollection('wallItems').create(wall_item, function(err, wallItem){
-				callback(err, wallItem)
+			db.getCollection('items').create(item, function(err, item){
+				callback(err, item)
 			})				
 		},
 	
-	], function(err, wallItem){	
-		controllerCallback(err, wallItem)	
+	], function(err, item){	
+		controllerCallback(err, item)	
 	})
 		
 	

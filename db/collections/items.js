@@ -2,7 +2,7 @@ var Collection = require('./../collection')
 	, ObjectId = require('mongodb').ObjectID
 	, async = require('async')
 
-function WallItems(db){
+function Items(db){
 	var options = {	
 		relations : [		
 			{
@@ -11,17 +11,16 @@ function WallItems(db){
 			},
 		]
 	}
-	Collection.call(this, db, 'wall_items', options) 
+	Collection.call(this, db, 'items', options) 
 }
 
-WallItems.prototype = Collection.prototype
+Items.prototype = Collection.prototype
 
-
-WallItems.prototype.fetchWall = function(wall_id, callback){
+Items.prototype.fetchWall = function(wall_id, callback){
 	var self = this
 	self.find({ wall : wall_id }).limit(3).toArray(function(err, items){
 		self.resolveArrayJoins(items, callback)
 	})
 }
 
-module.exports = WallItems
+module.exports = Items

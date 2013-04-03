@@ -48,8 +48,8 @@ exports.findByEmail = function(email, callback){
 exports.fetchWall = function(user_id, callback){
 	exports.findById(user_id, function(err, user){
 		var wall_id = user.wall.toString()	
-		db.getCollection('wallItems').fetchWall( wall_id, function(err, wallItems){
-			callback(null, wallItems)		
+		db.getCollection('items').fetchWall( wall_id, function(err, items){
+			callback(null, items)		
 		})	
 	})
 }

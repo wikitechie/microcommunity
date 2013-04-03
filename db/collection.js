@@ -21,8 +21,7 @@ function Collection(db, collectionName, options){
 			}
 			self._relations[relation.type].push(relation)			
 		})		
-	}
-	
+	}	
 }
 
 Collection.prototype = MongoCollection.prototype
@@ -88,7 +87,6 @@ Collection.prototype.resolveArrayJoins = function(array, callback){
 
 
 Collection.prototype.findById = function(id, callback){
-
 	var doc = ObjectId(id)
 	var self = this	
 	
