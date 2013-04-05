@@ -1,6 +1,7 @@
 define([
 	'bb',
 	'models/item',
+	'bootstrap',
 ], function(Backbone, Item){
 
 	var ItemView = Backbone.Marionette.ItemView.extend({

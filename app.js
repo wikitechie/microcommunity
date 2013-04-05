@@ -12,14 +12,15 @@ var express = require('express')
   , _ = require('underscore')
   , async = require('async')
   , Resource = require('express-resource')
+  , mongoose = require('mongoose')
   ;
 
-//setting up database
-d = require('./db/db')
-usersController = require('./controllers/users')
-d.connect(function(){
-	console.log('db object connected')
-})
+mongoose.connect('mongodb://localhost/test');
+
+require('./models/user')
+require('./models/post')
+
+var Post = mongoose.model('Post')
 
 //setting up passport before app configuration
 require('./passport')
@@ -58,7 +59,7 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(__dirname + '/static'));
   app.use('/client', express.static(__dirname + '/client-built'));      
-  app.use('/client', express.static(__dirname + '/js'));      
+  app.use('/client', express.static(__dirname + '/client'));      
   app.use('/test',express.static(__dirname + '/test/client'));   
   app.use('/shared', express.static(__dirname + '/shared'))  
 })
@@ -72,20 +73,44 @@ var auth = require('./routes/auth');
 auth.install(app);
 
 //main app
-app.get('/', function(req, res){		
-	usersController.fetchWall('51594b68fdea47a50d000001', function(err, items){
+app.get('/', function(req, res){	
+
+	Post.find().limit(5).sort({ _id : -1 }).exec(function(err, results){
+		console.log(results)
 		res.loadPage('home', {
 			wall : { 
 				id : '51594b68fdea47a50d000002', 
 				owner : '5093489b5c707a300e000001',
-				items : [	] 
+				items : results 
 			}
-		})
-	})			
+		})	
+	})
+	
+	
 })
 
+var count = 1
+//api
+app.post('/api/walls/:id/items', function(req, res){
+
+	var post = new Post({
+		content : req.body.content,
+		author : req.body.author._id,
+		wall : req.body.wall,
+		createdAt : Date()		
+	})
+	
+	
+	post.save(function(err){	
+		res.send(post)				
+	})
+
+
+})
+
+
 //loading api
-app.resource('api/posts', require('./api/posts'));
+//app.resource('api/posts', require('./api/posts'));
 
 //providing libraries for client testing
 if(app.get('env') == 'test'){

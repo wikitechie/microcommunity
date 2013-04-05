@@ -12,7 +12,7 @@ requirejs.config({
 
     text : 'lib/require/text',
        
-    bootstrap: 'lib/bootstrap.min',
+    bootstrap: 'lib/bootstrap',
     bootbox: 'lib/bootbox.min',    
     'jquery.gravatar': 'lib/jquery.gravatar',
     'jquery.spin': 'lib/jquery.spin',
@@ -44,10 +44,7 @@ requirejs.config({
   	'diff' : [],
   	'bootstrap-notify': ['jquery'],
   	'bootbox' : ['bootstrap'],
-
-  	'bootstrap' : {
-  		exports: ''
-  	}  	
+  	'bootstrap' : ['jquery']	
   }  
 })
 

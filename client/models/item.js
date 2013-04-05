@@ -3,8 +3,11 @@ define([
 	'backbone-relational'
 ], function(Backbone){
 
-	var Item = Backbone.RelationalModel.extend({	
-		urlRoot : 'api/posts',	
+	var Item = Backbone.RelationalModel.extend({
+		idAttribute : '_id',	
+		urlRoot : function(){
+			return 'api/walls/' + this.get('wall').id + '/items'
+		},	
 		constructor : function(){
 		
 			/* a small  hack in order to prevent the model from 

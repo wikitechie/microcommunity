@@ -1,6 +1,7 @@
 var flash = require('connect-flash')
 	, passport = require('passport')
-	, usersController = require('./../controllers/users')
+	, mongoose = require('mongoose')
+	, User = mongoose.model('User')
 
 exports.install = function(app){
 
@@ -29,13 +30,14 @@ exports.install = function(app){
 	app.post('/signup', function(req, res){
 
 		if(req.body.password == req.body.passwordconf) {
-			var user = {
+		
+			var user = new User({
 				email: req.body.email,
 				password: req.body.password, 
-				displayName : req.body.displayName
-			}
-			
-			usersController.create(user, function(err,user){
+				displayName : req.body.displayName			
+			})
+		
+			user.save(function(err){
 				console.log(err)
 				if (!err) {
 				  console.log("user created");
