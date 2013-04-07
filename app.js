@@ -13,12 +13,14 @@ var express = require('express')
   , async = require('async')
   , Resource = require('express-resource')
   , mongoose = require('mongoose')
+  , models = require('./models')
   ;
 
 mongoose.connect('mongodb://localhost/test');
 
 require('./models/user')
 require('./models/post')
+require('./models/wall')
 
 var Post = mongoose.model('Post')
 
@@ -76,7 +78,6 @@ auth.install(app);
 app.get('/', function(req, res){	
 
 	Post.find().limit(5).sort({ _id : -1 }).exec(function(err, results){
-		console.log(results)
 		res.loadPage('home', {
 			wall : { 
 				id : '51594b68fdea47a50d000002', 
@@ -98,8 +99,7 @@ app.post('/api/walls/:id/items', function(req, res){
 		author : req.body.author._id,
 		wall : req.body.wall,
 		createdAt : Date()		
-	})
-	
+	})	
 	
 	post.save(function(err){	
 		res.send(post)				

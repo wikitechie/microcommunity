@@ -1,10 +1,12 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
+	, models = require('./index')
 
 var userSchema = new mongoose.Schema({
 	displayName: String,
 	password : String,
 	email : String,
-	openId : String
+	openId : String,
+	wall : mongoose.Schema.Types.ObjectId
 })
 
 userSchema.statics.findByEmail = function(email, callback){
@@ -14,6 +16,28 @@ userSchema.statics.findByEmail = function(email, callback){
 	})
 }
 
+//creating a wall object for each user
+userSchema.pre('save', function(next){
+	var Wall = mongoose.model('Wall')		
+	var wall = new Wall()
+	var self = this
+	wall.save(function(err, wall){
+		if (!err){
+			self.wall = wall._id
+			next(null)
+		} else {
+			next(new Error('Could not create wall object'))
+		}
+	})
+})
+
+userSchema.post('save', function(doc){
+	models.emit('user:new', doc)
+})
+
 
 var User = mongoose.model('User', userSchema);
+
+
+
 
