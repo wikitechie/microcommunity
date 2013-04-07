@@ -33,7 +33,7 @@ define([
 		newPost : function(data){			
 			var self = this			
 			self.disable()		
-			App.wall.createPost ( App.currentUser.id , this.ui.input.val(), function(err, model) {
+			App.wall.createPost(App.currentUser.id , this.ui.input.val(), function(err, model){
 				self.reset()
 				self.enable()											
 			})

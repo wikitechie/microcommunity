@@ -32,7 +32,7 @@ define([
 		},
 		
 		initialize : function(attr, options){
-			this.set('createdAt', new Date())
+			this.set('published', new Date())
 		},
 		
 		subModelTypeAttribute : 'itemType',

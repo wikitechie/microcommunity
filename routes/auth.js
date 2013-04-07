@@ -39,7 +39,6 @@ exports.install = function(app){
 		
 			user.save(function(err){
 				if (!err) {
-				  console.log("user created");
 					req.logIn(user, function(err) {
 						if (err) { return next(err); }
 						return res.redirect('/');

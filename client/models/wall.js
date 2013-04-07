@@ -5,6 +5,8 @@ define([
 
 	var Wall = Backbone.RelationalModel.extend({
 	
+		idAttribute : '_id',		
+	
 		createPost : function( author, content, callback ){
 			
 			var post = {

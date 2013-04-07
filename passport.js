@@ -19,7 +19,6 @@ passport.use(new LocalStrategy(
 	function(email, password, done) {
 		process.nextTick(function () { 
 			User.findByEmail(email, function(err, user){
-				console.log('here')
 				if (err) { return done(err); }
 				if (!user) { return done(null, false, { message: 'Unknown email ' + email }); }
 				if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }

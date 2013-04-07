@@ -14,15 +14,18 @@ var express = require('express')
   , Resource = require('express-resource')
   , mongoose = require('mongoose')
   , models = require('./models')
-  ;
+  , async = require('async')
 
 mongoose.connect('mongodb://localhost/test');
 
 require('./models/user')
 require('./models/post')
 require('./models/wall')
+require('./models/item')
 
 var Post = mongoose.model('Post')
+var Wall = mongoose.model('Wall')
+var Item = mongoose.model('Item')
 
 //setting up passport before app configuration
 require('./passport')
@@ -38,7 +41,7 @@ app.configure(function(){
 			res.render(app, { 
 				server : {
 					appName: app,
-					data: data,
+					data: data || {},
 					current_user: req.user			
 				}
 			});
@@ -74,20 +77,23 @@ app.configure('development', function(){
 var auth = require('./routes/auth');
 auth.install(app);
 
+
+var ObjectId = mongoose.Types.ObjectId
+
 //main app
 app.get('/', function(req, res){	
 
-	Post.find().limit(5).sort({ _id : -1 }).exec(function(err, results){
-		res.loadPage('home', {
-			wall : { 
-				id : '51594b68fdea47a50d000002', 
-				owner : '5093489b5c707a300e000001',
-				items : results 
-			}
-		})	
-	})
-	
-	
+	if(req.user && req.user.wall){
+		var id = req.user.wall
+		var user = req.user._id
+		
+		Wall.loadItems(id, function(err, wall){			
+			res.loadPage('home', { wall : wall })
+		})
+		
+	} else {
+		res.loadPage('home')
+	}	
 })
 
 var count = 1
@@ -97,14 +103,12 @@ app.post('/api/walls/:id/items', function(req, res){
 	var post = new Post({
 		content : req.body.content,
 		author : req.body.author._id,
-		wall : req.body.wall,
-		createdAt : Date()		
+		wall : req.params.id,
 	})	
-	
+		
 	post.save(function(err){	
 		res.send(post)				
 	})
-
 
 })
 
