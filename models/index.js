@@ -1,13 +1,21 @@
 var util = require('util')
 	, EventEmitter = require('events').EventEmitter
 	, mongoose = require('mongoose')
+	, _ = require('underscore')
 	
-function Models() { 
 
+function Models() { 
+	this.objectCollectionMatch = {
+		'post' : 'posts'
+	}
+	
+	this.objectModelMatch = {
+		'post' : 'Post'
+	}	
+			
 }
 
 util.inherits(Models, EventEmitter)
-
 
 var models = new Models()
 
@@ -17,11 +25,6 @@ models.on('user:new', function(user){
 	})
 })
 
-models.on('post:new', function(post){
-	var object = new mongoose.Types.DBRef('posts', post._id)
-	mongoose.model('Item').findByIdAndUpdate(post.item, { $set : { object : object } }, function(err, item){
-	})
-})
 
 module.exports = models
 

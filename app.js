@@ -23,6 +23,7 @@ require('./models/post')
 require('./models/wall')
 require('./models/item')
 
+
 var Post = mongoose.model('Post')
 var Wall = mongoose.model('Wall')
 var Item = mongoose.model('Item')
@@ -82,34 +83,26 @@ var ObjectId = mongoose.Types.ObjectId
 
 //main app
 app.get('/', function(req, res){	
-
 	if(req.user && req.user.wall){
-		var id = req.user.wall
-		var user = req.user._id
-		
-		Wall.loadItems(id, function(err, wall){			
+		var id = req.user.wall		
+		Wall.loadItems(id, function(err, wall){		
 			res.loadPage('home', { wall : wall })
-		})
-		
+		})		
 	} else {
 		res.loadPage('home')
 	}	
 })
 
-var count = 1
 //api
 app.post('/api/walls/:id/items', function(req, res){
-
 	var post = new Post({
 		content : req.body.content,
 		author : req.body.author._id,
 		wall : req.params.id,
-	})	
-		
+	})			
 	post.save(function(err){	
 		res.send(post)				
 	})
-
 })
 
 

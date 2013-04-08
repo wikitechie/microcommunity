@@ -11,7 +11,7 @@ var wallSchema = new mongoose.Schema({
 wallSchema.statics.loadItems = function(id, callback){
 	var Item = mongoose.model('Item')	
 	this.findById(id, function(err, wall){
-		Item.find({ wall : id }).limit(5).sort({ published : 1 }).exec(function(err, items){				
+		Item.find({ wall : id }).sort({ published : -1 }).limit(5).exec(function(err, items){				
 			var dbrefs = _.pluck(items, 'object')				
 			function deref(dbref, callback){
 				mongoose.connection.db.dereference(dbref, function(err, item){

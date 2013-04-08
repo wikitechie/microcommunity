@@ -23,7 +23,7 @@ define([
 					//removing the old model which has no id
 					App.wall.get('items').remove(model)
 					//adding the new model
-					App.wall.get('items').add(model)
+					App.wall.get('items').add(model, { at : 0 })
 					callback(null, model)
 				}, wait : true
 			})	
