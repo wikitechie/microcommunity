@@ -10,10 +10,10 @@ define([
 				relatedModel : 'Core.Item',
 				collectionType : 'Core.Items',
 				includeInJSON : Backbone.Model.prototype.idAttribute,				
-				reverseRelation : {
+				/*reverseRelation : {
 					key : 'stream',
 					includeInJSON : Backbone.Model.prototype.idAttribute,														
-				}
+				}*/
 			}						
 		]				
 	})

@@ -25,9 +25,9 @@ define([
 					type : Backbone.HasOne,
 					key : 'author',
 					relatedModel : 'Core.User',
-					includeInJSON : Backbone.Model.prototype.idAttribute
+					//includeInJSON : Backbone.Model.prototype.idAttribute
 				})			
-			}		
+			}
 			
 			Backbone.RelationalModel.prototype.constructor.apply(this, arguments)
 		},
@@ -42,7 +42,8 @@ define([
 		},
 		defaults : {
 			objectType : 'item'
-		}				
+		}
+						
 	})
 	
 	return Item

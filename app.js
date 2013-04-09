@@ -87,11 +87,20 @@ var ObjectId = mongoose.Types.ObjectId
 
 //main app
 app.get('/', function(req, res){	
-	Stream.globalStream(function(err, wall){		
-		res.loadPage('home', { wall : wall })
-	})
+	Stream.globalStream(function(err, stream){
+		if(!req.user){
+			console.log(stream)
+			res.loadPage('home', { stream : stream })
+		} else {
+			Wall.findById(req.user.wall, function(err, wall){
+				res.loadPage('home', { 
+					stream : stream,
+					wall : wall
+				})
+			})
+		}		
+	})	
 })
-
 
 //profile app
 app.get('/profiles/:id', function(req, res){	
