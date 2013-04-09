@@ -19,8 +19,9 @@ module.exports = function Itemable(schema, options){
 	})	
 	
 	//populating options
-	schema.pre('init', function(next, doc){
-		var modelName = models.objectModelMatch[doc.objectType]
+	schema.pre('init', function(next, doc){	
+		var objectType = schema.virtuals.objectType.getters[0]()
+		var modelName = models.objectModelMatch[objectType]
 		this.model(modelName).populate(doc, { path : 'author' }, next)
 	})		
 

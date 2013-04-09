@@ -11,16 +11,9 @@ define([
 			else return false
 		},
 		initializeLayout : function(){
-
 			MyApp.layout = new Views.Layout()	
-
-			MyApp.mainRegion.show(this.layout)	
-
-			if (this.isLoggedIn()){
-				MyApp.layout.publisher.show(new Views.PublisherView())
-			}			
-
-			MyApp.layout.items.show(new Views.ItemsView({	collection : this.wall.get('items') }))		
+			MyApp.mainRegion.show(this.layout)		
+			MyApp.layout.items.show(new Views.ItemsView({	collection : this.stream.get('items') }))		
 		}		
 	})	
 		
@@ -28,18 +21,13 @@ define([
 		mainRegion : '#social-stream'
 	})
 	
-	MyApp.addInitializer(function(options){
-			
-
+	MyApp.addInitializer(function(options){	
 		MyApp.currentUser = new Core.User(server.current_user)	
-		MyApp.wall = new Core.Wall(options.wall)		
-		
-
-		MyApp.initializeLayout()	
-
+		MyApp.stream = new Core.Stream(options.wall)				
+		MyApp.initializeLayout()		
 	})	
 
 	return MyApp
 	
-});
+})
 

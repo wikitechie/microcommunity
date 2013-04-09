@@ -6,8 +6,12 @@ block content
 			include shared/sidebar
 								
 		.span7
+			.row-fluid.page-header
+				h1 
+					= server.data.user.displayName
 			.row-fluid
 				#social-stream
+				
 	<script id="item-template" type="text/html">
 	<tr>
 	<td><%= author.displayName %></td>
@@ -25,9 +29,7 @@ block content
 	<input id='publish-button' type='submit' />
 	</script>
 	<script id="layout-template" type="text/html">
-	<h1>My Layout!</h1>
-	<h2>Publisher</h2>
-	<div id='publisher'></div><h2>Items</h2>
+	<div id='publisher'></div>
 	<div id='items'></div>
 	</script>	
 

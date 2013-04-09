@@ -11,6 +11,10 @@ function Models() {
 	
 	this.objectModelMatch = {
 		'post' : 'Post'
+	}
+	
+	this.collectionModelMatch = {
+		'posts' : 'Post'
 	}	
 			
 }

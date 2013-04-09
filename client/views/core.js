@@ -9,13 +9,12 @@ define([
 	})
 	
 	var ItemsView = Backbone.Marionette.CompositeView.extend({
-		el : '#sandbox',
 		template : '#items-template',
 		itemView : ItemView,
 		appendHtml : function(collectionView, itemView, index){
 			//some models are added automatically by BackboneRelational before they are actually saved
 			//so we just check if the model is new or not
-			if (!itemView.model.isNew()) {	
+			if (!itemView.model.isNew()) {
 				//when index is 0, we should prepend the item, not append it
 				if (index == 0)
 					collectionView.$('tbody').prepend(itemView.el)	
@@ -27,7 +26,6 @@ define([
 	})
 	
 	var PublisherView = Backbone.Marionette.ItemView.extend({
-		el : '#publisher',
 		template : '#publisher-template',
 		
 		ui : {

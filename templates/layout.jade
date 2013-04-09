@@ -32,8 +32,8 @@ html
 								span.caret
 							ul.dropdown-menu
 								li
-									a(href="#") 
-										= "Account"
+									- var link ='profiles/' + server.current_user._id
+									<a href=#{link}>Profile</a>
 								li.divider
 								li
 									a(href="/logout") Log out						

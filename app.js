@@ -24,9 +24,11 @@ require('./models/wall')
 require('./models/item')
 
 
-var Post = mongoose.model('Post')
+
 var Wall = mongoose.model('Wall')
 var Item = mongoose.model('Item')
+var User = mongoose.model('User')
+var Post = mongoose.model('Post')
 
 //setting up passport before app configuration
 require('./passport')
@@ -83,6 +85,7 @@ var ObjectId = mongoose.Types.ObjectId
 
 //main app
 app.get('/', function(req, res){	
+
 	if(req.user && req.user.wall){
 		var id = req.user.wall		
 		Wall.loadItems(id, function(err, wall){		
@@ -92,6 +95,21 @@ app.get('/', function(req, res){
 		res.loadPage('home')
 	}	
 })
+
+
+//profile app
+app.get('/profiles/:id', function(req, res){	
+	var id = req.params.id	
+	User.findById(id, function(err, user){
+		Wall.loadItems(user.wall, function(err, wall){	
+			res.loadPage('profile', {
+				user : user, 
+				wall : wall 
+			})
+		})			
+	})	
+})
+
 
 //api
 app.post('/api/walls/:id/items', function(req, res){
