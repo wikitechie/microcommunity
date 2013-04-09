@@ -28,14 +28,9 @@ define([
 	})
 	
 	MyApp.addInitializer(function(options){
-			
-
 		MyApp.currentUser = new Core.User(server.current_user)	
-		MyApp.wall = new Core.Wall(options.wall)		
-		
-
+		MyApp.wall = new Core.Wall(options.wall)
 		MyApp.initializeLayout()	
-
 	})	
 
 	return MyApp

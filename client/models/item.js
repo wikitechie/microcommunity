@@ -7,7 +7,7 @@ define([
 		idAttribute : '_id',	
 		urlRoot : function(){
 			return 'api/walls/' + this.get('wall').id + '/items'
-		},	
+		},			
 		constructor : function(){
 		
 			/* a small  hack in order to prevent the model from 
@@ -24,7 +24,8 @@ define([
 				this.relations.push({
 					type : Backbone.HasOne,
 					key : 'author',
-					relatedModel : 'Core.User'
+					relatedModel : 'Core.User',
+					includeInJSON : Backbone.Model.prototype.idAttribute
 				})			
 			}		
 			
