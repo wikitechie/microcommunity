@@ -40,10 +40,10 @@ exports.fetch_user_data = (id, callback)->
 				exports.fetch_user_total_upvote id, (err, upvote)->
 					exports.fetch_user_followers id, (err, followers)->
 						data = 
-							wikipages_count : wikipages_count	
-							edit_count : edit_count
-							reputation : upvote
-							followers : followers
+							#wikipages_count : wikipages_count	
+							#edit_count : edit_count
+							#reputation : upvote
+							#followers : followers
 				
 						callback(null, data)
 							
