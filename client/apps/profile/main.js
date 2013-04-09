@@ -13,7 +13,7 @@ define([
 		initializeLayout : function(){
 			MyApp.layout = new Views.Layout()	
 			MyApp.mainRegion.show(this.layout)		
-			MyApp.layout.items.show(new Views.ItemsView({	collection : this.stream.get('items') }))		
+			MyApp.layout.items.show(new Views.ItemsView({	collection : this.wall.get('items') }))		
 		}		
 	})	
 		
@@ -23,7 +23,7 @@ define([
 	
 	MyApp.addInitializer(function(options){	
 		MyApp.currentUser = new Core.User(server.current_user)	
-		MyApp.stream = new Core.Stream(options.wall)				
+		MyApp.wall = new Core.Wall(options.wall)				
 		MyApp.initializeLayout()		
 	})	
 

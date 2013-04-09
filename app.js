@@ -21,6 +21,7 @@ mongoose.connect('mongodb://localhost/test');
 require('./models/user')
 require('./models/post')
 require('./models/wall')
+require('./models/stream')
 require('./models/item')
 
 
@@ -29,6 +30,7 @@ var Wall = mongoose.model('Wall')
 var Item = mongoose.model('Item')
 var User = mongoose.model('User')
 var Post = mongoose.model('Post')
+var Stream = mongoose.model('Stream')
 
 //setting up passport before app configuration
 require('./passport')
@@ -85,15 +87,9 @@ var ObjectId = mongoose.Types.ObjectId
 
 //main app
 app.get('/', function(req, res){	
-
-	if(req.user && req.user.wall){
-		var id = req.user.wall		
-		Wall.loadItems(id, function(err, wall){		
-			res.loadPage('home', { wall : wall })
-		})		
-	} else {
-		res.loadPage('home')
-	}	
+	Stream.globalStream(function(err, wall){		
+		res.loadPage('home', { wall : wall })
+	})
 })
 
 

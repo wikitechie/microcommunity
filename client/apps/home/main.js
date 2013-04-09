@@ -19,7 +19,6 @@ define([
 			if (this.isLoggedIn()){
 				MyApp.layout.publisher.show(new Views.PublisherView())
 			}			
-
 			MyApp.layout.items.show(new Views.ItemsView({	collection : this.wall.get('items') }))		
 		}		
 	})	
