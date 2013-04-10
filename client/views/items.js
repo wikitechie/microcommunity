@@ -13,10 +13,9 @@ define([
 			if (!itemView.model.isNew()) {
 				//when index is 0, we should prepend the item, not append it
 				if (index == 0)
-					collectionView.$('tbody').prepend(itemView.el)	
+					collectionView.$('#items-collection').prepend(itemView.el)	
 				else 
-					collectionView.$('tbody').append(itemView.el)					
-				
+					collectionView.$('#items-collection').append(itemView.el)					
 			}		
 		} 
 	})

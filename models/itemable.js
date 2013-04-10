@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 	, models = require('./index')
+	, _ = require('underscore')
 
 module.exports = function Itemable(schema, options){
 
@@ -11,6 +12,7 @@ module.exports = function Itemable(schema, options){
 		item : mongoose.Schema.Types.ObjectId,	
 		published : Date			
 	})
+
 	
 	//adding published attribute
 	schema.pre('save', function(next){
@@ -24,7 +26,7 @@ module.exports = function Itemable(schema, options){
 		var modelName = models.objectModelMatch[objectType]
 		this.model(modelName).populate(doc, { path : 'author' }, next)
 	})		
-
+	
 	//before save
 	schema.pre('save', function(next){
 		var Item = mongoose.model('Item')		

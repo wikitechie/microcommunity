@@ -6,7 +6,8 @@ var userSchema = new mongoose.Schema({
 	password : String,
 	email : String,
 	openId : String,
-	wall : mongoose.Schema.Types.ObjectId
+	wall : mongoose.Schema.Types.ObjectId,
+	_wall : mongoose.Schema.Types.Mixed
 })
 
 userSchema.statics.findByEmail = function(email, callback){
@@ -14,6 +15,7 @@ userSchema.statics.findByEmail = function(email, callback){
 		callback(err, user)
 	})
 }
+
 
 //creating a wall object for each user
 userSchema.pre('save', function(next){

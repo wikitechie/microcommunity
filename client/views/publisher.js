@@ -4,55 +4,58 @@ define([
 ],function(Backbone, html){
 
 	var PublisherView = Backbone.Marionette.ItemView.extend({
-	
+				
+		template : html,
+		ui : {
+			input : '#new-post',
+			button : '#publish-button',
+			spinner : '.spinner'
+		},		
+		events : {
+			'click #publish-button' : 'newPost',
+			'click #new-post' : 'expand'
+		},	
+			
 		initialize : function(options){
 			if (options && options.wall){
 				this.wall = options.wall
 			}
 		},
-		
-		template : html,
-		
-		ui : {
-			input : '#new-post'
-		},
-		
-		events : {
-			'click #publish-button' : 'newPost'
-		},	
-			
-		newPost : function(){	
-				
-			this.disable()						
+					
+		newPost : function(){					
+			this.disable()									
 			var post = {
 				content : this.ui.input.val(),
 				author : App.currentUser.id,
 				wall : this.wall.id,
 				itemType : 'post'
-			}
-			
-			App.trigger('publisher:post:new', post)
-			
-			var self = this
-			App.once('publisher:release', function(){
+			}			
+			App.vent.trigger('publisher:post:new', post)			
+			var self = this			
+			App.vent.once('publisher:release', function(){
 				self.reset()
 				self.enable()
-			})
-			
-			setTimeout(function(){	
-				console.debug('server timeout!')
-				App.trigger('publisher:release')
-			}, 10000)
-			
+			})			
 		},
+		
+		expand : function(){
+			this.ui.input.attr("rows","3")			
+		},
+		
 		reset : function(){
 			this.ui.input.val("")
 		},
+		
 		disable : function(){
 			this.ui.input.prop("disabled", true)
+			this.ui.button.addClass('disabled')
+			this.ui.spinner.spin()
 		},
+		
 		enable : function(){
 			this.ui.input.prop("disabled", false)
+			this.ui.button.removeClass('disabled')
+			this.ui.spinner.spin(false)				
 		}		
 	})	
 	

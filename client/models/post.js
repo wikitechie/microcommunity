@@ -6,15 +6,15 @@ define([
 	var Post = Item.extend({
 
 		msg : function(){			
-			var msg						
-			if ( this.get('wall').id == this.get('author').get('wall').id )	
+			var msg					
+			if ( this.get('wall').id == this.get('author').get('wall') )	
 				msg = ' posted on his wall '
 			else
 				msg = ' posted on ' 
-					+ this.get('wall').get('owner').get('name') 
+					+ this.get('wall').get('owner').get('displayName') 
 					+ '\'s wall '
 		
-			return this.get('author').get('name') 
+			return this.get('author').get('displayName') 
 				+ msg 
 				+ this.get('content')		
 		}	

@@ -4,7 +4,6 @@ define([
 	'models/items',	
 	'models/post',
 	'models/wall',
-	'models/stream',
 	'jquery',
 	'bb'
 ], function(User, Item, Items, Post, Wall, Stream, $, Backbone){
@@ -15,8 +14,7 @@ define([
 		Item : Item,
 		Items : Items,
 		Post : Post,
-		Wall : Wall,
-		Stream : Stream
+		Wall : Wall
 	}
 		
 	//building an instance in order to setup relations	

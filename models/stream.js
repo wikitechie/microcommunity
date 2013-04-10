@@ -21,7 +21,7 @@ streamSchema.statics.loadItems = function(id, callback){
 streamSchema.statics.globalStream = function(callback){
 	var Item = mongoose.model('Item')	
 	Item.fetchItems({}, function(err, items){		
-		callback(err, {	items : items })					
+		callback(err, items)					
 	})
 }
 

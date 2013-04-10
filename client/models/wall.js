@@ -5,44 +5,8 @@ define([
 
 	var Wall = Backbone.RelationalModel.extend({
 	
-		idAttribute : '_id',		
-	
-		createPost : function( author, content, callback ){
-			
-			var post = {
-				content : content,
-				author : author,
-				wall : this.id,
-				itemType : 'post'
-			}
-			
-			var self = this	
-			
-			App.wall.get('items').create(post, {
-				success : function(model){
-					//removing the old model which has no id
-					App.wall.get('items').remove(model)
-					//adding the new model
-					App.wall.get('items').add(model, { at : 0 })
-					callback(null, model)
-				}, wait : true
-			})	
-			
-		},
-	
+		idAttribute : '_id',	
 		relations : [
-			{
-				type : Backbone.HasMany,
-				key : 'items',
-				relatedModel : 'Core.Item',
-				collectionType : 'Core.Items',
-				includeInJSON : Backbone.Model.prototype.idAttribute,								
-				reverseRelation : {
-					key : 'wall',
-					type : Backbone.HasOne,					
-					includeInJSON : Backbone.Model.prototype.idAttribute,														
-				}
-			},
 			{
 				type : Backbone.HasOne,
 				key : 'owner',

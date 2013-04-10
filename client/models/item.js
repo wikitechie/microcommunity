@@ -6,30 +6,7 @@ define([
 	var Item = Backbone.RelationalModel.extend({
 		idAttribute : '_id',	
 		urlRoot : function(){
-			return 'api/walls/' + this.get('wall').id + '/items'
-		},			
-		constructor : function(){
-		
-			/* a small  hack in order to prevent the model from 
-				 overriding the 'wall' reverseRelation which 
-				 is set in the wall model */
-				 
-			var setup = true	 
-			_.each(this.relations, function(relation){
-				if (relation.key == 'author')
-					setup = false			
-			})
-			
-			if (setup) {
-				this.relations.push({
-					type : Backbone.HasOne,
-					key : 'author',
-					relatedModel : 'Core.User',
-					//includeInJSON : Backbone.Model.prototype.idAttribute
-				})			
-			}
-			
-			Backbone.RelationalModel.prototype.constructor.apply(this, arguments)
+			return '/api/walls/' + this.get('wall').id + '/items'
 		},
 		
 		initialize : function(attr, options){
@@ -42,7 +19,21 @@ define([
 		},
 		defaults : {
 			objectType : 'item'
-		}
+		},
+		
+		relations : [
+			{
+				type : Backbone.HasOne,
+				key : 'wall',
+				relatedModel : 'Core.Wall',
+				includeInJSON : Backbone.Model.prototype.idAttribute
+			},
+			{
+				type : Backbone.HasOne,
+				key : 'author',
+				relatedModel : 'Core.User'
+			}					
+		]
 						
 	})
 	

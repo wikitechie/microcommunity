@@ -87,14 +87,13 @@ var ObjectId = mongoose.Types.ObjectId
 
 //main app
 app.get('/', function(req, res){	
-	Stream.globalStream(function(err, stream){
+	Stream.globalStream(function(err, items){
 		if(!req.user){
-			res.loadPage('home', { stream : stream })
+			res.loadPage('home', { items : items })
 		} else {
 			Wall.findById(req.user.wall, function(err, wall){
-				console.log(wall)
 				res.loadPage('home', { 
-					stream : stream,
+					items : items,
 					wall : wall
 				})
 			})
@@ -121,7 +120,8 @@ app.post('/api/walls/:id/items', function(req, res){
 		content : req.body.content,
 		author : req.body.author._id,
 		wall : req.params.id,
-	})			
+	})	
+
 	post.save(function(err){	
 		res.send(post)				
 	})

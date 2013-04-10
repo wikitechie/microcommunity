@@ -4,7 +4,6 @@ var mongoose = require('mongoose')
 	,  _ = require('underscore')
 	, async = require('async')
 	, models = require('./index')
-	
 
 var itemSchema = new mongoose.Schema({
 	object : { type : mongoose.Schema.Types.DBRef },
@@ -17,7 +16,9 @@ itemSchema.statics.fetchItems = function (query, callback){
 		var dbrefs = _.pluck(items, 'object')				
 		function deref(dbref, callback){				
 			var modelName = models.collectionModelMatch[dbref.namespace]
-			mongoose.model(modelName).findById(dbref.oid).exec(callback)
+			mongoose.model(modelName).findById(dbref.oid).exec(function(err, item){
+				callback(err, item.toJSON())
+			})
 		}				
 		async.map(dbrefs, deref, function(err, items){		
 			callback(err, items)					

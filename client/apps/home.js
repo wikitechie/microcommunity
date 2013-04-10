@@ -30,26 +30,33 @@ define([
 			App.mainStream.publisher.show(publisher)			
 		}
 		
-		//creating and showing publisher		
-		App.stream = new Core.Wall(server.data.stream)
+		//creating and showing items		
+		App.items = new Core.Items(server.data.items)
+		
 		var items = new Views.ItemsView({	
-			collection : App.stream.get('items') 
-		})			
+			collection : App.items
+		})
+					
 		App.mainStream.items.show(items)
 
-		//connecting publisher and stream		
-		App.on('publisher:post:new', function(post){
-			App.stream.get('items').create(post, {
-				success : function(model){
-					App.trigger('publisher:release')
-				}, 
-				error : function(model, xhr, options){
-					console.log('error')
-					console.log(model.toJSON())
-				},
-				wait : true, at : 0 
+		//connecting publisher and stream
+		if (App.currentUser){
+			App.vent.on('publisher:post:new', function(post){
+				App.items.create(post, {
+					success : function(model){
+						App.vent.trigger('publisher:release')
+					}, 
+					error : function(model, xhr, options){
+						console.log('error')
+						console.log(model.toJSON())
+					},
+					wait : true, at : 0 
+				})		
 			})		
-		})			
+		}
+				
+
+					
 	})	
 
 	return App
