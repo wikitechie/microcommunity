@@ -17,6 +17,7 @@ itemSchema.statics.fetchItems = function (query, callback){
 		function deref(dbref, callback){				
 			var modelName = models.collectionModelMatch[dbref.namespace]
 			mongoose.model(modelName).findById(dbref.oid).exec(function(err, item){
+				//console.log(item)
 				callback(err, item.toJSON())
 			})
 		}				

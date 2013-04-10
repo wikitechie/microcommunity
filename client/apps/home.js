@@ -25,7 +25,7 @@ define([
 		//creating and showing publisher	
 		if (App.currentUser){
 			var publisher = new Views.PublisherView({
-				wall : new Core.Wall(server.data.wall)
+				wall : new Core.Wall(App.currentUser.get('wall'))
 			})
 			App.mainStream.publisher.show(publisher)			
 		}

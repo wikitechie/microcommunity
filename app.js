@@ -88,16 +88,7 @@ var ObjectId = mongoose.Types.ObjectId
 //main app
 app.get('/', function(req, res){	
 	Stream.globalStream(function(err, items){
-		if(!req.user){
-			res.loadPage('home', { items : items })
-		} else {
-			Wall.findById(req.user.wall, function(err, wall){
-				res.loadPage('home', { 
-					items : items,
-					wall : wall
-				})
-			})
-		}		
+		res.loadPage('home', { items : items })	
 	})	
 })
 

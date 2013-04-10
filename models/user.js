@@ -6,7 +6,7 @@ var userSchema = new mongoose.Schema({
 	password : String,
 	email : String,
 	openId : String,
-	wall : mongoose.Schema.Types.ObjectId,
+	wall : { type : mongoose.Schema.Types.ObjectId, ref: 'Wall'} ,
 	_wall : mongoose.Schema.Types.Mixed
 })
 
@@ -16,11 +16,18 @@ userSchema.statics.findByEmail = function(email, callback){
 	})
 }
 
+//populating options
+userSchema.pre('init', function(next, doc){	
+	var Wall = mongoose.model('Wall')
+	Wall.populate(doc, 'wall', function(err, doc){
+		next(err, doc)
+	})
+})	
 
 //creating a wall object for each user
 userSchema.pre('save', function(next){
-	var Wall = mongoose.model('Wall')		
-	var wall = new Wall()
+	var Wall = mongoose.model('Wall')
+	var wall = new Wall({ displayName : this.displayName })
 	var self = this
 	wall.save(function(err, wall){
 		if (!err){

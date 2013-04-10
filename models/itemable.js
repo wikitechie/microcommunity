@@ -8,7 +8,7 @@ module.exports = function Itemable(schema, options){
 
 	schema.add({
 		author : { type : mongoose.Schema.Types.ObjectId, ref : 'User' },
-		wall : mongoose.Schema.Types.ObjectId,
+		wall : { type : mongoose.Schema.Types.ObjectId, ref : 'Wall' },
 		item : mongoose.Schema.Types.ObjectId,	
 		published : Date			
 	})
@@ -24,7 +24,7 @@ module.exports = function Itemable(schema, options){
 	schema.pre('init', function(next, doc){	
 		var objectType = schema.virtuals.objectType.getters[0]()
 		var modelName = models.objectModelMatch[objectType]
-		this.model(modelName).populate(doc, { path : 'author' }, next)
+		this.model(modelName).populate(doc, 'author wall', next)
 	})		
 	
 	//before save
