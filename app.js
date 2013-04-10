@@ -47,7 +47,7 @@ app.configure(function(){
 				server : {
 					appName: app,
 					data: data || {},
-					current_user: req.user			
+					currentUser: req.user			
 				}
 			});
 		}	
@@ -89,10 +89,10 @@ var ObjectId = mongoose.Types.ObjectId
 app.get('/', function(req, res){	
 	Stream.globalStream(function(err, stream){
 		if(!req.user){
-			console.log(stream)
 			res.loadPage('home', { stream : stream })
 		} else {
 			Wall.findById(req.user.wall, function(err, wall){
+				console.log(wall)
 				res.loadPage('home', { 
 					stream : stream,
 					wall : wall
@@ -114,7 +114,6 @@ app.get('/profiles/:id', function(req, res){
 		})			
 	})	
 })
-
 
 //api
 app.post('/api/walls/:id/items', function(req, res){

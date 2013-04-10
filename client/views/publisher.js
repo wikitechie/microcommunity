@@ -4,6 +4,13 @@ define([
 ],function(Backbone, html){
 
 	var PublisherView = Backbone.Marionette.ItemView.extend({
+	
+		initialize : function(options){
+			if (options && options.wall){
+				this.wall = options.wall
+			}
+		},
+		
 		template : html,
 		
 		ui : {
@@ -12,14 +19,15 @@ define([
 		
 		events : {
 			'click #publish-button' : 'newPost'
-		},		
-		newPost : function(data){	
+		},	
+			
+		newPost : function(){	
 				
 			this.disable()						
 			var post = {
 				content : this.ui.input.val(),
 				author : App.currentUser.id,
-				wall : App.wall.id,
+				wall : this.wall.id,
 				itemType : 'post'
 			}
 			
@@ -35,11 +43,7 @@ define([
 				console.debug('server timeout!')
 				App.trigger('publisher:release')
 			}, 10000)
-					
-			/*App.wall.createPost(App.currentUser.id , this.ui.input.val(), function(err, model){
-				self.reset()
-				self.enable()											
-			})*/
+			
 		},
 		reset : function(){
 			this.ui.input.val("")

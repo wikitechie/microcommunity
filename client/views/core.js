@@ -4,15 +4,15 @@ define([
 	'views/item',
 	'views/items',
 	'views/publisher',
-	'views/layout',
+	'views/layouts/items',
 	'bootstrap'	
-], function(Backbone, Item, ItemView, ItemsView, PublisherView, Layout){
+], function(Backbone, Item, ItemView, ItemsView, PublisherView, ItemsLayout){
 	
 	return {
 		ItemView : ItemView,
 		ItemsView : ItemsView,
 		PublisherView : PublisherView,
-		Layout : Layout	
+		ItemsLayout : ItemsLayout	
 	}
 	
 })

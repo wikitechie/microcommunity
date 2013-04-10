@@ -52,10 +52,10 @@ requirejs.config({
 //You SHOULD always refer to your app with the global App variable
 if (typeof server != 'undefined' ){
 	if (server.appName){
-		requirejs(['apps/' + server.appName + '/main'], function(app){	
+		requirejs(['apps/' + server.appName ], function(app){	
 			if (app){
 				App = app
-				App.start(server.data)	
+				App.start(server)	
 			}	
 		})	
 	}	

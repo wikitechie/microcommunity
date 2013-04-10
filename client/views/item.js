@@ -6,9 +6,8 @@ define([
 	var ItemView = Backbone.Marionette.ItemView.extend({	
 		template : html,
 		serializeData: function(){	
-			console.log(this.model.get('author').toJSON())
 			return _.extend(this.model.toJSON(), {
-				author : this.model.get('author').toJSON()
+				author : this.model.get('author').toJSON(),
 			})		  
 		},		
 	})

@@ -1,9 +1,9 @@
 define([
 	'bb',
-	'text!templates/layout.html'
+	'text!templates/layouts/items.html'
 ],function(Backbone, html){
 
-	var Layout = Backbone.Marionette.Layout.extend({
+	var ItemsLayout = Backbone.Marionette.Layout.extend({
 		template : html,
 		regions : {
 			publisher : '#publisher',
@@ -11,6 +11,6 @@ define([
 		}
 	})
 	
-	return Layout
+	return ItemsLayout
 	
 })

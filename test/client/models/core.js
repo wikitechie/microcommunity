@@ -1,7 +1,5 @@
 define([
-	'models/core',
-	'backbone',
-	'backbone-relational'
+	'models/core'
 ], function(Core) {		
 
 	describe('User Model', function(){
