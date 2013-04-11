@@ -14,7 +14,8 @@ function Models() {
 	}
 	
 	this.collectionModelMatch = {
-		'posts' : 'Post'
+		'posts' : 'Post',
+		'users' : 'User'
 	}	
 			
 }

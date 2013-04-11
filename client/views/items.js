@@ -19,9 +19,9 @@ define([
 			}		
 		},
 		
-		itemViewOptions: function(model, index){
+		/* itemViewOptions: function(model, index){
 			return { parentType : this.collection.type }
-		}	
+		}	*/
 		 
 	})
 	

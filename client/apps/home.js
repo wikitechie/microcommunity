@@ -30,7 +30,7 @@ define([
 			App.mainStream.publisher.show(publisher)			
 		}
 		
-		//creating and showing items		
+		//creating and showing items	
 		App.items = new Core.Items(server.data.items, { type : 'stream' })
 		
 		var items = new Views.ItemsView({	

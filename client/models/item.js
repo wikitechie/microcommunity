@@ -13,6 +13,14 @@ define([
 			this.set('published', new Date())
 		},
 		
+		serialize : function(){			 
+			return _.extend(this.toJSON(), {
+				author: this.get('author').serialize(),
+				wall: this.get('wall').serialize(),
+				parentType : this.collection.type
+			})
+		},		
+		
 		subModelTypeAttribute : 'itemType',
 		subModelTypes : {
 			'post' : 'Core.Post'

@@ -9,12 +9,8 @@ define([
 		},	
 		template : html,
 		serializeData: function(){
-			return _.extend(this.model.toJSON(), {
-				author : _.extend(this.model.get('author').toJSON(), { link : this.model.get('author').link()}),
-				wall : _.extend(this.model.get('wall').toJSON(), { link : this.model.get('wall').get('owner').link()}),
-				parentType : this.parentType,
-			})		  
-		},		
+			return this.model.serialize()	  
+		}
 	})
 	
 	return ItemView
