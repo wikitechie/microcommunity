@@ -8,10 +8,13 @@
 		<div class="mainWrapper">
 			<p>
 				<a href="/profiles/<%= author._id %>" class='email'>
-				<%= author.displayName %>
-				</a>
-				<% if (author._id != wall.owner ) { %>				
-				<b>&#8250;</b> <%= wall.displayName %>
+				<%= author.displayName %>								
+				</a>				
+				<% if (parentType == 'stream') { %>
+					<% if (author._id != wall.owner) { %>				
+					 <i class="icon-play"></i>
+					<%= wall.displayName %>
+					<% } %>					
 				<% } %>
 			</p>
 			<p class ='text'>

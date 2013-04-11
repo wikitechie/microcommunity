@@ -17,7 +17,12 @@ define([
 				else 
 					collectionView.$('#items-collection').append(itemView.el)					
 			}		
-		} 
+		},
+		
+		itemViewOptions: function(model, index){
+			return { parentType : this.collection.type }
+		}	
+		 
 	})
 	
 	return ItemsView

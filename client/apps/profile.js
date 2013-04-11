@@ -31,7 +31,7 @@ define([
 		}
 		
 		//creating and showing items		
-		App.items = new Core.Items(server.data.wall.items)
+		App.items = new Core.Items(server.data.wall.items, { type : 'wall' })
 		
 		var items = new Views.ItemsView({	
 			collection : App.items
