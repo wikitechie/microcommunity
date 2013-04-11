@@ -7,13 +7,15 @@
 		</div>
 		<div class="mainWrapper">
 			<p>
-				<a href="/profiles/<%= author._id %>" class='email'>
+				<a href="<%= author.link %>" class='email'>
 				<%= author.displayName %>								
 				</a>				
 				<% if (parentType == 'stream') { %>
 					<% if (author._id != wall.owner) { %>				
 					 <i class="icon-play"></i>
-					<%= wall.displayName %>
+					<a href="<%= wall.link %>" class='email'>					 
+						<%= wall.displayName %>
+					</a>									
 					<% } %>					
 				<% } %>
 			</p>
