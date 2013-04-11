@@ -26,12 +26,13 @@ define([
 				type : Backbone.HasOne,
 				key : 'wall',
 				relatedModel : 'Core.Wall',
-				includeInJSON : Backbone.Model.prototype.idAttribute
+				//includeInJSON : Backbone.Model.prototype.idAttribute				
 			},
 			{
 				type : Backbone.HasOne,
 				key : 'author',
-				relatedModel : 'Core.User'
+				relatedModel : 'Core.User',
+				//includeInJSON : Backbone.Model.prototype.idAttribute				
 			}					
 		]
 						

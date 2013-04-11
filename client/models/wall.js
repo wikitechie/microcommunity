@@ -3,8 +3,7 @@ define([
 	'models/item'
 ],function(Backbone, Item){
 
-	var Wall = Backbone.RelationalModel.extend({
-	
+	var Wall = Backbone.RelationalModel.extend({	
 		idAttribute : '_id',	
 		relations : [
 			{

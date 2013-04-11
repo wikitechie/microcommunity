@@ -19,17 +19,18 @@ define([
 		initialize : function(options){
 			if (options && options.wall){
 				this.wall = options.wall
-			}
+			}							
 		},
 					
 		newPost : function(){					
-			this.disable()									
+			this.disable()	
 			var post = {
 				content : this.ui.input.val(),
 				author : App.currentUser.id,
 				wall : this.wall.id,
 				itemType : 'post'
-			}			
+			}
+			
 			App.vent.trigger('publisher:post:new', post)			
 			var self = this			
 			App.vent.once('publisher:release', function(){

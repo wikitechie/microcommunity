@@ -12,7 +12,6 @@ module.exports = function Itemable(schema, options){
 		item : mongoose.Schema.Types.ObjectId,	
 		published : Date			
 	})
-
 	
 	//adding published attribute
 	schema.pre('save', function(next){
@@ -37,7 +36,7 @@ module.exports = function Itemable(schema, options){
 				self.item = item._id
 				next(null)
 			} else {
-				next(new Error('Could not create item object'))
+				throw new Error('Could not create item object')
 			}
 		})
 	})

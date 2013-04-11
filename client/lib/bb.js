@@ -7,7 +7,8 @@ define([
 	'jquery.gravatar',
 	'jquery.spin',
 	'general',
-	'moment'
+	'moment',
+	'bootstrap'
 ], function(html, Backbone){
 
 	Backbone.Marionette.Renderer.render = function(template, data){
