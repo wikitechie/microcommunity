@@ -1,7 +1,8 @@
 define([
 	'bb',
+	'models/post',	
 	'text!templates/publisher.html'
-],function(Backbone, html){
+],function(Backbone, Post, html){
 
 	var PublisherView = Backbone.Marionette.ItemView.extend({
 				
@@ -23,13 +24,13 @@ define([
 		},
 					
 		newPost : function(){					
-			this.disable()	
-			var post = {
+			this.disable()			
+			var post = new Post()			
+			post.set({
 				content : this.ui.input.val(),
-				author : App.currentUser.id,
 				wall : this.wall.id,
-				itemType : 'post'
-			}
+				author : App.currentUser.id
+			})
 			
 			App.vent.trigger('publisher:post:new', post)			
 			var self = this			

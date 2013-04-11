@@ -41,16 +41,16 @@ define([
 
 		//connecting publisher and stream
 		if (App.currentUser){
-			App.vent.on('publisher:post:new', function(post){
-				App.items.create(post, {
+			App.vent.on('publisher:post:new', function(post){				
+				post.save({}, {
 					success : function(model){
+						App.items.add(model, { at : 0 }) 
 						App.vent.trigger('publisher:release')
 					}, 
 					error : function(model, xhr, options){
 						console.log('error')
 						console.log(model.toJSON())
-					},
-					wait : true, at : 0 
+					},								
 				})		
 			})		
 		}

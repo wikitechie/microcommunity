@@ -88,7 +88,6 @@ var ObjectId = mongoose.Types.ObjectId
 //main app
 app.get('/', function(req, res){	
 	Stream.globalStream(function(err, items){
-		console.log(items)
 		res.loadPage('home', { items : items })	
 	})	
 })
@@ -111,8 +110,8 @@ app.post('/api/walls/:id/items', function(req, res){
 
 	var post = new Post({
 		content : req.body.content,
-		author : req.body.author._id,
-		wall : req.body.wall._id,
+		author : req.body.author,
+		wall : req.body.wall,
 	})	
 
 	post.save(function(err){
