@@ -20,6 +20,7 @@ mongoose.connect('mongodb://localhost/test');
 
 require('./models/user')
 require('./models/post')
+require('./models/photo')
 require('./models/wall')
 require('./models/stream')
 require('./models/item')
@@ -30,6 +31,7 @@ var Wall = mongoose.model('Wall')
 var Item = mongoose.model('Item')
 var User = mongoose.model('User')
 var Post = mongoose.model('Post')
+var Photo = mongoose.model('Photo')
 var Stream = mongoose.model('Stream')
 
 //setting up passport before app configuration
@@ -106,7 +108,7 @@ app.get('/profiles/:id', function(req, res){
 })
 
 //api
-app.post('/api/walls/:id/items', function(req, res){
+app.post('/api/walls/:id/items/posts', function(req, res){
 
 	var post = new Post({
 		content : req.body.content,
@@ -115,11 +117,28 @@ app.post('/api/walls/:id/items', function(req, res){
 	})	
 
 	post.save(function(err){
-		Post.findById(post.id, function(){
-			res.send(post)						
-		})	
+		res.send(post)
 	})
 })
+
+//api
+app.post('/api/walls/:id/items/photos', function(req, res){
+
+	var photo = new Photo({
+		content : req.body.content,
+		author : req.body.author,
+		wall : req.body.wall,
+	})	
+
+	photo.save(function(err){
+		Photo.findById(photo.id, function(){
+			res.send(photo)						
+		})	
+	})
+	
+})
+
+
 
 
 //loading api

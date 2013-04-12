@@ -4,7 +4,10 @@ define([
 ], function(Backbone){
 
 	var Item = Backbone.RelationalModel.extend({
-		idAttribute : '_id',	
+		idAttribute : '_id',
+		
+		//TODO validate author and wall: validate : function(){}
+			
 		urlRoot : function(){
 			return '/api/walls/' + this.get('wall').id + '/items'
 		},
@@ -23,7 +26,8 @@ define([
 		
 		subModelTypeAttribute : 'itemType',
 		subModelTypes : {
-			'post' : 'Core.Post'
+			'post' : 'Core.Post',
+			'photo' : 'Core.Photo'
 		},
 		defaults : {
 			objectType : 'item'

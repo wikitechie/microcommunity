@@ -21,6 +21,11 @@ body {
 	float: left;
 }
 
+.mainWrapper img{
+  width:100%;
+  max-width:400px;
+}
+
 .floating_panel {
   position: absolute;
 }

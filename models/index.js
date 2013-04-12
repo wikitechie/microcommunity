@@ -6,16 +6,19 @@ var util = require('util')
 
 function Models() { 
 	this.objectCollectionMatch = {
-		'post' : 'posts'
+		'post' : 'posts',
+		'photo' : 'photos'
 	}
 	
 	this.objectModelMatch = {
-		'post' : 'Post'
+		'post' : 'Post',
+		'photo' : 'Photo'
 	}
 	
 	this.collectionModelMatch = {
 		'posts' : 'Post',
-		'users' : 'User'
+		'users' : 'User',
+		'photos' : 'Photo'
 	}	
 			
 }

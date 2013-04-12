@@ -1,8 +1,7 @@
 define([
 	'bb',
-	'views/post',
 	'text!templates/item.html'
-],function(Backbone, PostView, html){
+],function(Backbone, html){
 
 	var ItemView = Backbone.Marionette.Layout.extend({	
 		initialize : function(options){
@@ -16,8 +15,9 @@ define([
 			content : '.content'
 		},
 		onRender : function(){
-			//TODO: create a generic logic here
-			this.content.show(new PostView({ model : this.model }))
+			//TODO: create a generic logic here			
+			var View = this.model.contentView
+			this.content.show(new View({ model : this.model }))
 		}
 	})
 	

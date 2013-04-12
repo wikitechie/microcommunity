@@ -41,7 +41,7 @@ define([
 
 		//connecting publisher and stream
 		if (App.currentUser){
-			App.vent.on('publisher:post:new', function(post){				
+			App.vent.on('publisher:newitem', function(post){				
 				post.save({}, {
 					success : function(model){
 						App.items.add(model, { at : 0 }) 

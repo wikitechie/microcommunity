@@ -1,9 +1,17 @@
 define([
 	'bb',
-	'models/item',	
-], function(Backbone, Item){
+	'models/item',
+	'views/post'
+], function(Backbone, Item, PostView){
 
 	var Post = Item.extend({
+	
+		urlRoot : function(){
+			var base = Post.__super__.urlRoot.apply(this, arguments)
+			return base	+ '/posts'		
+		},
+		
+		contentView : PostView,	
 
 		msg : function(){			
 			var msg
