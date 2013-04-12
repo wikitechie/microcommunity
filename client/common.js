@@ -53,10 +53,12 @@ requirejs.config({
 if (typeof server != 'undefined' ){
 	if (server.appName){
 		requirejs(['apps/' + server.appName ], function(app){	
-			if (app){
-				App = app
-				App.start(server)	
-			}	
+			$(function () {
+				if (app){
+					App = app
+					App.start(server)	
+				}				
+			})			
 		})	
 	}	
 }

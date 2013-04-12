@@ -1,66 +1,61 @@
 define([
 	'bb',
 	'models/post',	
-	'text!templates/publisher.html'
-],function(Backbone, Post, html){
+	'text!templates/publisher.html', 
+	'views/post_publisher'
+], function(Backbone, Post, html, PostPublisher){
 
-	var PublisherView = Backbone.Marionette.ItemView.extend({
-				
-		template : html,
-		ui : {
-			input : '#new-post',
-			button : '#publish-button',
-			spinner : '.spinner'
-		},		
-		events : {
-			'click #publish-button' : 'newPost',
-			'click #new-post' : 'expand'
-		},	
-			
-		initialize : function(options){
+	var publishers = [ PostPublisher ]
+	
+	function getPublisher(identifier){
+		_.find(publishers, function(pub){ pub.identifier = identifier })
+	}
+		
+	function getFinalTemplate(){
+		var container = $('<div>')		
+		container.append(html)	
+		publishers.forEach(function(publisher){
+			container.find('.nav-tabs')
+				.append("<li><a href='#"+publisher.identifier+"'>"+publisher.label+"</a></li>")
+			container.find('.tab-content')
+				.append("<div class='tab-pane' id='"+publisher.identifier+"'></div>")
+		})		
+		return container.html()
+	}
+	
+	function getRegions(){
+		var regions = {}
+		publishers.forEach(function(publisher){
+			regions[publisher.identifier] = '.tab-pane#'	+ publisher.identifier						
+		})
+		return regions		
+	}
+
+	var PublisherContainer = Backbone.Marionette.Layout.extend({				
+		template : getFinalTemplate(),
+		initialize : function(options){		
 			if (options && options.wall){
 				this.wall = options.wall
-			}							
+			}	
 		},
-					
-		newPost : function(){					
-			this.disable()			
-			var post = new Post()			
-			post.set({
-				content : this.ui.input.val(),
-				wall : this.wall.id,
-				author : App.currentUser.id
-			})
-			
-			App.vent.trigger('publisher:post:new', post)			
-			var self = this			
-			App.vent.once('publisher:release', function(){
-				self.reset()
-				self.enable()
-			})			
-		},
-		
-		expand : function(){
-			this.ui.input.attr("rows","3")			
-		},
-		
-		reset : function(){
-			this.ui.input.val("")
-		},
-		
-		disable : function(){
-			this.ui.input.prop("disabled", true)
-			this.ui.button.addClass('disabled')
-			this.ui.spinner.spin()
-		},
-		
-		enable : function(){
-			this.ui.input.prop("disabled", false)
-			this.ui.button.removeClass('disabled')
-			this.ui.spinner.spin(false)				
-		}		
+		regions : getRegions(),				
+		onRender : function(){
+			var self = this		
+			$(function () {
+				$('#publisher-tab a').click(function(e){
+					e.preventDefault()
+					$(this).tab('show')
+				})				
+				publishers.forEach(function(publisher){
+					self[publisher.identifier].show(new publisher.view({
+						container : self					
+					}))
+				})
+				$('#publisher-tab a:first').tab('show')											
+			})		
+		}
 	})	
 	
-	return PublisherView
+	return PublisherContainer
 	
 })
