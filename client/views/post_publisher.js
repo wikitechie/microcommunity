@@ -1,6 +1,6 @@
 define([
 	'bb',
-	'models/post',	
+	'modules/post/model',	
 	'text!templates/post_publisher.html'
 ],function(Backbone, Post, html){
 

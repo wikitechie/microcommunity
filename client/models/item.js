@@ -26,8 +26,8 @@ define([
 		
 		subModelTypeAttribute : 'itemType',
 		subModelTypes : {
-			'post' : 'Core.Post',
-			'photo' : 'Core.Photo'
+			'post' : 'Core.Item.Post',
+			'photo' : 'Core.Item.Photo'
 		},
 		defaults : {
 			objectType : 'item'

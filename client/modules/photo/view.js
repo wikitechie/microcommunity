@@ -1,6 +1,6 @@
 define([
 	'bb',
-	'text!templates/photo.html'
+	'text!./template.html'
 ],function(Backbone, html){
 
 	var PhotoView = Backbone.Marionette.ItemView.extend({	

@@ -1,6 +1,6 @@
 define([
 	'bb',
-	'text!templates/post.html'
+	'text!./template.html'
 ],function(Backbone, html){
 
 	var PostView = Backbone.Marionette.ItemView.extend({	

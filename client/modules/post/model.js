@@ -1,7 +1,7 @@
 define([
 	'bb',
 	'models/item',
-	'views/post'
+	'./view'
 ], function(Backbone, Item, PostView){
 
 	var Post = Item.extend({

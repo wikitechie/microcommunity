@@ -1,6 +1,6 @@
 define([
 	'bb',
-	'models/photo',	
+	'modules/photo/model',	
 	'text!templates/photo_publisher.html'
 ],function(Backbone, Photo, html){
 

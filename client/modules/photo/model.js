@@ -1,7 +1,7 @@
 define([
 	'bb',
 	'models/item',	
-	'views/photo',		
+	'./view',		
 ], function(Backbone, Item, PhotoView){
 	var Photo = Item.extend({	
 		urlRoot : function(){
