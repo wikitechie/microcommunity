@@ -101,7 +101,7 @@ app.get('/profiles/:id', function(req, res){
 		Wall.loadItems(user.wall, function(err, wall){	
 			res.loadPage('profile', {
 				user : user, 
-				wall : wall 
+				items : wall.items 
 			})
 		})			
 	})	

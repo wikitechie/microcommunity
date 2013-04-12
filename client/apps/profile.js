@@ -24,14 +24,15 @@ define([
 		
 		//creating and showing publisher	
 		if (App.currentUser){
+			var user = new Core.User(server.data.user)
 			var publisher = new Views.PublisherView({
-				wall : new Core.Wall(server.data.wall)
+				wall : user.get('wall')
 			})
 			App.mainStream.publisher.show(publisher)			
 		}
 		
-		//creating and showing items		
-		App.items = new Core.Items(server.data.wall.items, { type : 'wall' })
+		//creating and showing items	
+		App.items = new Core.Items(server.data.items, { type : 'stream' })
 		
 		var items = new Views.ItemsView({	
 			collection : App.items
@@ -41,7 +42,7 @@ define([
 
 		//connecting publisher and stream
 		if (App.currentUser){
-			App.vent.on('publisher:post:new', function(post){				
+			App.vent.on('publisher:newitem', function(post){				
 				post.save({}, {
 					success : function(model){
 						App.items.add(model, { at : 0 }) 

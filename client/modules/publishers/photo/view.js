@@ -1,10 +1,10 @@
 define([
 	'bb',
-	'modules/post/model',	
-	'text!templates/post_publisher.html'
-],function(Backbone, Post, html){
+	'modules/photo/model',	
+	'text!./template.html'
+],function(Backbone, Photo, html){
 
-	var PostPublisher = Backbone.Marionette.ItemView.extend({
+	var PhotoPublisher = Backbone.Marionette.ItemView.extend({
 	
 		initialize : function(options){
 			this.container = options.container
@@ -25,14 +25,14 @@ define([
 					
 		newPost : function(){					
 			this.disable()			
-			var post = new Post()			
-			post.set({
+			var photo = new Photo()			
+			photo.set({
 				content : this.ui.input.val(),
 				wall : this.container.wall.id,
 				author : App.currentUser.id
 			})
 			
-			App.vent.trigger('publisher:newitem', post)			
+			App.vent.trigger('publisher:newitem', photo)			
 			var self = this			
 			App.vent.once('publisher:release', function(){
 				self.reset()
@@ -62,9 +62,9 @@ define([
 	})	
 	
 	return { 
-		label : 'Post', 
-		identifier : 'post', 
-		view : PostPublisher 
+		label : 'Photo', 
+		identifier : 'photo', 
+		view : PhotoPublisher 
 	}	
 	
 })

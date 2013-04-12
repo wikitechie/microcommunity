@@ -22,10 +22,6 @@ define([
 		Items : Items,
 		Wall : Wall
 	}
-		
-	//building an instance in order to setup relations	
-	var post = new Core.Item.Post()
-	var photo = new Core.Item.Photo()
 	
 	return Core
 	
