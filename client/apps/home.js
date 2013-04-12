@@ -1,64 +1,32 @@
 define([
 	'models/core',
-	'views/core'
-], function(Core, Views){
+	'modules/publisher',
+	'modules/stream'
+], function(Core, publiserhModule, streamModule){
 
 	var App = new Backbone.Marionette.Application()	
-		
+	
+	App.currentUser = new Core.User(server.currentUser)
+
 	App.addRegions({
-		mainRegion : '#social-stream'
+		publisher : '#publisher-region',
+		stream : '#stream-region'
 	})
 	
-	//login	
-	App.addInitializer(function(server){
-		if (server.currentUser){
-			App.currentUser = new Core.User(server.currentUser)
-		}	
-	})	
-	
-	//stream 
-	App.addInitializer(function(server){
-	
-		App.mainStream = new Views.ItemsLayout()
-		App.mainRegion.show(App.mainStream)
-		
-		//creating and showing publisher	
-		if (App.currentUser){
-			var publisher = new Views.PublisherView({
-				wall : App.currentUser.get('wall')
-			})
-			App.mainStream.publisher.show(publisher)			
-		}
-		
-		//creating and showing items	
-		App.items = new Core.Items(server.data.items, { type : 'stream' })
-		
-		var items = new Views.ItemsView({	
-			collection : App.items
+	if (App.currentUser.id){
+		var Publisher = publiserhModule(App, App.currentUser.get('wall'), function(view){
+			App.publisher.show(view)
 		})
-					
-		App.mainStream.items.show(items)
-
-		//connecting publisher and stream
-		if (App.currentUser){
-			App.vent.on('publisher:newitem', function(post){				
-				post.save({}, {
-					success : function(model){
-						App.items.add(model, { at : 0 }) 
-						App.vent.trigger('publisher:release')
-					}, 
-					error : function(model, xhr, options){
-						console.log('error')
-						console.log(model.toJSON())
-					},								
-				})		
-			})		
-		}
-				
-
-					
-	})	
-
+		
+		App.vent.on('publisher:newitem', function(item){				
+			Stream.add(item) 
+		})		
+	}
+		
+	var Stream = streamModule(App, { items : server.data.items, type : 'stream' }, function(view){
+		App.stream.show(view)
+	})
+		
 	return App
 	
 });

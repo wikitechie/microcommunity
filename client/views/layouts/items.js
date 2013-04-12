@@ -7,7 +7,7 @@ define([
 		template : html,
 		regions : {
 			publisher : '#publisher',
-			items : '#items'
+			stream : '#stream'
 		}
 	})
 	

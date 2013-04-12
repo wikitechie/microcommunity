@@ -30,14 +30,20 @@ define([
 				content : this.ui.input.val(),
 				wall : this.container.wall.id,
 				author : App.currentUser.id
-			})
+			})	
 			
-			App.vent.trigger('publisher:newitem', post)			
-			var self = this			
-			App.vent.once('publisher:release', function(){
-				self.reset()
-				self.enable()
-			})			
+			var self = this							
+			post.save({}, {
+				success : function(model){
+					App.vent.trigger('publisher:newitem', post)	
+					self.reset()
+					self.enable()											
+				}, 
+				error : function(model, xhr, options){
+					alert('error')
+					self.enable()					
+				},								
+			})		
 		},
 		
 		expand : function(){
