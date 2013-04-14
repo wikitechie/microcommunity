@@ -25,8 +25,6 @@ require('./models/wall')
 require('./models/stream')
 require('./models/item')
 
-
-
 var Wall = mongoose.model('Wall')
 var Item = mongoose.model('Item')
 var User = mongoose.model('User')
@@ -39,6 +37,11 @@ require('./passport')
 
 //app setup and configuration
 var app = express.createServer();
+
+var photosApp = require('./lib/photos')
+app.use(photosApp)
+var postsApp = require('./lib/posts')
+app.use(postsApp)
 
 app.configure(function(){
 
@@ -106,39 +109,6 @@ app.get('/profiles/:id', function(req, res){
 		})			
 	})	
 })
-
-//api
-app.post('/api/walls/:id/items/posts', function(req, res){
-
-	var post = new Post({
-		content : req.body.content,
-		author : req.body.author,
-		wall : req.body.wall,
-	})	
-
-	post.save(function(err){
-		res.send(post)
-	})
-})
-
-//api
-app.post('/api/walls/:id/items/photos', function(req, res){
-
-	var photo = new Photo({
-		content : req.body.content,
-		author : req.body.author,
-		wall : req.body.wall,
-	})	
-
-	photo.save(function(err){
-		Photo.findById(photo.id, function(){
-			res.send(photo)						
-		})	
-	})
-	
-})
-
-
 
 
 //loading api
