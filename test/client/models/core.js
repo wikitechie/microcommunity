@@ -1,5 +1,5 @@
 define([
-	'models/core'
+	'models/index'
 ], function(Core) {		
 
 	describe('User Model', function(){

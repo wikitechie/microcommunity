@@ -33,7 +33,18 @@ models.on('user:new', function(user){
 	})
 })
 
-
 module.exports = models
+
+mongoose.connect('mongodb://localhost/test')
+
+require('./user')
+require('./post')
+require('./photo')
+require('./wall')
+require('./stream')
+require('./item')
+
+
+
 
 
