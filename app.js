@@ -4,17 +4,9 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
-  , http = require('http')
   , fs = require('fs')
-  , passport = require('passport')  
-  , flash = require('connect-flash')
-  , _ = require('underscore')
-  , async = require('async')
-  , Resource = require('express-resource')
   , mongoose = require('mongoose')
   , models = require('./models')
-  , async = require('async')
 
 mongoose.connect('mongodb://localhost/test');
 
@@ -25,23 +17,17 @@ require('./models/wall')
 require('./models/stream')
 require('./models/item')
 
-var Wall = mongoose.model('Wall')
-var Item = mongoose.model('Item')
-var User = mongoose.model('User')
-var Post = mongoose.model('Post')
-var Photo = mongoose.model('Photo')
-var Stream = mongoose.model('Stream')
-
-//setting up passport before app configuration
-require('./passport')
-
 //app setup and configuration
 var app = express.createServer();
 
 var photosApp = require('./lib/photos')
-app.use(photosApp)
 var postsApp = require('./lib/posts')
-app.use(postsApp)
+var profileApp = require('./lib/profile')
+var homeApp = require('./lib/home')
+var authenticationApp = require('./lib/authentication')
+var registrationApp = require('./lib/registration')
+var passport = require('./lib/passport')
+
 
 app.configure(function(){
 
@@ -57,62 +43,36 @@ app.configure(function(){
 			});
 		}	
 		next()
-	})     
+	})	
+
+	app.use(passport)
+
+	app.use(homeApp)
+	app.use(photosApp)
+	app.use(postsApp)	
+	app.use(profileApp)
+	app.use(authenticationApp)
+	app.use(registrationApp)	
 	
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/templates');
   app.set('view engine', 'jade');
   app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser('keyboard cat'));
-  app.use(flash());
-  app.use(express.session());  
-  app.use(passport.initialize());
-  app.use(passport.session());  
+  app.use(express.logger('dev'));  
+ 
   app.use(app.router);
+  
   app.use(express.static(__dirname + '/static'));
-  app.use('/client', express.static(__dirname + '/client-built'));      
+  //app.use('/client', express.static(__dirname + '/client-built'));      
   app.use('/client', express.static(__dirname + '/client'));      
   app.use('/test',express.static(__dirname + '/test/client'));   
-  app.use('/shared', express.static(__dirname + '/shared'))  
+  app.use('/shared', express.static(__dirname + '/shared')) 
+   
 })
 
 app.configure('development', function(){
   app.use(express.errorHandler());
 })
-
-//authentication pages
-var auth = require('./routes/auth');
-auth.install(app);
-
-
-var ObjectId = mongoose.Types.ObjectId
-
-//main app
-app.get('/', function(req, res){	
-	Stream.globalStream(function(err, items){
-		res.loadPage('home', { items : items })	
-	})	
-})
-
-//profile app
-app.get('/profiles/:id', function(req, res){	
-	var id = req.params.id	
-	User.findById(id, function(err, user){
-		Wall.loadItems(user.wall, function(err, wall){	
-			res.loadPage('profile', {
-				user : user, 
-				items : wall.items 
-			})
-		})			
-	})	
-})
-
-
-//loading api
-//app.resource('api/posts', require('./api/posts'));
 
 //providing libraries for client testing
 if(app.get('env') == 'test'){
@@ -132,8 +92,6 @@ if(app.get('env') == 'test'){
 		fs.createReadStream(__dirname + '/node_modules/chai/chai.js').pipe(res);
 	});		
 }
-
-
 
 app = app.listen(3000);
 

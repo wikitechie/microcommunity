@@ -14,7 +14,7 @@ define([
 	})
 	
 	if (App.currentUser.id){
-		var profileUser = new Core.User(server.data.user)
+		var profileUser = Core.User.findOrCreate(server.data.user)
 		var Publisher = publiserhModule(App, profileUser.get('wall'), function(view){
 			App.publisher.show(view)
 		})

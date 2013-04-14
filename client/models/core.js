@@ -2,8 +2,8 @@ define([
 	'models/user',
 	'models/item',
 	'models/items',	
-	'modules/post/model',
-	'modules/photo/model',
+	'modules/post-item/model',
+	'modules/photo-item/model',
 	'models/wall',
 	'jquery',
 	'bb'
