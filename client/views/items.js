@@ -3,7 +3,6 @@ define([
 	'views/item',
 	'text!templates/items.html'
 ],function(Backbone, ItemView, html){
-
 	var ItemsView = Backbone.Marionette.CompositeView.extend({
 		template : html,
 		itemView : ItemView,
@@ -17,14 +16,7 @@ define([
 				else 
 					collectionView.$('#items-collection').append(itemView.el)					
 			}		
-		},
-		
-		/* itemViewOptions: function(model, index){
-			return { parentType : this.collection.type }
-		}	*/
-		 
-	})
-	
-	return ItemsView
-	
+		}		 
+	})	
+	return ItemsView	
 })

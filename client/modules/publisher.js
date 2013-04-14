@@ -1,9 +1,8 @@
 define([
   "bb",
-	'views/core'  
+	'views/index'  
 ], function(Backbone, Views){
-  return function(App, wall, callback){
-  
+  return function(App, wall, callback){  
 		return App.module('Publisher', function(Publisher, App){
 			Publisher.addInitializer(function(){
 				if (App.currentUser){
@@ -13,8 +12,6 @@ define([
 					callback(publisher)		
 				}				
 			})
-		})
-		  	
-	}
-	  
+		})		  	
+	}	  
 })
