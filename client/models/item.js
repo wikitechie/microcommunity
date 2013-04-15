@@ -7,8 +7,12 @@ define([
 		idAttribute : '_id',
 		
 		//TODO validate author and wall: validate : function(){}
-			
+		
 		urlRoot : function(){
+			return this.baseUrlRoot() + '/' + this.collection
+		},
+			
+		baseUrlRoot : function(){
 			return '/api/walls/' + this.get('wall').id + '/items'
 		},
 		
@@ -25,10 +29,7 @@ define([
 		},		
 		
 		subModelTypeAttribute : 'itemType',
-		subModelTypes : {
-			'post' : 'Core.Item.Post',
-			'photo' : 'Core.Item.Photo'
-		},
+		subModelTypes : server.itemModulesInfo.subModelTypes,
 		defaults : {
 			objectType : 'item'
 		},

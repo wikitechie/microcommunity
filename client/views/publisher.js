@@ -1,8 +1,8 @@
 define([
 	'bb',
 	'text!templates/publisher.html', 
-	'modules/post-publisher/view',
-	'modules/photo-publisher/view'
+	'views/publishers/post',
+	'views/publishers/photo'
 ], function(Backbone, html, PostPublisher, PhotoPublisher){
 
 	var publishers = [ PostPublisher, PhotoPublisher ]

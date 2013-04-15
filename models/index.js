@@ -15,12 +15,16 @@ function Models() {
 		'photo' : 'Photo'
 	}
 	
+	this.modelObjectMatch = {
+		'Post' : 'post',
+		'Photo' : 'photo'	
+	}
+	
 	this.collectionModelMatch = {
 		'posts' : 'Post',
 		'users' : 'User',
 		'photos' : 'Photo'
-	}	
-			
+	}		
 }
 
 util.inherits(Models, EventEmitter)

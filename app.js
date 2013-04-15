@@ -5,17 +5,13 @@
 
 var express = require('express')
   , models = require('./models')
-
+  , mc = require('./microcommunity')  
+  
 //app setup and configuration
-var app = express.createServer()
+var app = express()
 
-var photosApp = require('./lib/photos')
-var postsApp = require('./lib/posts')
-var profileApp = require('./lib/profile')
-var homeApp = require('./lib/home')
-var authenticationApp = require('./lib/authentication')
-var registrationApp = require('./lib/registration')
-var passport = require('./lib/passport')
+var basic = require('./lib/basic')
+var auth = require('./lib/auth')
 var utils = require('./lib/utils')
 
 app.configure(function(){
@@ -27,22 +23,20 @@ app.configure(function(){
 				server : {
 					appName: app,
 					data: data || {},
-					currentUser: req.user			
+					currentUser: req.user,
+					itemModulesInfo : mc.exportItemsModulesForClient()
 				}
-			});
+			})
 		}	
 		next()
 	})	
 
 	//microcommunity modules
-	app.use(passport)
-	app.use(homeApp)
-	app.use(photosApp)
-	app.use(postsApp)	
-	app.use(profileApp)
-	app.use(authenticationApp)
-	app.use(registrationApp)	
+	app.use(auth) //should be used first	
+	app.use(basic)
 	
+  //microcommunity util module 
+  app.use(utils.test)	
 	
 	//express modules
   app.set('port', process.env.PORT || 3000)
@@ -52,12 +46,8 @@ app.configure(function(){
   app.use(express.logger('dev')) 
   app.use(app.router)  
   app.use(express.static(__dirname + '/static'))
-  app.use('/client', express.static(__dirname + '/client-built'))     
-  app.use('/client', express.static(__dirname + '/client'))  
-  
-  //microcommunity util module 
-  app.use(utils.test)
-   
+  app.use('/client', express.static('client-built'))     
+  app.use('/client', express.static('client'))   
 })
 
 app.configure('development', function(){

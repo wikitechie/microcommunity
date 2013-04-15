@@ -1,21 +1,17 @@
 define([
 	'models/user',
 	'models/item',
-	'models/items',	
-	'modules/post-item/model',
-	'modules/photo-item/model',
+	'models/items',
+	'models/items-index',
 	'models/wall',
 	'jquery',
 	'bb'
-], function(User, Item, Items, Post, Photo, Wall, $, Backbone){
+], function(User, Item, Items, ItemsIndex, Wall, $, Backbone){
 	
 	//defining Core as a global variable. This is important to make BackboneRelations functional
 	
-	_.extend(Item, {
-		Post : Post,
-		Photo : Photo,	
-	})
-	
+	_.extend(Item, ItemsIndex)
+		
 	Core = {
 		User : User,
 		Item : Item,
