@@ -10,6 +10,5 @@ app.configure(function(){
 	app.use(passport)
 	app.use(authenticationApp)
 	app.use(registrationApp)	
-
 })
 

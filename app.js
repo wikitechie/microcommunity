@@ -1,7 +1,7 @@
-var microcommunity = require('./core')
+var microcommunity = require('./microcommunity')
 	, basic = require('./lib/basic')
 
-var app = microcommunity()
+var app = microcommunity.core()
 
 //instaling plugins
 app.use(basic)	

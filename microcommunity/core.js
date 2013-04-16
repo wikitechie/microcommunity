@@ -4,30 +4,13 @@
  */
 
 var express = require('express')
-  , models = require('./models')
-  , mc = require('./microcommunity')  
   
 module.exports = function(){ 
 	//app setup and configuration
-	var app = module.exports = express()
+	var app = express()
 
 	var auth = require('./lib/auth')
 	var utils = require('./lib/utils')
-
-	//a middleware for rendering pages while passing js data to the client
-	app.use(function(req, res, next){
-		res.loadPage = function (app, data){
-			res.render(app, { 
-				server : {
-					appName: app,
-					data: data || {},
-					currentUser: req.user,
-					itemModulesInfo : mc.exportItemsModulesForClient()
-				}
-			})
-		}	
-		next()
-	})	
 
 	//microcommunity modules
 	app.use(auth) //should be used first

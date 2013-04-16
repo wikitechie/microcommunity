@@ -1,12 +1,9 @@
 
 var express = require('express')
 	, passport = require('passport')	
+	, plugin = require('./../../../plugin')
 
-var app = module.exports = express.createServer()
-
-app.configure(function(){
-  app.set('views', __dirname + '/views')
-})
+var app = module.exports = plugin(__dirname)
 
 app.get('/login', function(req, res){
 	res.loadPage('login', {

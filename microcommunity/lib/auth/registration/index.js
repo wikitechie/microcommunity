@@ -3,8 +3,9 @@ var express = require('express')
 	, passport = require('passport')	
 	, mongoose = require('mongoose')
 	, User = mongoose.model('User')
+	, plugin = require('./../../../plugin')	
 
-var app = module.exports = express.createServer()
+var app = module.exports = plugin(__dirname)
 
 app.configure(function(){
   app.set('views', __dirname + '/views')
