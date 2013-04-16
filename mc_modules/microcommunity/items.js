@@ -1,5 +1,4 @@
-var express = require('express')
-	, _ = require('underscore')
+var _ = require('underscore')
 	, models = require('./models')
 
 var itemsModules = [

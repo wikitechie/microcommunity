@@ -1,9 +1,8 @@
 
-var express = require('express')
-	, passport = require('passport')	
+var passport = require('passport')	
 	, mongoose = require('mongoose')
 	, User = mongoose.model('User')
-	, plugin = require('./../../../plugin')	
+	, plugin = require('microcommunity').plugin
 
 var app = module.exports = plugin(__dirname)
 

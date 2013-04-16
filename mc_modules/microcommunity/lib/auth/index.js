@@ -1,6 +1,6 @@
 var express = require('express')
 
-var app = module.exports = express.createServer()
+var app = module.exports = express()
 
 var authenticationApp = require('./authentication')
 var registrationApp = require('./registration')

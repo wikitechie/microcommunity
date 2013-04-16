@@ -1,5 +1,5 @@
-var microcommunity = require('./microcommunity')
-	, basic = require('./lib/basic')
+var microcommunity = require('microcommunity')
+	, basic = require('microcommunity-basic')
 
 var app = microcommunity.core()
 

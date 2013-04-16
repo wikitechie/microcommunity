@@ -1,7 +1,6 @@
 
-var express = require('express')
-	, passport = require('passport')	
-	, plugin = require('./../../../plugin')
+var passport = require('passport')	
+	, plugin = require('microcommunity').plugin
 
 var app = module.exports = plugin(__dirname)
 

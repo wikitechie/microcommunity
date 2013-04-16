@@ -1,6 +1,6 @@
 
 var express = require('express')
-  , mc = require('./../../core/microcommunity')  
+  , items = require('./items')  
 
 module.exports = function(path){
 
@@ -16,9 +16,9 @@ module.exports = function(path){
 					appName: appName,
 					data: data || {},
 					currentUser: req.user,
-					itemModulesInfo : mc.exportItemsModulesForClient()
+					itemModulesInfo : items.exportItemsModulesForClient()
 				}
-				app.set('views', viewsPath)									
+				app.set('views', viewsPath)
 				res.render(appName, { server : serverData }, function(err, html){
 					if (err) {
 						next(err)

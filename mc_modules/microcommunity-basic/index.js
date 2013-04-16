@@ -1,5 +1,5 @@
 
-var microcommunity = require('./../../microcommunity')
+var microcommunity = require('microcommunity')
 	, mongoose = require('mongoose')
 	, Stream = mongoose.model('Stream')
 	, User = mongoose.model('User')
