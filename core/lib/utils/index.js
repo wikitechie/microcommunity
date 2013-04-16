@@ -6,17 +6,17 @@ var express = require('express')
 
 var app = module.exports.test = express.createServer();
 
-var rootPath = path.normalize(__dirname + '/../..')
+var rootPath = path.normalize(__dirname + '/../../..')
 
 app.configure(function(){
-  app.use('/test', express.static(rootPath + '/test/client'));        
+  app.use('/test', express.static(rootPath + '/core/test/client'));        
 })
 
 //providing libraries for client testing
 if(app.get('env') == 'test'){
 
 	app.get('/test', function(req, res){
-		fs.createReadStream(rootPath + '/test/client/runner.html').pipe(res);
+		fs.createReadStream(rootPath + '/core/test/client/runner.html').pipe(res);
 	});
 
 	app.get('/sandbox', function(req, res){
