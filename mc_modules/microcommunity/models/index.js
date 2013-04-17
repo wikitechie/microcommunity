@@ -7,35 +7,33 @@ var util = require('util')
 function Models() { 
 	this.objectCollectionMatch = {
 		'post' : 'posts',
-		'photo' : 'photos'
+		'photo' : 'photos',
+		'user' : 'users'
 	}
 	
 	this.objectModelMatch = {
 		'post' : 'Post',
-		'photo' : 'Photo'
+		'photo' : 'Photo',
+		'user' : 'User'
 	}
 	
 	this.modelObjectMatch = {
 		'Post' : 'post',
-		'Photo' : 'photo'	
+		'Photo' : 'photo',
+		'User' : 'user'
 	}
 	
 	this.collectionModelMatch = {
 		'posts' : 'Post',
 		'users' : 'User',
-		'photos' : 'Photo'
+		'photos' : 'Photo',
+		'users' : 'User'
 	}		
 }
 
 util.inherits(Models, EventEmitter)
 
 var models = new Models()
-
-models.on('user:new', function(user){
-	var owner = new mongoose.Types.DBRef('users', user._id)
-	mongoose.model('Wall').findByIdAndUpdate(user.wall, { $set : { owner : owner } }, function(err, wall){
-	})
-})
 
 module.exports = models
 

@@ -34,7 +34,7 @@ requirejs.config({
   		exports : "_"
   	},  
   	'jquery' : {
-  		exports : 'jQuery'
+  		exports : '$'
   	},  	
   	'jquery.gravatar' : ['jquery', 'md5'],
   	'jquery.spin' : ['jquery', 'spin'],
@@ -53,10 +53,12 @@ requirejs.config({
 if (typeof server != 'undefined' ){
 	if (server.appName){
 		requirejs(['apps/' + server.appName ], function(app){	
-			if (app){
-				App = app
-				App.start(server)	
-			}				
+			$(function(){
+				if (app){
+					App = app
+					App.start(server)	
+				}				
+			})						
 		})	
 	}	
 }

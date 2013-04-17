@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 	, models = require('./index')
-	, itemable = require('./itemable')
+	, itemable = require('./plugins/itemable')
 
 var schemaOptions = {
   toJSON: {
