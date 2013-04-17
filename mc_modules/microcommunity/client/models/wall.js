@@ -9,7 +9,10 @@ define([
 			switch(this.get('owner').$ref){
 				case 'users':
 					return "/profiles/" + this.get('owner').$id	
-					break		
+					break	
+				case 'wikipages':
+					return "/wiki/" + this.get('owner').$id	
+					break							
 			}
 		},				
 		serialize : function(){

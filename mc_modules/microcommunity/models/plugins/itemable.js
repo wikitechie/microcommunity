@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-	, models = require('./index')
+	, models = require('./../index')
 	, _ = require('underscore')
 
 module.exports = function Itemable(schema, options){

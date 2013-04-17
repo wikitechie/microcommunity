@@ -8,26 +8,30 @@ function Models() {
 	this.objectCollectionMatch = {
 		'post' : 'posts',
 		'photo' : 'photos',
-		'user' : 'users'
+		'user' : 'users',
+		'wikipage' : 'wikipages'
 	}
 	
 	this.objectModelMatch = {
 		'post' : 'Post',
 		'photo' : 'Photo',
-		'user' : 'User'
+		'user' : 'User',
+		'wikipage' : 'Wikipage'		
 	}
 	
 	this.modelObjectMatch = {
 		'Post' : 'post',
 		'Photo' : 'photo',
-		'User' : 'user'
+		'User' : 'user',
+		'Wikipage' : 'wikipage'		
 	}
 	
 	this.collectionModelMatch = {
 		'posts' : 'Post',
 		'users' : 'User',
 		'photos' : 'Photo',
-		'users' : 'User'
+		'users' : 'User',
+		'wikipages' : 'Wikipage'
 	}		
 }
 
@@ -39,12 +43,16 @@ module.exports = models
 
 mongoose.connect('mongodb://localhost/test')
 
-require('./user')
+require('./item')
 require('./post')
 require('./photo')
+
 require('./wall')
+require('./user')
+require('./wikipage')
+
 require('./stream')
-require('./item')
+
 
 
 

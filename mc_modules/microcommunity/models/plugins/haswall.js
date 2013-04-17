@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-	, models = require('./index')
+	, models = require('./../index')
 
 module.exports = function hasWall(schema, options){
 
