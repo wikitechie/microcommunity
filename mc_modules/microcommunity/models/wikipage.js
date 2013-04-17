@@ -3,7 +3,8 @@ var mongoose = require('mongoose')
 	, hasWall = require('./plugins/haswall')	
 
 var wikipageSchema = new mongoose.Schema({
-	title: String
+	title: String,
+	content : String
 })
 
 wikipageSchema.virtual('objectType').get(function(){ return 'wikipage' })
