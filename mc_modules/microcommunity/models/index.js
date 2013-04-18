@@ -9,21 +9,24 @@ function Models() {
 		'post' : 'posts',
 		'photo' : 'photos',
 		'user' : 'users',
-		'wikipage' : 'wikipages'
+		'wikipage' : 'wikipages',
+		'activity' : 'activities'
 	}
 	
 	this.objectModelMatch = {
 		'post' : 'Post',
 		'photo' : 'Photo',
 		'user' : 'User',
-		'wikipage' : 'Wikipage'		
+		'wikipage' : 'Wikipage',
+		'activity' : 'Activity'		
 	}
 	
 	this.modelObjectMatch = {
 		'Post' : 'post',
 		'Photo' : 'photo',
 		'User' : 'user',
-		'Wikipage' : 'wikipage'		
+		'Wikipage' : 'wikipage',
+		'Activity' : 'activity'		
 	}
 	
 	this.collectionModelMatch = {
@@ -31,7 +34,8 @@ function Models() {
 		'users' : 'User',
 		'photos' : 'Photo',
 		'users' : 'User',
-		'wikipages' : 'Wikipage'
+		'wikipages' : 'Wikipage',
+		'activities' : 'Activity'
 	}		
 }
 
@@ -51,7 +55,9 @@ require('./wall')
 require('./user')
 require('./wikipage')
 
+require('./activity')
 require('./stream')
+
 
 
 

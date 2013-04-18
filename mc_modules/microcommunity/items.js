@@ -3,7 +3,8 @@ var _ = require('underscore')
 
 var itemsModules = [
 	{ path : 'models/items/photo' , model : 'Photo' },
-	{ path : 'models/items/post' , model : 'Post' },					
+	{ path : 'models/items/post' , model : 'Post' },			
+	{ path : 'models/items/activity' , model : 'Activity' },								
 ]
 
 function subModelTypes(){

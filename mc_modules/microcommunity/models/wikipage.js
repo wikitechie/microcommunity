@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 	, models = require('./index')
-	, hasWall = require('./plugins/haswall')	
+	, hasWall = require('./plugins/haswall')
 
 var wikipageSchema = new mongoose.Schema({
 	title: String,

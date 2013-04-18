@@ -3,6 +3,7 @@ var microcommunity = require('microcommunity')
 	, mongoose = require('mongoose')
 	, Wikipage = mongoose.model('Wikipage')
 	, Wall = mongoose.model('Wall')
+	, Activity = mongoose.model('Activity')
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
@@ -29,7 +30,19 @@ app.post('/new-wikipage', function(req, res){
 	})
 	
 	wikipage.save(function(err, wikipage){
-		res.redirect('/wiki/' + wikipage.id)	
+		var dbref = new mongoose.Types.DBRef('wikipages', wikipage.id)		
+		var activity = new Activity({
+			author : req.user._id,
+			wall : wikipage.wall,
+			activityType : 'wikipage',
+			object : dbref
+		})
+		
+		activity.save(function(err, activity){
+			console.log(activity)
+			res.redirect('/wiki/' + wikipage.id)				
+		})				
+
 	})
 
 })

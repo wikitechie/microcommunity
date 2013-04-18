@@ -39,8 +39,7 @@ module.exports = function Itemable(schema, options){
 				throw new Error('Could not create item object')
 			}
 		})
-	})
-	
+	})	
 
 	//after save
 	schema.post('save', function(itemable){
