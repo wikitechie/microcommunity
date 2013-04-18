@@ -18,7 +18,9 @@ define([
 	})
 	
 	App.mainSidebar.show(new basicSidebar())
-	App.newWikipageSidebar.show(new newWikipageSidebar())	
+	if (App.currentUser.id){
+		App.newWikipageSidebar.show(new newWikipageSidebar())		
+	}	
 	
 	if (App.currentUser.id){
 		var Publisher = publiserhModule(App, App.currentUser.get('wall'), function(view){

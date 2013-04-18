@@ -21,6 +21,7 @@ requirejs.config({
     'general' : 'lib/general',
     'moment' : 'lib/moment.min',
     'diff' : 'lib/diff',
+    'activity' : 'components/activity'
   },
   
   shim: {

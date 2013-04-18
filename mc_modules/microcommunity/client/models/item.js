@@ -16,11 +16,7 @@ define([
 			return '/api/walls/' + this.get('wall').id + '/items'
 		},
 		
-		initialize : function(attr, options){
-			this.set('published', new Date())
-		},
-		
-		serialize : function(){			 
+		serialize : function(){			
 			return _.extend(this.toJSON(), {
 				author: this.get('author').serialize(),
 				wall: this.get('wall').serialize(),
@@ -28,7 +24,7 @@ define([
 			})
 		},		
 		
-		subModelTypeAttribute : 'itemType',
+		subModelTypeAttribute : 'objectType',
 		subModelTypes : server.itemModulesInfo.subModelTypes,
 		defaults : {
 			objectType : 'item'

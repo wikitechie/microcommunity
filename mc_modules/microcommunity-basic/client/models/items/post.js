@@ -1,12 +1,14 @@
 define([
 	'bb',
 	'models/item',
-	'views/items/post'
-], function(Backbone, Item, PostView){
+	'views/items/post',
+	'text!templates/items/post/message.html'
+], function(Backbone, Item, PostView, messageTemplate){
 
 	var Post = Item.extend({	
 		collection : 'posts',
-		contentView : PostView
+		contentView : PostView,
+		messageTemplate : messageTemplate
 	})
 	
 	return Post

@@ -9,12 +9,15 @@ var schemaOptions = {
 }
 
 var activitySchema = new mongoose.Schema({
-	activityType  : String,
-	object : { type : mongoose.Schema.Types.DBRef }
+	wikipage : { type : mongoose.Schema.Types.ObjectId, ref : 'Wikipage' }
 }, schemaOptions)
 
-activitySchema.virtual('objectType').get(function(){ return 'activity' })
+activitySchema.pre('init', function(next, doc){
+	this.model('NewWikipageActivity').populate(doc, 'wikipage', next)	
+})
+
+activitySchema.virtual('objectType').get(function(){ return 'activity:new-wikipage' })
 
 activitySchema.plugin(itemable)
 
-var Activity = mongoose.model('Activity', activitySchema)
+var Activity = mongoose.model('NewWikipageActivity', activitySchema)

@@ -55,9 +55,5 @@ module.exports = function Itemable(schema, options){
 		mongoose.model('Item')
 			.findByIdAndUpdate(itemable.item, { $set : { object : dbref } }, function(err, item){})	
 	})
-	
-	//itemType virtual	
-	schema.virtual('itemType').get(function(){ return this.objectType })
-	
 
 }

@@ -60,9 +60,6 @@ module.exports = function hasWall(schema, options){
 	})		
 	
 	models.on('wall:update', function(wallOwner, dbref){
-		console.log('updating wall')
-		console.log(wallOwner)
-		console.log(dbref)
 		mongoose.model('Wall')
 			.findByIdAndUpdate(wallOwner.wall, { $set : { owner : dbref } }, function(err, item){})	
 	})

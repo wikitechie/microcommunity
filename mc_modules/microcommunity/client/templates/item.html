@@ -7,17 +7,7 @@
 		</div>
 		<div class="mainWrapper">
 			<p>
-				<a href="<%= author.link %>" class='email'>
-				<%= author.displayName %>								
-				</a>
-				<% if (parentType == 'stream') { %>
-					<% if (author._id != wall.owner.$id) { %>				
-					 <i class="icon-play"></i>
-					<a href="<%= wall.link %>">					 
-						<%= wall.displayName %>
-					</a>									
-					<% } %>					
-				<% } %>
+				<a href="<%= author.link %>" class='email'><%= author.displayName %></a> <span class='message'></span>
 			</p>
 			<div class ='content'></div>
 			<p><small><%= moment(published).fromNow() %></small>
