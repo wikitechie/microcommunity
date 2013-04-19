@@ -1,9 +1,10 @@
 define([
 	'bb',
 	'models/item',
+	'components/revision/views/diff',
 	'text!components/revision/templates/wall-message.html',
 	'text!components/revision/templates/stream-message.html'	
-], function(Backbone, Item, messageTemplateWall, messageTemplateStream){
+], function(Backbone, Item, DiffView, messageTemplateWall, messageTemplateStream){
 	
 	var Revision = Item.extend({
 		messageTemplate : function(type){
@@ -11,7 +12,8 @@ define([
 				return messageTemplateWall
 			else
 				return messageTemplateStream
-		}
+		},
+		contentView : DiffView
 	})		
 	return Revision
 })

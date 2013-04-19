@@ -23,6 +23,7 @@
     "underscore": "*",
     "async": "*",
     "amdefine" : "*",
+    "diff" : "*",
     "express-resource": "git://github.com/visionmedia/express-resource.git#add/express3x-support",
 	"ability": "*"
   },

@@ -1,4 +1,5 @@
 
+
 var microcommunity = require('microcommunity')
 
 require('./models/wikipage')
@@ -49,19 +50,28 @@ app.get('/wiki/:id', function(req, res){
 })
 
 app.post('/wiki/:id/edit', ensureAuthenticated, function(req, res){
-	Wikipage.findByIdAndUpdate(req.params.id, {$set : {content : req.body.content}}, function(err, wikipage){
-		var dbref = new mongoose.Types.DBRef('wikipages', wikipage.id)	
+	Wikipage.findByIdAndUpdate(req.params.id, 
+		{$set : {content : req.body.content}}, 
+		{ new:false }, 
+		function(err, wikipage){
+		
+			var dbref = new mongoose.Types.DBRef('wikipages', wikipage.id)
+			var diff = require('diff')
+			var content = req.body.content
+			var summary = req.body.summary
 				
-		var revision = new Revision({
-			content : req.body.content,
-			author : req.user._id,
-			wall : wikipage.wall,
-			wikipage : wikipage.id
-		})
+			var revision = new Revision({
+				content : content,
+				author : req.user._id,
+				wall : wikipage.wall,
+				wikipage : wikipage.id,
+				diff : diff.diffWords(wikipage.content, content),
+				summary : summary	
+			})
 	
-		revision.save(function(err, activity){
-			res.redirect('/wiki/' + wikipage.id)				
-		})
+			revision.save(function(err, activity){
+				res.redirect('/wiki/' + wikipage.id)				
+			})
 	})	
 })
 

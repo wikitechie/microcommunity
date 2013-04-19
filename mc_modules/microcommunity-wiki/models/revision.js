@@ -4,7 +4,9 @@ var mongoose = require('mongoose')
 
 var revisionSchema = new mongoose.Schema({
 	content : String,
-	wikipage : { type : mongoose.Schema.Types.ObjectId, ref : 'Wikipage' }
+	summary : String,
+	wikipage : { type : mongoose.Schema.Types.ObjectId, ref : 'Wikipage' },
+	diff : mongoose.Schema.Types.Mixed
 })
 
 revisionSchema.pre('init', function(next, doc){
