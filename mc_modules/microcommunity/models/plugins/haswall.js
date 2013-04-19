@@ -9,8 +9,8 @@ module.exports = function hasWall(schema, options){
 	if (!options.displayNameAttribute)
 		throw new Error('MicroCommunity Wall Plugin: You should provide a displayNameAttribute option')
 		
-	if (!schema.virtuals.objectType) 
-		throw new Error('MicroCommunity Wall Plugin: should have objectType attribute')		
+	//if (!schema.virtuals.objectType) 
+		//throw new Error('MicroCommunity Wall Plugin: should have objectType attribute')		
 
 	schema.add({
 		wall : { type : mongoose.Schema.Types.ObjectId, ref: 'Wall'}	
@@ -39,20 +39,10 @@ module.exports = function hasWall(schema, options){
 		})
 	})	
 	
-	/* schema.post('save', function(doc){
-		models.emit('user:new', doc)
-	})	
-
-	models.on('user:new', function(user){
-		var owner = new mongoose.Types.DBRef('users', user._id)
-		mongoose.model('Wall').findByIdAndUpdate(user.wall, { $set : { owner : owner } }, function(err, wall){
-		})
-	})*/
-	
 	//after save
 	schema.post('save', function(wallOwner){
-		//creating the corresponding dbref
-		var collection = models.objectCollectionMatch[wallOwner.objectType]		
+		//creating the corresponding dbref		
+		var collection = models.convert(wallOwner.objectType, 'object', 'collection')
 		var dbref = new mongoose.Types.DBRef(collection, wallOwner.id)
 		
 		//issuing an update event	

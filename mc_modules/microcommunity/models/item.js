@@ -14,8 +14,8 @@ var itemSchema = new mongoose.Schema({
 itemSchema.statics.fetchItems = function (query, callback){
 	this.find(query).sort({ published : -1 }).limit(10).exec(function(err, items){				
 		var dbrefs = _.pluck(items, 'object')				
-		function deref(dbref, callback){				
-			var modelName = models.collectionModelMatch[dbref.namespace]
+		function deref(dbref, callback){						
+			var modelName = models.convert(dbref.namespace, 'collection', 'model')
 			mongoose.model(modelName).findById(dbref.oid).exec(function(err, item){
 				callback(err, item.toJSON())
 			})

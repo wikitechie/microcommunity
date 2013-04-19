@@ -15,11 +15,9 @@ userSchema.statics.findByEmail = function(email, callback){
 	})
 }
 
-userSchema.virtual('objectType').get(function(){ return 'user' })
-
 userSchema.plugin(hasWall, { displayNameAttribute : 'displayName' })
 
-var User = mongoose.model('User', userSchema);
+var User = models.define('User', 'user', 'users', userSchema)
 
 
 

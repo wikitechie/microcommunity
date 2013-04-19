@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
 
 module.exports = function Itemable(schema, options){
 
-	if (!schema.virtuals.objectType) throw new Error ('Itemable: should have objectType attribute')
+	//if (!schema.virtuals.objectType) throw new Error ('Itemable: should have objectType attribute')
 
 	schema.add({
 		author : { type : mongoose.Schema.Types.ObjectId, ref : 'User' },
@@ -21,10 +21,10 @@ module.exports = function Itemable(schema, options){
 	
 	//populating options
 	schema.pre('init', function(next, doc){	
-		var objectType = schema.virtuals.objectType.getters[0]()
-		var modelName = models.objectModelMatch[objectType]
+		var objectType = schema.virtuals.objectType.getters[0]()		
+		var modelName = models.convert(objectType, 'object', 'model')
 		this.model(modelName).populate(doc, 'author wall', next)
-	})		
+	})
 	
 	//before save
 	schema.pre('save', function(next){

@@ -7,9 +7,8 @@ var wikipageSchema = new mongoose.Schema({
 	content : String
 })
 
-wikipageSchema.virtual('objectType').get(function(){ return 'wikipage' })
-
 wikipageSchema.plugin(hasWall, { displayNameAttribute : 'title' })
 
-var Wikipage = mongoose.model('Wikipage', wikipageSchema);
+models.define('Wikipage', 'wikipage', 'wikipages', wikipageSchema)
+
 

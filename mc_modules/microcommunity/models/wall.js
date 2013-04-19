@@ -19,5 +19,4 @@ wallSchema.statics.loadItems = function(id, callback){
 	})	
 }
 
-module.exports = mongoose.model('Wall', wallSchema);
-
+module.exports = mongoose.model('Wall', wallSchema)

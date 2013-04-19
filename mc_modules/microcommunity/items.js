@@ -9,8 +9,8 @@ var itemsModules = [
 
 function subModelTypes(){
 	var output = {}
-	itemsModules.forEach(function(module){	
-		var itemType = models.modelObjectMatch[module.model]
+	itemsModules.forEach(function(module){			
+		var itemType = models.convert(module.model, 'model', 'object')
 		output[itemType] = 'Core.Item.' + module.model	
 	})
 	return output
