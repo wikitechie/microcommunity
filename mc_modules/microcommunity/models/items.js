@@ -2,6 +2,8 @@ var _ = require('underscore')
 
 var itemsModules = []
 
+var publishersPaths = []
+
 function subModelTypes(){
 	var output = {}
 	var models = require('./index')			
@@ -17,6 +19,14 @@ exports.addItem = function(model, path){
 		path : path,
 		model : model
 	})
+}
+
+exports.addPublisher = function(path){
+	publishersPaths.push(path)
+}
+
+exports.exportPublishers = function(){
+	return publishersPaths
 }
 
 //the output of this function is used in models/items-index.js 

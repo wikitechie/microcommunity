@@ -10,3 +10,4 @@ postSchema.plugin(itemable, { clientPath : 'models/items/post' })
 
 models.define('Post', 'post', 'posts', postSchema)
 models.items.addItem('Post', 'models/items/post')
+models.items.addPublisher('views/publishers/post')

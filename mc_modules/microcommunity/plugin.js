@@ -1,6 +1,6 @@
 
 var express = require('express')
-  , items = require('./models/items')  
+  , models = require('./models')  
 
 module.exports = function(path){
 
@@ -16,7 +16,8 @@ module.exports = function(path){
 					appName: appName,
 					data: data || {},
 					currentUser: req.user,
-					itemModulesInfo : items.exportItemsModulesForClient()
+					itemModulesInfo : models.items.exportItemsModulesForClient(),
+					publishersPaths : models.items.exportPublishers()
 				}
 				app.set('views', viewsPath)
 				res.render(appName, { server : serverData }, function(err, html){

@@ -1,11 +1,10 @@
 define([
 	'bb',
 	'text!templates/publisher.html', 
-	'views/publishers/post',
-	'views/publishers/photo'
-], function(Backbone, html, PostPublisher, PhotoPublisher){
+	'views/publisher-index'
+], function(Backbone, html, Index){
 
-	var publishers = [ PostPublisher, PhotoPublisher ]
+	var publishers = Index
 	
 	function getPublisher(identifier){
 		_.find(publishers, function(pub){ pub.identifier = identifier })
