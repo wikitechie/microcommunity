@@ -76,10 +76,9 @@ define([
 				
 				if (ContentView.prototype.actions){	
 					var actions = new Actions(ContentView.prototype.actions)
-					var self = this
 					actions.on('all', function(action){
-						self.content.currentView.trigger('action:' + action)
-					})		
+						this.content.currentView.trigger('action:' + action)
+					}, this)		
 					this.actions.show(new ActionsView({ collection : actions }))
 				}				
 							

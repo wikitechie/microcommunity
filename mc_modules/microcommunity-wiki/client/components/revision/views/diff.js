@@ -5,7 +5,7 @@ define([
 
 	var DiffView = Backbone.Marionette.ItemView.extend({	
 		initialize : function(){
-			this.on('action:diff', this.toggle)
+			this.on('action:diff', this.toggle, this)
 		},
 		ui : {
 			comparason : '.diff-comparison'
