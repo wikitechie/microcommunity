@@ -6,7 +6,7 @@ define([
 	var App = Backbone.Marionette.Application.extend({
 		setup : function(server){
 			if (server.currentUser){
-				this.currentUser = new Models.User(server.currentUser)
+				this.currentUser = Models.User.findOrCreate(server.currentUser)
 			}			
 		}	
 	})

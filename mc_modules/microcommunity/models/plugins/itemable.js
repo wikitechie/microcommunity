@@ -46,8 +46,8 @@ module.exports = function Itemable(schema, options){
 
 	//after save
 	schema.post('save', function(itemable){
-		//creating the corresponding dbref
-		var collection = models.objectCollectionMatch[itemable.objectType]		
+		//creating the corresponding dbref		
+		var collection = models.convert(itemable.objectType, 'object', 'collection')		
 		var dbref = new mongoose.Types.DBRef(collection, itemable._id)
 		
 		//issuing an update event	

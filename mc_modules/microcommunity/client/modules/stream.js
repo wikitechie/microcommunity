@@ -11,7 +11,9 @@ define([
 			Stream.addInitializer(function(){			
 				collection = new Core.Items(options.items, { type : options.type })					
 				var items = new Views.ItemsView({	
-					collection: collection
+					collection: collection,
+					width : options.width,
+					type : options.type
 				})				
 				callback(items)							
 			})			

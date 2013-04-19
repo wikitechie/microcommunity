@@ -9,7 +9,7 @@ define([
 	var App = new MCApp()
 	App.setup(server)
 		
-	var wikipage = new Wikipage(server.data.wikipage)
+	var wikipage = Wikipage.findOrCreate(server.data.wikipage)
 		
 	App.addInitializer(function(){	
 		App.wikipage.show(new WikipageView({ model : wikipage }))
@@ -30,7 +30,7 @@ define([
 		})			
 			
 	}	
-	var Stream = streamModule(App, { items : server.data.items, type : 'wall' }, function(view){
+	var Stream = streamModule(App, { items : server.data.items, type : 'wall', width:'400px' }, function(view){
 		App.wall.show(view)
 	})	
 	

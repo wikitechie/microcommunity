@@ -15,6 +15,7 @@ var app = module.exports = microcommunity.plugin(__dirname)
 //main app
 app.get('/', function(req, res){	
 	Stream.globalStream(function(err, items){
+		console.log(items)
 		res.loadPage('home', { items : items })	
 	})	
 })
