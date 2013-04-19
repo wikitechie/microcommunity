@@ -3,11 +3,13 @@ var microcommunity = require('microcommunity')
 
 require('./models/wikipage')
 require('./models/activity')
+require('./models/revision')
 
 var mongoose = require('mongoose')
 	, Wikipage = mongoose.model('Wikipage')
 	, Wall = mongoose.model('Wall')
 	, Activity = mongoose.model('NewWikipageActivity')
+	, Revision = mongoose.model('Revision')
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
@@ -48,15 +50,16 @@ app.get('/wiki/:id', function(req, res){
 
 app.post('/wiki/:id/edit', ensureAuthenticated, function(req, res){
 	Wikipage.findByIdAndUpdate(req.params.id, {$set : {content : req.body.content}}, function(err, wikipage){
-		var dbref = new mongoose.Types.DBRef('wikipages', wikipage.id)			
-		var activity = new Activity({
+		var dbref = new mongoose.Types.DBRef('wikipages', wikipage.id)	
+				
+		var revision = new Revision({
+			content : req.body.content,
 			author : req.user._id,
 			wall : wikipage.wall,
-			activityType : 'revision',
-			object : dbref
-		})		
+			wikipage : wikipage.id
+		})
 	
-		activity.save(function(err, activity){
+		revision.save(function(err, activity){
 			res.redirect('/wiki/' + wikipage.id)				
 		})
 	})	
