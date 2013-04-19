@@ -9,6 +9,27 @@ define([
 			return this.model.serialize()	  
 		},				
 	})
+	
+	var Action = Backbone.Model.extend({})
+	var Actions = Backbone.Collection.extend({})
+	var ActionView = Backbone.Marionette.ItemView.extend({
+		tagName : 'span',
+		className : 'action',
+		events : {
+			'click a' : 'click'
+		},				
+		template : '<a href=><%= label %></a> · ',
+		model : Action,
+		click : function(e){
+			e.preventDefault()
+			this.model.collection.trigger(this.model.get('name'))
+		}
+	})				
+	var ActionsView = Backbone.Marionette.CompositeView.extend({
+		tagName : 'span',
+		template : '',
+		itemView : ActionView
+	})	
 
 	var ItemView = Backbone.Marionette.Layout.extend({	
 		initialize : function(options){
@@ -25,7 +46,8 @@ define([
 		},
 		regions : {
 			content : '.content',
-			message : '.message'
+			message : '.message',
+			actions : '.actions'
 		},		
 		defaultRenderer : function(){	
 		
@@ -50,7 +72,17 @@ define([
 			//TODO: create a generic logic here		
 			ContentView = normalizeProperty(this.model.contentView)
 			if (ContentView){
-				this.content.show(new ContentView({ model : this.model }))			
+				this.content.show(new ContentView({ model : this.model }))
+				
+				if (ContentView.prototype.actions){	
+					var actions = new Actions(ContentView.prototype.actions)
+					var self = this
+					actions.on('all', function(action){
+						self.content.currentView.trigger('action:' + action)
+					})		
+					this.actions.show(new ActionsView({ collection : actions }))
+				}				
+							
 			}
 			
 			var MessageTemplate = normalizeProperty(this.model.messageTemplate)			
@@ -61,6 +93,7 @@ define([
 				})
 				this.message.show(message)				
 			}
+
 
 		},				
 		onRender : function(){			

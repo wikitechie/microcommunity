@@ -4,7 +4,22 @@ define([
 ], function(Backbone, html){
 
 	var DiffView = Backbone.Marionette.ItemView.extend({	
-		template : html
+		initialize : function(){
+			this.on('action:diff', this.toggle)
+		},
+		ui : {
+			comparason : '.diff-comparison'
+		},
+		toggle : function(){
+			this.ui.comparason.slideToggle()
+		},
+		template : html,
+		actions : [
+			{ label : 'Difference', name : 'diff' }
+		],
+		onRender : function(){
+			this.ui.comparason.hide()
+		}	
 	})
 	
 	return DiffView

@@ -10,7 +10,10 @@
 				<a href="<%= author.link %>" class='email'><%= author.displayName %></a> <span class='message'></span>
 			</p>
 			<div class ='content'></div>
-			<p><small><%= moment(published).fromNow() %></small>
+			<p><small>
+			<span class='actions'></span>
+			 <%= moment(published).fromNow() %>
+			</small>
 			</p>
 			</div>
 		</div>

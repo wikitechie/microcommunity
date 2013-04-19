@@ -2,7 +2,7 @@ define([
 	'bb',
 	'views/item',
 	'text!templates/items.html'
-],function(Backbone, ItemView, html){
+], function(Backbone, ItemView, html){
 	var ItemsView = Backbone.Marionette.CompositeView.extend({
 		initialize : function(options){
 			this.itemViewOptions = { width : options.width, type : options.type }
@@ -19,8 +19,7 @@ define([
 				else 
 					collectionView.$('#items-collection').append(itemView.el)					
 			}		
-		}
-				 
+		}				 
 	})	
 	return ItemsView	
 })
