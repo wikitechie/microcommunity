@@ -24,10 +24,10 @@ app.get('/', function(req, res){
 app.get('/profiles/:id', function(req, res){	
 	var id = req.params.id	
 	User.findById(id, function(err, user){
-		Wall.loadItems(user.wall, function(err, wall){	
+		Wall.loadItems(user.wall, function(err, items){	
 			res.loadPage('profile', {
 				user : user, 
-				items : wall.items 
+				items : items
 			})
 		})			
 	})	

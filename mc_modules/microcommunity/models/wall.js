@@ -13,9 +13,7 @@ var wallSchema = new mongoose.Schema({
 wallSchema.statics.loadItems = function(id, callback){
 	var Item = mongoose.model('Item')	
 	this.findById(id, function(err, wall){	
-		Item.fetchItems({ wall : id }, function(err, items){		
-			callback(err, { _id : id, owner : wall.owner.oid,	items : items })					
-		})		
+		Item.fetchItems({ wall : id }, callback)		
 	})	
 }
 
