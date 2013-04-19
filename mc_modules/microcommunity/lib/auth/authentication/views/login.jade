@@ -1,6 +1,8 @@
 .row
 	.span6.offset3
-		= server.data.message
+		if server.data.message != ''
+			.alert
+				= server.data.message
 			
 		form.form-horizontal(action="/login", method="post")
 			.fieldset

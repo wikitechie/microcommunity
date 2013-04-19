@@ -6,12 +6,10 @@ define([
 		idAttribute : '_id',
 		link : function(){
 			return this.get('wall').link()
-		},
-		
+		},		
 		serialize : function(){
 			return _.extend(this.toJSON(), { link : this.link() })
-		},
-		
+		},		
 		relations : [
 			{
 				type : Backbone.HasOne,
@@ -19,9 +17,9 @@ define([
 				relatedModel : 'Core.Wall',
 				//includeInJSON : Backbone.Model.prototype.idAttribute				
 			}			
-		]		
-				
-	})	
+		]				
+	})
+	
 	return Wikipage
 	
 })

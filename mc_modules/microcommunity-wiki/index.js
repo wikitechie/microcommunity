@@ -11,7 +11,13 @@ var mongoose = require('mongoose')
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
-app.get('/wiki/new', function(req, res){	
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+	req.flash('error', 'You should be logged in to view this page')	  
+  res.redirect('/login');
+}
+
+app.get('/wiki/new', ensureAuthenticated, function(req, res){	
 	res.loadPage('wikipage-form', { 
 		edit : false, 
 		title : ( req.query.title || '' ),
@@ -19,7 +25,7 @@ app.get('/wiki/new', function(req, res){
 	})
 })
 
-app.get('/wiki/:id/edit', function(req, res){	
+app.get('/wiki/:id/edit', ensureAuthenticated, function(req, res){	
 	Wikipage.findById(req.params.id, function(err, wikipage){
 		res.loadPage('wikipage-form', { 
 			edit : true, 
@@ -40,7 +46,7 @@ app.get('/wiki/:id', function(req, res){
 	})
 })
 
-app.post('/wiki/:id/edit', function(req, res){
+app.post('/wiki/:id/edit', ensureAuthenticated, function(req, res){
 	Wikipage.findByIdAndUpdate(req.params.id, {$set : {content : req.body.content}}, function(err, wikipage){
 		var dbref = new mongoose.Types.DBRef('wikipages', wikipage.id)			
 		var activity = new Activity({
@@ -56,7 +62,7 @@ app.post('/wiki/:id/edit', function(req, res){
 	})	
 })
 
-app.post('/wiki/new', function(req, res){	
+app.post('/wiki/new', ensureAuthenticated, function(req, res){	
 	var wikipage = new Wikipage({
 		title : req.body.title,
 		content : req.body.content

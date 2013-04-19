@@ -8,7 +8,6 @@ app.get('/login', function(req, res){
 	res.loadPage('login', {
 		message : req.flash('error')
 	})
-	//res.render('login', { current_user: req.user, message: req.flash('error') })
 })
 
 app.post('/login', function(req, res, next) {

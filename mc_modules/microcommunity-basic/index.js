@@ -33,8 +33,14 @@ app.get('/profiles/:id', function(req, res){
 	})	
 })
 
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+	req.flash('error', 'You should be logged in to view this page')	  
+  res.redirect('/login');
+}
+
 //api
-app.post('/api/walls/:id/items/posts', function(req, res){
+app.post('/api/walls/:id/items/posts', ensureAuthenticated, function(req, res){
 	var post = new Post({
 		content : req.body.content,
 		author : req.body.author,
@@ -46,7 +52,7 @@ app.post('/api/walls/:id/items/posts', function(req, res){
 })
 
 //api
-app.post('/api/walls/:id/items/photos', function(req, res){
+app.post('/api/walls/:id/items/photos', ensureAuthenticated, function(req, res){
 	var photo = new Photo({
 		content : req.body.content,
 		author : req.body.author,
