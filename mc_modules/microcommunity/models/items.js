@@ -1,22 +1,18 @@
 var _ = require('underscore')
-	, models = require('./models')
 
-var itemsModules = [
-	{ path : 'models/items/photo' , model : 'Photo' },
-	{ path : 'models/items/post' , model : 'Post' },			
-	{ path : 'activity/model' , model : 'NewWikipageActivity' },								
-]
+var itemsModules = []
 
 function subModelTypes(){
 	var output = {}
-	itemsModules.forEach(function(module){			
+	var models = require('./index')			
+	itemsModules.forEach(function(module){	
 		var itemType = models.convert(module.model, 'model', 'object')
 		output[itemType] = 'Core.Item.' + module.model	
 	})
 	return output
 }
 
-exports.addItem = function(path, model){
+exports.addItem = function(model, path){
 	itemsModules.push({
 		path : path,
 		model : model

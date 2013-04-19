@@ -13,5 +13,4 @@ activitySchema.pre('init', function(next, doc){
 activitySchema.plugin(itemable)
 
 models.define('NewWikipageActivity', 'activity:new-wikipage', 'newwikipageactivities', activitySchema)
-
-
+models.items.addItem('NewWikipageActivity', 'components/activity/model')

@@ -5,6 +5,9 @@ var mongoose = require('mongoose')
 module.exports = function Itemable(schema, options){
 
 	//if (!schema.virtuals.objectType) throw new Error ('Itemable: should have objectType attribute')
+	
+	//if (!options) throw new Error('MicroCommunity Item Plugin: you should pass options')
+	//if (!options.clientPath) throw new Error('MicroCommunity Item Plugin: you should pass clientPath option')	
 
 	schema.add({
 		author : { type : mongoose.Schema.Types.ObjectId, ref : 'User' },

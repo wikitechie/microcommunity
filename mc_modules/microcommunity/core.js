@@ -4,6 +4,8 @@
  */
 
 var express = require('express')
+
+var models = require('./models')  
   
 module.exports = function(){ 
 	//app setup and configuration

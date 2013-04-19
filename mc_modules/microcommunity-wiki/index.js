@@ -4,7 +4,6 @@ var microcommunity = require('microcommunity')
 require('./models/wikipage')
 require('./models/activity')
 
-
 var mongoose = require('mongoose')
 	, Wikipage = mongoose.model('Wikipage')
 	, Wall = mongoose.model('Wall')

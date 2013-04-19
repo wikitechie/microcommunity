@@ -1,7 +1,10 @@
-
 var microcommunity = require('microcommunity')
 	, mongoose = require('mongoose')
-	, Stream = mongoose.model('Stream')
+	
+require('./models/post')
+require('./models/photo')	
+	
+var Stream = mongoose.model('Stream')
 	, User = mongoose.model('User')
 	, Wall = mongoose.model('Wall')
 	, Post = mongoose.model('Post')

@@ -20,8 +20,7 @@ requirejs.config({
     'md5' : 'lib/md5',
     'general' : 'lib/general',
     'moment' : 'lib/moment.min',
-    'diff' : 'lib/diff',
-    'activity' : 'components/activity'
+    'diff' : 'lib/diff'
   },
   
   shim: {

@@ -1,6 +1,6 @@
 
 var express = require('express')
-  , items = require('./items')  
+  , items = require('./models/items')  
 
 module.exports = function(path){
 

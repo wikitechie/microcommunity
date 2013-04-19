@@ -56,16 +56,13 @@ Models.prototype.define = function(modelName, objectType, collectionName, schema
 
 Models.prototype.start = function(){
 	mongoose.connect('mongodb://localhost/test')
-	//async.series(definitions)
 }
 
-
 var models = new Models()
+models.items = require('./items')
 module.exports = models
 
 require('./item')
-require('./post')
-require('./photo')
 require('./wall')
 require('./user')
 require('./stream')
