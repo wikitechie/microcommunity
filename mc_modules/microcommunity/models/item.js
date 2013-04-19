@@ -8,6 +8,7 @@ var mongoose = require('mongoose')
 var itemSchema = new mongoose.Schema({
 	object : { type : mongoose.Schema.Types.DBRef },
 	wall : mongoose.Schema.Types.ObjectId,
+	streams : [mongoose.Schema.Types.ObjectId],	
 	published : Date
 })
 

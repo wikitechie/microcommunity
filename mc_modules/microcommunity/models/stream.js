@@ -11,18 +11,12 @@ var streamSchema = new mongoose.Schema({
 
 streamSchema.statics.loadItems = function(id, callback){
 	var Item = mongoose.model('Item')	
-	this.findById(id, function(err, stream){	
-		Item.fetchItems({ stream : id }, function(err, items){		
-			callback(err, { _id : id, owner : stream.owner.oid,	items : items })					
-		})		
-	})	
+	Item.fetchItems({ streams : id }, callback)	
 }
 
 streamSchema.statics.globalStream = function(callback){
 	var Item = mongoose.model('Item')	
-	Item.fetchItems({}, function(err, items){		
-		callback(err, items)					
-	})
+	Item.fetchItems({}, callback)
 }
 
 module.exports = mongoose.model('Stream', streamSchema);

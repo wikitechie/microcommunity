@@ -12,6 +12,7 @@ module.exports = function Itemable(schema, options){
 	schema.add({
 		author : { type : mongoose.Schema.Types.ObjectId, ref : 'User' },
 		wall : { type : mongoose.Schema.Types.ObjectId, ref : 'Wall' },
+		streams : [{ type : mongoose.Schema.Types.ObjectId, ref : 'Stream' }],		
 		item : mongoose.Schema.Types.ObjectId,	
 		published : Date			
 	})
@@ -29,18 +30,25 @@ module.exports = function Itemable(schema, options){
 		this.model(modelName).populate(doc, 'author wall', next)
 	})
 	
-	//before save
+	//before save, adding the wall item
 	schema.pre('save', function(next){
-		var Item = mongoose.model('Item')		
-		var item = new Item({ wall : this.wall, published : this.published })
 		var self = this
-		item.save(function(err, item){
-			if (!err){
-				self.item = item._id
-				next(null)
-			} else {
-				throw new Error('Could not create item object')
-			}
+		this.model('User').findById(self.author, function(err, author){
+			var Item = mongoose.model('Item')		
+			var item = new Item({ 
+				wall : self.wall, 
+				published : self.published,
+				streams : self.streams
+			})
+			item.save(function(err, item){
+				if (!err){
+					console.log(item)
+					self.item = item._id
+					next(null)
+				} else {
+					throw new Error('Could not create item object')
+				}
+			})		
 		})
 	})	
 

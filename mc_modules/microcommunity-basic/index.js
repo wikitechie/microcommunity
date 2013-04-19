@@ -7,6 +7,7 @@ require('./models/photo')
 var Stream = mongoose.model('Stream')
 	, User = mongoose.model('User')
 	, Wall = mongoose.model('Wall')
+	, Stream = mongoose.model('Stream')
 	, Post = mongoose.model('Post')
 	, Photo = mongoose.model('Photo')
 
@@ -41,10 +42,12 @@ function ensureAuthenticated(req, res, next) {
 
 //api
 app.post('/api/walls/:id/items/posts', ensureAuthenticated, function(req, res){
+	console.log(req.user.stream)
 	var post = new Post({
 		content : req.body.content,
 		author : req.body.author,
 		wall : req.body.wall,
+		streams : [req.user.stream]
 	})	
 	post.save(function(err){
 		res.send(post)
@@ -57,6 +60,7 @@ app.post('/api/walls/:id/items/photos', ensureAuthenticated, function(req, res){
 		content : req.body.content,
 		author : req.body.author,
 		wall : req.body.wall,
+		streams : [req.user.stream]		
 	})
 	photo.save(function(err){
 		Photo.findById(photo.id, function(){

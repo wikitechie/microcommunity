@@ -40,10 +40,10 @@ app.get('/wiki/:id/edit', ensureAuthenticated, function(req, res){
 
 app.get('/wiki/:id', function(req, res){
 	Wikipage.findById(req.params.id, function(err, wikipage){	
-		Wall.loadItems(wikipage.wall, function(err, wall){		
+		Wall.loadItems(wikipage.wall, function(err, items){		
 			res.loadPage('wikipage', {
 				wikipage : wikipage,
-				items : wall.items 				
+				items : items 				
 			})
 		})
 	})
@@ -64,6 +64,7 @@ app.post('/wiki/:id/edit', ensureAuthenticated, function(req, res){
 				content : content,
 				author : req.user._id,
 				wall : wikipage.wall,
+				streams : [req.user.stream, wikipage.stream],			
 				wikipage : wikipage.id,
 				diff : diff.diffWords(wikipage.content, content),
 				summary : summary	
@@ -85,7 +86,8 @@ app.post('/wiki/new', ensureAuthenticated, function(req, res){
 		var activity = new Activity({
 			author : req.user._id,
 			wall : wikipage.wall,
-			wikipage : wikipage.id
+			wikipage : wikipage.id,
+			streams : [req.user.stream, wikipage.stream]
 		})
 		
 		activity.save(function(err, activity){

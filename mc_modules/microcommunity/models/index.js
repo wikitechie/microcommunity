@@ -62,10 +62,11 @@ var models = new Models()
 models.items = require('./items')
 module.exports = models
 
+require('./stream')
 require('./item')
 require('./wall')
 require('./user')
-require('./stream')
+
 
 models.start()
 
