@@ -2,6 +2,7 @@
 
 var microcommunity = require('microcommunity')
 
+require('./models/wiki')
 require('./models/wikipage')
 require('./models/activity')
 require('./models/revision')
@@ -11,6 +12,7 @@ var mongoose = require('mongoose')
 	, Wall = mongoose.model('Wall')
 	, Activity = mongoose.model('NewWikipageActivity')
 	, Revision = mongoose.model('Revision')
+	, Wiki = mongoose.model('Wiki')
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
@@ -19,6 +21,25 @@ function ensureAuthenticated(req, res, next) {
 	req.flash('error', 'You should be logged in to view this page')	  
   res.redirect('/login');
 }
+
+app.get('/wikis', function(req, res){
+	Wiki.find().exec(function(err, wikis){
+		res.loadPage('wikis', { wikis : wikis })	
+	})
+})
+
+app.post('/wikis', function(req, res){	
+	var wiki = new Wiki({
+		name : req.body.name,
+		description : req.body.description
+	})
+	
+	wiki.save(function(err){
+	  res.redirect('/wikis');
+	})
+})
+
+
 
 app.get('/wiki/new', ensureAuthenticated, function(req, res){	
 	res.loadPage('wikipage-form', { 
