@@ -11,7 +11,8 @@ module.exports = function Itemable(schema, options){
 
 	schema.add({
 		author : { type : mongoose.Schema.Types.ObjectId, ref : 'User' },
-		wall : { type : mongoose.Schema.Types.ObjectId, ref : 'Wall' },
+		wall : { type : mongoose.Schema.Types.ObjectId, ref : 'Wall' },		
+		walls : [{ type : mongoose.Schema.Types.ObjectId, ref : 'Wall' }],
 		streams : [{ type : mongoose.Schema.Types.ObjectId, ref : 'Stream' }],		
 		item : mongoose.Schema.Types.ObjectId,	
 		published : Date			
@@ -36,9 +37,10 @@ module.exports = function Itemable(schema, options){
 		this.model('User').findById(self.author, function(err, author){
 			var Item = mongoose.model('Item')		
 			var item = new Item({ 
-				wall : self.wall, 
-				published : self.published,
-				streams : self.streams
+				wall : self.wall,
+				walls : self.walls,		
+				streams : self.streams,						 
+				published : self.published
 			})
 			item.save(function(err, item){
 				if (!err){

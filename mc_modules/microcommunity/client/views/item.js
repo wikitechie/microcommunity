@@ -36,6 +36,7 @@ define([
 			var opts = options || {}
 			this.width = opts.width || '500px'
 			this.type = opts.type || 'stream'
+			this.wall = opts.wall
 		},
 		template : html,
 		serializeData: function(){
@@ -52,6 +53,7 @@ define([
 		defaultRenderer : function(){	
 		
 			var itemViewType = this.type
+			var wall = this.wall
 		
 			function normalizeProperty(property){
 				var normalized
@@ -60,7 +62,7 @@ define([
 						normalized = property
 					}					
 					else {
-						normalized = property(itemViewType)
+						normalized = property(itemViewType, wall)
 					}
 						
 				} else {
@@ -83,7 +85,7 @@ define([
 				}				
 							
 			}
-			
+						
 			var MessageTemplate = normalizeProperty(this.model.messageTemplate)			
 			if (MessageTemplate){				
 				var message = new MessageView({
@@ -92,8 +94,7 @@ define([
 				})
 				this.message.show(message)				
 			}
-
-
+			
 		},				
 		onRender : function(){			
 			this.ui.mainWrapper.css('max-width', this.width)

@@ -12,5 +12,3 @@ wikiSchema.plugin(hasWall, { displayNameAttribute : 'name' })
 wikiSchema.plugin(hasStream)
 
 models.define('Wiki', 'wiki', 'wikis', wikiSchema)
-
-

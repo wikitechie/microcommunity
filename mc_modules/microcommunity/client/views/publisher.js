@@ -35,6 +35,7 @@ define([
 		initialize : function(options){		
 			if (options && options.wall){
 				this.wall = options.wall
+				this.identifier = options.identifier
 			}	
 		},
 		regions : getRegions(),				

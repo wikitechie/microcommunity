@@ -1,24 +1,32 @@
 define([
 	'bb',
 	'models/item',
-],function(Backbone, Item, User){
+	'models/user',
+	'models/wikipage',
+	'models/wiki'
+],function(Backbone, Item, User, Wikipage, Wiki){
 
 	var Wall = Backbone.RelationalModel.extend({	
-		idAttribute : '_id',		
+		idAttribute : '_id',				
 		link : function(){		
 			switch(this.get('owner').$ref){
 				case 'users':
-					return "/profiles/" + this.get('owner').$id	
+					var user = User.findOrCreate(this.get('owner').$id)
+					return user.link()
 					break	
 				case 'wikipages':
-					return "/wiki/" + this.get('owner').$id	
-					break							
-			}
+					var wikipage = Wikipage.findOrCreate(this.get('owner').$id)
+					return wikipage.link()
+					break	
+				case 'wikis':
+					var wiki = Wiki.findOrCreate({ _id : this.get('owner').$id })
+					return wiki.link()
+					break												
+			}			
 		},				
 		serialize : function(){
 			return _.extend(this.toJSON(), { link : this.link() })
-		}
-		
+		}		
 	})
 	
 	return Wall

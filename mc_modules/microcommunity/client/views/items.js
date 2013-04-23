@@ -5,7 +5,7 @@ define([
 ], function(Backbone, ItemView, html){
 	var ItemsView = Backbone.Marionette.CompositeView.extend({
 		initialize : function(options){
-			this.itemViewOptions = { width : options.width, type : options.type }
+			this.itemViewOptions = { width : options.width, type : options.type, wall : options.wall }
 		},
 		template : html,
 		itemView : ItemView,

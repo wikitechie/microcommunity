@@ -3,7 +3,9 @@ define([
 	'views/sidebars/basic',
 	'views/new-wiki',
 	'views/wikis',	
-], function(Models, basicSidebar, newWikiForm, WikisView){
+	'models/wiki',
+	'models/wikis',
+], function(Models, basicSidebar, newWikiForm, WikisView, Wiki, Wikis){
 
 	var App = new Backbone.Marionette.Application()	
 	
@@ -17,8 +19,6 @@ define([
 	
 	App.mainSidebar.show(new basicSidebar())
 	
-	var Wiki = Backbone.Model.extend()
-	var Wikis = Backbone.Collection.extend({ model : Wiki })
 	
 	var wikis = new Wikis(server.data.wikis)
 		

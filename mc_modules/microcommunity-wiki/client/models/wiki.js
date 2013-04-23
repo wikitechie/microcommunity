@@ -2,10 +2,10 @@ define([
 	'bb',
 ],function(Backbone){
 
-	var User = Backbone.RelationalModel.extend({
+	var Wiki = Backbone.RelationalModel.extend({
 		idAttribute : '_id',
 		link : function(){
-			return "/profiles/" + this.get('id')
+			return 'wikis/'+ this.id
 		},		
 		serialize : function(){
 			return _.extend(this.toJSON(), { link : this.link() })
@@ -18,7 +18,8 @@ define([
 				//includeInJSON : Backbone.Model.prototype.idAttribute				
 			}			
 		]				
-	})	
-	return User
+	})
+	
+	return Wiki
 	
 })

@@ -1,8 +1,10 @@
 requirejs.config({
-	baseUrl: "../client",
+	baseUrl: "/client",
 
   paths: {
+
   	bb : 'lib/bb',
+
     cs: 'cs',
     jquery : 'lib/jquery',
     underscore: 'lib/underscore',    

@@ -15,7 +15,11 @@ define([
 	
 	if (App.currentUser.id){
 		var profileUser = Models.User.findOrCreate(server.data.user)
-		var Publisher = publiserhModule(App, profileUser.get('wall'), function(view){
+		var options = {
+			wall : profileUser.get('wall'),
+			identifier : 'user-wall'
+		}
+		var Publisher = publiserhModule(App, options, function(view){
 			App.publisher.show(view)
 		})		
 		App.vent.on('publisher:newitem', function(item){

@@ -13,6 +13,10 @@ var mongoose = require('mongoose')
 	, Activity = mongoose.model('NewWikipageActivity')
 	, Revision = mongoose.model('Revision')
 	, Wiki = mongoose.model('Wiki')
+	, User = mongoose.model('User')
+	, Post = mongoose.model('Post')
+	, Resource = require('express-resource')
+	
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
@@ -22,99 +26,70 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login');
 }
 
-app.get('/wikis', function(req, res){
-	Wiki.find().exec(function(err, wikis){
-		res.loadPage('wikis', { wikis : wikis })	
+app.resource('wikis', require('./wikis'))
+app.resource('wikis/:wiki/pages', require('./wikipages'))
+
+app.post('/api/publishers/wiki-wall/posts', function(req, res){
+	User.findById(req.body.author, function(err, author){
+		var post = new Post({
+			content : req.body.content,
+			wall : req.body.wall,
+			walls : [req.body.wall],
+			author : author.id,		
+			streams : [author.stream]
+		})	
+		post.save(function(err){
+			res.send(post)
+		})		
 	})
 })
 
-app.post('/wikis', function(req, res){	
-	var wiki = new Wiki({
-		name : req.body.name,
-		description : req.body.description
+app.post('/api/publishers/wiki-wall/photos', function(req, res){
+	User.findById(req.body.author, function(err, author){
+		var post = new Photo({
+			content : req.body.content,
+			wall : req.body.wall,
+			walls : [req.body.wall],
+			author : author.id,		
+			streams : [author.stream]
+		})	
+		post.save(function(err){
+			res.send(post)
+		})		
 	})
-	
-	wiki.save(function(err){
-	  res.redirect('/wikis');
+})
+
+
+
+app.post('/api/publishers/wikipage-wall/posts', function(req, res){
+	User.findById(req.body.author, function(err, author){
+		var post = new Post({
+			content : req.body.content,
+			wall : req.body.wall,
+			walls : [req.body.wall],
+			author : author.id,		
+			streams : [author.stream]
+		})	
+		post.save(function(err){
+			res.send(post)
+		})		
+	})
+})
+
+app.post('/api/publishers/wikipage-wall/photos', function(req, res){
+	User.findById(req.body.author, function(err, author){
+		var post = new Photo({
+			content : req.body.content,
+			wall : req.body.wall,
+			walls : [req.body.wall],
+			author : author.id,		
+			streams : [author.stream]
+		})	
+		post.save(function(err){
+			res.send(post)
+		})		
 	})
 })
 
 
 
-app.get('/wiki/new', ensureAuthenticated, function(req, res){	
-	res.loadPage('wikipage-form', { 
-		edit : false, 
-		title : ( req.query.title || '' ),
-		action : '/wiki/new' 
-	})
-})
-
-app.get('/wiki/:id/edit', ensureAuthenticated, function(req, res){	
-	Wikipage.findById(req.params.id, function(err, wikipage){
-		res.loadPage('wikipage-form', { 
-			edit : true, 
-			wikipage : wikipage, 
-			action : '/wiki/' + wikipage.id + '/edit' 
-		})
-	})	
-})
-
-app.get('/wiki/:id', function(req, res){
-	Wikipage.findById(req.params.id, function(err, wikipage){	
-		Wall.loadItems(wikipage.wall, function(err, items){		
-			res.loadPage('wikipage', {
-				wikipage : wikipage,
-				items : items 				
-			})
-		})
-	})
-})
-
-app.post('/wiki/:id/edit', ensureAuthenticated, function(req, res){
-	Wikipage.findByIdAndUpdate(req.params.id, 
-		{$set : {content : req.body.content}}, 
-		{ new:false }, 
-		function(err, wikipage){
-		
-			var dbref = new mongoose.Types.DBRef('wikipages', wikipage.id)
-			var diff = require('diff')
-			var content = req.body.content
-			var summary = req.body.summary
-				
-			var revision = new Revision({
-				content : content,
-				author : req.user._id,
-				wall : wikipage.wall,
-				streams : [req.user.stream, wikipage.stream],			
-				wikipage : wikipage.id,
-				diff : diff.diffWords(wikipage.content, content),
-				summary : summary	
-			})
-	
-			revision.save(function(err, activity){
-				res.redirect('/wiki/' + wikipage.id)				
-			})
-	})	
-})
-
-app.post('/wiki/new', ensureAuthenticated, function(req, res){	
-	var wikipage = new Wikipage({
-		title : req.body.title,
-		content : req.body.content
-	})
-	
-	wikipage.save(function(err, wikipage){
-		var activity = new Activity({
-			author : req.user._id,
-			wall : wikipage.wall,
-			wikipage : wikipage.id,
-			streams : [req.user.stream, wikipage.stream]
-		})
-		
-		activity.save(function(err, activity){
-			res.redirect('/wiki/' + wikipage.id)				
-		})				
-
-	})
-
-})

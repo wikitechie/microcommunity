@@ -8,14 +8,18 @@ define([
 ], function(Backbone, Item, Wikipage, ActivityView, messageTemplateWall, messageTemplateStream){
 	
 	var Activity = Item.extend({
-		messageTemplate : function(type){
-			if (type == 'wall')
-				return messageTemplateWall
-			else
+		messageTemplate : function(type, wall){
+			if (wall && wall.get('owner').$ref == 'wikipages')
+				return messageTemplateWall			
+			else 
 				return messageTemplateStream
 		},
-		contentView : function(type){
-			if (type == 'wall')
+		serialize : function(){		
+			var parent = Item.prototype.serialize.apply(this)		
+			return _.extend(parent, { wikipage : this.get('wikipage').serialize() })
+		},
+		contentView : function(type, wall){
+			if (wall && wall.get('owner').$ref == 'wikipages')
 				return false
 			else
 				return ActivityView

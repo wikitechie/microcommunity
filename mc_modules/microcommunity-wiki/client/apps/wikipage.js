@@ -22,15 +22,26 @@ define([
 	})
 	
 	if (App.currentUser){
-		var Publisher = publiserhModule(App, wikipage.get('wall'), function(view){
+		var options = {
+			wall : wikipage.get('wall'),
+			identifier : 'wikipage-wall'
+		}	
+		var Publisher = publiserhModule(App, options, function(view){
 			App.publisher.show(view)
 		})	
 		App.vent.on('publisher:newitem', function(item){				
 			Stream.add(item) 
 		})			
-			
-	}	
-	var Stream = streamModule(App, { items : server.data.items, type : 'wall', width:'400px' }, function(view){
+	}
+		
+	var options = { 
+		items : server.data.items, 
+		type : 'wall',
+		wall : wikipage.get('wall'),
+		width: '400px'
+	}
+	
+	var Stream = streamModule(App, options, function(view){
 		App.wall.show(view)
 	})	
 	

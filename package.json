@@ -24,7 +24,7 @@
     "async": "*",
     "amdefine" : "*",
     "diff" : "*",
-    "express-resource": "git://github.com/visionmedia/express-resource.git#add/express3x-support",
+    "express-resource": ">= 1.0",
 	"ability": "*"
   },
   

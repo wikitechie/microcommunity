@@ -8,12 +8,13 @@ define([
 			Stream.add = function(item){
 				collection.add(item, { at : 0 })
 			}			
-			Stream.addInitializer(function(){			
+			Stream.addInitializer(function(){
 				collection = new Core.Items(options.items, { type : options.type })					
 				var items = new Views.ItemsView({	
 					collection: collection,
 					width : options.width,
-					type : options.type
+					type : options.type,
+					wall : options.wall
 				})				
 				callback(items)							
 			})			

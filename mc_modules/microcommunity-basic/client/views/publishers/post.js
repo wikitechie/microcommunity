@@ -29,6 +29,7 @@ define([
 			post.set({
 				content : this.ui.input.val(),
 				wall : this.container.wall.id,
+				identifier : this.container.identifier,
 				author : App.currentUser.id
 			})	
 			

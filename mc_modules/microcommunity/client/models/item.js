@@ -8,18 +8,17 @@ define([
 		
 		//TODO validate author and wall: validate : function(){}
 		
-		urlRoot : function(){
-			return this.baseUrlRoot() + '/' + this.collection
-		},
-			
-		baseUrlRoot : function(){
-			return '/api/walls/' + this.get('wall').id + '/items'
+		url : function(){
+			return '/api/publishers/' + this.get('identifier') + '/' + this.collection
 		},
 		
-		serialize : function(){			
+		serialize : function(){
+			if (this.get('wall'))
+				var wall = this.get('wall').serialize()
+					
 			return _.extend(this.toJSON(), {
 				author: this.get('author').serialize(),
-				wall: this.get('wall').serialize(),
+				wall : wall,
 				parentType : this.collection.type
 			})
 		},		

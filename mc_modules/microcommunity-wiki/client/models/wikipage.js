@@ -5,7 +5,7 @@ define([
 	var Wikipage = Backbone.RelationalModel.extend({
 		idAttribute : '_id',
 		link : function(){
-			return this.get('wall').link()
+			return 'wikis/'+ this.get('wiki')._id +'/pages/' + this.get('id')
 		},		
 		serialize : function(){
 			return _.extend(this.toJSON(), { link : this.link() })

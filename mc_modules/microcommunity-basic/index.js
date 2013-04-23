@@ -16,7 +16,6 @@ var app = module.exports = microcommunity.plugin(__dirname)
 //main app
 app.get('/', function(req, res){	
 	Stream.globalStream(function(err, items){
-		console.log(items)
 		res.loadPage('home', { items : items })	
 	})	
 })
@@ -40,22 +39,25 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login');
 }
 
-//api
-app.post('/api/walls/:id/items/posts', ensureAuthenticated, function(req, res){
-	console.log(req.user.stream)
-	var post = new Post({
-		content : req.body.content,
-		author : req.body.author,
-		wall : req.body.wall,
-		streams : [req.user.stream]
-	})	
-	post.save(function(err){
-		res.send(post)
+
+//publisher api
+app.post('/api/publishers/user-wall/posts', function(req, res){	
+	User.findById(req.body.author, function(err, author){
+		var post = new Post({
+			content : req.body.content,
+			wall : req.body.wall,
+			walls : [req.body.wall],
+			author : author.id,		
+			streams : [author.stream]
+		})	
+		post.save(function(err){
+			res.send(post)
+		})		
 	})
 })
 
 //api
-app.post('/api/walls/:id/items/photos', ensureAuthenticated, function(req, res){
+app.post('/api/publishers/user-wall/photos', ensureAuthenticated, function(req, res){
 	var photo = new Photo({
 		content : req.body.content,
 		author : req.body.author,
