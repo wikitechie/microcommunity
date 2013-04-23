@@ -44,8 +44,7 @@ define([
 	var options = { 
 		items : server.data.items, 
 		type : 'wall',
-		wall : wikipage.get('wall'),
-		width: '400px'
+		wall : wikipage.get('wall')
 	}
 	
 	var Stream = streamModule(App, options, function(view){

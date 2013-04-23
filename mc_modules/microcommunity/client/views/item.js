@@ -34,7 +34,7 @@ define([
 	var ItemView = Backbone.Marionette.Layout.extend({	
 		initialize : function(options){
 			var opts = options || {}
-			this.width = opts.width || '500px'
+			this.width = opts.width || '510px'
 			this.type = opts.type || 'stream'
 			this.wall = opts.wall
 		},
