@@ -3,8 +3,9 @@ define([
 	'modules/publisher',
 	'modules/stream',
 	'views/sidebars/basic',
-	'views/sidebars/new-wikipage',	
-], function(Models, publiserhModule, streamModule, basicSidebar, newWikipageSidebar){
+	'views/sidebars/new-wikipage',
+	'models/wikis'	
+], function(Models, publiserhModule, streamModule, basicSidebar, newWikipageSidebar, Wikis){
 
 	var App = new Backbone.Marionette.Application()	
 	
@@ -12,14 +13,30 @@ define([
 
 	App.addRegions({
 		mainSidebar : '#main-sidebar-region',
+		wikisSidebar : '#wikis-sidebar-region',
 		publisher : '#publisher-region',
 		stream : '#stream-region'
 	})
 	
-	App.mainSidebar.show(new basicSidebar())
+	App.mainSidebar.show(new basicSidebar({
+		header : 'Navigation',
+		links : [ {label : 'Main', url : '/' } ]
+	}))	
 	
-	if (App.currentUser.id){
+	var wikisLinks = []
+	var wikis = new Wikis(server.data.wikis)
+	wikis.forEach(function(wiki){
+		wikisLinks.push({ label : wiki.get('name'), url : wiki.link() })
+	})
 	
+	wikisLinks.push({ label : 'All wikis', url : '/wikis' })
+		
+	App.wikisSidebar.show(new basicSidebar({
+		header : 'Wikis',
+		links : wikisLinks
+	}))
+	
+	if (App.currentUser.id){	
 		var options = {
 			wall : App.currentUser.get('wall'),
 			identifier : 'user-wall'

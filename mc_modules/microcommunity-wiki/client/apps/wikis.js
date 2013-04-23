@@ -17,8 +17,10 @@ define([
 		wikis : '#wikis-region'
 	})
 	
-	App.mainSidebar.show(new basicSidebar())
-	
+	App.mainSidebar.show(new basicSidebar({
+		header : 'Navigation',
+		links : [ {label : 'Main', url : '/' } ]
+	}))	
 	
 	var wikis = new Wikis(server.data.wikis)
 		

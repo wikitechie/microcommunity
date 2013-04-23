@@ -2,7 +2,7 @@ var microcommunity = require('microcommunity')
 	, mongoose = require('mongoose')
 	
 require('./models/post')
-require('./models/photo')	
+require('./models/photo')
 	
 var Stream = mongoose.model('Stream')
 	, User = mongoose.model('User')
@@ -11,12 +11,19 @@ var Stream = mongoose.model('Stream')
 	, Post = mongoose.model('Post')
 	, Photo = mongoose.model('Photo')
 
+
 var app = module.exports = microcommunity.plugin(__dirname)
 
 //main app
 app.get('/', function(req, res){	
+	var Wiki = mongoose.model('Wiki')
 	Stream.globalStream(function(err, items){
-		res.loadPage('home', { items : items })	
+		Wiki.find().limit(5).exec(function(err, wikis){
+			res.loadPage('home', { 
+				wikis : wikis, 
+				items : items 
+			})	
+		})		
 	})	
 })
 

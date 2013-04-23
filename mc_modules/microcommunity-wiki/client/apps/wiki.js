@@ -20,7 +20,11 @@ define([
 	
 	var wiki = new Wiki(server.data.wiki)
 	
-	App.mainSidebar.show(new basicSidebar())
+	App.mainSidebar.show(new basicSidebar({
+		header : 'Navigation',
+		links : [ {label : 'Main', url : '/' } ]
+	}))
+	
 	if (App.currentUser.id){
 		App.newWikipageSidebar.show(new newWikipageSidebar({ model : wiki }))		
 	}	
