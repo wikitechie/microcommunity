@@ -1,10 +1,11 @@
 define([
 	'app',
+	'views/sidebars/basic',
 	'views/wikipage',
 	'modules/publisher',
 	'modules/stream',	
 	'models/wikipage'
-], function(MCApp, WikipageView, publiserhModule, streamModule, Wikipage){
+], function(MCApp, basicSidebar, WikipageView, publiserhModule, streamModule, Wikipage){
 
 	var App = new MCApp()
 	App.setup(server)
@@ -16,10 +17,16 @@ define([
 	})	
 	
 	App.addRegions({
+		mainSidebar : '#main-sidebar-region',	
 		wikipage : '#wikipage-region',
 		publisher : '#publisher-region',
 		wall : '#wall-region'	
 	})
+	
+	App.mainSidebar.show(new basicSidebar({
+		header : 'Navigation',
+		links : [ {label : 'Main', url : '/' } ]
+	}))	
 	
 	if (App.currentUser){
 		var options = {
