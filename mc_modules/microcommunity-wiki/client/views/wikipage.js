@@ -74,7 +74,13 @@ define([
 	})
 	
 	var WikipageEdit = Backbone.Marionette.ItemView.extend({
-		template : edit
+		template : edit,
+		ui : {
+			input : 'textarea'
+		},		
+		getContent : function(){
+			return this.ui.input.val()
+		}
 	})	
 	
 	var WikipageView = Backbone.Marionette.Layout.extend({	
@@ -93,15 +99,15 @@ define([
 				this.buttons.currentView.on('edit', function(){
 					this.content.show(new WikipageEdit({ model : this.model }))
 				}, this)
-				
+				var self = this
 				this.buttons.currentView.on('save', function(){
-					this.model.save({}, {
+					this.model.save({ content : self.content.currentView.getContent() }, {
 						success : function(){
-							this.content.show(new WikipageBody({ model : this.model }))					
-							this.buttons.currentView.showEditButtons()						
+							self.content.show(new WikipageBody({ model : self.model }))					
+							self.buttons.currentView.showEditButtons()						
 						}			
 					})
-				}, this)
+				})
 				
 				this.buttons.currentView.on('cancel', function(){
 					this.content.show(new WikipageBody({ model : this.model }))

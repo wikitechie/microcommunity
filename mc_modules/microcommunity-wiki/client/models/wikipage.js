@@ -1,8 +1,10 @@
 define([
 	'bb',
-],function(Backbone){
+	'models/wiki'
+],function(Backbone, Wiki){
 
 	var Wikipage = Backbone.RelationalModel.extend({
+		urlRoot : '/api/wikipages',
 		idAttribute : '_id',
 		link : function(){
 			return '/wikis/'+ this.get('wiki')._id +'/pages/' + this.get('id')
@@ -15,8 +17,14 @@ define([
 				type : Backbone.HasOne,
 				key : 'wall',
 				relatedModel : 'Core.Wall',
-				//includeInJSON : Backbone.Model.prototype.idAttribute				
-			}			
+				includeInJSON : '_id'
+			},
+			{
+				type : Backbone.HasOne,
+				key : 'wiki',
+				relatedModel : Wiki,
+				includeInJSON : '_id'				
+			}							
 		]				
 	})
 	

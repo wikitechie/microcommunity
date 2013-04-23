@@ -29,6 +29,36 @@ function ensureAuthenticated(req, res, next) {
 app.resource('wikis', require('./wikis'))
 app.resource('wikis/:wiki/pages', require('./wikipages'))
 
+app.put('/api/wikipages/:id', function(req, res){
+	console.log(req.body)
+	Wikipage.findByIdAndUpdate(req.params.id, 
+		{ $set : { content : req.body.content } }, 
+		{ new : false }, 
+		function(err, wikipage){
+				
+			var dbref = new mongoose.Types.DBRef('wikipages', wikipage.id)
+			var diff = require('diff')
+			var content = req.body.content
+			var summary = req.body.summary
+				
+			var revision = new Revision({
+				content : content,
+				author : req.user._id,
+				walls : [wikipage.wall],
+				streams : [req.user.stream, wikipage.stream],			
+				wikipage : wikipage.id,
+				diff : diff.diffWords(wikipage.content, content),
+				summary : summary	
+			})
+	
+			revision.save(function(err, activity){
+				wikipage.content = content
+				res.send(wikipage)				
+			})
+	})
+})
+
+
 app.post('/api/publishers/wiki-wall/posts', function(req, res){
 	User.findById(req.body.author, function(err, author){
 		var post = new Post({
@@ -58,7 +88,6 @@ app.post('/api/publishers/wiki-wall/photos', function(req, res){
 		})		
 	})
 })
-
 
 
 app.post('/api/publishers/wikipage-wall/posts', function(req, res){
