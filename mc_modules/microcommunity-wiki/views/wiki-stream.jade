@@ -1,0 +1,9 @@
+extends wiki-layout
+
+block sidebars
+	#new-wikipage-sidebar-region
+
+block content
+	h1.page-header
+		= server.data.wiki.name
+	#stream-region

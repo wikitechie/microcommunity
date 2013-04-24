@@ -1,35 +1,32 @@
 define([
+	'app',
+	'views/wiki-sidebar',
+	'views/sidebars/new-wikipage',	
 	'models/index',
 	'modules/publisher',
 	'modules/stream',
 	'views/sidebars/basic',
 	'views/sidebars/new-wikipage',
 	'models/wiki'	
-], function(Models, publiserhModule, streamModule, basicSidebar, newWikipageSidebar, Wiki){
-
-	var App = new Backbone.Marionette.Application()	
-	
-	App.currentUser = new Models.User(server.currentUser)
+], function(App, WikiSidebar, NewWikipageSidebarView, Models, publiserhModule, streamModule, basicSidebar, newWikipageSidebar, Wiki){
 
 	App.addRegions({
-		mainSidebar : '#main-sidebar-region',
+		wikiSidebar : '#wiki-sidebar-region',	
 		newWikipageSidebar : '#new-wikipage-sidebar-region',
 		publisher : '#publisher-region',
 		stream : '#stream-region'
 	})	
 	
-	var wiki = new Wiki(server.data.wiki)
+	var wiki = Wiki.findOrCreate(server.data.wiki)	
 	
-	App.mainSidebar.show(new basicSidebar({
-		header : 'Navigation',
-		links : [ {label : 'Main', url : '/' } ]
-	}))
+	App.addInitializer(function(){	
+		var wikiSidebar = WikiSidebar(server.data.wiki)	
+		App.wikiSidebar.show(wikiSidebar)	
+		var sidebarView = NewWikipageSidebarView(server.data.wiki)
+		this.newWikipageSidebar.show(sidebarView)					
+	})
 	
-	if (App.currentUser.id){
-		App.newWikipageSidebar.show(new newWikipageSidebar({ model : wiki }))		
-	}	
-	
-	if (App.currentUser.id){
+	if (App.isLoggedIn()){
 		var options = {
 			wall : wiki.get('wall'),
 			identifier : 'wiki-wall'

@@ -1,15 +1,12 @@
 define([
+	'app',
 	'models/index',
 	'views/sidebars/basic',
 	'views/new-wiki',
 	'views/wikis',	
 	'models/wiki',
 	'models/wikis',
-], function(Models, basicSidebar, newWikiForm, WikisView, Wiki, Wikis){
-
-	var App = new Backbone.Marionette.Application()	
-	
-	App.currentUser = new Models.User(server.currentUser)
+], function(App, Models, basicSidebar, newWikiForm, WikisView, Wiki, Wikis){
 
 	App.addRegions({
 		mainSidebar : '#main-sidebar-region',
@@ -17,13 +14,7 @@ define([
 		wikis : '#wikis-region'
 	})
 	
-	App.mainSidebar.show(new basicSidebar({
-		header : 'Navigation',
-		links : [ {label : 'Main', url : '/' } ]
-	}))	
-	
-	var wikis = new Wikis(server.data.wikis)
-		
+	var wikis = new Wikis(server.data.wikis)		
 	App.wikis.show(new WikisView({ collection : wikis }))
 	
 	if (App.currentUser.id){

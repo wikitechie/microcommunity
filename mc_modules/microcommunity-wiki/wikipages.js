@@ -8,11 +8,14 @@ var mongoose = require('mongoose')
 	, Post = mongoose.model('Post')
 
 exports.new = function(req, res){
-	res.loadPage('wikipage-form', { 
-		edit : false, 
-		title : ( req.query.title || '' ),
-		action : '/wikis/' + req.params.wiki + '/pages'
-	})	
+	Wiki.findById(req.params.wiki, function(err, wiki){
+		res.loadPage('wikipage-form', { 
+			wiki : wiki,
+			edit : false, 
+			title : ( req.query.title || '' ),
+			action : '/wikis/' + req.params.wiki + '/pages'
+		})		
+	})
 }
 
 exports.create = function(req, res){	

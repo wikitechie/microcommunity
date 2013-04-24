@@ -1,7 +1,7 @@
 define([
 	'app',
 	'views/wiki-sidebar',
-	'views/sidebars/new-wikipage',		
+	'views/sidebars/new-wikipage',
 	'views/wikipage',
 	'modules/publisher',
 	'modules/stream',	
@@ -15,18 +15,18 @@ define([
 	})	
 	
 	App.addRegions({
-		newWikipageSidebar : '#new-wikipage-sidebar-region',	
-		wikiSidebar : '#wiki-sidebar-region',
+		newWikipageSidebar : '#new-wikipage-sidebar-region',
+		wikiSidebar : '#wiki-sidebar-region',	
 		wikipage : '#wikipage-region',
 		publisher : '#publisher-region',
 		wall : '#wall-region'	
 	})
-	
+
 	App.addInitializer(function(){	
-		var wikiSidebar = WikiSidebar(server.data.wikipage.wiki)	
+		var wikiSidebar = WikiSidebar(server.data.wiki)	
 		App.wikiSidebar.show(wikiSidebar)	
-		var sidebarView = NewWikipageSidebarView(server.data.wikipage.wiki)
-		this.newWikipageSidebar.show(sidebarView)					
+		var sidebarView = NewWikipageSidebarView(server.data.wiki)
+		this.newWikipageSidebar.show(sidebarView)		
 	})
 	
 	if (App.currentUser){

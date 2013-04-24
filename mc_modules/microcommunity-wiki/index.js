@@ -30,12 +30,13 @@ var wikiRoutes = require('./wikis')
 
 app.get('/wikis', wikiRoutes.index)
 app.get('/wikis/:wiki', wikiRoutes.show)
+app.get('/wikis/:wiki/wall', wikiRoutes.wall)
+app.get('/wikis/:wiki/stream', wikiRoutes.stream)
 app.post('/wikis', wikiRoutes.create)
 
 app.resource('wikis/:wiki/pages', require('./wikipages'))
 
 app.put('/api/wikipages/:id', function(req, res){
-	console.log(req.body)
 	Wikipage.findByIdAndUpdate(req.params.id, 
 		{ $set : { content : req.body.content } }, 
 		{ new : false }, 
@@ -50,7 +51,7 @@ app.put('/api/wikipages/:id', function(req, res){
 				content : content,
 				author : req.user._id,
 				walls : [wikipage.wall],
-				streams : [req.user.stream, wikipage.stream],			
+				streams : [req.user.stream, wikipage.stream, wikipage.wiki.stream ],			
 				wikipage : wikipage.id,
 				diff : diff.diffWords(wikipage.content, content),
 				summary : summary	
@@ -71,7 +72,7 @@ app.post('/api/publishers/wiki-wall/posts', function(req, res){
 			wall : req.body.wall,
 			walls : [req.body.wall],
 			author : author.id,		
-			streams : [author.stream]
+			streams : [author.stream,]
 		})	
 		post.save(function(err){
 			res.send(post)
