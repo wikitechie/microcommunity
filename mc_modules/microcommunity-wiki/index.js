@@ -26,7 +26,12 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login');
 }
 
-app.resource('wikis', require('./wikis'))
+var wikiRoutes = require('./wikis')
+
+app.get('/wikis', wikiRoutes.index)
+app.get('/wikis/:wiki', wikiRoutes.show)
+app.post('/wikis', wikiRoutes.create)
+
 app.resource('wikis/:wiki/pages', require('./wikipages'))
 
 app.put('/api/wikipages/:id', function(req, res){

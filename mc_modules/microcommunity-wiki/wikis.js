@@ -9,6 +9,20 @@ var mongoose = require('mongoose')
 
 exports.show = function(req, res){
 	Wiki.findById(req.params.wiki, function(err, wiki){
+		Wikipage.findById(wiki.homePage, function(err, wikipage){
+			Wall.loadItems(wikipage.wall, function(err, items){
+				res.loadPage('wikipage', { 
+					wiki : wiki,
+					wikipage : wikipage,
+					items : items
+				})		
+			})		
+		})		
+	})
+}
+
+exports.wall = function(req, res){
+	Wiki.findById(req.params.wiki, function(err, wiki){
 		Wall.loadItems(wiki.wall, function(err, items){
 			res.loadPage('wiki', { 
 				wiki : wiki, 
