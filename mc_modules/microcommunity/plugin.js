@@ -35,7 +35,8 @@ module.exports = function(path){
 			next()
 		})		
 	
-		app.use('/client', express.static(path + '/client'));      
+		app.use('/client', express.static(path + '/client'));  
+		app.use(express.static(path + '/static'))    
 		app.set('views', viewsPath)
 	})	
 	
