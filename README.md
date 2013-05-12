@@ -1,3 +1,7 @@
+Overview
+============
+MicroCommunity is an open source social networking the aims to make it easy to develop specialized social platforms that enforce knowledge exchange and content production in real and online communities. That goal is basically achieved by building a modular system of plugins that allow developers to mix them in order to meet the needs of small communities.
+
 Requirements
 ============
 mongodb server
