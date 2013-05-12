@@ -1,6 +1,7 @@
 Overview
 ============
-MicroCommunity is an open source social networking the aims to make it easy to develop specialized social platforms that enforce knowledge exchange and content production in real and online communities. That goal is basically achieved by building a modular system of plugins that allow developers to mix them in order to meet the needs of small communities.
+
+MicroCommunity is a project that aims to build an open source social networking platform, built as a modular system where developers can mix plugins supporting features such as diverse content types production, content organization and curation and collaboration styles. The goal is to make it easy for developers easily create dedicated platforms that encourage content production and knowledge exchange in small-scale communities, or MicroCommunities! We think that those communities for a majority in the online Arab community.
 
 Requirements
 ============
