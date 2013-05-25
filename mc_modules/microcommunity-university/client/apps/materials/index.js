@@ -2,22 +2,22 @@ define([
 	'app',
 	'models/index',
 	'views/sidebars/basic',
-	'views/new-wiki',
+	'views/new-material-form',
 	'views/thumbnails',
 	'models/materials',
-], function(App, Models, basicSidebar, newWikiForm, Thumbnails, Materials){
+], function(App, Models, basicSidebar, MaterialForm, Thumbnails, Materials){
 
 	App.addRegions({
 		mainSidebar : '#main-sidebar-region',
-		wikiForm : '#new-wiki-form-region',
+		materialForm : '#material-form-region',
 		materials : '#materials-region'
 	})
-	
+		
 	var materials = new Materials(server.data.containers)		
 	App.materials.show(new Thumbnails({ collection : materials }))
 	
 	if (App.isLoggedIn()){
-		App.wikiForm.show(new newWikiForm())	
+		App.materialForm.show(new MaterialForm())	
 	}
 		
 	return App
