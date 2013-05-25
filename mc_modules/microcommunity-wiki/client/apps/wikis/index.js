@@ -3,10 +3,9 @@ define([
 	'models/index',
 	'views/sidebars/basic',
 	'views/new-wiki',
-	'views/wikis',	
-	'models/wiki',
+	'views/thumbnails',
 	'models/wikis',
-], function(App, Models, basicSidebar, newWikiForm, WikisView, Wiki, Wikis){
+], function(App, Models, basicSidebar, newWikiForm, Thumbnails, Wikis){
 
 	App.addRegions({
 		mainSidebar : '#main-sidebar-region',
@@ -14,8 +13,8 @@ define([
 		wikis : '#wikis-region'
 	})
 	
-	var wikis = new Wikis(server.data.wikis)		
-	App.wikis.show(new WikisView({ collection : wikis }))
+	var wikis = new Wikis(server.data.containers)		
+	App.wikis.show(new Thumbnails({ collection : wikis }))
 	
 	if (App.currentUser.id){
 		App.wikiForm.show(new newWikiForm())	

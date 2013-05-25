@@ -9,8 +9,7 @@ var mongoose = require('mongoose')
 	, Post = mongoose.model('Post')
 
 exports.show = function(req, res){
-	Wiki.findById(req.params.wiki, function(err, wiki){
-		console.log(wiki)
+	Wiki.findById(req.params.id, function(err, wiki){
 		Wikipage.findById(wiki.homePage, function(err, wikipage){
 			Wall.loadItems(wikipage.wall, function(err, items){
 				res.loadPage('wiki-home', { 

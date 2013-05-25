@@ -17,12 +17,12 @@ define([
 		stream : '#stream-region'
 	})	
 	
-	var wiki = Wiki.findOrCreate(server.data.wiki)	
+	var wiki = Wiki.findOrCreate(server.data.container)	
 	
 	App.addInitializer(function(){	
-		var wikiSidebar = WikiSidebar(server.data.wiki)	
+		var wikiSidebar = WikiSidebar(server.data.container)	
 		App.wikiSidebar.show(wikiSidebar)	
-		var sidebarView = NewWikipageSidebarView(server.data.wiki)
+		var sidebarView = NewWikipageSidebarView(server.data.container)
 		this.newWikipageSidebar.show(sidebarView)					
 	})
 	

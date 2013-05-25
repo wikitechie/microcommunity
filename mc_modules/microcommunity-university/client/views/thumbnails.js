@@ -9,8 +9,7 @@ define([
 		template : html,
 		serializeData : function(){
 			return this.model.serialize()
-		}
-		
+		}		
 	})
 
 	var ThumbnailsView = Backbone.Marionette.CompositeView.extend({

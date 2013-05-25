@@ -28,7 +28,7 @@ materialSchema.post('save', function(doc){
 	})
 })*/
 
-materialSchema.plugin(hasWall, { displayNameAttribute : 'name' })
-materialSchema.plugin(hasStream)
+//materialSchema.plugin(hasWall, { displayNameAttribute : 'name' })
+//materialSchema.plugin(hasStream)
 
 models.define('Material', 'material', 'materials', materialSchema)

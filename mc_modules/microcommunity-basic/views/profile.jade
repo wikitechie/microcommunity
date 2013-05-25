@@ -1,14 +1,12 @@
-.row
-	.span3
-		| sidebar
-							
-	.span6
-		.row-fluid.page-header
-			h1 
-				= server.data.user.displayName
-		.row-fluid
-			#publisher-region
-			hr
-			#stream-region
-			
+extends layout
 
+block content
+	.row-fluid.page-header
+		h1 
+			= server.data.user.displayName
+	.row-fluid
+		#publisher-region
+		hr
+		#stream-region
+			
+	

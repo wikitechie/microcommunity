@@ -15,24 +15,23 @@ var mongoose = require('mongoose')
 	, Wiki = mongoose.model('Wiki')
 	, User = mongoose.model('User')
 	, Post = mongoose.model('Post')
-	, Resource = require('express-resource')
-	
+	, Resource = require('express-resource')	
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-	req.flash('error', 'You should be logged in to view this page')	  
-  res.redirect('/login');
-}
-
-var wikiRoutes = require('./wikis')
-
-app.get('/wikis', wikiRoutes.index)
-app.get('/wikis/:wiki', wikiRoutes.show)
-app.get('/wikis/:wiki/wall', wikiRoutes.wall)
-app.get('/wikis/:wiki/stream', wikiRoutes.stream)
-app.post('/wikis', wikiRoutes.create)
+app.container('/wikis', 'Wiki', 'wikis', function(req, res){
+	Wiki.findById(req.params.id, function(err, wiki){
+		Wikipage.findById(wiki.homePage, function(err, wikipage){
+			Wall.loadItems(wikipage.wall, function(err, items){
+				res.loadPage('wikis/show', { 
+					wiki : wiki,
+					wikipage : wikipage,
+					items : items
+				})		
+			})		
+		})		
+	})
+})
 
 app.resource('wikis/:wiki/pages', require('./wikipages'))
 

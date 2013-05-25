@@ -5,13 +5,15 @@ var express = require('express')
 module.exports = function(path){
 
 	var app = express()	
-
+	
+	var viewsPath = path + '/views'
+	var layoutPath = __dirname + '/views'		
+	
 	app.configure(function(){	
-		var viewsPath = path + '/views'
-		var layoutPath = __dirname + '/views'	
+
 		//a middleware for rendering pages while passing js data to the client
 		app.use(function(req, res, next){
-			res.loadPage = function (appName, data){		
+			res.loadPage = function (appName, data, options){		
 				var serverData = {
 					appName: appName,
 					data: data || {},
@@ -19,7 +21,11 @@ module.exports = function(path){
 					itemModulesInfo : models.items.exportItemsModulesForClient(),
 					publishersPaths : models.items.exportPublishers()
 				}
-				app.set('views', viewsPath)
+				if (options && options.rootViews) {
+					app.set('views', layoutPath)
+				} else {
+					app.set('views', viewsPath)
+				}				
 				res.render(appName, { server : serverData }, function(err, html){
 					if (err) {
 						next(err)
@@ -33,12 +39,41 @@ module.exports = function(path){
 				})			
 			}	
 			next()
-		})		
-	
+		})
+		
+		//a middleware for switching between root and modules view paths
+		
 		app.use('/client', express.static(path + '/client'));  
 		app.use(express.static(path + '/static'))    
-		app.set('views', viewsPath)
-	})	
+		app.set('views', layoutPath)
+	})
+	
+	app.container = function(path, modelName, viewsPath, homePage){
+
+		if(!homePage) throw new Error('You should provide container homepage callback')
+		
+		var mongoose = require('mongoose')
+		var Model = mongoose.model(modelName)
+		
+		var ContainerRoutes = require('./container')	
+		var containerRoutes = new ContainerRoutes(Model, viewsPath)	
+
+	
+		//index and create paths
+		app.post(path, containerRoutes.create)
+		app.get(path, containerRoutes.index)	
+	
+		//homepage of a container
+		app.get(path + '/:id', homePage)	
+
+		//stream and wall paths
+		app.get(path + '/:id/wall', containerRoutes.wall)
+		app.get(path + '/:id/stream', containerRoutes.stream)	
+		
+	}
+
+	
+		
 	
 	return app
 
