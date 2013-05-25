@@ -8,7 +8,7 @@ define([
 		},	
 		idAttribute : '_id',
 		link : function(){
-			return '/years/efd/materials/' + this.id
+			return '/materials/' + this.id
 		},		
 		serialize : function(){
 			return _.extend(this.toJSON(), { link : this.link() })

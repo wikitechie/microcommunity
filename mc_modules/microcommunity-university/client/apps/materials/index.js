@@ -4,17 +4,17 @@ define([
 	'views/sidebars/basic',
 	'views/new-wiki',
 	'views/thumbnails',
-	'models/wikis',
-], function(App, Models, basicSidebar, newWikiForm, Thumbnails, Wikis){
+	'models/materials',
+], function(App, Models, basicSidebar, newWikiForm, Thumbnails, Materials){
 
 	App.addRegions({
 		mainSidebar : '#main-sidebar-region',
 		wikiForm : '#new-wiki-form-region',
-		wikis : '#wikis-region'
+		materials : '#materials-region'
 	})
 	
-	var wikis = new Wikis(server.data.containers)		
-	App.wikis.show(new Thumbnails({ collection : wikis }))
+	var materials = new Materials(server.data.containers)		
+	App.materials.show(new Thumbnails({ collection : materials }))
 	
 	if (App.isLoggedIn()){
 		App.wikiForm.show(new newWikiForm())	

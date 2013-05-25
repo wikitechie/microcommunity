@@ -4,38 +4,27 @@ require('./models/material')
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
+var mongoose = require('mongoose')
+	, Material = mongoose.model('Material')
+
 app.container('/materials', 'Material', 'materials', function(req, res){
-	res.loadPage('material')
-})
 
-
-/* app.get('/years', function(req, res){
-	res.loadPage('years')
-})
-
-app.get('/years/:year', function(req, res){
-	Material.find().exec(function(err, materials){
-		res.loadPage('year', { materials : materials })
+	Material.findById(req.params.id, function(err, material){
+	
+	res.loadPage('materials/show', {
+		material : material
+	})
+		/*Wall.loadItems(wikipage.wall, function(err, items){
+			res.loadPage('wikis/show', { 
+				wiki : wiki,
+				wikipage : wikipage,
+				items : items
+			})		
+		})*/		
 	})	
+
+
+
 })
 
-var wikiRoutes = require('./wikis')
-
-app.get('/years/:year/materials/:material', function(req, res){
-	wikiRoutes.show(req, res)
-	//res.loadPage('material')
-})
-
-
-app.post('/years/:year/materials', function(req, res){
-	var material = new Material({
-		name : req.body.name,
-		description : req.body.description
-	})
-	
-	material.save(function(err){
-		res.redirect('/years/' + req.params.year)
-	})
-	
-}) */
 
