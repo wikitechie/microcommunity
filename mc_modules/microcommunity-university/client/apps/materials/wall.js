@@ -1,36 +1,41 @@
 define([
 	'app',
-	'views/wiki-sidebar',
-	'views/sidebars/new-wikipage',	
-	'models/index',
+	'views/sidebars/basic',	
+	'views/material-sidebar',
+	'models/semesters',	
+	'models/semester',	
 	'modules/publisher',
-	'modules/stream',
-	'views/sidebars/basic',
-	'views/sidebars/new-wikipage',
-	'models/wiki'	
-], function(App, WikiSidebar, NewWikipageSidebarView, Models, publiserhModule, streamModule, basicSidebar, newWikipageSidebar, Wiki){
-
+	'modules/stream'
+], function(App, BasicSidebar, MaterialSidebar, Semesters, Semester, publiserhModule, streamModule){
+	
 	App.addRegions({
-		wikiSidebar : '#wiki-sidebar-region',	
-		newWikipageSidebar : '#new-wikipage-sidebar-region',
+		materialSidebar : '#material-sidebar-region',
+		semestersSidebar : '#semesters-sidebar-region',
 		publisher : '#publisher-region',
-		stream : '#stream-region'
-	})	
-	
-	var wiki = Wiki.findOrCreate(server.data.container)	
-	
-	App.addInitializer(function(){	
-		var wikiSidebar = WikiSidebar(server.data.container)	
-		App.wikiSidebar.show(wikiSidebar)	
-		var sidebarView = NewWikipageSidebarView(server.data.container)
-		this.newWikipageSidebar.show(sidebarView)					
+		stream : '#stream-region'		
 	})
+		
+	var semesters = new Semesters(server.data.semesters)
+	var semestersLinks = []
+	semesters.forEach(function(semester){
+		semestersLinks.push({ label : semester.get('name'), url : semester.link() })
+	})
+		
+	App.semestersSidebar.show(new BasicSidebar({
+		header : 'Archive of Semesters',
+		links : semestersLinks
+	}))
 	
+	App.materialSidebar.show(new MaterialSidebar(server.data.material))
+	
+	var semester = Semester.findOrCreate(server.data.semester)
+		
 	if (App.isLoggedIn()){
 		var options = {
-			wall : wiki.get('wall'),
-			identifier : 'wiki-wall'
+			wall : semester.get('wall'),
+			identifier : 'semester-wall'
 		}
+		
 		var Publisher = publiserhModule(App, options, function(view){
 			App.publisher.show(view)
 		})
@@ -43,14 +48,13 @@ define([
 	var options = { 
 		items : server.data.items, 
 		type : 'wall',
-		wall : wiki.get('wall')
+		wall : semester.get('wall')
 	}
 		
 	var Stream = streamModule(App, options, function(view){
 		App.stream.show(view)
-	})
+	})		
+		
 		
 	return App
-	
-});
-
+})

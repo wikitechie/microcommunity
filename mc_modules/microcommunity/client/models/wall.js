@@ -8,20 +8,20 @@ define([
 
 	var Wall = Backbone.RelationalModel.extend({	
 		idAttribute : '_id',				
-		link : function(){		
+		link : function(){
 			switch(this.get('owner').$ref){
 				case 'users':
 					var user = User.findOrCreate(this.get('owner').$id)
 					return user.link()
 					break	
 				case 'wikipages':
-					var wikipage = Wikipage.findOrCreate(this.get('owner').$id)
+					var wikipage = Wikipage.findOrCreate({ _id : this.get('owner').$id })
 					return wikipage.link()
 					break	
 				case 'wikis':
 					var wiki = Wiki.findOrCreate({ _id : this.get('owner').$id })
 					return wiki.link()
-					break												
+					break																	
 			}			
 		},				
 		serialize : function(){

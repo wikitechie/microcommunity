@@ -20,6 +20,7 @@ app.get('/', function(req, res){
 	Stream.globalStream(function(err, items){
 		Wiki.find().limit(5).exec(function(err, wikis){
 			Material.find().limit(5).exec(function(err, materials){
+				console.log(items)
 				res.loadPage('home', { 
 					wikis : wikis, 
 					materials : materials,

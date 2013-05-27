@@ -27,7 +27,7 @@ module.exports = function hasWall(schema, options){
 	//creating a wall object for each wall
 	schema.pre('save', function(next){
 		var Wall = mongoose.model('Wall')
-		var wall = new Wall({ displayName : this[options.displayNameAttribute] })
+		var wall = new Wall()
 		var self = this
 		wall.save(function(err, wall){
 			if (!err){
@@ -51,7 +51,10 @@ module.exports = function hasWall(schema, options){
 	
 	models.on('wall:update', function(wallOwner, dbref){
 		mongoose.model('Wall')
-			.findByIdAndUpdate(wallOwner.wall, { $set : { owner : dbref } }, function(err, item){})	
+			.findByIdAndUpdate(wallOwner.wall, { $set : { 
+				owner : dbref,
+				displayName : wallOwner[options.displayNameAttribute]
+			} }, function(err, item){})	
 	})
 		
 	

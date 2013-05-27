@@ -2,17 +2,17 @@ define([
 	'app',
 	'views/sidebars/basic',	
 	'views/material-sidebar',
+	'views/new-semester-form',
 	'models/semesters',		
 	'models/material',
 	'modules/publisher',
 	'modules/stream'
-], function(App, BasicSidebar, MaterialSidebar, Semesters, Material, publiserhModule, streamModule){
+], function(App, BasicSidebar, MaterialSidebar, SemesterForm, Semesters, Material, publiserhModule, streamModule){
 	
 	App.addRegions({
 		materialSidebar : '#material-sidebar-region',
 		semestersSidebar : '#semesters-sidebar-region',
-		publisher : '#publisher-region',
-		stream : '#stream-region'		
+		semesterForm : '#semester-form-region'
 	})
 		
 	var semesters = new Semesters(server.data.semesters)
@@ -33,6 +33,8 @@ define([
 	)
 	
 	App.materialSidebar.show(new MaterialSidebar(server.data.material))
+	
+	App.semesterForm.show(new SemesterForm({ model : material }))
 		
 	return App
 	

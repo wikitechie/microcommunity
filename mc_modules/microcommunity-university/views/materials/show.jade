@@ -1,13 +1,9 @@
-.row
-	.span3
-		#main-sidebar-region
-		#wiki-sidebar-region
-		#new-wikipage-sidebar-region		
-		
-	.span9
-		.row-fluid
-			h1.page-header
-				= server.data.material.name
-		.row-fluid
-			#wikipage-region	
+extends layout
+
+block content
+	.row-fluid
+		h1.page-header
+			= server.data.material.name
+	.row-fluid
+		#wikipage-region	
 
