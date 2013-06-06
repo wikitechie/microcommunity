@@ -3,10 +3,17 @@ var mongoose = require('mongoose')
 	, hasWall = require('microcommunity/models/plugins/haswall')
 	, hasStream = require('microcommunity/models/plugins/has-stream')	
 
+
+var sectionSchema = new mongoose.Schema({
+	title: String,
+	description : String,
+})
+
 var materialSchema = new mongoose.Schema({
 	name: String,
 	description : String,
 	thumbnailPath : String,	
+	sections : [sectionSchema],
 	currentSemester : { type : mongoose.Schema.Types.ObjectId, ref : 'Semester' }	
 })
 

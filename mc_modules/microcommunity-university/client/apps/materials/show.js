@@ -16,11 +16,21 @@ define([
 		courseOutline : '#course-outline-region',
 		courseHeader : '#course-header-region'	
 	})
+
+	/*server.data.material.sections = [
+		{ title: 'first', description : 'blah blah blah' }, 
+		{ title: 'second', description : 'blah blah blah' }
+	]*/
 	
-	App.courseOutline.show(new CourseOutlineView())	
+	var material = Material.findOrCreate(server.data.material)
+	
+	App.courseOutline.show(new CourseOutlineView({ 
+		collection : material.get('sections') ,
+		model : material
+	}))
 	App.courseHeader.show(new CourseHeaderView())		
 
-	var material = Material.findOrCreate(server.data.material)
+
 	
 	App.materialSidebar.show(new MaterialSidebar(server.data.material))
 		

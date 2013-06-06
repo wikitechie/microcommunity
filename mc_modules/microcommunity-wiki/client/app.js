@@ -26,7 +26,10 @@ define([
 	App.addInitializer(function(){
 		App.mainSidebar.show(new basicSidebar({
 			header : 'Navigation',
-			links : [ {label : 'Main', url : '/' } ]
+			links : [ 
+				{label : 'Main', url : '/' },
+				{label : 'Materials', url : '/materials' },
+			]
 		}))	
 	})	
 	

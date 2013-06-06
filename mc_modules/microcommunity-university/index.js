@@ -48,6 +48,15 @@ app.post('/materials', function(req, res){
 	})
 })
 
+
+app.post('/materials/:id/sections', function(req, res){
+	var section = req.body
+	Material.findByIdAndUpdate(req.params.id, { $push : { sections : section } }, function(err, material){	
+		res.send(200, section)
+	})
+})
+
+
 app.get('/materials/:id', function(req, res){
 	Material.findById(req.params.id, function(err, material){	
 		res.loadPage('materials/show', {

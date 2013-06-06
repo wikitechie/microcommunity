@@ -1,6 +1,7 @@
 define([
 	'bb',
-], function(Backbone){
+	'models/section'
+], function(Backbone, Section){
 
 	var Material = Backbone.RelationalModel.extend({
 		defaults : {
@@ -19,6 +20,11 @@ define([
 				key : 'wall',
 				relatedModel : 'Core.Wall',
 				//includeInJSON : Backbone.Model.prototype.idAttribute				
+			},
+			{
+				type : Backbone.HasMany,
+				key : 'sections',
+				relatedModel : Section
 			}			
 		]				
 	})
