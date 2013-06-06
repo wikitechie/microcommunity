@@ -2,38 +2,28 @@ define([
 	'app',
 	'views/sidebars/basic',	
 	'views/material-sidebar',
-	'models/semesters',	
-	'models/semester',	
+	'views/course-header',		
+	'models/material',	
 	'modules/publisher',
 	'modules/stream'
-], function(App, BasicSidebar, MaterialSidebar, Semesters, Semester, publiserhModule, streamModule){
+], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule){
 	
 	App.addRegions({
 		materialSidebar : '#material-sidebar-region',
-		semestersSidebar : '#semesters-sidebar-region',
 		publisher : '#publisher-region',
-		stream : '#stream-region'		
-	})
-		
-	var semesters = new Semesters(server.data.semesters)
-	var semestersLinks = []
-	semesters.forEach(function(semester){
-		semestersLinks.push({ label : semester.get('name'), url : semester.link() })
-	})
-		
-	App.semestersSidebar.show(new BasicSidebar({
-		header : 'Archive of Semesters',
-		links : semestersLinks
-	}))
+		stream : '#stream-region',
+		courseHeader : '#course-header-region'				
+	})	
 	
 	App.materialSidebar.show(new MaterialSidebar(server.data.material))
+	App.courseHeader.show(new CourseHeaderView())			
 	
-	var semester = Semester.findOrCreate(server.data.semester)
+	var material = Material.findOrCreate(server.data.material)
 		
 	if (App.isLoggedIn()){
 		var options = {
-			wall : semester.get('wall'),
-			identifier : 'semester-wall'
+			wall : material.get('wall'),
+			identifier : 'materials/'+ material.id
 		}
 		
 		var Publisher = publiserhModule(App, options, function(view){
@@ -48,7 +38,7 @@ define([
 	var options = { 
 		items : server.data.items, 
 		type : 'wall',
-		wall : semester.get('wall')
+		wall : material.get('wall')
 	}
 		
 	var Stream = streamModule(App, options, function(view){

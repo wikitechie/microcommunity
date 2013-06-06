@@ -15,4 +15,5 @@ wallSchema.statics.loadItems = function(id, callback){
 	Item.fetchItems({ walls : id }, callback)	
 }
 
+
 module.exports = mongoose.model('Wall', wallSchema)

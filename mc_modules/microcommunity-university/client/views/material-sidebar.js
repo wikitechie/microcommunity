@@ -9,8 +9,9 @@ define([
 		return new BasicSidebar({
 			header : material.get('name'),
 			links : [ 
-				{label : 'Home page', url : material.link() },
-				{label : 'Community', url : material.link() + '/wall' }
+				{label : 'Home Page', url : material.link() },
+				{label : 'Wall', url : material.link() + '/wall' },
+				{label : 'Stream', url : material.link() + '/stream' }				
 			]
 		})	
 	}

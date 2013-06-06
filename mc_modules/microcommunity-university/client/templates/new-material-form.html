@@ -1,4 +1,4 @@
-<form class="form-horizontal" method='post' action='/materials'>
+<form class="form-horizontal" method='post' action='/materials' enctype="multipart/form-data">
 	<legend>Add a new material</legend>
 	<div class="control-group">
 		<label class="control-label">Title</label>
@@ -10,6 +10,12 @@
 		<label class="control-label">Description</label>
 		<div class="controls">
 			<textarea name='description'></textarea>
+		</div>
+	</div>		
+	<div class="control-group">
+		<label class="control-label">Thumbnail</label>
+		<div class="controls">
+			<input type='file' name='thumbnail' />
 		</div>
 	</div>	
   <div class="control-group">

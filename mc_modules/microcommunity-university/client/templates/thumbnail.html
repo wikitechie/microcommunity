@@ -1,7 +1,12 @@
 <div href="#" class="thumbnail">
-	<img src="<%= (typeof photo != 'undefined') ? photo : 'book-pile.jpg' %>" alt="">
+	<img src="<%= (typeof thumbnailPath != 'undefined') ? thumbnailPath : 'book-pile.jpg' %>" alt="">
 	<div class='caption'>
-		<center><h2><a href="<%= link %>"><%= name %></a></h2></center>
+		<h3><a href="<%= link %>"><%= name %></a></h3>	
+		<p><%= description %></p>
+		<p>
+			<button class="btn btn-primary" type="button">Participate</button>
+		</p>		
 	</div>
+
 </div>
 
