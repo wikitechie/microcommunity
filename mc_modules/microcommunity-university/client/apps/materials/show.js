@@ -2,18 +2,22 @@ define([
 	'app',
 	'views/sidebars/basic',	
 	'views/material-sidebar',
+	'views/course-outline',
 	'models/semesters',		
 	'models/material',
 	'modules/publisher',
 	'modules/stream'
-], function(App, BasicSidebar, MaterialSidebar, Semesters, Material, publiserhModule, streamModule){
+], function(App, BasicSidebar, MaterialSidebar, CourseOutlineView, Semesters, Material, publiserhModule, streamModule){
 	
 	App.addRegions({
 		materialSidebar : '#material-sidebar-region',
 		semestersSidebar : '#semesters-sidebar-region',
 		publisher : '#publisher-region',
-		stream : '#stream-region'		
+		stream : '#stream-region',
+		courseOutline : '#course-outline-region'		
 	})
+	
+	App.courseOutline.show(new CourseOutlineView())
 		
 	var semesters = new Semesters(server.data.semesters)
 	var semestersLinks = []

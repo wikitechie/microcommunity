@@ -1,16 +1,19 @@
 var microcommunity = require('microcommunity')
-
+	, addPublisher = require('semester-publisher')
+	
 require('./models/material')
 require('./models/semester')
 
 var app = module.exports = microcommunity.plugin(__dirname)
+
+addPublisher(app)
 
 var mongoose = require('mongoose')
 	, Material = mongoose.model('Material')
 	, Semester = mongoose.model('Semester')	
 	, Wall = mongoose.model('Wall')	
 	, Post = mongoose.model('Post')
-	, User = mongoose.model('User')
+
 
 app.get('/materials/:id', function(req, res){
 	Material.findById(req.params.id, function(err, material){	
@@ -104,36 +107,7 @@ app.get('/materials/:material/semesters/:semester', function(req, res){
 	})
 })
 
-//semester-wall
-app.post('/api/publishers/semester-wall/posts', function(req, res){
-	User.findById(req.body.author, function(err, author){
-		var post = new Post({
-			content : req.body.content,
-			wall : req.body.wall,
-			walls : [req.body.wall],
-			author : author.id,		
-			//streams : [author.stream,]
-		})	
-		post.save(function(err){
-			res.send(post)
-		})		
-	})
-})
 
-app.post('/api/publishers/semester-wall/photos', function(req, res){
-	User.findById(req.body.author, function(err, author){
-		var post = new Photo({
-			content : req.body.content,
-			wall : req.body.wall,
-			walls : [req.body.wall],
-			author : author.id,		
-			//streams : [author.stream]
-		})	
-		post.save(function(err){
-			res.send(post)
-		})		
-	})
-})
 
 
 
