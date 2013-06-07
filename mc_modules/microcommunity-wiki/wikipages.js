@@ -3,11 +3,11 @@ var mongoose = require('mongoose')
 	, Wall = mongoose.model('Wall')
 	, Activity = mongoose.model('NewWikipageActivity')
 	, Revision = mongoose.model('Revision')
-	, Wiki = mongoose.model('Wiki')
+	//, Wiki = mongoose.model('Wiki')
 	, User = mongoose.model('User')
 	, Post = mongoose.model('Post')
 
-exports.new = function(req, res){
+/* exports.new = function(req, res){
 	Wiki.findById(req.params.wiki, function(err, wiki){
 		res.loadPage('wikipage-form', { 
 			wiki : wiki,
@@ -37,7 +37,7 @@ exports.create = function(req, res){
 			})
 		})	
 	})
-}
+} */
 
 exports.show = function(req, res){
 	Wikipage.findById(req.params.page, function(err, wikipage){	
@@ -48,7 +48,7 @@ exports.show = function(req, res){
 			})
 		})
 	})
-}
+} 
 
 exports.edit = function(req, res){	
 	Wikipage.findById(req.params.page, function(err, wikipage){

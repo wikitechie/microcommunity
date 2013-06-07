@@ -16,18 +16,19 @@ var app = module.exports = microcommunity.plugin(__dirname)
 
 //main app
 app.get('/', function(req, res){	
-	var Wiki = mongoose.model('Wiki'), Material = mongoose.model('Material')
+	//var Wiki = mongoose.model('Wiki'), 
+	var Material = mongoose.model('Material')
 	Stream.globalStream(function(err, items){
-		Wiki.find().limit(5).exec(function(err, wikis){
+		//Wiki.find().limit(5).exec(function(err, wikis){
 			Material.find().limit(5).exec(function(err, materials){
 				console.log(items)
 				res.loadPage('home', { 
-					wikis : wikis, 
+					//wikis : wikis, 
 					materials : materials,
 					items : items 
 				})			
 			})	
-		})		
+		//})		
 	})	
 })
 

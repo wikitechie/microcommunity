@@ -1,0 +1,22 @@
+extends wiki-layout
+
+block sidebars
+	#new-wikipage-sidebar-region
+
+block content
+	.row-fluid
+		form.form-horizontal(action="#{server.data.action}", method="post")
+			if server.data.edit == false
+				h3 Title
+				p
+					input(type='text', name='title', class='span12', value='#{server.data.title}')
+			else
+				h3= server.data.wikipage.title
+			p
+				textarea(type='text', name='content', class='span12', rows=20)
+					if server.data.edit == true
+						= server.data.wikipage.content
+			p Summary
+			input(type='text', name='summary', class='span12')
+			br
+			input.btn.btn-primary.pull-right(type="submit") Save

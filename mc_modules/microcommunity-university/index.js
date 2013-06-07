@@ -94,4 +94,10 @@ app.get('/materials', function(req, res){
 })
 
 
+var wikipagesRoutes = require('./wikipages')
+
+app.get('/materials/:material/wikipages/new', wikipagesRoutes.new)
+app.post('/materials/:material/wikipages', wikipagesRoutes.create)
+app.get('/materials/:material/wikipages/:wikipage', wikipagesRoutes.show)
+
 

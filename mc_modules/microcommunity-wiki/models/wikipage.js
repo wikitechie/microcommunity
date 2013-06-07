@@ -6,11 +6,12 @@ var mongoose = require('mongoose')
 var wikipageSchema = new mongoose.Schema({
 	title: String,
 	content : String,
-	wiki : { type : mongoose.Schema.Types.ObjectId, ref : 'Wiki' },
+	material : { type : mongoose.Schema.Types.ObjectId, ref : 'Material' },	
+	//wiki : { type : mongoose.Schema.Types.ObjectId, ref : 'Wiki' },
 })
 
 wikipageSchema.pre('init', function(next, doc){
-	this.model('Wiki').populate(doc, 'wiki', next)	
+	this.model('Material').populate(doc, 'material', next)	
 })
 
 wikipageSchema.plugin(hasWall, { displayNameAttribute : 'title' })
