@@ -40,9 +40,9 @@ app.container('/wikis', 'Wiki', 'wikis', function(req, res){
 	})
 }) */
 
-var wikipagesRoutes = require('./wikipages')
+/* var wikipagesRoutes = require('./wikipages')
 app.get('/wikipages/:page', wikipagesRoutes.show)
-/* app.get('/wikipages/:page/edit', wikipagesRoutes.edit)
+app.get('/wikipages/:page/edit', wikipagesRoutes.edit)
 app.post('/wikipages/:page/', wikipagesRoutes.update) */
 
 app.put('/api/wikipages/:id', function(req, res){

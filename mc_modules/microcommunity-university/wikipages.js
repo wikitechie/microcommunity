@@ -7,6 +7,17 @@ var mongoose = require('mongoose')
 	, User = mongoose.model('User')
 	, Post = mongoose.model('Post')
 
+exports.show = function(req, res){
+	Wikipage.findById(req.params.wikipage, function(err, wikipage){	
+		Wall.loadItems(wikipage.wall, function(err, items){
+			res.loadPage('wikipage', {
+				wikipage : wikipage,
+				items : items 				
+			})
+		})
+	})
+}
+
 exports.new = function(req, res){
 	Material.findById(req.params.material, function(err, material){
 		res.loadPage('wikipage-form', { 

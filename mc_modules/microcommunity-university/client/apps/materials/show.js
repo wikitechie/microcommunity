@@ -31,7 +31,6 @@ define([
 	App.courseHeader.show(new CourseHeaderView())		
 
 
-	
 	App.materialSidebar.show(new MaterialSidebar(server.data.material))
 		
 	return App

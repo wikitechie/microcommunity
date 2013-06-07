@@ -1,12 +1,13 @@
 define([
 	'app',
 	'views/wiki-sidebar',
+	'views/material-sidebar',	
 	'views/sidebars/new-wikipage',		
 	'views/wikipage',
 	'modules/publisher',
 	'modules/stream',	
 	'models/wikipage'
-], function(App, WikiSidebar, NewWikipageSidebarView, WikipageView, publiserhModule, streamModule, Wikipage){
+], function(App, WikiSidebar, MaterialSidebar, NewWikipageSidebarView, WikipageView, publiserhModule, streamModule, Wikipage){
 
 	var wikipage = Wikipage.findOrCreate(server.data.wikipage)
 		
@@ -15,6 +16,7 @@ define([
 	})	
 	
 	App.addRegions({
+		materialSidebar : '#material-sidebar-region',	
 		newWikipageSidebar : '#new-wikipage-sidebar-region',	
 		wikiSidebar : '#wiki-sidebar-region',
 		wikipage : '#wikipage-region',
@@ -22,11 +24,15 @@ define([
 		wall : '#wall-region'	
 	})
 	
-	App.addInitializer(function(){	
+	/* App.addInitializer(function(){	
 		var wikiSidebar = WikiSidebar(server.data.wikipage.wiki)	
 		App.wikiSidebar.show(wikiSidebar)	
 		var sidebarView = NewWikipageSidebarView(server.data.wikipage.wiki)
 		this.newWikipageSidebar.show(sidebarView)					
+	}) */
+	
+	App.addInitializer(function(){
+		App.materialSidebar.show(new MaterialSidebar(server.data.wikipage.material))		
 	})
 	
 	if (App.currentUser){
