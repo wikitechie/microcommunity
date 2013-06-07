@@ -2,13 +2,43 @@ define([
 	'bb',
 	'text!templates/section.html',
 	'text!templates/course-outline.html',
+	'text!templates/attachement.html',	
+	'text!templates/attachement-list.html',		
 	'views/new-section-modal',
-],function(Backbone, sectionHtml, courseOutlineHtml, NewSectionModal){	
+	'views/new-attachement-modal'	
+],function(Backbone, sectionHtml, courseOutlineHtml, attachementHtml, attachementListHtml, NewSectionModal, NewAttachementModal){	
 
-	var SectionView = Backbone.Marionette.ItemView.extend({
+
+	var AttachementView = Backbone.Marionette.ItemView.extend({
+		template : attachementHtml
+	})
+	
+	var AttachementListView = Backbone.Marionette.CompositeView.extend({
+		template : attachementListHtml,
+		itemView : AttachementView,
+		appendHtml : function(collectionView, itemView, index){
+			collectionView.$('ul').append(itemView.el)
+		}
+	})
+
+	var SectionView = Backbone.Marionette.Layout.extend({
 		template : sectionHtml,
+		events : {
+			'click .add-attachement-btn' : 'addAttachement'
+		},
+		addAttachement : function(){
+			var newAttachement = new NewAttachementModal()
+			newAttachement.show()
+		},
+		regions : {
+			attachements : "#attachement-list-region"
+		},
 		onRender : function(){
-			console.log(this.model.url())
+			var collection = new Backbone.Collection([
+				{ id : 1 },
+				{ id : 2 }
+			])		
+			this.attachements.show(new AttachementListView({ collection : collection }))		
 		}				
 	})
 

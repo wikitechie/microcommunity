@@ -7,6 +7,10 @@ require('./models/wikipage')
 require('./models/activity')
 require('./models/revision')
 
+
+var addWikiPublisher = require('./wiki-publisher')
+	, addWikipagePublisher = require('./wikipage-publisher')
+
 var mongoose = require('mongoose')
 	, Wikipage = mongoose.model('Wikipage')
 	, Wall = mongoose.model('Wall')
@@ -18,6 +22,9 @@ var mongoose = require('mongoose')
 	, Resource = require('express-resource')	
 
 var app = module.exports = microcommunity.plugin(__dirname)
+
+addWikiPublisher(app)
+addWikipagePublisher(app)
 
 app.container('/wikis', 'Wiki', 'wikis', function(req, res){
 	Wiki.findById(req.params.id, function(err, wiki){
@@ -64,66 +71,7 @@ app.put('/api/wikipages/:id', function(req, res){
 })
 
 
-app.post('/api/publishers/wiki-wall/posts', function(req, res){
-	User.findById(req.body.author, function(err, author){
-		var post = new Post({
-			content : req.body.content,
-			wall : req.body.wall,
-			walls : [req.body.wall],
-			author : author.id,		
-			streams : [author.stream,]
-		})	
-		post.save(function(err){
-			res.send(post)
-		})		
-	})
-})
 
-app.post('/api/publishers/wiki-wall/photos', function(req, res){
-	User.findById(req.body.author, function(err, author){
-		var post = new Photo({
-			content : req.body.content,
-			wall : req.body.wall,
-			walls : [req.body.wall],
-			author : author.id,		
-			streams : [author.stream]
-		})	
-		post.save(function(err){
-			res.send(post)
-		})		
-	})
-})
-
-
-app.post('/api/publishers/wikipage-wall/posts', function(req, res){
-	User.findById(req.body.author, function(err, author){
-		var post = new Post({
-			content : req.body.content,
-			wall : req.body.wall,
-			walls : [req.body.wall],
-			author : author.id,		
-			streams : [author.stream]
-		})	
-		post.save(function(err){
-			res.send(post)
-		})		
-	})
-})
-
-app.post('/api/publishers/wikipage-wall/photos', function(req, res){
-	User.findById(req.body.author, function(err, author){
-		var post = new Photo({
-			content : req.body.content,
-			wall : req.body.wall,
-			walls : [req.body.wall],
-			author : author.id,		
-			streams : [author.stream]
-		})	
-		post.save(function(err){
-			res.send(post)
-		})		
-	})
-})
 
 
 
