@@ -16,7 +16,8 @@ define([
 			switch(this.model.get('object').$ref){
 				case "wikipages":
 					var wikipage = Wikipage.findOrCreate({ _id : this.model.get('object').$id })
-					link = wikipage.link()							
+					link = wikipage.link()
+					console.log(wikipage.toJSON())
 				break;
 			}		
 		

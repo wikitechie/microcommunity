@@ -39,8 +39,6 @@ app.post('/api/materials/:material/sections/:section/attachements', function(req
 	
 	var section = req.params.section
 	
-	console.log(attachement)
-	
 	var sectionIndex = 'sections.' + section + '.attachements'
 	
 	var update = {}
@@ -130,5 +128,13 @@ var wikipagesRoutes = require('./wikipages')
 app.get('/materials/:material/wikipages/new', wikipagesRoutes.new)
 app.post('/materials/:material/wikipages', wikipagesRoutes.create)
 app.get('/wikipages/:wikipage', wikipagesRoutes.show)
+
+var filesRoutes = require('./files')
+
+app.get('/materials/:material/files/new', filesRoutes.new)
+app.post('/materials/:material/files', filesRoutes.create)
+app.get('/files/:file', filesRoutes.show)
+
+
 
 

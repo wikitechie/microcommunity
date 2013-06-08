@@ -7,7 +7,7 @@ define([
 		urlRoot : '/api/wikipages',
 		idAttribute : '_id',
 		link : function(){
-			return '/wikipages/' + this.get('id')
+			return '/wikipages/' + this.id
 		},		
 		serialize : function(){
 			return _.extend(this.toJSON(), { link : this.link() })
