@@ -24,7 +24,10 @@ define([
 			{
 				type : Backbone.HasMany,
 				key : 'sections',
-				relatedModel : Section
+				relatedModel : Section,
+				reverseRelation : {
+					key : 'parent'
+				}	
 			}			
 		]				
 	})

@@ -28,6 +28,24 @@ function saveThumbnail(file, callback){
 	})	
 }
 
+app.post('/api/materials/:material/sections/:section/attachements', function(req, res){	
+	
+	var attachement = req.body
+	var section = req.params.section
+	
+	var sectionIndex = 'sections.' + section + '.attachements'
+	
+	var update = {}
+	update[sectionIndex] = attachement
+		
+	Material.findByIdAndUpdate(
+		req.params.material,
+		{ $push : update }, 
+		function(err, material){
+			res.send(200, attachement)
+	})
+	
+})
 
 app.get('/materials/new', function(req, res){
 	res.loadPage('materials/new')
@@ -58,7 +76,9 @@ app.post('/materials/:id/sections', function(req, res){
 
 
 app.get('/materials/:id', function(req, res){
+
 	Material.findById(req.params.id, function(err, material){	
+		console.log(material)
 		res.loadPage('materials/show', {
 			material : material
 		})

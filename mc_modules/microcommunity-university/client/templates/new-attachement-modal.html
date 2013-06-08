@@ -3,39 +3,28 @@
 	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	  <h3 id="myModalLabel">Add a new attachement</h3>
 	</div>
-	<div class="modal-body">
 	
-		<form>
-			<label class="radio">
-				<input type="radio" name=choice id="wikipage-radio" value="wikipage" checked>
-				<div class="media">
-					<a class="pull-left" href="#">
-						<img class="media-object" src="/wiki.png" width=75>
-					</a>
-					<div class="media-body">
-						<h4 class="media-heading">Wiki Page</h4>
-						A wiki page is a page that can be collaboratively edited by participants
-					</div>
+	<div class="modal-body">
+		<form class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label">Title</label>
+				<div class="controls">
+					<input class='input-title' type="text" name='name' placeholder="Title of your section">
 				</div>
-			</label>
-			<label class="radio">
-				<input type="radio"  name=choice id="file-radio" value="file">
-				<div class="media">
-					<a class="pull-left" href="#">
-						<img class="media-object" src="/file.png" width=75>
-					</a>
-					<div class="media-body">
-						<h4 class="media-heading">File</h4>
-						A computer file you can upload to the course
-					</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Description</label>
+				<div class="controls">
+					<textarea class='input-description' name='description'></textarea>
 				</div>
-			</label>				
-		</form>
-	</div>
+			</div>	
+		</form>	
+	</div> 
 	
 	<div class="modal-footer">
 		<button class="btn modal-cancel" data-dismiss="modal" aria-hidden="true">Close</button>
-		<button class="btn btn-primary modal-submit">Save changes</button>
-	</div>		
+		<button class="btn btn-primary modal-submit">Add</button>
+	</div>
+	
 
 

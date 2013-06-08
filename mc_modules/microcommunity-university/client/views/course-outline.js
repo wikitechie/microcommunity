@@ -6,11 +6,11 @@ define([
 	'text!templates/attachement-list.html',		
 	'views/new-section-modal',
 	'views/new-attachement-modal'	
-],function(Backbone, sectionHtml, courseOutlineHtml, attachementHtml, attachementListHtml, NewSectionModal, NewAttachementModal){	
+], function(Backbone, sectionHtml, courseOutlineHtml, attachementHtml, attachementListHtml, NewSectionModal, NewAttachementModal){	
 
 
 	var AttachementView = Backbone.Marionette.ItemView.extend({
-		template : attachementHtml
+		template : attachementHtml,		
 	})
 	
 	var AttachementListView = Backbone.Marionette.CompositeView.extend({
@@ -27,18 +27,14 @@ define([
 			'click .add-attachement-btn' : 'addAttachement'
 		},
 		addAttachement : function(){
-			var newAttachement = new NewAttachementModal()
+			var newAttachement = new NewAttachementModal({ model : this.model })
 			newAttachement.show()
 		},
 		regions : {
 			attachements : "#attachement-list-region"
 		},
 		onRender : function(){
-			var collection = new Backbone.Collection([
-				{ id : 1 },
-				{ id : 2 }
-			])		
-			this.attachements.show(new AttachementListView({ collection : collection }))		
+			this.attachements.show(new AttachementListView({ collection : this.model.get('attachements') }))		
 		}				
 	})
 

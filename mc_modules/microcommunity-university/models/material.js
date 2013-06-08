@@ -3,10 +3,16 @@ var mongoose = require('mongoose')
 	, hasWall = require('microcommunity/models/plugins/haswall')
 	, hasStream = require('microcommunity/models/plugins/has-stream')	
 
+var attachementSchema = new mongoose.Schema({
+	title: String,
+	description : String,
+	object : { type : mongoose.Schema.Types.DBRef }
+})
 
 var sectionSchema = new mongoose.Schema({
 	title: String,
 	description : String,
+	attachements : [attachementSchema],
 })
 
 var materialSchema = new mongoose.Schema({
