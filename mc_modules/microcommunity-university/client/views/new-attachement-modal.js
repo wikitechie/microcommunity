@@ -1,8 +1,30 @@
 define([
 	'bb',
 	'text!templates/new-attachement-modal.html',
-	'models/attachement'
-],function(Backbone, html, Attachement){
+	'models/attachement',
+	'models/wikipages'
+], function(Backbone, html, Attachement, Wikipages){	
+	
+	var OptionView = Backbone.Marionette.ItemView.extend({
+		tagName : 'option',
+		template : '<%= title %>',
+		onRender : function(){
+			$(this.el).attr('value', this.model.id)
+		}
+	})
+	
+	var WikipagesSelect = Backbone.Marionette.CompositeView.extend({
+		tagName : 'select',
+		template : '',
+		events : {
+			'click' : 'selected'
+		},		
+		itemView : OptionView,
+		selected : function(){
+			var id = $(this.el).find('option:selected').attr('value')
+			return { id : id, type : 'wikipage' }
+		}
+	})	
 	
 	var NewAttachementModal = Backbone.Marionette.Layout.extend({	
 		className : 'modal fade',
@@ -15,8 +37,13 @@ define([
 			submit : '.modal-submit',
 			cancel : '.modal-cancel',			
 		},
+		regions : {
+			wikipagesSelect : '.wikipages-select-region'
+		},
 		onRender : function(){
 			$(this.el).modal()
+			var wikipages = new Backbone.Collection(server.data.wikipages)
+			this.wikipagesSelect.show(new WikipagesSelect({ collection : wikipages }))
 		},
 		show : function(){
 			this.render()
@@ -31,7 +58,8 @@ define([
 				section : section,
 				material : material,
 				title : this.ui.title.val(),
-				description : this.ui.description.val()				
+				description : this.ui.description.val(),
+				object : this.wikipagesSelect.currentView.selected()			
 			})			
 			
 			var self = this			

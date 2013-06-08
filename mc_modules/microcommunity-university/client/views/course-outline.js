@@ -5,12 +5,26 @@ define([
 	'text!templates/attachement.html',	
 	'text!templates/attachement-list.html',		
 	'views/new-section-modal',
-	'views/new-attachement-modal'	
-], function(Backbone, sectionHtml, courseOutlineHtml, attachementHtml, attachementListHtml, NewSectionModal, NewAttachementModal){	
-
+	'views/new-attachement-modal',
+	'models/wikipage'
+], function(Backbone, sectionHtml, courseOutlineHtml, attachementHtml, attachementListHtml, NewSectionModal, NewAttachementModal, Wikipage){
 
 	var AttachementView = Backbone.Marionette.ItemView.extend({
-		template : attachementHtml,		
+		template : attachementHtml,	
+		serializeData : function(){
+			var link
+			switch(this.model.get('object').$ref){
+				case "wikipages":
+					var wikipage = Wikipage.findOrCreate({ _id : this.model.get('object').$id })
+					link = wikipage.link()							
+				break;
+			}		
+		
+			return _.extend(this.model.toJSON(), {
+				link : link,
+				thumbnail : {},
+			})
+		}
 	})
 	
 	var AttachementListView = Backbone.Marionette.CompositeView.extend({

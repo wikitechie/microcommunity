@@ -12,6 +12,8 @@ var mongoose = require('mongoose')
 	, Wall = mongoose.model('Wall')	
 	, Stream = mongoose.model('Stream')
 	, Post = mongoose.model('Post')
+	, Wikipage = mongoose.model('Wikipage')
+	, models = require('microcommunity/models')
 
 
 function saveThumbnail(file, callback){
@@ -29,9 +31,15 @@ function saveThumbnail(file, callback){
 }
 
 app.post('/api/materials/:material/sections/:section/attachements', function(req, res){	
-	
+
 	var attachement = req.body
+	var objectType = models.convert(req.body.object.type, 'object', 'collection')
+	var objectId = req.body.object.id
+	attachement.object = new mongoose.Types.DBRef(objectType, objectId)
+	
 	var section = req.params.section
+	
+	console.log(attachement)
 	
 	var sectionIndex = 'sections.' + section + '.attachements'
 	
@@ -77,12 +85,15 @@ app.post('/materials/:id/sections', function(req, res){
 
 app.get('/materials/:id', function(req, res){
 
-	Material.findById(req.params.id, function(err, material){	
-		console.log(material)
-		res.loadPage('materials/show', {
-			material : material
-		})
+	Wikipage.find({ material : req.params.id }).exec(function(err, wikipages){
+		Material.findById(req.params.id, function(err, material){	
+			res.loadPage('materials/show', {
+				material : material,
+				wikipages : wikipages
+			})
+		})	
 	})
+	
 })
 
 app.get('/materials/:id/wall', function(req, res){
