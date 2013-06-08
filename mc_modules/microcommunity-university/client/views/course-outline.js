@@ -6,24 +6,34 @@ define([
 	'text!templates/attachement-list.html',		
 	'views/new-section-modal',
 	'views/new-attachement-modal',
-	'models/wikipage'
-], function(Backbone, sectionHtml, courseOutlineHtml, attachementHtml, attachementListHtml, NewSectionModal, NewAttachementModal, Wikipage){
+	'models/wikipage',
+	'models/file'
+], function(Backbone, sectionHtml, courseOutlineHtml, attachementHtml, attachementListHtml, NewSectionModal, NewAttachementModal, Wikipage, File){
 
 	var AttachementView = Backbone.Marionette.ItemView.extend({
 		template : attachementHtml,	
 		serializeData : function(){
-			var link
+			var link, thumbnail
+			
 			switch(this.model.get('object').$ref){
 				case "wikipages":
 					var wikipage = Wikipage.findOrCreate({ _id : this.model.get('object').$id })
 					link = wikipage.link()
-					console.log(wikipage.toJSON())
+					thumbnailPath = '/wiki-icon.png'
 				break;
+				case "files":
+					var file = File.findOrCreate({ _id : this.model.get('object').$id })
+					link = file.link()
+					thumbnailPath = '/file-icon.png'					
+				break;
+				default:
+					thumbnailPath = '/attachment-icon.png'
+				break;				
 			}		
 		
 			return _.extend(this.model.toJSON(), {
 				link : link,
-				thumbnail : {},
+				thumbnailPath : thumbnailPath,
 			})
 		}
 	})

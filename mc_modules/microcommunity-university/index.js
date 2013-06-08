@@ -13,6 +13,7 @@ var mongoose = require('mongoose')
 	, Stream = mongoose.model('Stream')
 	, Post = mongoose.model('Post')
 	, Wikipage = mongoose.model('Wikipage')
+	, File = mongoose.model('File')
 	, models = require('microcommunity/models')
 
 
@@ -33,6 +34,7 @@ function saveThumbnail(file, callback){
 app.post('/api/materials/:material/sections/:section/attachements', function(req, res){	
 
 	var attachement = req.body
+	console.log(req.body)
 	var objectType = models.convert(req.body.object.type, 'object', 'collection')
 	var objectId = req.body.object.id
 	attachement.object = new mongoose.Types.DBRef(objectType, objectId)
@@ -84,12 +86,15 @@ app.post('/materials/:id/sections', function(req, res){
 app.get('/materials/:id', function(req, res){
 
 	Wikipage.find({ material : req.params.id }).exec(function(err, wikipages){
-		Material.findById(req.params.id, function(err, material){	
-			res.loadPage('materials/show', {
-				material : material,
-				wikipages : wikipages
+		File.find({ material : req.params.id }).exec(function(err, files){
+			Material.findById(req.params.id, function(err, material){	
+				res.loadPage('materials/show', {
+					material : material,
+					wikipages : wikipages,
+					files : files
+				})
 			})
-		})	
+		})		
 	})
 	
 })

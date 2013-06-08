@@ -5,7 +5,7 @@ define([
 	'models/wikipages'
 ], function(Backbone, html, Attachement, Wikipages){	
 	
-	var OptionView = Backbone.Marionette.ItemView.extend({
+	var WikipageOptionView = Backbone.Marionette.ItemView.extend({
 		tagName : 'option',
 		template : '<%= title %>',
 		onRender : function(){
@@ -13,18 +13,58 @@ define([
 		}
 	})
 	
-	var WikipagesSelect = Backbone.Marionette.CompositeView.extend({
+	var FileOptionView = Backbone.Marionette.ItemView.extend({
+		tagName : 'option',
+		template : '<%= name %>',
+		onRender : function(){
+			$(this.el).attr('value', this.model.id)
+		}
+	})	
+	
+	var ResourceSelect = Backbone.Marionette.CompositeView.extend({
+		tagName : 'select',
+		template : '',
+		selected : function(){
+			var id = $(this.el).find('option:selected').attr('value')
+			return id
+		}
+	})
+	
+	var resourceTypeIndex = []	
+		resourceTypeIndex[0] = { 
+			id : 0, name : 'Wikipage', type : 'wikipage', array : server.data.wikipages, 
+			view : WikipageOptionView
+		}
+		resourceTypeIndex[1] = { 
+			id : 1, name : 'File', type : 'file', array : server.data.files, 
+			view : FileOptionView 
+		}	
+	
+	var ResourceTypeOptionView = Backbone.Marionette.ItemView.extend({
+		tagName : 'option',
+		template : '<%= name %>',
+		onRender : function(){
+			$(this.el).attr('value', this.model.id)
+		}
+	})		
+	
+	var ResourceTypeSelect = Backbone.Marionette.CompositeView.extend({
 		tagName : 'select',
 		template : '',
 		events : {
-			'click' : 'selected'
+			'click' : 'onSelected'
 		},		
-		itemView : OptionView,
+		itemView : ResourceTypeOptionView,
+		onSelected : function(){
+			var id = $(this.el).find('option:selected').attr('value')
+			this.trigger('typeSelected', id)
+		},
 		selected : function(){
 			var id = $(this.el).find('option:selected').attr('value')
-			return { id : id, type : 'wikipage' }
-		}
+			return resourceTypeIndex[id].type
+		}		
 	})	
+		
 	
 	var NewAttachementModal = Backbone.Marionette.Layout.extend({	
 		className : 'modal fade',
@@ -38,12 +78,30 @@ define([
 			cancel : '.modal-cancel',			
 		},
 		regions : {
-			wikipagesSelect : '.wikipages-select-region'
+			resourceSelect : '.resource-select-region',
+			resourceTypeSelect : '.resource-type-select-region'			
 		},
 		onRender : function(){
 			$(this.el).modal()
-			var wikipages = new Backbone.Collection(server.data.wikipages)
-			this.wikipagesSelect.show(new WikipagesSelect({ collection : wikipages }))
+				
+			function select(type, self){				
+				var collection = new Backbone.Collection(resourceTypeIndex[type].array)			
+				self.resourceSelect.show(new ResourceSelect({ 
+					collection : collection ,
+					itemView : resourceTypeIndex[type].view,
+				}))			
+			}
+			
+			select(0, this)
+			
+			var resourceTypes = new Backbone.Collection(resourceTypeIndex)			
+			this.resourceTypeSelect.show(new ResourceTypeSelect({ collection : resourceTypes }))
+			
+			var self = this
+			this.resourceTypeSelect.currentView.on('typeSelected', function(type){
+				select(type, self)
+			})
+						
 		},
 		show : function(){
 			this.render()
@@ -59,7 +117,10 @@ define([
 				material : material,
 				title : this.ui.title.val(),
 				description : this.ui.description.val(),
-				object : this.wikipagesSelect.currentView.selected()			
+				object : {
+					id : this.resourceSelect.currentView.selected(),
+					type : this.resourceTypeSelect.currentView.selected()
+				}
 			})			
 			
 			var self = this			
