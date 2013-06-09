@@ -49,7 +49,7 @@ define([
 		links : materialsLinks
 	}))	
 	
-	if (App.currentUser.id){	
+	if (App.currentUser.id){
 		var options = {
 			wall : App.currentUser.get('wall'),
 			identifier : 'user-wall'

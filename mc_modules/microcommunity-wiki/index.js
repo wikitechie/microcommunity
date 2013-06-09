@@ -22,8 +22,9 @@ var mongoose = require('mongoose')
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
-addWikiPublisher(app)
-addWikipagePublisher(app)
+//api
+var api = require('./api')
+api(app)
 
 app.container('/wikis', 'Wiki', 'wikis', function(req, res){
 	Wiki.findById(req.params.id, function(err, wiki){
@@ -40,7 +41,6 @@ app.container('/wikis', 'Wiki', 'wikis', function(req, res){
 })
 
 var wikipagesRoutes = require('./routes')
-
 app.setupOnContainer = function(containersPath){
 	wikipagesRoutes.setup(app, containersPath)
 } 

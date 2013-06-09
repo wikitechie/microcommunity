@@ -8,7 +8,7 @@ define([
 	})
 	
 	App.addInitializer(function(){
-		App.materialSidebar.show(new MaterialSidebar(server.data.file.material))		
+		App.materialSidebar.show(new MaterialSidebar(server.data.file.container))		
 	})
 	
 	return App

@@ -9,9 +9,8 @@ var app = microcommunity.core()
 
 //instaling plugins
 app.use(basic)	
-
+app.use(wiki)
 app.use(files)
 app.use(uni)
-
 
 app = app.listen(3000)

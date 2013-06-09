@@ -1,5 +1,4 @@
 var mongoose = require('mongoose')
-	, models = require('./../index')
 	, hasWall = require('microcommunity/models/plugins/haswall')
 	, hasStream = require('microcommunity/models/plugins/has-stream')		
 
@@ -16,17 +15,6 @@ module.exports = function isContainer(schema, options){
 		name: String,
 		description : String,
 		containerType : { type : String, default : containerType }		
-	})
-	
-	schema.pre('init', function(next, doc){
-		console.log('doc before ' + containerType)
-		console.log(doc)	
-		if (doc.containerType != containerType){
-			doc = null
-		}
-		console.log('doc after' + containerType)
-		console.log(doc)
-		next(null, doc)
 	})
 	
 	schema.plugin(hasWall, { displayNameAttribute : 'name' })

@@ -2,7 +2,7 @@ define([
 	'bb',
 	'models/items/post',	
 	'text!templates/publishers/post.html'
-],function(Backbone, Post, html){
+], function(Backbone, Post, html){
 
 	var PostPublisher = Backbone.Marionette.ItemView.extend({
 	
@@ -25,7 +25,7 @@ define([
 					
 		newPost : function(){					
 			this.disable()			
-			var post = new Post()			
+			var post = new Post()	
 			post.set({
 				content : this.ui.input.val(),
 				wall : this.container.wall.id,
