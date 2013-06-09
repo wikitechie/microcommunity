@@ -1,13 +1,13 @@
 define([
 	'app',
-	'views/wiki-sidebar',
+	//'views/wiki-sidebar',
 	'views/material-sidebar',	
 	'views/sidebars/new-wikipage',		
 	'views/wikipage',
 	'modules/publisher',
 	'modules/stream',	
 	'models/wikipage'
-], function(App, WikiSidebar, MaterialSidebar, NewWikipageSidebarView, WikipageView, publiserhModule, streamModule, Wikipage){
+], function(App, MaterialSidebar, NewWikipageSidebarView, WikipageView, publiserhModule, streamModule, Wikipage){
 
 	var wikipage = Wikipage.findOrCreate(server.data.wikipage)
 		

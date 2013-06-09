@@ -7,6 +7,9 @@ define([
 		link : function(){
 			return '/files/' + this.id
 		},
+		serialize : function(){
+			return _.extend(this.toJSON(), {  link : this.link() })
+		}
 	})
 	
 	return File

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 	, Container = mongoose.model('Container')
 	, File = mongoose.model('File')
+	, FileActivity = mongoose.model('NewFileActivity')
 
 module.exports.setup = function(app, containers){
 
@@ -31,16 +32,15 @@ module.exports.setup = function(app, containers){
 			})
 		
 			file.save(function(err, file){	
-				/* var activity = new FileActivity({
+				var activity = new FileActivity({
 					author : req.user._id,
-					walls : [material.wall],
+					walls : [container.wall],
 					file : file.id,
-					streams : [req.user.stream, material.stream]
+					streams : [req.user.stream, container.stream]
 				})		
 				activity.save(function(err, activity){
 					res.redirect('/files/' + file.id)				
-				})*/			
-				res.redirect('/files/' + file.id)			
+				})			
 			})			
 		})
 	}

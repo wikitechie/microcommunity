@@ -1,13 +1,13 @@
 define([
 	'app',
-	'views/wiki-sidebar',
-	'views/sidebars/new-wikipage',
+	//'views/wiki-sidebar',
+	//'views/sidebars/new-wikipage',
 	'views/material-sidebar',	
 	'views/wikipage',
 	'modules/publisher',
 	'modules/stream',	
 	'models/wikipage'
-], function(App, WikiSidebar, NewWikipageSidebarView, MaterialSidebar, WikipageView, publiserhModule, streamModule, Wikipage){
+], function(App, MaterialSidebar, WikipageView, publiserhModule, streamModule, Wikipage){
 
 	App.addRegions({
 		materialSidebar : '#material-sidebar-region',	

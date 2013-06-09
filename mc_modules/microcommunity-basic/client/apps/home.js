@@ -3,10 +3,8 @@ define([
 	'modules/publisher',
 	'modules/stream',
 	'views/sidebars/basic',
-	'views/sidebars/new-wikipage',
-	'models/wikis',	
 	'models/materials'		
-], function(Models, publiserhModule, streamModule, basicSidebar, newWikipageSidebar, Wikis, Materials){
+], function(Models, publiserhModule, streamModule, basicSidebar, Materials){
 
 	var App = new Backbone.Marionette.Application()	
 	
@@ -14,7 +12,7 @@ define([
 
 	App.addRegions({
 		mainSidebar : '#main-sidebar-region',
-		wikisSidebar : '#wikis-sidebar-region',
+		//wikisSidebar : '#wikis-sidebar-region',
 		materialsSidebar : '#materials-sidebar-region',
 		publisher : '#publisher-region',
 		stream : '#stream-region'
@@ -25,24 +23,26 @@ define([
 		links : [ {label : 'Main', url : '/' } ]
 	}))	
 	
-	var wikisLinks = [], materialsLinks = []
+	/*var wikisLinks = [], materialsLinks = []
 	var wikis = new Wikis(server.data.wikis)
-	var materials = new Materials(server.data.materials)
+	
 	
 	wikis.forEach(function(wiki){
 		wikisLinks.push({ label : wiki.get('name'), url : wiki.link() })
 	})	
-	wikisLinks.push({ label : 'All wikis', url : '/wikis' })
+	wikisLinks.push({ label : 'All wikis', url : '/wikis' })*/
 	
+	var materialsLinks = []
+	var materials = new Materials(server.data.materials)
 	materials.forEach(function(material){
 		materialsLinks.push({ label : material.get('name'), url : material.link() })
 	})
 	materialsLinks.push({ label : 'All materials', url : '/materials' })	
 		
-	App.wikisSidebar.show(new basicSidebar({
+	/*App.wikisSidebar.show(new basicSidebar({
 		header : 'Wikis',
 		links : wikisLinks
-	}))
+	}))*/
 	
 	App.materialsSidebar.show(new basicSidebar({
 		header : 'Materials',

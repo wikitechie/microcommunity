@@ -20,6 +20,7 @@ app.get('/', function(req, res){
 	Stream.globalStream(function(err, items){
 		Container.find({ containerType : 'wiki' }).limit(5).exec(function(err, wikis){
 			Container.find({ containerType : 'material' }).limit(5).exec(function(err, materials){
+				console.log(items)
 				res.loadPage('home', { 
 					wikis : wikis, 
 					materials : materials,

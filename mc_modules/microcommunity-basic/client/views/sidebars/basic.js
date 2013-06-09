@@ -1,7 +1,7 @@
 define([
 	'bb',
 	'text!templates/sidebars/basic.html'
-],function(Backbone, html){
+], function(Backbone, html){
 
 	var Links = Backbone.Collection.extend()
 

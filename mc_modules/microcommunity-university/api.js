@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 	, User = mongoose.model('User')
 	, Post = mongoose.model('Post')
 	, Material = mongoose.model('Material')
+	, models = require('microcommunity/models')
 
 module.exports = function(app){
 

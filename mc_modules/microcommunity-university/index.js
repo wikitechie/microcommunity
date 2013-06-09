@@ -1,5 +1,7 @@
 var microcommunity = require('microcommunity')
-
+	, wikipagesPlugin = require('microcommunity-wikipages')
+	, filesPlugin = require('microcommunity-files')	
+	
 //loading models
 require('./models/material')
 
@@ -11,15 +13,21 @@ routes(app)
 var api = require('./api')
 api(app)
 
-//using wiki plugin
-wikipagesPlugin = require('microcommunity-wiki')
+//using wikipages plugin
+
 wikipagesPlugin.setupOnContainer('materials')
 app.use(wikipagesPlugin)
 
 //using file plugin
-var filesPlugin = require('microcommunity-files')
 filesPlugin.setupOnContainer('materials')
 app.use(filesPlugin)
+
+
+
+
+
+
+
 
 
 

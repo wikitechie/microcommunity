@@ -2,6 +2,7 @@ var microcommunity = require('microcommunity')
 
 //registering models
 require('./models/file')
+require('./models/new-file-activity')
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
