@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 	, Container = mongoose.model('Container')
 	, File = mongoose.model('File')
 	, FileActivity = mongoose.model('NewFileActivity')
+	, auth = require('microcommunity').auth
 
 module.exports.setup = function(app, containers){
 
@@ -45,8 +46,8 @@ module.exports.setup = function(app, containers){
 		})
 	}
 	
-	app.get('/' + containers + '/:container/files/new', exports.new)
-	app.post('/' + containers + '/:container/files', exports.create)
+	app.get('/' + containers + '/:container/files/new', auth.ensureAuthenticated, exports.new)
+	app.post('/' + containers + '/:container/files', auth.ensureAuthenticated, exports.create)
 	app.get('/files/:file', exports.show)
 
 }

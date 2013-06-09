@@ -6,6 +6,7 @@ var mongoose = require('mongoose')
 	, Container = mongoose.model('Container')
 	, User = mongoose.model('User')
 	, Post = mongoose.model('Post')
+	, auth = require('microcommunity').auth
 
 module.exports.setup = function(app, containers){
 
@@ -52,8 +53,8 @@ module.exports.setup = function(app, containers){
 		})
 	}
 
-	app.get('/' + containers + '/:container/wikipages/new', exports.new)
-	app.post('/'+ containers +'/:container/wikipages', exports.create)
+	app.get('/' + containers + '/:container/wikipages/new', auth.ensureAuthenticated, exports.new)
+	app.post('/'+ containers +'/:container/wikipages', auth.ensureAuthenticated, exports.create)
 	app.get('/wikipages/:wikipage', exports.show)		
 	
 	app.put('/api/wikipages/:id', function(req, res){

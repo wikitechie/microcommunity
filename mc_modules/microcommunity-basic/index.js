@@ -11,6 +11,7 @@ var Stream = mongoose.model('Stream')
 	, Post = mongoose.model('Post')
 	, Photo = mongoose.model('Photo')
 	, Container = mongoose.model('Container')
+	, auth = microcommunity.auth
 
 
 var app = module.exports = microcommunity.plugin(__dirname)
@@ -44,11 +45,6 @@ app.get('/profiles/:id', function(req, res){
 	})	
 })
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-	req.flash('error', 'You should be logged in to view this page')	  
-  res.redirect('/login');
-}
 
 
 //publisher api
@@ -68,7 +64,7 @@ app.post('/api/publishers/user-wall/posts', function(req, res){
 })
 
 //api
-app.post('/api/publishers/user-wall/photos', ensureAuthenticated, function(req, res){
+app.post('/api/publishers/user-wall/photos', auth.ensureAuthenticated, function(req, res){
 	var photo = new Photo({
 		content : req.body.content,
 		author : req.body.author,
