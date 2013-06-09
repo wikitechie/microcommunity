@@ -1,11 +1,8 @@
 var mongoose = require('mongoose')
 	, models = require('microcommunity/models/index')
-	, hasWall = require('microcommunity/models/plugins/haswall')
-	, hasStream = require('microcommunity/models/plugins/has-stream')	
+	, isContainer = require('microcommunity/models/plugins/is-container')	
 
 var wikiSchema = new mongoose.Schema({
-	name: String,
-	description : String,
 	homePage : { type : mongoose.Schema.Types.ObjectId, ref : 'Wikipage' },
 })
 
@@ -20,7 +17,6 @@ wikiSchema.pre('save', function(next, doc){
 	})
 })
 
-
 wikiSchema.post('save', function(doc){
 	var Wikipage = mongoose.model('Wikipage')
 	Wikipage.findByIdAndUpdate(doc.homePage, { $set : { wiki : doc.id } }, function(err, wikipage){
@@ -28,7 +24,6 @@ wikiSchema.post('save', function(doc){
 	})
 })
 
-wikiSchema.plugin(hasWall, { displayNameAttribute : 'name' })
-wikiSchema.plugin(hasStream)
+wikiSchema.plugin(isContainer, { containerType : 'wiki' })
 
-models.define('Wiki', 'wiki', 'wikis', wikiSchema)
+models.define('Wiki', 'wiki', 'containers', wikiSchema)

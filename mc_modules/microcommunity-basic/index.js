@@ -10,25 +10,23 @@ var Stream = mongoose.model('Stream')
 	, Stream = mongoose.model('Stream')
 	, Post = mongoose.model('Post')
 	, Photo = mongoose.model('Photo')
+	, Container = mongoose.model('Container')
 
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
 //main app
-app.get('/', function(req, res){	
-	//var Wiki = mongoose.model('Wiki'), 
-	var Material = mongoose.model('Material')
+app.get('/', function(req, res){
 	Stream.globalStream(function(err, items){
-		//Wiki.find().limit(5).exec(function(err, wikis){
-			Material.find().limit(5).exec(function(err, materials){
-				console.log(items)
+		Container.find({ containerType : 'wiki' }).limit(5).exec(function(err, wikis){
+			Container.find({ containerType : 'material' }).limit(5).exec(function(err, materials){
 				res.loadPage('home', { 
-					//wikis : wikis, 
+					wikis : wikis, 
 					materials : materials,
 					items : items 
 				})			
 			})	
-		//})		
+		})		
 	})	
 })
 

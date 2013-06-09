@@ -66,7 +66,7 @@ require('./stream')
 require('./item')
 require('./wall')
 require('./user')
-
+require('./container')
 
 models.start()
 

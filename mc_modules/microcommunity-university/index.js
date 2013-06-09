@@ -4,6 +4,12 @@ require('./models/material')
 
 var app = module.exports = microcommunity.plugin(__dirname)
 
+//using wiki plugin
+wikipagesPlugin = require('microcommunity-wiki')
+wikipagesPlugin.setupOnContainer('materials')
+app.use(wikipagesPlugin)		
+
+
 var addPublisher = require('./material-publisher')
 addPublisher(app)
 
@@ -121,17 +127,11 @@ app.get('/materials/:id/stream', function(req, res){
 })
 
 app.get('/materials', function(req, res){
-	Material.find().exec(function(err, containers){
+	Material.find({ containerType : 'material' }).exec(function(err, containers){
 		res.loadPage('materials/index', { containers : containers })	
 	})
 })
 
-
-var wikipagesRoutes = require('./wikipages')
-
-app.get('/materials/:material/wikipages/new', wikipagesRoutes.new)
-app.post('/materials/:material/wikipages', wikipagesRoutes.create)
-app.get('/wikipages/:wikipage', wikipagesRoutes.show)
 
 var filesRoutes = require('./files')
 

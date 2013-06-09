@@ -32,7 +32,7 @@ define([
 	}) */
 	
 	App.addInitializer(function(){
-		App.materialSidebar.show(new MaterialSidebar(server.data.wikipage.material))		
+		App.materialSidebar.show(new MaterialSidebar(server.data.wikipage.container))		
 	})
 	
 	if (App.currentUser){

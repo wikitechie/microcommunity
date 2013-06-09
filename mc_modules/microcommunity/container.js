@@ -29,7 +29,7 @@ function Container(Model, viewsPath){
 	}
 
 	this.index = function(req, res){
-		Model.find().exec(function(err, containers){
+		Model.find({ containerType : 'wiki' }).exec(function(err, containers){
 			res.loadPage(viewsPath + '/index', { containers : containers })	
 		})
 	}
