@@ -8,6 +8,9 @@ define([
 		urlRoot : function(){
 			return '/materials/' + this.get('material') + '/sections'
 		},
+		url : function(){
+			return '/materials/' + this.get('material') + '/sections/'
+		},		
 		relations : [
 			{
 				type : Backbone.HasMany,

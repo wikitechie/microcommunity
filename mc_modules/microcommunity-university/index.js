@@ -34,7 +34,6 @@ function saveThumbnail(file, callback){
 app.post('/api/materials/:material/sections/:section/attachements', function(req, res){	
 
 	var attachement = req.body
-	console.log(req.body)
 	var objectType = models.convert(req.body.object.type, 'object', 'collection')
 	var objectId = req.body.object.id
 	attachement.object = new mongoose.Types.DBRef(objectType, objectId)

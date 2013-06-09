@@ -12,6 +12,7 @@ var attachementSchema = new mongoose.Schema({
 var sectionSchema = new mongoose.Schema({
 	title: String,
 	description : String,
+	highlighted : Boolean,
 	attachements : [attachementSchema],
 })
 
