@@ -20,18 +20,19 @@ define([
 	/*server.data.material.sections = [
 		{ title: 'first', description : 'blah blah blah' }, 
 		{ title: 'second', description : 'blah blah blah' }
-	]*/
+	]*/	
 	
-	var material = Material.findOrCreate(server.data.material)
+	App.addInitializer(function(){
+		var material = Material.findOrCreate(server.data.material)
 	
-	App.courseOutline.show(new CourseOutlineView({ 
-		collection : material.get('sections') ,
-		model : material
-	}))
-	App.courseHeader.show(new CourseHeaderView())		
+		App.courseOutline.show(new CourseOutlineView({ 
+			collection : material.get('sections') ,
+			model : material
+		}))
+		App.courseHeader.show(new CourseHeaderView({ model : material }))
 
-
-	App.materialSidebar.show(new MaterialSidebar(server.data.material))
+		App.materialSidebar.show(new MaterialSidebar(server.data.material))	
+	})
 		
 	return App
 	

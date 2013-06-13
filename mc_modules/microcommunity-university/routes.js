@@ -1,25 +1,30 @@
 var mongoose = require('mongoose')
+	, Container = mongoose.model('Container')
 	, Material = mongoose.model('Material')
 	, Wall = mongoose.model('Wall')	
 	, Stream = mongoose.model('Stream')
 	, Post = mongoose.model('Post')
 	, Wikipage = mongoose.model('Wikipage')
 	, File = mongoose.model('File')
+	, auth = require('microcommunity').auth	
 
 module.exports = function(app){
 
 	function saveThumbnail(file, callback){
-		var path = require('path')
-			, fs = require('fs')
-	
-		var randomeName = path.basename(file.path)
-		fs.readFile(file.path, function (err, data) {
-			var relativePath = "/uploads/" + randomeName;
-			var absolutePath = __dirname + '/static/' + relativePath
-			fs.writeFile(absolutePath, data, function (err) {
-				callback(relativePath)
-			})
-		})	
+		if (file.name !== ''){
+			var path = require('path')
+				, fs = require('fs')	
+			var randomeName = path.basename(file.path)
+			fs.readFile(file.path, function (err, data) {
+				var relativePath = "/uploads/" + randomeName;
+				var absolutePath = __dirname + '/static/' + relativePath
+				fs.writeFile(absolutePath, data, function (err) {
+					callback(relativePath)
+				})
+			})		
+		} else {
+			callback(null)
+		}		
 	}
 
 	app.get('/materials/new', function(req, res){
@@ -27,62 +32,70 @@ module.exports = function(app){
 	})	
 
 	app.post('/materials', function(req, res){
-		saveThumbnail(req.files.thumbnail, function(filePath){	
+		saveThumbnail(req.files.thumbnail, function(filePath){		
 			var container = new Material({
 				name : req.body.name,
-				description : req.body.description,
-				thumbnailPath : filePath
+				description : req.body.description
 			})			
-			container.save(function(err){		
-				var date = new Date()
-				var currentYear = date.getFullYear()		
-				res.redirect('/materials/' + container.id)
-			})	
-		})
+			if (filePath) container.thumbnailPath = filePath			
+			container.save(function(err){						
+				//making the creator the default admin		
+				container.newMembership(req.user)
+				container.addRole(req.user, 'mc:admin')	
+				container.addRole(req.user, 'mc:member')	
+				container.save(function(err){
+					res.redirect('/materials/' + container.id)
+				})						
+			})			
+		})		
 	})
 
 
-	app.post('/materials/:id/sections', function(req, res){
-		var section = req.body
-		Material.findByIdAndUpdate(req.params.id, { $push : { sections : section } }, function(err, material){	
-			res.send(200, section)
-		})
+	app.get('/materials/:container/members', function(req, res){
+		req.container.populateMemberships(function(err, material){
+			res.loadPage('materials/members', {
+				material : material
+			})			
+		})			
+	})
+	
+	app.get('/materials/:container/settings', 
+		auth.ensureAuthenticated, 
+		auth.ensureContainerAdmin(),		 
+		function(req, res){		
+			res.loadPage('materials/settings', {
+				material : req.container
+			})		
 	})
 
-
-	app.get('/materials/:id', function(req, res){
-		Wikipage.find({ container : req.params.id }).exec(function(err, wikipages){
-			File.find({ container : req.params.id }).exec(function(err, files){
-				Material.findById(req.params.id, function(err, material){	
-					res.loadPage('materials/show', {
-						material : material,
-						wikipages : wikipages,
-						files : files
-					})
+	app.get('/materials/:container', function(req, res){
+		Wikipage.find({ container : req.container.id }).exec(function(err, wikipages){
+			File.find({ container : req.container.id }).exec(function(err, files){
+				console.log(req.container)
+				res.loadPage('materials/show', {
+					material : req.container,
+					wikipages : wikipages,
+					files : files
 				})
 			})		
 		})	
 	})
 
-	app.get('/materials/:id/wall', function(req, res){
-		Material.findById(req.params.id, function(err, material){	
-			Wall.loadItems(material.wall, function(err, items){
-				res.loadPage('materials/wall', {
-					material : material,
-					items : items
-				})				
-			})
+	app.get('/materials/:container/wall', function(req, res){
+		Wall.loadItems(req.container.wall, function(err, items){
+			res.loadPage('materials/wall', {
+				material : req.container,
+				items : items
+			})				
 		})
 	})
 
-	app.get('/materials/:id/stream', function(req, res){
-		Material.findById(req.params.id, function(err, material){	
-			Stream.loadItems(material.stream, function(err, items){
-				res.loadPage('materials/stream', {
-					material : material,
-					items : items
-				})				
-			})
+	app.get('/materials/:container/stream', function(req, res){
+		Stream.loadItems(req.container.stream, function(err, items){
+			res.loadPage('materials/stream', {
+				material : req.container,
+				items : items
+			})				
 		})
 	})
 

@@ -10,10 +10,10 @@ define([
 		itemView : SectionView,
 		events : {
 			'click .new-section' : 'newSection'
-		},		
+		},	
 		appendHtml : function(collectionView, itemView, index){
 			collectionView.$('.sections-region').append(itemView.el)
-		},		
+		},	
 		newSection : function(){
 			var newSection = new NewSectionModal({ model : this.model })			
 			newSection.show()

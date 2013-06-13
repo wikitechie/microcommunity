@@ -1,6 +1,8 @@
 
 var express = require('express')
   , models = require('./models')  
+  , mongoose = require('mongoose')
+  , Container = mongoose.model('Container')
 
 module.exports = function(path){
 
@@ -18,6 +20,8 @@ module.exports = function(path){
 					appName: appName,
 					data: data || {},
 					currentUser: req.user,
+					currentContainer : req.container,
+					containerMembership : req.containerMembership,
 					itemModulesInfo : models.items.exportItemsModulesForClient(),
 					publishersPaths : models.items.exportPublishers()
 				}
@@ -71,6 +75,19 @@ module.exports = function(path){
 		app.get(path + '/:id/stream', containerRoutes.stream)	
 		
 	}
+	
+	app.param('container', function(req, res, next, id){
+		Container.findById(id, function(err, container){
+			req.container = container
+			if (req.user){
+				var membership = req.container.isMember(req.user)
+				if (membership){
+					req.containerMembership = membership
+				}
+			}						
+			next()
+		})
+	})	
 
 	
 		

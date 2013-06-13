@@ -13,22 +13,23 @@ define([
 		publisher : '#publisher-region',
 		stream : '#stream-region',
 		courseHeader : '#course-header-region'		
-	})
+	})	
 	
-	App.materialSidebar.show(new MaterialSidebar(server.data.material))
-	App.courseHeader.show(new CourseHeaderView())			
+	App.addInitializer(function(){	
+		App.materialSidebar.show(new MaterialSidebar(server.data.material))
 	
-	var material = Material.findOrCreate(server.data.material)
+		var material = Material.findOrCreate(server.data.material)
+		App.courseHeader.show(new CourseHeaderView({ model : material }))
 	
-	var options = { 
-		items : server.data.items, 
-		type : 'stream',
-	}
+		var options = { 
+			items : server.data.items, 
+			type : 'stream',
+		}
 		
-	var Stream = streamModule(App, options, function(view){
-		App.stream.show(view)
+		var Stream = streamModule(App, options, function(view){
+			App.stream.show(view)
+		})	
 	})		
-		
 		
 	return App
 })

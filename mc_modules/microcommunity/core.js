@@ -15,7 +15,7 @@ module.exports = function(){
 	var utils = require('./lib/utils')
 
 	//microcommunity modules
-	app.use(auth) //should be used first
+	app.use(auth) //should be used first	
 
 	//microcommunity util module 
 	app.use(utils.test)	

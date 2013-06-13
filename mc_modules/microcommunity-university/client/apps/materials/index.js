@@ -11,9 +11,11 @@ define([
 		mainSidebar : '#main-sidebar-region',
 		materials : '#materials-region'
 	})
-		
-	var materials = new Materials(server.data.containers)		
-	App.materials.show(new Thumbnails({ collection : materials }))
+	
+	App.addInitializer(function(){
+		var materials = new Materials(server.data.containers)		
+		App.materials.show(new Thumbnails({ collection : materials }))		
+	})
 
 	return App
 	

@@ -15,36 +15,39 @@ define([
 		courseHeader : '#course-header-region'				
 	})	
 	
-	App.materialSidebar.show(new MaterialSidebar(server.data.material))
-	App.courseHeader.show(new CourseHeaderView())			
+	App.addInitializer(function(){
 	
-	var material = Material.findOrCreate(server.data.material)
+		App.materialSidebar.show(new MaterialSidebar(server.data.material))
+
+		var material = Material.findOrCreate(server.data.material)
+		App.courseHeader.show(new CourseHeaderView({ model : material }))			
 		
-	if (App.isLoggedIn()){
-		var options = {
-			wall : material.get('wall'),
-			identifier : 'materials/'+ material.id
+		if (App.isLoggedIn()){
+			var options = {
+				wall : material.get('wall'),
+				identifier : 'materials/'+ material.id
+			}
+		
+			var Publisher = publiserhModule(App, options, function(view){
+				App.publisher.show(view)
+			})
+		
+			App.vent.on('publisher:newitem', function(item){				
+				Stream.add(item) 
+			})		
+		}
+	
+		var options = { 
+			items : server.data.items, 
+			type : 'wall',
+			wall : material.get('wall')
 		}
 		
-		var Publisher = publiserhModule(App, options, function(view){
-			App.publisher.show(view)
-		})
-		
-		App.vent.on('publisher:newitem', function(item){				
-			Stream.add(item) 
+		var Stream = streamModule(App, options, function(view){
+			App.stream.show(view)
 		})		
-	}
-	
-	var options = { 
-		items : server.data.items, 
-		type : 'wall',
-		wall : material.get('wall')
-	}
 		
-	var Stream = streamModule(App, options, function(view){
-		App.stream.show(view)
-	})		
-		
+	})
 		
 	return App
 })

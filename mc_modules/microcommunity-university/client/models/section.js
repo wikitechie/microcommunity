@@ -6,11 +6,8 @@ define([
 	var Section = Backbone.RelationalModel.extend({
 		idAttribute : '_id',
 		urlRoot : function(){
-			return '/materials/' + this.get('material') + '/sections'
-		},
-		url : function(){
-			return '/materials/' + this.get('material') + '/sections/'
-		},		
+			return '/api/materials/' + this.get('material') + '/sections'
+		},	
 		relations : [
 			{
 				type : Backbone.HasMany,

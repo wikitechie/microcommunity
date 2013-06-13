@@ -4,3 +4,22 @@ exports.ensureAuthenticated = function (req, res, next) {
   res.redirect('/login');
 }
 
+exports.ensureContainerRole = function(role){
+	return function(req, res, next){
+		var hasRole = req.container.hasRole(req.user, role)
+		console.log(hasRole)
+		if (hasRole) {
+			next()
+		} else {
+			res.redirect('back');		
+		}
+	}	
+}
+
+exports.ensureContainerAdmin = function(){
+	return exports.ensureContainerRole('mc:admin')
+}
+
+exports.ensureContainerMember = function(){
+	return exports.ensureContainerRole('mc:member')
+}

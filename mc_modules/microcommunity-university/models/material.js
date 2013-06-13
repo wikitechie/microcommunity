@@ -17,10 +17,13 @@ var sectionSchema = new mongoose.Schema({
 
 var materialSchema = new mongoose.Schema({
 	thumbnailPath : String,	
-	sections : [sectionSchema],
-	currentSemester : { type : mongoose.Schema.Types.ObjectId, ref : 'Semester' }	
+	sections : [sectionSchema]	
 })
 
-materialSchema.plugin(isContainer, { containerType : 'material' })
+var containerOptions = { 
+	containerType : 'material'
+}
+
+materialSchema.plugin(isContainer, containerOptions)
 
 models.define('Material', 'material', 'containers', materialSchema)
