@@ -1,11 +1,14 @@
 var microcommunity = require('microcommunity')
+	, basic = require('microcommunity-basic')
 	, wikipagesPlugin = require('microcommunity-wikipages')
-	, filesPlugin = require('microcommunity-files')	
-	
-//loading models
-require('./models/material')
+	, filesPlugin = require('microcommunity-files')
 
-var app = module.exports = microcommunity.plugin(__dirname)
+//registering models
+var materialSchema = require('./models/material')	
+microcommunity.models.define('Material', 'material', 'containers', materialSchema)
+	
+//creating and setting up the app	
+var app = microcommunity.createApplication(__dirname)	
 
 //routes & api
 var routes = require('./routes')
@@ -13,22 +16,19 @@ routes(app)
 var api = require('./api')
 api(app)
 
-//using wikipages plugin
+//using external plugins
 
-wikipagesPlugin.setupOnContainer('materials')
-app.use(wikipagesPlugin)
+	//using wikipages plugin
+	wikipagesPlugin.setupOnContainer('materials')
+	app.use(wikipagesPlugin)
 
-//using file plugin
-filesPlugin.setupOnContainer('materials')
-app.use(filesPlugin)
+	//using file plugin
+	filesPlugin.setupOnContainer('materials')
+	app.use(filesPlugin)
 
+	//using apps
+	app.use(basic)
 
-
-
-
-
-
-
-
+app.listen(3000)
 
 

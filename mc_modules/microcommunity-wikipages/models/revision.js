@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
-	, models = require('microcommunity/models/index')
-	, itemable = require('microcommunity/models/plugins/itemable')
+	, models = require('microcommunity').models
+	, items = require('microcommunity').items		
+	, isItem = models.plugins.isItem	
 
 var revisionSchema = new mongoose.Schema({
 	content : String,
@@ -13,7 +14,7 @@ revisionSchema.pre('init', function(next, doc){
 	this.model('Revision').populate(doc, 'wikipage', next)	
 })
 
-revisionSchema.plugin(itemable)
+revisionSchema.plugin(isItem)
 
 models.define('Revision', 'revision', 'revision', revisionSchema)
-models.items.addItem('Revision', 'components/revision/model')
+items.addItem('Revision', 'components/revision/model')

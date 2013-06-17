@@ -1,5 +1,4 @@
 var mongoose = require('mongoose')
-	, models = require('./../index')
 
 module.exports = function hasWall(schema, options){
 
@@ -21,6 +20,8 @@ module.exports = function hasWall(schema, options){
 			}
 		})
 	})	
+	
+	var models = require('./../../models')
 	
 	//after save
 	schema.post('save', function(streamOwner){

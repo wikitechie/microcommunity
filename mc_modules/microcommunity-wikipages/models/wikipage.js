@@ -1,9 +1,9 @@
 var mongoose = require('mongoose')
-	, models = require('microcommunity/models/index')
-	, hasWall = require('microcommunity/models/plugins/haswall')
-	, hasStream = require('microcommunity/models/plugins/has-stream')	
-	, isContent = require('microcommunity/models/plugins/is-content')
-
+	, models = require('microcommunity').models
+	, hasWall = models.plugins.hasWall
+	, hasStream = models.plugins.hasStream	
+	, isContent = models.plugins.isContent				
+	
 var wikipageSchema = new mongoose.Schema({
 	title: String,
 	content : String

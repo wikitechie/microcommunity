@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
-	, models = require('microcommunity/models/index')
-	, itemable = require('microcommunity/models/plugins/itemable')
+	, models = require('microcommunity').models
+	, items = require('microcommunity').items	
+	, isItem = models.plugins.isItem
 
 var activitySchema = new mongoose.Schema({
 	wikipage : { type : mongoose.Schema.Types.ObjectId, ref : 'Wikipage' }
@@ -10,7 +11,7 @@ activitySchema.pre('init', function(next, doc){
 	this.model('NewWikipageActivity').populate(doc, 'wikipage', next)	
 })
 
-activitySchema.plugin(itemable)
+activitySchema.plugin(isItem)
 
 models.define('NewWikipageActivity', 'activity:new-wikipage', 'newwikipageactivities', activitySchema)
-models.items.addItem('NewWikipageActivity', 'components/activity/model')
+items.addItem('NewWikipageActivity', 'components/activity/model')

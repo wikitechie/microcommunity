@@ -12,6 +12,7 @@
   "dependencies": {
   	"should" : "*",
     "express": "3.0.0alpha1",
+    "connect": "*",
     "mongoose": "*",
     "mongodb": "*",
     "socket.io" : "*",

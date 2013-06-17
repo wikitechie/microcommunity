@@ -8,10 +8,12 @@ define([
 	var MCApp = Backbone.Marionette.Application.extend({
 		setup : function(){
 			this.currentUser = Models.User.findOrCreate(server.currentUser)
-			this.containerMembership = new Membership(server.containerMembership)
+			
 			this.currentContainer = server.currentContainer			
-			this.containerMembership.set('container', this.currentContainer.id)
-
+			if (server.containerMembership){
+				this.containerMembership = new Membership(server.containerMembership)
+				this.containerMembership.set('container', this.currentContainer.id)
+			}
 		},		
 		isLoggedIn : function(){
 			if (this.currentUser) return true

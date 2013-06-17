@@ -1,5 +1,4 @@
 var mongoose = require('mongoose')
-	, models = require('./../index')
 	, _ = require('underscore')
 
 module.exports = function Itemable(schema, options){
@@ -52,7 +51,9 @@ module.exports = function Itemable(schema, options){
 				}
 			})		
 		})
-	})	
+	})
+	
+	var models = require('./../../models')	
 
 	//after save
 	schema.post('save', function(itemable){

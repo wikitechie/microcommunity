@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
-	, hasWall = require('microcommunity/models/plugins/haswall')
-	, hasStream = require('microcommunity/models/plugins/has-stream')		
+	, hasWall = require('./has-wall')
+	, hasStream = require('./has-stream')		
 	, _ = require('underscore')
 
 module.exports = function isContainer(schema, options){

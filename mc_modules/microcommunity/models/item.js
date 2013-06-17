@@ -3,7 +3,7 @@ var mongoose = require('mongoose')
 	, loaded = dbref.install(mongoose)
 	,  _ = require('underscore')
 	, async = require('async')
-	, models = require('./index')
+	, models = require('../models')
 
 var itemSchema = new mongoose.Schema({
 	object : { type : mongoose.Schema.Types.DBRef },
@@ -28,5 +28,5 @@ itemSchema.statics.fetchItems = function (query, callback){
 	})	
 }
 
-module.exports = mongoose.model('Item', itemSchema);
+module.exports = itemSchema
 

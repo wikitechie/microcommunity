@@ -3,7 +3,6 @@ var mongoose = require('mongoose')
 	, loaded = dbref.install(mongoose)
 	, _ = require('underscore')
 	, async = require('async')
-	, models = require('./index')
 
 var wallSchema = new mongoose.Schema({
 	owner : { type : mongoose.Schema.Types.DBRef },
@@ -15,5 +14,4 @@ wallSchema.statics.loadItems = function(id, callback){
 	Item.fetchItems({ walls : id }, callback)	
 }
 
-
-module.exports = mongoose.model('Wall', wallSchema)
+module.exports = wallSchema

@@ -3,7 +3,6 @@ var mongoose = require('mongoose')
 	, loaded = dbref.install(mongoose)
 	, _ = require('underscore')
 	, async = require('async')
-	, models = require('./index')
 
 var streamSchema = new mongoose.Schema({
 	owner : { type : mongoose.Schema.Types.DBRef },
@@ -19,5 +18,5 @@ streamSchema.statics.globalStream = function(callback){
 	Item.fetchItems({}, callback)
 }
 
-module.exports = mongoose.model('Stream', streamSchema);
+module.exports = streamSchema
 

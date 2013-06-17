@@ -1,6 +1,5 @@
 var mongoose = require('mongoose')
-	, models = require('./index')
-	, hasWall = require('./plugins/haswall')
+	, hasWall = require('./plugins/has-wall')
 	, hasStream = require('./plugins/has-stream')
 
 var userSchema = new mongoose.Schema({
@@ -19,8 +18,7 @@ userSchema.statics.findByEmail = function(email, callback){
 userSchema.plugin(hasWall, { displayNameAttribute : 'displayName' })
 userSchema.plugin(hasStream)
 
-var User = models.define('User', 'user', 'users', userSchema)
-
+module.exports = userSchema
 
 
 

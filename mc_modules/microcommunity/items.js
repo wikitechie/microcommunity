@@ -1,12 +1,24 @@
 var _ = require('underscore')
 
-var itemsModules = []
+//publishers registery
 
 var publishersPaths = []
 
+exports.addPublisher = function(path){
+	publishersPaths.push(path)
+}
+
+exports.exportPublishers = function(){
+	return publishersPaths
+}
+
+//items registery
+
+var itemsModules = []
+
 function subModelTypes(){
 	var output = {}
-	var models = require('./index')			
+	var models = require('./models')			
 	itemsModules.forEach(function(module){	
 		var itemType = models.convert(module.model, 'model', 'object')
 		output[itemType] = 'Core.Item.' + module.model	
@@ -19,14 +31,6 @@ exports.addItem = function(model, path){
 		path : path,
 		model : model
 	})
-}
-
-exports.addPublisher = function(path){
-	publishersPaths.push(path)
-}
-
-exports.exportPublishers = function(){
-	return publishersPaths
 }
 
 //the output of this function is used in models/items-index.js 

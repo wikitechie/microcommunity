@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
-	, models = require('microcommunity/models/index')
-	, isContainer = require('microcommunity/models/plugins/is-container')		
+	, models = require('microcommunity').models
+	, isContainer = models.plugins.isContainer
 
 var attachementSchema = new mongoose.Schema({
 	title: String,
@@ -26,4 +26,4 @@ var containerOptions = {
 
 materialSchema.plugin(isContainer, containerOptions)
 
-models.define('Material', 'material', 'containers', materialSchema)
+module.exports = materialSchema

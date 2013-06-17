@@ -1,13 +1,14 @@
 var mongoose = require('mongoose')
-	, models = require('microcommunity/models')
-	, itemable = require('microcommunity/models/plugins/itemable')
+	, models = require('microcommunity').models
+	, items = require('microcommunity').items	
+	, isItem = models.plugins.isItem
 
 var postSchema = new mongoose.Schema({
 	content: String
 })
 
-postSchema.plugin(itemable, { clientPath : 'models/items/post' })
+postSchema.plugin(isItem)
 
 models.define('Post', 'post', 'posts', postSchema)
-models.items.addItem('Post', 'models/items/post')
-models.items.addPublisher('views/publishers/post')
+items.addItem('Post', 'models/items/post')
+items.addPublisher('views/publishers/post')
