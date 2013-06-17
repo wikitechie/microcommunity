@@ -1,1 +1,1 @@
-NODE_PATH=mc_modules:node_modules nodemon app.js
+NODE_PATH=mc_modules:node_modules nodemon app/app.js
