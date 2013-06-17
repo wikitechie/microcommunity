@@ -7,7 +7,6 @@ exports.ensureAuthenticated = function (req, res, next) {
 exports.ensureContainerRole = function(role){
 	return function(req, res, next){
 		var hasRole = req.container.hasRole(req.user, role)
-		console.log(hasRole)
 		if (hasRole) {
 			next()
 		} else {
