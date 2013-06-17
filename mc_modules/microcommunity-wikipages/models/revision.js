@@ -16,5 +16,4 @@ revisionSchema.pre('init', function(next, doc){
 
 revisionSchema.plugin(isItem)
 
-models.define('Revision', 'revision', 'revision', revisionSchema)
-items.addItem('Revision', 'components/revision/model')
+module.exports = revisionSchema

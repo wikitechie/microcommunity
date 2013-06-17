@@ -5,7 +5,7 @@
 		
 	.span9
 		.row-fluid
-			form(class="form-horizontal", enctype="multipart/form-data", method='post', action="#{server.data.action}")
+			form(class="form-horizontal", enctype="multipart/form-data", method='post', action="/#{server.currentContainer.containerType}s/#{server.currentContainer._id}/files")
 				legend Upload a file
 				.control-group
 					label.control-label Title

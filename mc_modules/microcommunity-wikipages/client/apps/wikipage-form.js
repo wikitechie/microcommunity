@@ -23,7 +23,7 @@ define([
 	})*/
 	
 	App.addInitializer(function(){
-		App.materialSidebar.show(new MaterialSidebar(server.data.container))		
+		App.materialSidebar.show(new MaterialSidebar(server.currentContainer))		
 	})	
 	
 	return App

@@ -17,16 +17,11 @@ var api = require('./api')
 api(app)
 
 //using external plugins
-
 	//using wikipages plugin
-	wikipagesPlugin.setupOnContainer('materials')
-	app.use(wikipagesPlugin)
-
+	app.use(wikipagesPlugin({ containersPath : '/materials' }))
 	//using file plugin
-	filesPlugin.setupOnContainer('materials')
-	app.use(filesPlugin)
-
-	//using apps
+	app.use(filesPlugin({ containersPath : '/materials' }))
+	//using basic app
 	app.use(basic)
 
 app.listen(3000)

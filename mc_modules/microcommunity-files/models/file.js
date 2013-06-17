@@ -9,4 +9,4 @@ var fileSchema = new mongoose.Schema({
 
 fileSchema.plugin(isContent)
 
-models.define('File', 'file', 'files', fileSchema)
+module.exports = fileSchema

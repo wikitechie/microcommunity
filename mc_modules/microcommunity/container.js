@@ -42,8 +42,7 @@ function Container(Model, viewsPath){
 		container.save(function(err){		
 			res.redirect('/' + viewsPath )
 		})
-	}	
-	
+	}
 	
 }
 

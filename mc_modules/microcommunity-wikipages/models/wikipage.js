@@ -13,4 +13,4 @@ wikipageSchema.plugin(hasWall, { displayNameAttribute : 'title' })
 wikipageSchema.plugin(hasStream)
 wikipageSchema.plugin(isContent)
 
-models.define('Wikipage', 'wikipage', 'wikipages', wikipageSchema)
+module.exports = wikipageSchema

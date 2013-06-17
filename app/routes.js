@@ -1,11 +1,11 @@
-var mongoose = require('mongoose')
-	, Container = mongoose.model('Container')
-	, Material = mongoose.model('Material')
-	, Wall = mongoose.model('Wall')	
-	, Stream = mongoose.model('Stream')
-	, Post = mongoose.model('Post')
-	, Wikipage = mongoose.model('Wikipage')
-	, File = mongoose.model('File')
+var microcommunity = require('microcommunity')
+	, Container = microcommunity.model('Container')
+	, Material = microcommunity.model('Material')
+	, Wall = microcommunity.model('Wall')	
+	, Stream = microcommunity.model('Stream')
+	, Post = microcommunity.model('Post')
+	, Wikipage = microcommunity.model('Wikipage')
+	, File = microcommunity.model('File')
 	, auth = require('microcommunity').auth	
 
 module.exports = function(app){

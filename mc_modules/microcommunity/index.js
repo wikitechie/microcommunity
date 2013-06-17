@@ -7,7 +7,6 @@ var connect = require('connect')
 	, items = require('./items')	
 
 
-
 //setting up app and plugin functions
 module.exports.createApplication = createApplication
 module.exports.plugin = createPlugin
@@ -17,6 +16,7 @@ module.exports.auth = auth
 models.initialize()
 module.exports.models = models
 module.exports.items = items
+module.exports.model = models.getModel
 
 var app = exports.app
 

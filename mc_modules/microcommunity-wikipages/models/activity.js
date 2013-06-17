@@ -13,5 +13,4 @@ activitySchema.pre('init', function(next, doc){
 
 activitySchema.plugin(isItem)
 
-models.define('NewWikipageActivity', 'activity:new-wikipage', 'newwikipageactivities', activitySchema)
-items.addItem('NewWikipageActivity', 'components/activity/model')
+module.exports = activitySchema

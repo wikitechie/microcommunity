@@ -13,5 +13,4 @@ schema.pre('init', function(next, doc){
 
 schema.plugin(isItem)
 
-models.define('NewFileActivity', 'activity:new-file', 'newfileactivities', schema)
-items.addItem('NewFileActivity', 'componenets/new-file-activity/model')
+module.exports = schema
