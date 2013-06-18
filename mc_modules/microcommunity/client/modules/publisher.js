@@ -1,18 +1,27 @@
 define([
   "bb",
-	'views/index'  
-], function(Backbone, Views){
-  return function(App, options, callback){  
+	'views/publisher-constructor' 
+], function(Backbone, PublisherConstructor){
+  return function(App, Region, options){
+    
 		return App.module('Publisher', function(Publisher, App){
+		
 			Publisher.addInitializer(function(){
-				if (App.currentUser){
-					var publisher = new Views.PublisherView({
+				if (App.isLoggedIn()){
+								
+					var wallOptions = {
 						wall : options.wall,
 						identifier : options.identifier
-					})
-					callback(publisher)		
+					}				
+					var PublisherView = PublisherConstructor(options.publishers)
+					
+					var publisher = new PublisherView(wallOptions)
+									
+					Region.show(publisher)										
 				}				
 			})
-		})		  	
+			
+		})
+				  	
 	}	  
 })

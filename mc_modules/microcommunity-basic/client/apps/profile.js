@@ -1,35 +1,29 @@
 define([
+	'app',
 	'models/index',
 	'modules/publisher',
-	'modules/stream'
-], function(Models, publiserhModule, streamModule){
-
-	var App = new Backbone.Marionette.Application()	
-	
-	App.currentUser = new Models.User(server.currentUser)
+	'modules/stream',
+	'views/publishers/post'	
+], function(App, Models, publiserhModule, streamModule, PostPublisher){
 
 	App.addRegions({
 		publisher : '#publisher-region',
 		stream : '#stream-region'
 	})
 	
-	if (App.currentUser.id){
+	if (App.isLoggedIn()){	
 		var profileUser = Models.User.findOrCreate(server.data.user)
 		var options = {
 			wall : profileUser.get('wall'),
-			identifier : 'user-wall'
-		}
-		var Publisher = publiserhModule(App, options, function(view){
-			App.publisher.show(view)
-		})		
-		App.vent.on('publisher:newitem', function(item){
-			Stream.add(item) 
-		})		
+			identifier : 'user-wall',
+			publishers : [PostPublisher]			
+		}		
+		var Publisher = publiserhModule(App, App.publisher, options)		
 	}
+
+	var options = { items : server.data.items, type : 'wall' }
+	var Stream = streamModule(App, App.stream, options)		
 		
-	var Stream = streamModule(App, { items : server.data.items, type : 'wall' }, function(view){
-		App.stream.show(view)
-	})
 		
 	return App
 	

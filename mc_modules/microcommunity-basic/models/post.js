@@ -11,4 +11,3 @@ postSchema.plugin(isItem)
 
 models.define('Post', 'post', 'posts', postSchema)
 items.addItem('Post', 'models/items/post')
-items.addPublisher('views/publishers/post')

@@ -11,5 +11,4 @@ photoSchema.plugin(isItem)
 
 Photo = models.define('Photo', 'photo', 'photos', photoSchema)
 items.addItem('Photo', 'models/items/photo')
-items.addPublisher('views/publishers/photo')
 

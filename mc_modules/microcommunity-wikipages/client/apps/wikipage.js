@@ -1,13 +1,13 @@
 define([
 	'app',
-	//'views/wiki-sidebar',
 	'views/material-sidebar',	
 	'views/sidebars/new-wikipage',		
 	'views/wikipage',
 	'modules/publisher',
 	'modules/stream',	
-	'models/wikipage'
-], function(App, MaterialSidebar, NewWikipageSidebarView, WikipageView, publiserhModule, streamModule, Wikipage){
+	'models/wikipage',
+	'views/publishers/post',
+], function(App, MaterialSidebar, NewWikipageSidebarView, WikipageView, publiserhModule, streamModule, Wikipage, PostPublisher){
 
 	var wikipage = Wikipage.findOrCreate(server.data.wikipage)
 		
@@ -24,39 +24,28 @@ define([
 		wall : '#wall-region'	
 	})
 	
-	/* App.addInitializer(function(){	
-		var wikiSidebar = WikiSidebar(server.data.wikipage.wiki)	
-		App.wikiSidebar.show(wikiSidebar)	
-		var sidebarView = NewWikipageSidebarView(server.data.wikipage.wiki)
-		this.newWikipageSidebar.show(sidebarView)					
-	}) */
-	
 	App.addInitializer(function(){
 		App.materialSidebar.show(new MaterialSidebar(server.data.wikipage.container))		
 	})
-	
-	if (App.currentUser){
+		
+	if (App.isLoggedIn()){
 		var options = {
 			wall : wikipage.get('wall'),
-			identifier : 'wikipage-wall'
-		}	
-		var Publisher = publiserhModule(App, options, function(view){
-			App.publisher.show(view)
-		})	
-		App.vent.on('publisher:newitem', function(item){				
-			Stream.add(item) 
-		})			
+			identifier : 'wikipage-wall',
+			publishers : [PostPublisher]
+		}		
+		var Publisher = publiserhModule(App, App.publisher, options)		
 	}
-		
+
 	var options = { 
 		items : server.data.items, 
 		type : 'wall',
 		wall : wikipage.get('wall')
 	}
+	var Stream = streamModule(App, App.wall, options)		
+		
+	return App
 	
-	var Stream = streamModule(App, options, function(view){
-		App.wall.show(view)
-	})
 	
 	return App
 })

@@ -1,40 +1,13 @@
 define([
 	'bb',
-	'text!templates/item.html'
-], function(Backbone, html){
-
-	var MessageView = Backbone.Marionette.ItemView.extend({
-		className : 'activityMessage',
-		serializeData : function(){
-			return this.model.serialize()	  
-		},				
-	})
-	
-	var Action = Backbone.Model.extend({})
-	var Actions = Backbone.Collection.extend({})
-	var ActionView = Backbone.Marionette.ItemView.extend({
-		tagName : 'span',
-		className : 'action',
-		events : {
-			'click a' : 'click'
-		},				
-		template : '<a href=><%= label %></a> · ',
-		model : Action,
-		click : function(e){
-			e.preventDefault()
-			this.model.collection.trigger(this.model.get('name'))
-		}
-	})				
-	var ActionsView = Backbone.Marionette.CompositeView.extend({
-		tagName : 'span',
-		template : '',
-		itemView : ActionView
-	})	
+	'text!templates/item.html',
+	'views/item/actions',
+	'views/item/message'
+], function(Backbone, html, ActionsView, MessageView){
 
 	var ItemView = Backbone.Marionette.Layout.extend({	
 		initialize : function(options){
 			var opts = options || {}
-			this.width = opts.width || '510px'
 			this.type = opts.type || 'stream'
 			this.wall = opts.wall
 		},
@@ -42,18 +15,21 @@ define([
 		serializeData: function(){
 			return this.model.serialize()	  
 		},
-		ui : {
-			mainWrapper : '.mainWrapper'
-		},
 		regions : {
-			content : '.content',
-			message : '.message',
-			actions : '.actions'
+			content : '.content-region',
+			message : '.message-region',
+			actions : '.actions-region'
 		},		
 		defaultRenderer : function(){	
 		
 			var itemViewType = this.type
 			var wall = this.wall
+			
+			/* this helper function takes a property (of the contentView)
+				 -> if it is a View it returns it
+				 -> if it is a function, it calls it passing itemViewType (wall or stream) and the wall object
+				 -> else it returns it as it is
+			*/			
 		
 			function normalizeProperty(property){
 				var normalized
@@ -77,13 +53,12 @@ define([
 				this.content.show(new ContentView({ model : this.model }))
 				
 				if (ContentView.prototype.actions){	
-					var actions = new Actions(ContentView.prototype.actions)
+					var actions = new Backbone.Collection(ContentView.prototype.actions)
 					actions.on('all', function(action){
 						this.content.currentView.trigger('action:' + action)
 					}, this)		
 					this.actions.show(new ActionsView({ collection : actions }))
-				}				
-							
+				}							
 			}
 						
 			var MessageTemplate = normalizeProperty(this.model.messageTemplate)			
@@ -97,12 +72,7 @@ define([
 			
 		},				
 		onRender : function(){			
-			this.ui.mainWrapper.css('max-width', this.width)
-			if (this.type == 'wall'){
-				this.defaultRenderer()
-			} else if (this.type == 'stream') {
-				this.defaultRenderer()		
-			}
+			this.defaultRenderer()
 		}
 	})	
 	return ItemView	

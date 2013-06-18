@@ -1,14 +1,12 @@
 define([
+	'app',
 	'models/index',
 	'modules/publisher',
 	'modules/stream',
 	'views/sidebars/basic',
-	'models/materials'		
-], function(Models, publiserhModule, streamModule, basicSidebar, Materials){
-
-	var App = new Backbone.Marionette.Application()	
-	
-	App.currentUser = new Models.User(server.currentUser)
+	'models/materials',
+	'views/publishers/post'
+], function(App, Models, publiserhModule, streamModule, basicSidebar, Materials, PostPublisher){
 
 	App.addRegions({
 		mainSidebar : '#main-sidebar-region',
@@ -49,23 +47,17 @@ define([
 		links : materialsLinks
 	}))	
 	
-	if (App.currentUser.id){
+	if (App.isLoggedIn()){
 		var options = {
 			wall : App.currentUser.get('wall'),
-			identifier : 'user-wall'
-		}
-		var Publisher = publiserhModule(App, options, function(view){
-			App.publisher.show(view)
-		})
-		
-		App.vent.on('publisher:newitem', function(item){				
-			Stream.add(item) 
-		})		
+			identifier : 'user-wall',
+			publishers : [PostPublisher]
+		}		
+		var Publisher = publiserhModule(App, App.publisher, options)		
 	}
-		
-	var Stream = streamModule(App, { items : server.data.items, type : 'stream' }, function(view){
-		App.stream.show(view)
-	})
+
+	var options = { items : server.data.items, type : 'stream' }	
+	var Stream = streamModule(App, App.stream, options)		
 		
 	return App
 	

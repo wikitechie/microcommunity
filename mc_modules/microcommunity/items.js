@@ -1,17 +1,5 @@
 var _ = require('underscore')
 
-//publishers registery
-
-var publishersPaths = []
-
-exports.addPublisher = function(path){
-	publishersPaths.push(path)
-}
-
-exports.exportPublishers = function(){
-	return publishersPaths
-}
-
 //items registery
 
 var itemsModules = []

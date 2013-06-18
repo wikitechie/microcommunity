@@ -20,15 +20,14 @@ define([
 	
 		var material = Material.findOrCreate(server.data.material)
 		App.courseHeader.show(new CourseHeaderView({ model : material }))
-	
+		
 		var options = { 
 			items : server.data.items, 
 			type : 'stream',
 		}
+		var Stream = streamModule(App, App.stream, options)				
 		
-		var Stream = streamModule(App, options, function(view){
-			App.stream.show(view)
-		})	
+			
 	})		
 		
 	return App

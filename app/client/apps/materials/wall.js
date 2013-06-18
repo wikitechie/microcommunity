@@ -5,8 +5,9 @@ define([
 	'views/course-header',		
 	'models/material',	
 	'modules/publisher',
-	'modules/stream'
-], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule){
+	'modules/stream',
+	'views/publishers/post'
+], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule, PostPublisher){
 	
 	App.addRegions({
 		materialSidebar : '#material-sidebar-region',
@@ -25,27 +26,18 @@ define([
 		if (App.isLoggedIn()){
 			var options = {
 				wall : material.get('wall'),
-				identifier : 'materials/'+ material.id
-			}
-		
-			var Publisher = publiserhModule(App, options, function(view){
-				App.publisher.show(view)
-			})
-		
-			App.vent.on('publisher:newitem', function(item){				
-				Stream.add(item) 
-			})		
+				identifier : 'materials/'+ material.id,
+				publishers : [PostPublisher]
+			}		
+			var Publisher = publiserhModule(App, App.publisher, options)		
 		}
 	
 		var options = { 
 			items : server.data.items, 
 			type : 'wall',
 			wall : material.get('wall')
-		}
-		
-		var Stream = streamModule(App, options, function(view){
-			App.stream.show(view)
-		})		
+		}		
+		var Stream = streamModule(App, App.stream, options)		
 		
 	})
 		
