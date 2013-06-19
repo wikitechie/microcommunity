@@ -4,7 +4,7 @@ define([
 	'models/user',
 	'models/wikipage',
 	'models/wiki'
-],function(Backbone, Item, User, Wikipage, Wiki){
+], function(Backbone, Item, User, Wikipage, Wiki){
 
 	var Wall = Backbone.RelationalModel.extend({	
 		idAttribute : '_id',				
@@ -26,7 +26,13 @@ define([
 		},				
 		serialize : function(){
 			return _.extend(this.toJSON(), { link : this.link() })
-		}		
+		},
+		url : function(){
+			if (!this.get('wallType')) { throw "Wall: Undefined wallType error" }
+			else {
+				return '/api/walls/' + this.get('wallType')
+			}			
+		},	
 	})
 	
 	return Wall

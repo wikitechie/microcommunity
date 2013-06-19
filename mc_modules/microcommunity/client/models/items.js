@@ -6,7 +6,8 @@ define([
 	var Items = Backbone.Collection.extend({
 		model : Item,
 		initialize : function(models, options){
-			this.type = options.type
+			if (options && options.type)
+				this.type = options.type
 		}		
 	})
 		

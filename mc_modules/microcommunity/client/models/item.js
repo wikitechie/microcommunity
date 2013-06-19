@@ -7,11 +7,9 @@ define([
 		idAttribute : '_id',
 		
 		//TODO validate author and wall: validate : function(){}
-		
-		url : function(){
-			return '/api/publishers/' + this.get('identifier') + '/' + this.collection
-		},
-		
+		url : function(){		
+			return this.get('wall').url() + '/' + this.get('objectType')
+		},		
 		serialize : function(){
 			if (this.get('wall'))
 				var wall = this.get('wall').serialize()
@@ -25,9 +23,6 @@ define([
 		
 		subModelTypeAttribute : 'objectType',
 		subModelTypes : server.itemModulesInfo.subModelTypes,
-		defaults : {
-			objectType : 'item'
-		},
 		
 		relations : [
 			{

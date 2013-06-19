@@ -45,7 +45,7 @@ app.get('/profiles/:id', function(req, res){
 })
 
 //publisher api
-app.post('/api/publishers/user-wall/posts', function(req, res){	
+app.post('/api/walls/user/post', function(req, res){	
 	User.findById(req.body.author, function(err, author){
 		var post = new Post({
 			content : req.body.content,
@@ -61,7 +61,7 @@ app.post('/api/publishers/user-wall/posts', function(req, res){
 })
 
 //api
-app.post('/api/publishers/user-wall/photos', auth.ensureAuthenticated, function(req, res){
+app.post('/api/walls/user/photo', auth.ensureAuthenticated, function(req, res){
 	var photo = new Photo({
 		content : req.body.content,
 		author : req.body.author,

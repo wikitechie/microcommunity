@@ -9,7 +9,7 @@ var wikipageSchema = new mongoose.Schema({
 	content : String
 })
 
-wikipageSchema.plugin(hasWall, { displayNameAttribute : 'title' })
+wikipageSchema.plugin(hasWall, { displayNameAttribute : 'title', wallType : 'wikipage' })
 wikipageSchema.plugin(hasStream)
 wikipageSchema.plugin(isContent)
 

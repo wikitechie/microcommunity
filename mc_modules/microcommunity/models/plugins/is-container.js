@@ -115,9 +115,9 @@ module.exports = function isContainer(schema, options){
 		console.log(role)
 		this.memberships[index].roles.push(role)	
 				
-	}
+	}	
 	
-	
-	schema.plugin(hasWall, { displayNameAttribute : 'name' })
+	schema.plugin(hasWall, { displayNameAttribute : 'name', wallType : containerType })
 	schema.plugin(hasStream)
+	
 }

@@ -22,7 +22,6 @@ function loadPageMiddleware(app, path){
 				currentContainer : req.container,
 				containerMembership : req.containerMembership,
 				itemModulesInfo : items.exportItemsModulesForClient(),
-				publishersPaths : items.exportPublishers()
 			}
 			if (options && options.rootViews) {
 				req.app.set('views', layoutPath)

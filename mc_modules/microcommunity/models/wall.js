@@ -6,7 +6,8 @@ var mongoose = require('mongoose')
 
 var wallSchema = new mongoose.Schema({
 	owner : { type : mongoose.Schema.Types.DBRef },
-	displayName : String
+	displayName : String,
+	wallType : String
 })
 
 wallSchema.statics.loadItems = function(id, callback){

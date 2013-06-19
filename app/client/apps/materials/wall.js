@@ -6,7 +6,7 @@ define([
 	'models/material',	
 	'modules/publisher',
 	'modules/stream',
-	'views/publishers/post'
+	'views/publishers/post',
 ], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule, PostPublisher){
 	
 	App.addRegions({

@@ -6,7 +6,7 @@ define([
 ], function(Backbone, Item, PostView, messageTemplate){
 
 	var Post = Item.extend({	
-		collection : 'posts',
+
 		contentView : PostView,
 		messageTemplate : messageTemplate
 	})

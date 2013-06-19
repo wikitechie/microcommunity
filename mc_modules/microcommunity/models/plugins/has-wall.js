@@ -8,6 +8,11 @@ module.exports = function hasWall(schema, options){
 	if (!options.displayNameAttribute)
 		throw new Error('MicroCommunity Wall Plugin: You should provide a displayNameAttribute option')
 		
+	if (!options.wallType)
+		throw new Error('MicroCommunity Wall Plugin: You should provide a wallType option')		
+		
+	var wallType = options.wallType
+		
 	//if (!schema.virtuals.objectType) 
 		//throw new Error('MicroCommunity Wall Plugin: should have objectType attribute')		
 
@@ -54,7 +59,8 @@ module.exports = function hasWall(schema, options){
 		mongoose.model('Wall')
 			.findByIdAndUpdate(wallOwner.wall, { $set : { 
 				owner : dbref,
-				displayName : wallOwner[options.displayNameAttribute]
+				displayName : wallOwner[options.displayNameAttribute],
+				wallType : wallType
 			} }, function(err, item){})	
 	})
 		

@@ -15,7 +15,7 @@ userSchema.statics.findByEmail = function(email, callback){
 	})
 }
 
-userSchema.plugin(hasWall, { displayNameAttribute : 'displayName' })
+userSchema.plugin(hasWall, { displayNameAttribute : 'displayName', wallType : 'user' })
 userSchema.plugin(hasStream)
 
 module.exports = userSchema

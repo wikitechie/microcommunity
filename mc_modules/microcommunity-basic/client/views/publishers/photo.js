@@ -1,76 +1,35 @@
 define([
 	'bb',
-	'models/items/photo',	
 	'text!templates/publishers/photo.html'
-],function(Backbone, Photo, html){
+], function(Backbone, html){
 
 	var PhotoPublisher = Backbone.Marionette.ItemView.extend({
-	
-		initialize : function(options){
-			this.container = options.container
-		},
-				
-		template : html,
-		
+		template : html,						
 		ui : {
-			input : '#new-post',
-			button : '#publish-button',
-			spinner : '.spinner'
-		},
-				
-		events : {
-			'click #publish-button' : 'newPost',
-			'click #new-post' : 'expand'
+			content : '#photo-content'
+		},						
+		exportData : function(){
+			return {
+				content : this.ui.content.val()
+			}						
 		},	
-					
-		newPost : function(){					
-			this.disable()			
-			var photo = new Photo()			
-			photo.set({
-				content : this.ui.input.val(),
-				wall : this.container.wall.id,
-				identifier : this.container.identifier,
-				author : App.currentUser.id
-			})				
-			var self = this							
-			photo.save({}, {
-				success : function(model){
-					App.vent.trigger('publisher:newitem', photo)	
-					self.reset()
-					self.enable()											
-				}, 
-				error : function(model, xhr, options){
-					alert('error')
-					self.enable()					
-				},								
-			})				
-		},
-		
-		expand : function(){
-			this.ui.input.attr("rows","3")			
-		},
-		
 		reset : function(){
-			this.ui.input.val("")
-		},
-		
+			this.ui.content.val("")
+		},		
 		disable : function(){
-			this.ui.input.prop("disabled", true)
-			this.ui.button.addClass('disabled')
-			this.ui.spinner.spin()
-		},
-		
+			this.ui.content.prop("disabled", true)
+		},		
 		enable : function(){
-			this.ui.input.prop("disabled", false)
-			this.ui.button.removeClass('disabled')
-			this.ui.spinner.spin(false)				
-		}		
-	})	
+			this.ui.content.prop("disabled", false)			
+		}								
+								
+	})		
 	
-	return { 
+	return 	{ 
+		objectType : 'photo', 
+		icon : 'icon-camera', 
 		label : 'Photo', 
-		identifier : 'photo', 
 		view : PhotoPublisher 
-	}	
+	}		
 	
 })

@@ -1,77 +1,40 @@
 define([
 	'bb',
-	'models/items/post',	
 	'text!templates/publishers/post.html'
-], function(Backbone, Post, html){
+], function(Backbone, html){
 
 	var PostPublisher = Backbone.Marionette.ItemView.extend({
-	
-		initialize : function(options){
-			this.container = options.container
-		},
-				
-		template : html,
-		
+		template : html,						
 		ui : {
-			input : '#new-post',
-			button : '#publish-button',
-			spinner : '.spinner'
-		},
-				
+			content : '#post-content'
+		},					
 		events : {
-			'click #publish-button' : 'newPost',
-			'click #new-post' : 'expand'
+			'click #post-content' : 'expand'
 		},	
-					
-		newPost : function(){					
-			this.disable()			
-			var post = new Post()	
-			post.set({
-				content : this.ui.input.val(),
-				wall : this.container.wall.id,
-				identifier : this.container.identifier,
-				author : App.currentUser.id
-			})	
-			
-			var self = this							
-			post.save({}, {
-				success : function(model){
-					App.vent.trigger('publisher:newitem', post)	
-					self.reset()
-					self.enable()											
-				}, 
-				error : function(model, xhr, options){
-					alert('error')
-					self.enable()					
-				},								
-			})		
-		},
-		
+		exportData : function(){
+			return {
+				content : this.ui.content.val()
+			}						
+		},		
 		expand : function(){
-			this.ui.input.attr("rows","3")			
-		},
-		
+			this.ui.content.attr("rows","3")			
+		},		
 		reset : function(){
-			this.ui.input.val("")
-		},
-		
+			this.ui.content.val("")
+		},		
 		disable : function(){
-			this.ui.input.prop("disabled", true)
-			this.ui.button.addClass('disabled')
-			this.ui.spinner.spin()
-		},
-		
+			this.ui.content.prop("disabled", true)
+		},		
 		enable : function(){
-			this.ui.input.prop("disabled", false)
-			this.ui.button.removeClass('disabled')
-			this.ui.spinner.spin(false)				
-		}		
+			this.ui.content.prop("disabled", false)			
+		}											
 	})	
 	
 	return { 
+		objectType : 'post', 
+		icon : 'icon-pencil', 
 		label : 'Post', 
-		identifier : 'post', 
-		view : PostPublisher 
+		view :  PostPublisher 
 	}	
 	
 })
