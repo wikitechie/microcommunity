@@ -12,7 +12,6 @@ microcommunity.registerApp(__dirname)
 
 module.exports = microcommunity
 
-
 //creating and setting up the app	
 
 if (!module.parent){

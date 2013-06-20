@@ -1,4 +1,5 @@
-NODE_PATH=mc_modules:node_modules node app/build-script.js
-echo "Merge complete successfully"
-r.js -o app/client-merged/build.js
-rm -r app/client-merged
+NODE_PATH=mc_modules:node_modules node app/build-task.js
+echo "Merge process completed successfully"
+#r.js -o app/client-merged/build.js
+#rm -r app/client-merged
+echo "Build process completed successfully"

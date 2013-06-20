@@ -6,6 +6,9 @@ var connect = require('connect')
 	, models = require('./models')
 	, items = require('./items')
 	, sidebars = require('./sidebars')
+	, build = require('./build')
+
+var microcommunity = module.exports = {}
 
 //setting up app and plugin functions
 module.exports.createApplication = createApplication
@@ -20,6 +23,9 @@ module.exports.models = models
 module.exports.items = items
 module.exports.model = models.getModel
 module.exports.sidebars = sidebars
+
+//client building
+module.exports.build = build
 
 //registration methods
 var mainPath
@@ -60,7 +66,7 @@ function findModules(path, callback){
 }
 
 //retrieves all the client modules in the main app and installed plugins
-module.exports.listClientModules = function(callback){
+module.exports.getClientModules = function(callback){
 	var allPaths = pluginPaths
 	allPaths.push(mainPath)
 	
