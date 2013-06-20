@@ -1,10 +1,12 @@
 .row
-	.span3
-		#main-sidebar-region
-		#material-sidebar-region		
-		#semesters-sidebar-region
-		block sidebars
+	.span2(style="height:500px;")
+		.row-fluid
+			.span2(style="position:fixed; border-right: 2px solid #eee;")
+				#main-sidebar-region
+				#material-sidebar-region		
+				#semesters-sidebar-region
+				block sidebars
 		
-	.span9
+	.span10
 		block content
 

@@ -2,8 +2,10 @@ define([
 	'bb',
 	'models/index',
 	'models/membership',
-	'views/sidebars/basic'
-], function(Backbone, Models, Membership, basicSidebar){
+	'views/sidebars/basic',
+	'views/sidebars/sidebars',
+	'models/materials'
+], function(Backbone, Models, Membership, basicSidebar, SidebarsView, Materials){
 
 	var MCApp = Backbone.Marionette.Application.extend({
 		setup : function(){
@@ -56,17 +58,13 @@ define([
 	App.setup()
 	
 	App.addRegions({
-		mainSidebar : '#main-sidebar-region'
-	})	
+		sidebar : '#sidebar-region'
+	})
+	
+	var sidebars = new Backbone.Collection(server.sidebars)		
 
 	App.addInitializer(function(){
-		App.mainSidebar.show(new basicSidebar({
-			header : 'Navigation',
-			links : [ 
-				{label : 'Main', url : '/' },
-				{label : 'Materials', url : '/materials' },
-			]
-		}))	
+		App.sidebar.show(new SidebarsView({ collection : sidebars }))	
 	})	
 	
 	

@@ -9,12 +9,10 @@ define([
 ], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, Users, MembersView){
 	
 	App.addRegions({
-		materialSidebar : '#material-sidebar-region',
 		courseHeader : '#course-header-region'
 	})
 
 	App.addInitializer(function(){
-		App.materialSidebar.show(new MaterialSidebar(server.data.material))
 		var material = Material.findOrCreate(server.data.material)
 		App.courseHeader.show(new CourseHeaderView({ model : material }))		
 	})

@@ -1,8 +1,38 @@
 var util = require('util')
 	, EventEmitter = require('events').EventEmitter
 	, mongoose = require('mongoose')
+	, Model = mongoose.Model
 	, _ = require('underscore')
 	, async = require('async')
+	
+var oldInit = Model.prototype.init;
+Model.prototype.init = function(doc, query, fn) {
+  var key = 'containerType';
+  if (key) {
+    var newFn = function() {
+      // this is pretty ugly, but we need to run the code below before the callback
+      process.nextTick(function() {
+        fn.apply(this, arguments);
+      });
+    }
+    var obj = oldInit.call(this, doc, query, newFn);
+
+    // If the discriminatorField contains a model name, we set the documents prototype to that model
+    var objectType = doc[key];
+    if (objectType){
+		  var modelName = models.convert(objectType, 'object', 'model')
+		  var model = mongoose.models[modelName];
+		  if(model) {
+		    obj.__proto__ = model.prototype;
+		  }    
+    }
+    return obj;
+  } else {
+    // If theres no discriminatorKey we can just call the original method
+    return oldInit.apply(this, arguments);
+  }
+}	
+	
 
 function Models(){}
 util.inherits(Models, EventEmitter)
@@ -49,7 +79,7 @@ Models.prototype.define = function(modelName, objectType, collectionName, schema
 	//configuration and creation of the mongoose model
 	schema.virtual('objectType').get(function(){ return objectType })	
 	schema.set('toJSON', { virtuals: true })
-	var Model = mongoose.model(modelName, schema, collectionName)	
+	var MyModel = mongoose.model(modelName, schema, collectionName)	
 	
 	//registering the model meta data
 	registerModel({
@@ -58,8 +88,9 @@ Models.prototype.define = function(modelName, objectType, collectionName, schema
 		collection : collectionName
 	})
 	
-	return Model	
+	return MyModel	
 }
+
 
 Models.prototype.getModel = function(modelName){
 	return mongoose.model(modelName)
@@ -106,5 +137,4 @@ var models = new Models()
 //exporting final object
 module.exports = models
 
-models.start()
 

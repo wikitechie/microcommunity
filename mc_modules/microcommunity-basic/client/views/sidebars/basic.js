@@ -1,23 +1,16 @@
 define([
 	'bb',
-	'text!templates/sidebars/basic.html'
-], function(Backbone, html){
+	'text!templates/sidebars/basic.html',
+	'text!templates/sidebars/link.html'
+], function(Backbone, html, linkTemplate){
 
-	var Links = Backbone.Collection.extend()
 
 	var LinkView = Backbone.Marionette.ItemView.extend({
 		tagName : 'li',
-		template : "<a href ='<%= url %>'><%= label %></a>"
+		template : linkTemplate
 	})
 
 	var SidebarView = Backbone.Marionette.CompositeView.extend({
-		initialize : function(options){
-			this.collection = new Links(options.links)
-			this.header = options.header
-		},
-		serializeData : function(){
-			return { header : this.header }
-		},
 		itemView : LinkView,	
 		template : html,
 		appendHtml : function(collectionView, itemView, index){

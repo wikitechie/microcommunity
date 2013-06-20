@@ -57,6 +57,8 @@ exports.put = function(req, res){
 			if (req.body.material){
 				streams.push(req.body.material.stream)
 			}
+			
+			var difference = diff.diffWords(wikipage.content, content)
 		
 			var revision = new Revision({
 				content : content,
@@ -64,10 +66,10 @@ exports.put = function(req, res){
 				walls : [wikipage.wall],
 				streams : streams,			
 				wikipage : wikipage.id,
-				diff : diff.diffWords(wikipage.content, content),
+				diff : difference,
 				summary : summary	
 			})
-
+			
 			revision.save(function(err, activity){
 				wikipage.content = content
 				res.send(wikipage)				

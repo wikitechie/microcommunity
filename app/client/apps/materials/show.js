@@ -10,17 +10,11 @@ define([
 ], function(App, BasicSidebar, MaterialSidebar, CourseOutlineView, CourseHeaderView, Material, publiserhModule, streamModule){
 	
 	App.addRegions({
-		materialSidebar : '#material-sidebar-region',
 		publisher : '#publisher-region',
 		stream : '#stream-region',
 		courseOutline : '#course-outline-region',
 		courseHeader : '#course-header-region'	
 	})
-
-	/*server.data.material.sections = [
-		{ title: 'first', description : 'blah blah blah' }, 
-		{ title: 'second', description : 'blah blah blah' }
-	]*/	
 	
 	App.addInitializer(function(){
 		var material = Material.findOrCreate(server.data.material)
@@ -31,7 +25,6 @@ define([
 		}))
 		App.courseHeader.show(new CourseHeaderView({ model : material }))
 
-		App.materialSidebar.show(new MaterialSidebar(server.data.material))	
 	})
 		
 	return App

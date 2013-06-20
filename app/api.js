@@ -58,14 +58,14 @@ module.exports = function(app){
 	})
 
 	//semester-wall
-	app.post('/api/publishers/materials/:container/posts', function(req, res){
+	app.post('/api/walls/material/post', function(req, res){
 		User.findById(req.body.author, function(err, author){
 			var post = new Post({
 				content : req.body.content,
 				wall : req.body.wall,
 				walls : [req.body.wall],
 				author : author.id,		
-				streams : [req.container.stream]
+				//streams : [req.container.stream]
 			})	
 			post.save(function(err){
 				res.send(post)
@@ -73,14 +73,14 @@ module.exports = function(app){
 		})		
 	})
 
-	app.post('/api/publishers/materials/:container/photos', function(req, res){	
+	app.post('/api/walls/material/photo', function(req, res){	
 			User.findById(req.body.author, function(err, author){
 			var post = new Photo({
 				content : req.body.content,
 				wall : req.body.wall,
 				walls : [req.body.wall],
 				author : author.id,		
-				streams : [req.container.stream]
+				//streams : [req.container.stream]
 			})	
 			post.save(function(err){
 				res.send(post)

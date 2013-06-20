@@ -1,0 +1,4 @@
+NODE_PATH=mc_modules:node_modules node app/build-script.js
+echo "Merge complete successfully"
+r.js -o app/client-merged/build.js
+rm -r app/client-merged

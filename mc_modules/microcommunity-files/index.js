@@ -11,6 +11,8 @@ models.define('File', 'file', 'files', fileSchema)
 models.define('NewFileActivity', 'activity:new-file', 'newfileactivities', newFileActivitySchema)
 items.addItem('NewFileActivity', 'componenets/new-file-activity/model')
 
+microcommunity.registerPlugin(__dirname)
+
 var routes = require('./files-routes')
 
 //initialization function

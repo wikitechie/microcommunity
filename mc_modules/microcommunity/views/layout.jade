@@ -4,7 +4,8 @@ html
 		title MicroCommunity
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		link(href='/css/bootstrap.min.css', rel='stylesheet')
-		link(href='/css/bootstrap-responsive.min.css', rel='stylesheet')		
+		link(href='/css/bootstrap-responsive.min.css', rel='stylesheet')	
+		link(href='/css/font-awesome.min.css', rel='stylesheet')					
 		link(href='/css/app.css', rel='stylesheet')
 		<script type="text/javascript">
 		!= "server = " + JSON.stringify(server)  + ";"
@@ -37,12 +38,14 @@ html
 								li
 									a(href="/logout") Log out						
 
-					ul.nav.main-nav		
-
 		div.container	
-			.row
-				.span12
-					|!{ content }
+			.row		
+				.span2
+					#sidebar-region
+																
+				.span9(style="border-left: 2px solid #eee; padding-left:20px")
+					|!{ content }	
+									
 
 			.notifications.bottom-left			
 

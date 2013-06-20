@@ -9,7 +9,6 @@ define([
 ], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, Users, MembersView){
 	
 	App.addRegions({
-		materialSidebar : '#material-sidebar-region',
 		publisher : '#publisher-region',
 		stream : '#stream-region',
 		courseHeader : '#course-header-region',
@@ -17,7 +16,6 @@ define([
 	})
 	
 	App.addInitializer(function(){
-		App.materialSidebar.show(new MaterialSidebar(server.data.material))
 		var material = Material.findOrCreate(server.data.material)
 		App.courseHeader.show(new CourseHeaderView({ model : material }))		
 		App.membersRegion.show(new MembersView({ collection : material.get('members') }))	

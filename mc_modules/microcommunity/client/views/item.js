@@ -34,9 +34,11 @@ define([
 			function normalizeProperty(property){
 				var normalized
 				if ('function' == typeof property){
-					if (property == 'function (){return c.apply(this,arguments)}'){
-						normalized = property
-					}					
+					//testing if the function is an ItemView	
+					var instance = new property()
+					if (instance instanceof Backbone.Marionette.ItemView){
+						normalized = property					
+					}			
 					else {
 						normalized = property(itemViewType, wall)
 					}

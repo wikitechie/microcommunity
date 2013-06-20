@@ -1,9 +1,8 @@
-.row
-	.span3
-		#main-sidebar-region
-		#wikis-sidebar-region	
-		#materials-sidebar-region
-		block sidebars
-										
-	.span9
+.row-fluid
+	.span2(style="height:500px;")
+		.row-fluid
+			.span2(style="position:fixed; border-right: 2px solid #eee;")
+				#sidebar-region
+														
+	.span7	
 		block content	

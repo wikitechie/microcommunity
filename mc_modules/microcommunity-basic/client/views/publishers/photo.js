@@ -27,7 +27,7 @@ define([
 	
 	return 	{ 
 		objectType : 'photo', 
-		icon : 'icon-camera', 
+		icon : ' icon-camera-retro', 
 		label : 'Photo', 
 		view : PhotoPublisher 
 	}		

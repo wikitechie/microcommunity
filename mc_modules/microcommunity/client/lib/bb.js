@@ -1,5 +1,4 @@
 define([
-	'text!templates/item.html',
 	'backbone',
 	'backbone-relational',
 	'backbone-marionette',
@@ -9,7 +8,7 @@ define([
 	'general',
 	'moment',
 	'bootstrap'
-], function(html, Backbone){
+], function(Backbone){
 
 	Backbone.Marionette.Renderer.render = function(template, data){
 		return _.template(template, data)

@@ -7,6 +7,7 @@ var express = require('express')
 
 var models = require('./models') 
 	, items = require('./items')
+	, sidebars = require('./sidebars')
 
 function loadPageMiddleware(app, path){
 
@@ -14,7 +15,7 @@ function loadPageMiddleware(app, path){
 	var layoutPath = __dirname + '/views'	
 
 	return function (req, res, next){
-		res.loadPage = function (appName, data, options){		
+		res.loadPage = function (appName, data, options){	
 			var serverData = {
 				appName: appName,
 				data: data || {},
@@ -22,6 +23,7 @@ function loadPageMiddleware(app, path){
 				currentContainer : req.container,
 				containerMembership : req.containerMembership,
 				itemModulesInfo : items.exportItemsModulesForClient(),
+				sidebars : res.sidebars.getSidebars()
 			}
 			if (options && options.rootViews) {
 				req.app.set('views', layoutPath)
@@ -57,14 +59,36 @@ function containerMiddleware(req, res, next, id){
 		next()
 	})
 }  
-  
 
-function setupPluginInterface(app, path){
-	app.use(loadPageMiddleware(app, path))			
+//TODO create an interface to customize basic sidebar
+function basicSidebarCallback(req, res, next){
+	var links =  [ 
+		{label : 'Main', url : '/' },
+		{label : 'Materials', url : '/materials', icon : 'icon-camera-retro' },
+	]
+	res.sidebars.pushSidebar('Navigation', links)
+	next()
+}
+
+function ContainerSidebar(req, res, next){
+	var sidebar = req.container.getSidebar()
+	res.sidebars.pushSidebar(sidebar.header, sidebar.links)
+	next()
+}
+
+function setupPluginInterface(app, path){	
+	app.use(loadPageMiddleware(app, path))	
+	app.use('/client', express.static(path + '/client-built'))     			
 	app.use('/client', express.static(path + '/client'))
 	app.use(express.static(path + '/static')) 
 	app.set('views', path + '/views'	)	
-	app.param('container', containerMiddleware)		
+	app.param('container', containerMiddleware, ContainerSidebar)	
+	app.use(function(req, res, next){
+		var Sidebars = require('./sidebars')
+		res.sidebars = new Sidebars()
+		next()
+	})		
+	app.use(basicSidebarCallback)		
 }
 
 function useInternalPlugins(app){

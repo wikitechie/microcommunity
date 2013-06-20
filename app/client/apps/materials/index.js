@@ -8,7 +8,6 @@ define([
 ], function(App, Models, basicSidebar, MaterialForm, Thumbnails, Materials){
 
 	App.addRegions({
-		mainSidebar : '#main-sidebar-region',
 		materials : '#materials-region'
 	})
 	
