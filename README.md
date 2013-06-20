@@ -1,5 +1,6 @@
-OverView
+Overview
 ========
+
 MicroCommunity is a project that aims to build an open source social networking platform, built as a modular system where developers can mix plugins supporting features such as diverse content types production, content organization and curation and collaboration styles. The goal is to make it easy for developers easily create dedicated platforms that encourage content production and knowledge exchange in small-scale communities, or MicroCommunities! We think that those communities for a majority in the online Arab community.
 
 Requirements
@@ -39,6 +40,5 @@ Running this command will generate 'client-built' folder which could be served i
 ```bash
 ./build
 ```
-
 
 
