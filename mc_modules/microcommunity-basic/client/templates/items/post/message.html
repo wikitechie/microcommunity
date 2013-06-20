@@ -1,0 +1,8 @@
+<% if (parentType == 'stream') { %>
+	<% if (author._id != wall.owner.$id) { %>				
+	 <i class="icon-play"></i>
+	<a href="<%= wall.link %>">					 
+		<%= wall.displayName %>
+	</a>									
+	<% } %>					
+<% } %>

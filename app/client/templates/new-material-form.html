@@ -1,0 +1,27 @@
+<form class="form-horizontal" method='post' action='/materials' enctype="multipart/form-data">
+	<legend>Add a new material</legend>
+	<div class="control-group">
+		<label class="control-label">Title</label>
+		<div class="controls">
+			<input type="text" name='name' placeholder="Material name">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">Description</label>
+		<div class="controls">
+			<textarea name='description'></textarea>
+		</div>
+	</div>		
+	<div class="control-group">
+		<label class="control-label">Thumbnail</label>
+		<div class="controls">
+			<input type='file' name='thumbnail' />
+		</div>
+	</div>	
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn">Create</button>
+    </div>
+  </div>	
+</form>		
+<hr />

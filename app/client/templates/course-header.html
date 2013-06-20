@@ -1,0 +1,17 @@
+<div class='row-fluid'>
+	<div class='span3'>
+		<div class="thumbnail">
+			<img src="<%= server.data.material.thumbnailPath ? server.data.material.thumbnailPath : '/book-pile.jpg' %>" alt="">
+		</div>
+	</div>
+	<div class='span9'>
+		<div class='page-header'>
+			<h1><%= server.data.material.name	%> <small>Spring 2012</small></h1>	
+		</div>	
+		<div class="pull-right" id="button-region">
+		</div>				
+		<p><%= server.data.material.description %></p>
+	</div>
+</div>
+
+<hr />

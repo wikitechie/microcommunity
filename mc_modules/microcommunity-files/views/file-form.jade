@@ -1,0 +1,18 @@
+.row-fluid
+	form(class="form-horizontal", enctype="multipart/form-data", method='post', action="/#{server.currentContainer.containerType}s/#{server.currentContainer._id}/files")
+		legend Upload a file
+		.control-group
+			label.control-label Title
+			.controls
+				input(type="text", name='name', placeholder="Name of your file")
+		.control-group
+			label.control-label Description
+			.controls
+				textarea(name='description')						
+		.control-group
+			label.control-label File
+			.controls
+				input(type="file", name='file')
+		.control-group
+			.controls
+				button.btn(type="submit") Upload
