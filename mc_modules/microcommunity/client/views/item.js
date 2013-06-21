@@ -54,20 +54,22 @@ define([
 			//TODO: create a generic logic here		
 			ContentView = normalizeProperty(this.model.contentView)
 			if (ContentView){
-				this.content.show(new ContentView({ model : this.model }))
-				
-				if (ContentView.prototype.actions){	
-					var actions = new Backbone.Collection(ContentView.prototype.actions)
-					actions.on('all', function(action){
-						this.content.currentView.trigger('action:' + action)
-					}, this)		
-					this.actions.show(new ActionsView({ collection : actions }))
-				}							
+				this.content.show(new ContentView({ itemView : this, model : this.model }))					
 			}
+			
+			//actions			
+			if (this.model.actions){	
+				var actions = new Backbone.Collection(this.model.actions)
+				actions.on('all', function(action){
+					this.trigger('action:' + action)
+				}, this)		
+				this.actions.show(new ActionsView({ collection : actions }))
+			}					
 						
 			var MessageTemplate = normalizeProperty(this.model.messageTemplate)			
 			if (MessageTemplate){				
 				var message = new MessageView({
+					itemView : this,
 					model : this.model,
 					template : MessageTemplate
 				})
@@ -77,11 +79,10 @@ define([
 			var PluginView = this.model.pluginView
 			if (PluginView) {
 				this.plugin.show(new PluginView({
+					itemView : this,
 					model : this.model 
 				}))			
 			}
-			
-
 			
 		},				
 		onRender : function(){			

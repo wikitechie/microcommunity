@@ -13,7 +13,10 @@ define([
 				return messageTemplateWall
 			else
 				return messageTemplateStream
-		},		
+		},	
+		actions : [
+			{ label : 'Difference', name : 'diff' }
+		],
 		serialize : function(){		
 			var parent = Item.prototype.serialize.apply(this)		
 			return _.extend(parent, { wikipage : this.get('wikipage').serialize() })

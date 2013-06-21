@@ -9,7 +9,10 @@ define([
 	var Post = Item.extend({	
 		contentView : PostView,
 		messageTemplate : messageTemplate,
-		pluginView : Comments
+		pluginView : Comments,
+		actions : [
+			{ label : 'Comment', name : 'comment' }
+		]
 	})
 	
 	return Post

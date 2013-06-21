@@ -71,7 +71,13 @@ define([
 		}		
 	})
 	
-	CommentsThreadView = Backbone.Marionette.Layout.extend({
+	var CommentsThreadView = Backbone.Marionette.Layout.extend({
+		initialize : function(options){
+			if (options){
+				this.itemView = options.itemView
+				this.itemView.on('action:comment', this.toggle, this)
+			}
+		},
 		template : html,
 		regions : {
 			commentsList : '.comments-list-region',
@@ -84,7 +90,10 @@ define([
 				var options = { model : this.model, collection : comments, commenter : App.currentUser }			
 				this.commentsForm.show(new CommentsForm(options))			
 			}
-		}
+		},
+		toggle : function(){
+			$(this.el).slideToggle()
+		},		
 	})
 	
 	return CommentsThreadView	
