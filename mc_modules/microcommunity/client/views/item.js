@@ -2,8 +2,9 @@ define([
 	'bb',
 	'text!templates/item.html',
 	'views/item/actions',
-	'views/item/message'
-], function(Backbone, html, ActionsView, MessageView){
+	'views/item/message',
+	'views/item-plugins/comments'
+], function(Backbone, html, ActionsView, MessageView, CommentsThread){
 
 	var ItemView = Backbone.Marionette.Layout.extend({	
 		initialize : function(options){
@@ -13,12 +14,13 @@ define([
 		},
 		template : html,
 		serializeData: function(){
-			return this.model.serialize()	  
+			return _.extend(this.model.serialize())
 		},
 		regions : {
 			content : '.content-region',
 			message : '.message-region',
-			actions : '.actions-region'
+			actions : '.actions-region',
+			plugin  : '.plugin-region'
 		},		
 		defaultRenderer : function(){	
 		
@@ -71,6 +73,15 @@ define([
 				})
 				this.message.show(message)				
 			}
+			
+			var PluginView = this.model.pluginView
+			if (PluginView) {
+				this.plugin.show(new PluginView({
+					model : this.model 
+				}))			
+			}
+			
+
 			
 		},				
 		onRender : function(){			

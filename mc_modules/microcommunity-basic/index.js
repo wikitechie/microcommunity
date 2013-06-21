@@ -86,6 +86,41 @@ module.exports = function(){
 		})	
 	})
 	
+	app.post('/api/items/:item/comments' , function(req, res){
+		
+		
+		var comment = req.body
+		comment.published = Date()
+		
+		var Item = microcommunity.model('Item')
+		Item.findById(req.params.item, function(err, item){
+			var dbref = item.object	
+			var modelName = microcommunity.models.convert(dbref.namespace, 'collection', 'model')
+			var Model = microcommunity.model(modelName)
+			
+			var update = { $push : { comments : comment } }
+			var options = { select : 'comments' }
+			Model.findByIdAndUpdate(dbref.oid, update, options, function(err, object){
+				var l = object.comments.length
+				var comment = object.comments[l-1]
+				res.send(comment)			
+			})
+			
+			/*Model.findById(dbref.oid, function(err, object){
+				object.comments.push(comment)
+				object.save(function(err, object){
+					console.log(object.comments)
+					res.send(200, object.comments[object.comments.length-1])					
+				})
+			})*/	
+								
+		})
+
+		
+		
+	})
+	
+	
 	return app
 }
 

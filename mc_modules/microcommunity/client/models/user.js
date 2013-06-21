@@ -8,7 +8,8 @@ define([
 			return "/profiles/" + this.get('id')
 		},		
 		serialize : function(){
-			return _.extend(this.toJSON(), { link : this.link() })
+			var avatar = $.gravatar(this.get('email'), { size: 50 })
+			return _.extend(this.toJSON(), { link : this.link(), avatar : avatar })
 		},		
 		relations : [
 			{

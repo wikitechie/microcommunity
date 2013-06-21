@@ -43,7 +43,6 @@ module.exports = function Itemable(schema, options){
 			})
 			item.save(function(err, item){
 				if (!err){
-					console.log(item)
 					self.item = item._id
 					next(null)
 				} else {

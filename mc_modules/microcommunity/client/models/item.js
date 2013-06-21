@@ -1,7 +1,8 @@
 define([
-	'backbone',
-	'backbone-relational'
-], function(Backbone){
+	'bb',
+	'models/comment',
+	'models/comments'
+], function(Backbone,Comment, Comments){
 
 	var Item = Backbone.RelationalModel.extend({
 		idAttribute : '_id',
@@ -19,7 +20,7 @@ define([
 				wall : wall,
 				parentType : this.collection.type
 			})
-		},		
+		},
 		
 		subModelTypeAttribute : 'objectType',
 		subModelTypes : server.itemModulesInfo.subModelTypes,
@@ -36,7 +37,17 @@ define([
 				key : 'author',
 				relatedModel : 'Core.User',
 				includeInJSON : '_id'			
-			}					
+			},
+			{
+				type : Backbone.HasMany,
+				key : 'comments',
+				relatedModel : Comment,
+				collectionType : Comments,
+				/*reverseRelation : {
+					key : 'item',
+					includeInJSON : false
+				}*/
+			}				
 		]
 						
 	})

@@ -112,7 +112,6 @@ module.exports = function isContainer(schema, options){
 			throw new Error("MicroCommunity: Container of type '" + this.containerType + "' does not have member '" + user.id + "'")	
 			
 		var index = this.membershipIndex(membership)
-		console.log(role)
 		this.memberships[index].roles.push(role)	
 				
 	}	
