@@ -1,44 +1,22 @@
-function attachAction(item, action, value){
-	item[action] = value	
-}
+var helpers = require('./helpers')
 
 module.exports = function (item, user, callback){
-
 	var mc = require('microcommunity')
-	
-	var Container = mc.model('Container')
-	, Wikipage = mc.model('Wikipage')
-	, wallType = item.wall.wallType
+	var wallType = item.wall.wallType
 		
 	if (!user){
-		attachAction(item, 'canComment', false)
+		helpers.attachAction(item, 'canComment', false)
 		callback(null, item)
-	} else if (wallType === "material"){			
-		var material = Container.findById(item.wall.owner.oid, function(err, material){					
-			if (material.isMember(user)){		
-				attachAction(item, 'canComment', true)
-				callback(null, item)			
-			} else {
-				attachAction(item, 'canComment', false)
-				callback(null, item)							
-			}
-		})		
+	} else if (wallType === "material"){		
+		helpers.authorizeIfContainerMember(item.wall.owner.oid, item, 'canComment', user, callback)
+	
 	} else if (wallType === "wikipage") {
+		var Wikipage = mc.model('Wikipage')
 		var wikipage = Wikipage.findById(item.wall.owner.oid, function(err, wikipage){
-			var material = Container.findById(wikipage.container, function(err, material){
-				if (material.isMember(user)){		
-					attachAction(item, 'canComment', true)
-					callback(null, item)								
-				} else {
-					attachAction(item, 'canComment', false)
-					callback(null, item)								
-				}
-
-				})
+			helpers.authorizeIfContainerMember(wikipage.container, item, 'canComment', user, callback)
 		})				
 	} else {
-		attachAction(item, 'canComment', true)
+		helpers.	attachAction(item, 'canComment', true)
 		callback(null, item)		
-	}
-	
+	}	
 }

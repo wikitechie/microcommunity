@@ -8,7 +8,6 @@ var abilities = {
 	}
 }
 
-
 var authorize = module.exports.authorize = function(object, objectType, action, user, callback){
 	abilities[objectType][action](object, user, callback)
 }

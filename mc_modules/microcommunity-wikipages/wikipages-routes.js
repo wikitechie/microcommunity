@@ -37,7 +37,7 @@ exports.show = function(req, res){
 		Wall.loadItems(wikipage.wall, function(err, items){		
 			can.authorizeItems(items, req.user, function(err, items){
 				var w = wikipage.toJSON()
-				can.authorizeWall(w.wall, req.user, function(err, wall){
+				can.authorize(w.wall, 'wall', 'publish', req.user, function(err, wall){
 					res.loadPage('wikipage', {
 						wall : wall,
 						wikipage : w,

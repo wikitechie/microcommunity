@@ -83,7 +83,7 @@ module.exports = function(){
 				streams : [author.stream]
 			})	
 			post.save(function(err){
-				can.authorizeItem(post.toJSON(), req.user, function(err, post){
+				can.authorize(post.toJSON(), 'item', 'comment', req.user, function(err, post){
 					res.send(post)
 				})				
 			})		
