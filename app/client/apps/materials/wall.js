@@ -9,6 +9,7 @@ define([
 	'views/publishers/post',
 ], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule, PostPublisher){
 	
+	
 	App.addRegions({
 		publisher : '#publisher-region',
 		stream : '#stream-region',
@@ -17,10 +18,10 @@ define([
 		
 	App.addInitializer(function(){
 
-		var material = Material.findOrCreate(server.data.material)
+		var material = new Material(server.data.material)
 		App.courseHeader.show(new CourseHeaderView({ model : material }))			
 		
-		if (App.isLoggedIn()){
+		if (material.get('wall').get('canPublish')){
 			var options = {
 				wall : material.get('wall'),
 				identifier : 'materials/'+ material.id,

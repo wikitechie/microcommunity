@@ -15,7 +15,7 @@ function loadPageMiddleware(app, path){
 	var layoutPath = __dirname + '/views'	
 
 	return function (req, res, next){
-		res.loadPage = function (appName, data, options){	
+		res.loadPage = function (appName, data, options){
 			var serverData = {
 				appName: appName,
 				data: data || {},

@@ -1,9 +1,21 @@
 define([
 	'bb',
 	'text!templates/section.html',
+	'text!templates/section-toolbar.html',	
 	'views/attachements',
 	'views/new-attachement-modal',		
-], function(Backbone, html, AttachementListView, NewAttachementModal){
+], function(Backbone, html, sectionToolbarHtml, AttachementListView, NewAttachementModal){
+
+	var SectionToolbarView = Backbone.Marionette.ItemView.extend({
+		template : sectionToolbarHtml,
+		events : {
+			'click .add-attachement-btn' : 'addAttachement',		
+		},
+		addAttachement : function(){
+			var newAttachement = new NewAttachementModal({ model : this.model })
+			newAttachement.show()
+		},		
+	})
 
 	var SectionView = Backbone.Marionette.Layout.extend({
 		initialize : function(){
@@ -13,7 +25,6 @@ define([
 		template : html,
 		events : {
 			'mouseover' : 'displayControls',
-			'click .add-attachement-btn' : 'addAttachement',
 			'click .pin-btn' : 'setHighlighted'
 		},
 		displayControls : function(){
@@ -28,15 +39,14 @@ define([
 				this.highlight = false
 			}
 		},
-		addAttachement : function(){
-			var newAttachement = new NewAttachementModal({ model : this.model })
-			newAttachement.show()
-		},
 		regions : {
-			attachements : "#attachement-list-region"
+			attachements : "#attachement-list-region",
+			sectionToolbar : '#section-toolbar-region'
 		},
 		onRender : function(){
-			this.attachements.show(new AttachementListView({ collection : this.model.get('attachements') }))		
+			this.attachements.show(new AttachementListView({ collection : this.model.get('attachements') }))
+			if (App.isContainerAmin())
+				this.sectionToolbar.show(new SectionToolbarView({ model : this.model }))								
 		}				
 	})
 	

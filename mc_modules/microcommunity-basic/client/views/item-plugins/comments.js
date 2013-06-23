@@ -3,7 +3,7 @@ define([
 	'text!templates/comments.html',
 	'text!templates/comment.html',
 	'text!templates/comment-form.html',	
-	'models/comment'
+	'models/comment',
 ], function(Backbone, html, commentHTML, commentFormHTML, Comment){
 
 	var CommentView = Backbone.Marionette.ItemView.extend({
@@ -57,6 +57,10 @@ define([
 					self.collection.add(model)
 					self.enable()
 					self.reset()					
+				},
+				error : function(model, xhr, options){
+					alert('error')
+					self.enable()
 				}				
 			})
 		},
@@ -85,8 +89,8 @@ define([
 		},
 		onRender : function(){
 			var comments = this.model.get('comments')
-			this.commentsList.show(new CommentsList({ collection : comments }))			
-			if (App.isLoggedIn()){
+			this.commentsList.show(new CommentsList({ collection : comments }))
+			if (this.model.get('canComment')){
 				var options = { model : this.model, collection : comments, commenter : App.currentUser }			
 				this.commentsForm.show(new CommentsForm(options))			
 			}

@@ -7,7 +7,17 @@ var mongoose = require('mongoose')
 
 module.exports = function(app){
 
-	app.post('/api/materials/:id/sections', function(req, res){
+	/*var user = require('connect-roles')
+	user.use('add a section', function(req){
+		if (!req.user) 
+			return false		
+		else if (req.material.hasRole(req.user, 'admin'))
+			return true		
+		else 
+			return false
+	})*/
+
+	app.post('/api/materials/:id/sections', /*fetchMaterial, user.can('add a section'),*/ function(req, res){
 		var section = req.body
 		Material.findByIdAndUpdate(req.params.id, { $push : { sections : section } }, function(err, material){	
 			res.send(200, section)

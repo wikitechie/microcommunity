@@ -6,13 +6,28 @@ define([
 	'views/publishers/post'	
 ], function(App, Models, publiserhModule, streamModule, PostPublisher){
 
+	function canPostOnWall(wall){	
+		if (!App.isLoggedIn()) { return false }
+		
+		else {		
+			if ( wall.get('owner').$id === App.currentUser.id ) {
+				return true
+			} else {
+				return false			
+			}		
+		}
+	}
+
 	App.addRegions({
 		publisher : '#publisher-region',
 		stream : '#stream-region'
 	})
 	
-	if (App.isLoggedIn()){	
-		var profileUser = Models.User.findOrCreate(server.data.user)
+	//if (App.isLoggedIn()){	
+	var profileUser = Models.User.findOrCreate(server.data.user)	
+	
+	if (App.isLoggedIn())	
+	if (profileUser.get('wall').get('canPublish')){
 		var options = {
 			wall : profileUser.get('wall'),
 			identifier : 'user-wall',

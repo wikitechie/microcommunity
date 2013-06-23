@@ -16,19 +16,12 @@ define([
 	})	
 	
 	App.addRegions({
-		materialSidebar : '#material-sidebar-region',	
-		newWikipageSidebar : '#new-wikipage-sidebar-region',	
-		wikiSidebar : '#wiki-sidebar-region',
 		wikipage : '#wikipage-region',
 		publisher : '#publisher-region',
 		wall : '#wall-region'	
 	})
-	
-	App.addInitializer(function(){
-		App.materialSidebar.show(new MaterialSidebar(server.data.wikipage.container))		
-	})
 		
-	if (App.isLoggedIn()){
+	if (wikipage.get('wall').get('canPublish')){
 		var options = {
 			wall : wikipage.get('wall'),
 			identifier : 'wikipage-wall',

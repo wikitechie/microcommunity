@@ -13,7 +13,8 @@ define([
 		stream : '#stream-region'
 	})
 	
-	if (App.isLoggedIn()){	
+	if (App.isLoggedIn())	
+	if (App.currentUser.get('wall').get('canPublish')){	
 		var options = {
 			wall : App.currentUser.get('wall'),
 			publishers : [PostPublisher, PhotoPublisher]

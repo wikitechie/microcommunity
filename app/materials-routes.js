@@ -6,6 +6,7 @@ var microcommunity = require('microcommunity')
 	, Post = microcommunity.model('Post')
 	, Wikipage = microcommunity.model('Wikipage')
 	, File = microcommunity.model('File')
+	, can = microcommunity.can
 
 function saveThumbnail(file, callback){
 	if (file.name !== ''){
@@ -76,19 +77,26 @@ exports.show = function(req, res){
 
 exports.wall = function(req, res){
 	Wall.loadItems(req.container.wall, function(err, items){
-		res.loadPage('materials/wall', {
-			material : req.container,
-			items : items
-		})				
+		can.authorizeItems(items, req.user, function(err, items){
+			req.container = req.container.toJSON()		
+			can.authorize(req.container.wall, 'wall', 'publish', req.user, function(err, wall){
+				res.loadPage('materials/wall', {
+					material : req.container,
+					items : items
+				})		
+			})					
+		})			
 	})
 }
 
 exports.stream = function(req, res){
 	Stream.loadItems(req.container.stream, function(err, items){
-		res.loadPage('materials/stream', {
-			material : req.container,
-			items : items
-		})				
+		can.authorizeItems(items, req.user, function(err, items){
+			res.loadPage('materials/stream', {
+				material : req.container,
+				items : items
+			})
+		})
 	})
 }
 

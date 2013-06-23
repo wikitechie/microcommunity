@@ -6,6 +6,8 @@ var mongoose = require('mongoose')
 	, Container = mongoose.model('Container')
 	, User = mongoose.model('User')
 	, Post = mongoose.model('Post')
+	, mc = require('microcommunity')
+	, can = mc.can
 
 exports.new = function(req, res){
 	res.loadPage('wikipage-form')		
@@ -32,10 +34,16 @@ exports.create = function(req, res){
 
 exports.show = function(req, res){
 	Wikipage.findById(req.params.wikipage, function(err, wikipage){	
-		Wall.loadItems(wikipage.wall, function(err, items){
-			res.loadPage('wikipage', {
-				wikipage : wikipage,
-				items : items 				
+		Wall.loadItems(wikipage.wall, function(err, items){		
+			can.authorizeItems(items, req.user, function(err, items){
+				var w = wikipage.toJSON()
+				can.authorizeWall(w.wall, req.user, function(err, wall){
+					res.loadPage('wikipage', {
+						wall : wall,
+						wikipage : w,
+						items : items 				
+					})		
+				})		
 			})
 		})
 	})

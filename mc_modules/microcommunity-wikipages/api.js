@@ -2,10 +2,11 @@ var mongoose = require('mongoose')
 	, User = mongoose.model('User')
 	, Post = mongoose.model('Post')
 	, Photo = mongoose.model('Photo')
+	
 
 module.exports = function(app){
 
-	app.post('/api/publishers/wikipage-wall/posts', function(req, res){
+	app.post('/api/walls/wikipage/post', function(req, res){
 		User.findById(req.body.author, function(err, author){
 			var post = new Post({
 				content : req.body.content,

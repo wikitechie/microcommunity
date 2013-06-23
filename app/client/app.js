@@ -4,8 +4,10 @@ define([
 	'models/membership',
 	'views/sidebars/basic',
 	'views/sidebars/sidebars',
-	'models/materials'
-], function(Backbone, Models, Membership, basicSidebar, SidebarsView, Materials){
+	'models/materials',
+	'can'
+], function(Backbone, Models, Membership, basicSidebar, SidebarsView, Materials, can){
+
 
 	var MCApp = Backbone.Marionette.Application.extend({
 		setup : function(){
@@ -51,7 +53,9 @@ define([
 			} else {
 				return false
 			}
-		},		
+		},
+		can : can
+				
 	})
 	
 	var App = new MCApp()

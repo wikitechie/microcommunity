@@ -7,6 +7,7 @@ var connect = require('connect')
 	, items = require('./items')
 	, sidebars = require('./sidebars')
 	, build = require('./build')
+	, can = require('./can')
 
 var microcommunity = module.exports = {}
 
@@ -23,6 +24,7 @@ module.exports.models = models
 module.exports.items = items
 module.exports.model = models.getModel
 module.exports.sidebars = sidebars
+module.exports.can = can
 
 //client building
 module.exports.build = build
