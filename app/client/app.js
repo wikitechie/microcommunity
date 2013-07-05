@@ -61,16 +61,15 @@ define([
 	var App = new MCApp()
 	App.setup()
 	
-	App.addRegions({
-		sidebar : '#sidebar-region'
-	})
-	
-	var sidebars = new Backbone.Collection(server.sidebars)		
-
-	App.addInitializer(function(){
-		App.sidebar.show(new SidebarsView({ collection : sidebars }))	
-	})	
-	
+	if (server.sidebars){
+		App.addRegions({
+			sidebar : '#sidebar-region'
+		})	
+		var sidebars = new Backbone.Collection(server.sidebars)
+		App.addInitializer(function(){
+			App.sidebar.show(new SidebarsView({ collection : sidebars }))	
+		})	
+	}	
 	
 	return App
 })

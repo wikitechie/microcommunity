@@ -1,33 +1,33 @@
-.row
+.row-fluid
 	.span6
-		if server.data.message != ''
-			.alert
-				= server.data.message
-			
-		form.form-horizontal(action="/login", method="post")
-			.fieldset
-				legend Log in using your favourite service
+		.container
+			form.form-signin.form-horizontal(action="/login", method="post")
+				if server.data.message != ''
+					.alert
+						= server.data.message				
+				.fieldset
+					legend External Services
 				
-				.control-group
-					label.control-label 				
-						a(href='/auth/google') Google
+					.control-group
+						label.control-label 				
+							a(href='/auth/google') Google
 		
-			.fieldset
-				legend Log in
+				.fieldset
+					legend Log in
 				
-				.control-group
-					label.control-label Email
-					.controls
-						input.input-xlarge(type="text", name="username")
-						p.help-block Enter your email
+					.control-group
+						label.control-label Email
+						.controls
+							input.input-xlarge(type="text", name="username")
+							p.help-block Enter your email
 						
-				.control-group
-					label.control-label Password
-					.controls
-						input.input-xlarge(type="password", name="password")
-						p.help-block Your password	
+					.control-group
+						label.control-label Password
+						.controls
+							input.input-xlarge(type="password", name="password")
+							p.help-block Your password	
 				
-				.form-actions
-					button.btn.btn-primary(type="submit") Log in
-					button.btn Cancel
+					.form-actions
+						button.btn.btn-primary(type="submit") Log in
+						button.btn Cancel
 

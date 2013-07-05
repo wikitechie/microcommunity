@@ -1,5 +1,6 @@
 function Sidebars(){
 	this.collection = [] 
+	this.disabled = false
 }
 
 function Sidebar(header, links){
@@ -13,7 +14,16 @@ Sidebars.prototype.pushSidebar = function(header, links){
 }
 
 Sidebars.prototype.getSidebars = function(){
-	return this.collection
+	if (this.disabled == true){
+		return false
+	} else {
+		console.log(this.collection)
+		return this.collection
+	}	
+}
+
+Sidebars.prototype.disable = function(){
+	this.disabled = true
 }
 
 module.exports = Sidebars

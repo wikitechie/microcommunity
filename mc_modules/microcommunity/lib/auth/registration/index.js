@@ -12,6 +12,7 @@ app.configure(function(){
 
 
 app.get('/signup', function(req, res){
+	res.sidebars.disable()
 	res.loadPage('signup', {
 		message : req.flash('error')
 	})	

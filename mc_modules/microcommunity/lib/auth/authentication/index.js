@@ -5,6 +5,7 @@ var passport = require('passport')
 var app = module.exports = plugin(__dirname)
 
 app.get('/login', function(req, res){
+	res.sidebars.disable()
 	res.loadPage('login', {
 		message : req.flash('error')
 	})
