@@ -2,7 +2,8 @@ var helpers = require('./helpers')
 
 module.exports = function (item, user, callback){
 	var mc = require('microcommunity')
-	var wallType = item.wall.wallType
+	var wallType
+	if (item.wall) wallType = item.wall.wallType
 		
 	if (!user){
 		helpers.attachAction(item, 'canComment', false)

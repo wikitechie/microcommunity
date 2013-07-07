@@ -114,6 +114,8 @@ function useExpressModules(app){
 
 var application = module.exports = {}
 
+application.containerMiddleware  = containerMiddleware
+
 application.initApplication = function(path){
 
 	//internal plugins

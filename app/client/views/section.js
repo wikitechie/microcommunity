@@ -45,7 +45,7 @@ define([
 		},
 		onRender : function(){
 			this.attachements.show(new AttachementListView({ collection : this.model.get('attachements') }))
-			if (App.isContainerAmin())
+			if (App.isContainerAdmin())
 				this.sectionToolbar.show(new SectionToolbarView({ model : this.model }))								
 		}				
 	})

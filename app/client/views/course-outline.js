@@ -31,7 +31,7 @@ define([
 		},		
 		onRender : function(){
 			this.sections.show(new SectionsListView({ collection : this.collection }))
-			if (App.isContainerAmin())
+			if (App.isContainerAdmin())
 				this.newSectionBtn.show(new NewSectionButton({ model : this.model }))
 		}
 	})

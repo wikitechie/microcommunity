@@ -22,6 +22,11 @@ module.exports = function(wall, user, callback){
 		var wikipage = Wikipage.findById(wall.owner.oid, function(err, wikipage){
 			helpers.authorizeIfContainerMember(wikipage.container, wall, 'canPublish', user, callback)	
 		})
-	}	
+	}	else if (wall.wallType == 'homework'){
+		var Homework = mc.model('Homework')
+		var homework = Homework.findById(wall.owner.oid, function(err, homework){
+			helpers.authorizeIfContainerMember(homework.container, wall, 'canPublish', user, callback)	
+		})	
+	}
 }
 

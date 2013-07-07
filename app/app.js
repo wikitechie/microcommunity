@@ -2,6 +2,7 @@ var microcommunity = require('microcommunity')
 	, basic = require('microcommunity-basic')
 	, wikipagesPlugin = require('microcommunity-wikipages')
 	, filesPlugin = require('microcommunity-files')
+	, homeworksPlugin = require('microcommunity-homeworks')
 	, auth = require('microcommunity').auth	
 
 //registering models
@@ -38,6 +39,8 @@ if (!module.parent){
 	app.use(wikipagesPlugin({ containersPath : '/materials' }))
 	//using file plugin
 	app.use(filesPlugin({ containersPath : '/materials' }))
+	//using homework plugin
+	app.use(homeworksPlugin({ containersPath : '/materials' }))
 	//using basic app
 	app.use(basic())
 

@@ -25,11 +25,12 @@ module.exports = function(app){
 	})
 	
 	app.post('/api/materials/:container/memberships', auth.ensureAuthenticated, function(req, res){
+
 		if (!req.container.isMember(req.user)){
 			req.container.newMembership(req.user)
 		}			
-		req.container.addRole(req.user, 'mc:member')	
-		req.container.save(function(err){				
+		req.container.addRole(req.user, 'mc:member')
+		req.container.save(function(err){		
 			res.send(200, req.container)	
 		})
 	})

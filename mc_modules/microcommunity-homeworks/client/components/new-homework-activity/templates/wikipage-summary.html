@@ -1,0 +1,7 @@
+<p>
+<% if (summary) { %>
+	<%= nl2br(content.substr(0, 300), false) %>... <a class='read-more'>Read more</a>
+<% } else { %>
+	<%= nl2br(content, false) %>
+<% } %>
+</p>

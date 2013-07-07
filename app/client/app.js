@@ -36,7 +36,7 @@ define([
 			else return false
 		},
 		isContainerMember : function(){ return this.hasContainerRole('mc:member')},
-		isContainerAmin : function(){ return this.hasContainerRole('mc:admin') },
+		isContainerAdmin : function(){ return this.hasContainerRole('mc:admin') },
 		hasContainerRole : function(testRole){
 			if (this.hasContainerMembership()){
 				if (!this.isValidRole(testRole)){

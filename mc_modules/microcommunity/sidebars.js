@@ -17,7 +17,6 @@ Sidebars.prototype.getSidebars = function(){
 	if (this.disabled == true){
 		return false
 	} else {
-		console.log(this.collection)
 		return this.collection
 	}	
 }

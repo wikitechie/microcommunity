@@ -1,0 +1,10 @@
+<li class="media well">
+  <a class="pull-left" href="#">
+    <img class="media-object" src="<%= student.avatar %>">
+  </a>
+  <div class="media-body">
+    <a href="<%= student.link %>"><h4 class="media-heading"><%= student.displayName %></h4></a>
+    <p><%= comment %></p>
+		<p><small><%= moment(date).fromNow() %></small></p>    
+  </div>
+</li>
