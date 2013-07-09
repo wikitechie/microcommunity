@@ -13,7 +13,7 @@ define([
 			this.set('members', members)
 		},
 		defaults : {
-			photo : '/book-pile.jpg',
+			thumbnailPath : '/publication.png',
 		},	
 		idAttribute : '_id',
 		link : function(){
