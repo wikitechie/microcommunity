@@ -3,8 +3,9 @@ define([
 	'models/item',
 	'models/user',
 	'models/wikipage',
-	'models/wiki'
-], function(Backbone, Item, User, Wikipage, Wiki){
+	'models/wiki',
+	'models/material'
+], function(Backbone, Item, User, Wikipage, Wiki, Material){
 
 	var Wall = Backbone.RelationalModel.extend({	
 		idAttribute : '_id',				
@@ -21,7 +22,11 @@ define([
 				case 'wikis':
 					var wiki = Wiki.findOrCreate({ _id : this.get('owner').$id })
 					return wiki.link()
-					break																	
+					break	
+				case 'containers':
+					var material = Material.findOrCreate({ _id : this.get('owner').$id })
+					return material.link()
+					break																							
 			}			
 		},				
 		serialize : function(){

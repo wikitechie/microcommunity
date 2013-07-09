@@ -17,7 +17,8 @@ var sectionSchema = new mongoose.Schema({
 
 var materialSchema = new mongoose.Schema({
 	thumbnailPath : String,	
-	sections : [sectionSchema]	
+	sections : [sectionSchema],
+	semester : { academicYear : Number, season : String }
 })
 
 materialSchema.methods.getSidebar = function(){
@@ -39,8 +40,21 @@ materialSchema.methods.getSidebar = function(){
 }
 
 var containerOptions = { 
-	containerType : 'material'
+	containerType : 'material',
+	displayNameAttribute : 'displayName'
 }
+
+materialSchema.virtual('displayName').get(function(){
+	return this.name + ' (' + this.semesterName + ')'
+})
+
+
+materialSchema.virtual('semesterName').get(function(){
+	if (this.semester.season == 'fall')
+		return 'Fall ' + (this.semester.academicYear - 1)
+	else
+		return 'Spring ' + (this.semester.academicYear)	
+})
 
 materialSchema.plugin(isContainer, containerOptions)
 

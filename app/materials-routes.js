@@ -26,15 +26,51 @@ function saveThumbnail(file, callback){
 }
 
 exports.new =  function(req, res){
-	res.loadPage('materials/new')
+	res.loadPage('materials/new', { 
+		currentSemester : currentSemester(),
+		courses : [] 
+	})
+}
+
+function currentSemester(){
+
+	var currentTime = new Date()
+	var year = currentTime.getFullYear()
+	var month = currentTime.getMonth()
+	
+	var academicYear	
+	if (month < 9){
+		academicYear = year
+	} else {
+		academicYear = year - 1 
+	}
+	
+	var season
+	if (month > 1 && month < 7)
+		season = 'spring'
+	else 
+		season = 'fall'
+	
+	return {
+		academicYear : academicYear,
+		season : season
+	}
 }
 
 exports.create = function(req, res){
-	saveThumbnail(req.files.thumbnail, function(filePath){		
+	saveThumbnail(req.files.thumbnail, function(filePath){	
+	
+		var semester = {
+			season : req.body.season,
+			academicYear : req.body.academicYear
+		}
+		
 		var container = new Material({
 			name : req.body.name,
-			description : req.body.description
-		})			
+			description : req.body.description,
+			semester : semester
+		})
+					
 		if (filePath) container.thumbnailPath = filePath			
 		container.save(function(err){						
 			//making the creator the default admin		
@@ -101,7 +137,29 @@ exports.stream = function(req, res){
 }
 
 exports.index = function(req, res){
-	Material.find({ containerType : 'material' }).exec(function(err, containers){
-		res.loadPage('materials/index', { containers : containers })	
+
+	var current = currentSemester()
+
+	var query = {
+		containerType : 'material'
+	}
+	var queryTitle = ""
+	
+	if (req.query.academicYear && req.query.season){	
+		query['semester.academicYear'] = req.query.academicYear
+		query['semester.season'] = req.query.semester.season
+	}	else if (req.query.academicYear){
+		queryTitle = "Year " + req.query.academicYear	
+		query['semester.academicYear'] = req.query.academicYear	
+	} else {	
+		queryTitle = "Current semester"
+		query['semester.academicYear'] = current.academicYear
+		query['semester.season'] = current.season	
+	}
+
+	
+	Material.find(query).exec(function(err, containers){
+		res.loadPage('materials/index', { containers : containers, queryTitle : queryTitle })	
 	})
+	
 }

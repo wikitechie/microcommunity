@@ -1,3 +1,14 @@
-a(href='/materials/new') Add a new material
-hr
-#materials-region
+.row-fluid
+	.span12
+		.pull-right	
+			a.btn.btn-primary(href='/materials/new') Add a new material	
+		h1.page-header
+			= server.data.queryTitle 
+
+.row-fluid
+	.span7
+		.row-fluid
+			#materials-region
+	.span5
+		#browse-materials-region
+	

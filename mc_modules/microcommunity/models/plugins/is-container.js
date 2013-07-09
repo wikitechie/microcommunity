@@ -7,6 +7,7 @@ module.exports = function isContainer(schema, options){
 	
 	var	containerType = 'container'	
 	var	defaultRoles = [ "mc:admin", "mc:member" ]	
+	var displayNameAttribute = 'displayName'
 	
 	if (options){	
 		if (options.containerType){
@@ -15,6 +16,8 @@ module.exports = function isContainer(schema, options){
 		if (options.defaultRoles){
 			defaultRoles	= options.defaultRoles
 		}
+		if (options.displayNameAttribute)
+			displayNameAttribute = options.displayNameAttribute
 	}	
 	
 	var membershipsSchema = new mongoose.Schema({
@@ -116,7 +119,8 @@ module.exports = function isContainer(schema, options){
 				
 	}	
 	
-	schema.plugin(hasWall, { displayNameAttribute : 'name', wallType : containerType })
+	
+	schema.plugin(hasWall, { displayNameAttribute : displayNameAttribute, wallType : containerType })
 	schema.plugin(hasStream)
 	
 }

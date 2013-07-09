@@ -10,7 +10,11 @@ define([
 		materialForm : '#material-form-region',
 	})
 		
-	App.materialForm.show(new MaterialForm())	
+
+	var formInfo = new Backbone.Model({
+		currentSemester : server.data.currentSemester
+	})
+	App.materialForm.show(new MaterialForm({ model : formInfo }))	
 		
 	return App
 	

@@ -1,8 +1,8 @@
  <% if (parentType == 'stream') { %>
 	<% if (author._id != wall.owner.$id) { %>				
 	<i class="icon-angle-right"></i>		
-	<a href="<%= wall.link %>">					 
+	<b><a href="<%= wall.link %>">					 
 		<%= wall.displayName %>
-	</a>									
+	</a></b>							
 	<% } %>					
 <% } %>

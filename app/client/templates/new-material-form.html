@@ -1,5 +1,5 @@
 <form class="form-horizontal" method='post' action='/materials' enctype="multipart/form-data">
-	<legend>Add a new material</legend>
+	<legend>Basic Information</legend>
 	<div class="control-group">
 		<label class="control-label">Title</label>
 		<div class="controls">
@@ -9,7 +9,7 @@
 	<div class="control-group">
 		<label class="control-label">Description</label>
 		<div class="controls">
-			<textarea name='description'></textarea>
+			<textarea name='description' class="input-xlarge"></textarea>
 		</div>
 	</div>		
 	<div class="control-group">
@@ -17,10 +17,46 @@
 		<div class="controls">
 			<input type='file' name='thumbnail' />
 		</div>
+	</div>		
+	<legend>Academic Information</legend>	
+	<div class="control-group">
+		<label class="control-label">Course</label>
+		<div class="controls">
+			<select>
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select>
+		</div>
 	</div>	
+	<div class="control-group">
+		<label class="control-label">Academic Year</label>
+		<div class="controls">
+			<select name="academicYear">
+				<option value="<%= currentSemester.academicYear %>">
+					<%= currentSemester.academicYear - 1 %> - <%= currentSemester.academicYear %> 
+				</option>
+			</select>
+		</div>
+	</div>	
+	<div class="control-group">
+		<label class="control-label">Season</label>
+		<div class="controls">
+			<label class="radio">
+				<input type="radio" name="season" id="fall" value="fall" >
+				Fall
+			</label>
+			<label class="radio">
+				<input type="radio" name="season" id="spring" value="spring">
+				Spring
+			</label>
+		</div>
+	</div>					
   <div class="control-group">
     <div class="controls">
-      <button type="submit" class="btn">Create</button>
+      <button type="submit" class="btn btn-large btn-primary">Create</button>
     </div>
   </div>	
 </form>		
