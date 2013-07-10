@@ -8,6 +8,10 @@ var abilities = {
 	},
 	question : {
 		answer : require('./can/question-answer')
+	},
+	answer : {
+		vote : require('./can/answer-vote'),
+		verify : require('./can/answer-verify')
 	}
 }
 

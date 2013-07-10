@@ -7,7 +7,11 @@ var mongoose = require('mongoose')
 var answerSchema = new mongoose.Schema({
 	author : { type : mongoose.Schema.Types.ObjectId, ref : 'User' },
 	content : String,
-	votes : Number,
+	votes : [{
+		user : { type : mongoose.Schema.Types.ObjectId, ref : 'User' },
+		value : String
+	}],
+	votesCount : Number,
 	published : Date,
 })
 	

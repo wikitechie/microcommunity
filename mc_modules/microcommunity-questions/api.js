@@ -2,6 +2,7 @@ var mc = require('microcommunity')
 	, User = mc.model('User')
 	, Wall = mc.model('Wall')
 	, Question = mc.model('Question')	
+	, can = mc.can
 
 module.exports = function(app){
 
@@ -17,23 +18,61 @@ module.exports = function(app){
 					container : wall.owner.oid
 				})	
 				question.save(function(err){
-					res.send(question)
+					question = question.toJSON()
+					can.authorize(question, 'question', 'answer', req.user, function(err, question){
+						res.send(question)
+					})					
 				})		
 			})
 		})		
 	})
 	
-	app.post('/api/questions/:question/answers', function(req, res){
-	
+	app.post('/api/questions/:question/answers', function(req, res){	
 		var answer = req.body		
-		answer.published = new Date()
-		
-		var update = { $push : { answers : answer } }
-	
+		answer.published = new Date()		
+		var update = { $push : { answers : answer } }	
 		Question.findByIdAndUpdate(req.params.question, update, function(err, question){
-			res.send(200, answer)				
+			var last = question.answers.length - 1
+			
+			var answer = question.answers[last].toJSON()
+			answer.question = question	
+			can.authorize(answer, 'answer', 'vote', req.user, function(err, answer){
+				delete answer.question
+				res.send(200, answer)				
+			})			
+			
+		})
+	})
+	
+	app.post('/api/questions/:question/answers/:answer/votes', function(req, res){
+		
+		var vote = { 
+			user : req.body.user,
+			value : req.body.type
+		}	
+		
+		var inc		
+		if (vote.value === 'up') {inc = 1} else {inc = -1}
+		
+		var query = { _id : req.params.question, 'answers._id' : req.params.answer }
+		var update = { $push : { 'answers.$.votes' : vote }, $inc : { 'answers.$.votesCount' : inc } }
+	
+		Question.findOneAndUpdate(query, update, function(err, question){
+			var _ = require('underscore')
+			var answer = _.find(question.answers, function(answer){ return (answer.id === req.params.answer) })	
+			
+			var answer = answer.toJSON()
+			answer.question = question
+			
+			can.authorize(answer, 'answer', 'vote', req.user, function(err, answer){
+				delete answer.question
+				res.send(200, answer)
+			})
+					
+			
 		})
 
 	})
+		
 
 }

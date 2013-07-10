@@ -4,6 +4,7 @@ var mongoose = require('mongoose')
 	, Material = mongoose.model('Material')
 	, models = require('microcommunity/models')
 	, auth = require('microcommunity').auth		
+	, can = require('microcommunity').can
 
 module.exports = function(app){
 
@@ -30,7 +31,7 @@ module.exports = function(app){
 			req.container.newMembership(req.user)
 		}			
 		req.container.addRole(req.user, 'mc:member')
-		req.container.save(function(err){		
+		req.container.save(function(err){	
 			res.send(200, req.container)	
 		})
 	})
@@ -79,7 +80,9 @@ module.exports = function(app){
 				//streams : [req.container.stream]
 			})	
 			post.save(function(err){
-				res.send(post)
+				can.authorize(post.toJSON(), 'item', 'comment', req.user, function(err, post){
+					res.send(post)
+				})	
 			})		
 		})		
 	})

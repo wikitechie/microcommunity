@@ -3,7 +3,6 @@ var helpers = require('./helpers')
 module.exports = function(wall, user, callback){
 
 	var mc = require('microcommunity')
-
 	if (!user) {
 		helpers.attachAction(wall, 'canPublish', false)	
 		callback(null, wall)	}			
@@ -13,8 +12,7 @@ module.exports = function(wall, user, callback){
 			callback(null, wall)					
 		} else {
 			helpers.attachAction(wall, 'canPublish', false)
-			callback(null, wall)						
-		}
+			callback(null, wall)		}
 	} else if (wall.wallType == 'material') {
 		helpers.authorizeIfContainerMember(wall.owner.oid, wall, 'canPublish', user, callback)						
 	} else if (wall.wallType == 'wikipage'){

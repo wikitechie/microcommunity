@@ -30,27 +30,35 @@ module.exports = function hasWall(schema, options){
 	})		
 	
 	//creating a wall object for each wall
-	schema.pre('save', function(next, doc){
-		var Wall = mongoose.model('Wall')
+	schema.pre('save', function(next){
+	
+		if (this.isNew){
+			console.log('new wall')
+			var Wall = mongoose.model('Wall')		
+			var collection = models.convert(this.objectType, 'object', 'collection')
+			var dbref = new mongoose.Types.DBRef(collection, this.id)		
 		
-		var collection = models.convert(this.objectType, 'object', 'collection')
-		var dbref = new mongoose.Types.DBRef(collection, this.id)		
+			var wall = new Wall({ 
+				owner : dbref,
+				displayName : this[displayNameAttribute],
+				wallType : wallType
+			})
 		
-		var wall = new Wall({ 
-			owner : dbref,
-			displayName : this[displayNameAttribute],
-			wallType : wallType
-		})		
+			var self = this
+			wall.save(function(err, wall){
+				if (!err){
+					self.wall = wall.id
+					next(null)
+				} else {
+					next(new Error('Could not create wall object'))
+				}
+			})		
 		
-		var self = this
-		wall.save(function(err, wall){
-			if (!err){
-				self.wall = wall.id
-				next(null)
-			} else {
-				next(new Error('Could not create wall object'))
-			}
-		})
+		} else {
+			console.log('no wall')	
+			next()
+		}
+
 	})	
 	
 	var models = require('./../../models')

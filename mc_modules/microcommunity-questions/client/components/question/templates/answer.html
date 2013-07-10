@@ -1,22 +1,21 @@
 <li class="media" style="padding-left:10px; margin:0px; padding-top:4px; padding-right:10px;	">
-	<div class="pull-left" style="text-align:center" href="#">
-		<p style="margin:0px; padding:0px;"><i class="icon-chevron-up icon-large"></i></p>
-		<p style="margin:0px; padding:0px; font-weight:bold;">0</p>
-		<p style="margin:0px;"><i class="icon-chevron-down icon-large"></i></p>
-				<p style="margin:0px; padding:0px;"><i class="icon-ok icon-large" style="color:green;"></i></p>
-	</div>
+	<div class="pull-left vote-controls-region">
+
+	</div>	
 	<div class="media-body">
-		<p><%= content %></p> 		
-		<div class="media" >
-			<div class="pull-left">
-				<img class="media-object" src="<%= author.avatar %>" width="20px" />
-			</div>
-			<div class="media-body">
-				<small><p>
-						<a href="<%= author.link %>"><%= author.displayName %></a> · <%= moment(published).fromNow() %> · <a href="#">Comments (3)</a></p>	
-				</p></small>	
-			</div>	
-		</div>					
+	
+	<div class="media" >
+		<div class="pull-left">
+			<img class="media-object" src="<%= author.avatar %>" width="20px" />
+		</div>
+		<div class="media-body">
+			<p>
+				<a href="<%= author.link %>"><%= author.displayName %></a> · <%= moment(published).fromNow() %></p>	
+			</p>
+		</div>	
+	</div>		
+	
+		<p><%= content %></p> 							
 	</div>	
 </li>
 <hr/>
