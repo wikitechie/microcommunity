@@ -7,7 +7,8 @@ define([
 	'modules/publisher',
 	'modules/stream',
 	'views/publishers/post',
-], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule, PostPublisher){
+	'views/publishers/question'
+], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule, PostPublisher, QuestionPublisher){
 	
 	
 	App.addRegions({
@@ -24,8 +25,7 @@ define([
 		if (material.get('wall').get('canPublish')){
 			var options = {
 				wall : material.get('wall'),
-				identifier : 'materials/'+ material.id,
-				publishers : [PostPublisher]
+				publishers : [PostPublisher, QuestionPublisher]
 			}		
 			var Publisher = publiserhModule(App, App.publisher, options)		
 		}

@@ -1,6 +1,7 @@
 var microcommunity = require('microcommunity')
 	, basic = require('microcommunity-basic')
 	, wikipagesPlugin = require('microcommunity-wikipages')
+	, questionsPlugin = require('microcommunity-questions')
 	, filesPlugin = require('microcommunity-files')
 	, homeworksPlugin = require('microcommunity-homeworks')
 	, auth = require('microcommunity').auth	
@@ -41,6 +42,7 @@ if (!module.parent){
 	app.use(filesPlugin({ containersPath : '/materials' }))
 	//using homework plugin
 	app.use(homeworksPlugin({ containersPath : '/materials' }))
+	app.use(questionsPlugin())
 	//using basic app
 	app.use(basic())
 
