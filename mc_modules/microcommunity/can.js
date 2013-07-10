@@ -5,10 +5,13 @@ var abilities = {
 	},
 	wall : {
 		publish : require('./can/wall-publish')
+	},
+	question : {
+		answer : require('./can/question-answer')
 	}
 }
 
-var authorize = module.exports.authorize = function(object, objectType, action, user, callback){
+var authorize = module.exports.authorize = function(object, objectType, action, user, callback){	
 	abilities[objectType][action](object, user, callback)
 }
 
@@ -37,7 +40,9 @@ var authorizeMiddlewareAPI = module.exports.authorizeMiddlewareAPI = function(ob
 
 //to be used on items
 module.exports.authorizeItems = function (items, user, callback){
-	authorizeCollection(items, 'item', 'comment', user, callback)
+	authorizeCollection(items, 'item', 'comment', user, function(err, items){
+		authorizeCollection(items, 'question', 'answer', user, callback)	
+	})
 }
 
 

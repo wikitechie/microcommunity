@@ -3,8 +3,21 @@ var mongoose = require('mongoose')
 	, isItem = models.plugins.isItem
 	, isContent = models.plugins.isContent				
 	
+	
+var answerSchema = new mongoose.Schema({
+	author : { type : mongoose.Schema.Types.ObjectId, ref : 'User' },
+	content : String,
+	votes : Number,
+	published : Date,
+})
+	
 var questionSchema = new mongoose.Schema({
-	content : String
+	content : String,
+	answers : [ answerSchema ]
+})
+
+questionSchema.pre('init', function(next, doc){
+	this.model('User').populate(doc, 'answers.author', next)
 })
 
 questionSchema.plugin(isItem)

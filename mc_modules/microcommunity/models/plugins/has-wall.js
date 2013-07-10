@@ -12,6 +12,7 @@ module.exports = function hasWall(schema, options){
 		throw new Error('MicroCommunity Wall Plugin: You should provide a wallType option')		
 		
 	var wallType = options.wallType
+	var displayNameAttribute = options.displayNameAttribute
 		
 	//if (!schema.virtuals.objectType) 
 		//throw new Error('MicroCommunity Wall Plugin: should have objectType attribute')		
@@ -29,13 +30,22 @@ module.exports = function hasWall(schema, options){
 	})		
 	
 	//creating a wall object for each wall
-	schema.pre('save', function(next){
+	schema.pre('save', function(next, doc){
 		var Wall = mongoose.model('Wall')
-		var wall = new Wall()
+		
+		var collection = models.convert(this.objectType, 'object', 'collection')
+		var dbref = new mongoose.Types.DBRef(collection, this.id)		
+		
+		var wall = new Wall({ 
+			owner : dbref,
+			displayName : this[displayNameAttribute],
+			wallType : wallType
+		})		
+		
 		var self = this
 		wall.save(function(err, wall){
 			if (!err){
-				self.wall = wall._id
+				self.wall = wall.id
 				next(null)
 			} else {
 				next(new Error('Could not create wall object'))
@@ -44,25 +54,6 @@ module.exports = function hasWall(schema, options){
 	})	
 	
 	var models = require('./../../models')
-	
-	//after save
-	schema.post('save', function(wallOwner){
-		//creating the corresponding dbref		
-		var collection = models.convert(wallOwner.objectType, 'object', 'collection')
-		var dbref = new mongoose.Types.DBRef(collection, wallOwner.id)
-		
-		//issuing an update event	
-		models.emit('wall:update', wallOwner, dbref)
-	})		
-	
-	models.on('wall:update', function(wallOwner, dbref){
-		mongoose.model('Wall')
-			.findByIdAndUpdate(wallOwner.wall, { $set : { 
-				owner : dbref,
-				displayName : wallOwner[options.displayNameAttribute],
-				wallType : wallType
-			} }, function(err, item){})	
-	})
 		
 	
 }
