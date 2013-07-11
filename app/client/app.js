@@ -56,7 +56,7 @@ define([
 		},
 		hasRole : function(role){
 			if (!this.isLoggedIn()) return false			
-			if (this.currentUser.get('role') == role) {return true} else {return false
+			if (this.currentUser.get('role') == role) {return true} else {return false}
 		},
 		can : can
 				

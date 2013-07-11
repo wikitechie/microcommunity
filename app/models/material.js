@@ -18,7 +18,8 @@ var sectionSchema = new mongoose.Schema({
 var materialSchema = new mongoose.Schema({
 	thumbnailPath : String,	
 	sections : [sectionSchema],
-	semester : { academicYear : Number, season : String }
+	semester : { academicYear : Number, season : String },
+	course : { type : mongoose.Schema.Types.ObjectId, ref : 'Course' },
 })
 
 materialSchema.methods.getSidebar = function(){

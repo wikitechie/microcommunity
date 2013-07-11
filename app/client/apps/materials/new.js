@@ -8,13 +8,15 @@ define([
 	App.addRegions({
 		mainSidebar : '#main-sidebar-region',
 		materialForm : '#material-form-region',
-	})
-		
+	})		
 
 	var formInfo = new Backbone.Model({
 		currentSemester : server.data.currentSemester
 	})
-	App.materialForm.show(new MaterialForm({ model : formInfo }))	
+
+	var courses = new Backbone.Collection(server.data.courses)
+	
+	App.materialForm.show(new MaterialForm({ model : formInfo, courses : courses }))	
 		
 	return App
 	

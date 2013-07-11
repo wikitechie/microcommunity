@@ -8,7 +8,9 @@ var microcommunity = require('microcommunity')
 
 //registering models
 var materialSchema = require('./models/material')	
+var coursesSchema = require('./models/course')	
 microcommunity.models.define('Material', 'material', 'containers', materialSchema)
+microcommunity.models.define('Course', 'course', 'courses', coursesSchema)
 
 microcommunity.registerApp(__dirname)
 
@@ -30,6 +32,21 @@ if (!module.parent){
 	app.get('/materials/:container/wall', routes.wall)
 	app.get('/materials/:container/stream', routes.stream)
 	app.get('/materials', routes.index)
+	
+	var Course = microcommunity.model('Course')
+	
+	app.get('/courses', auth.ensureAuthenticated, auth.ensureRoot, function(req, res){ 
+		Course.find().exec(function(err, courses){
+			res.loadPage('courses', { courses : courses })
+		})		
+	})
+	
+	app.post('/courses', auth.ensureAuthenticated, auth.ensureRoot, function(req, res){ 
+		var course = new Course({ year : req.body.year, title : req.body.title })		
+		course.save(function(err){
+			res.redirect('/courses')
+		})
+	})	
 
 	//api
 	var api = require('./api')

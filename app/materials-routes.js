@@ -26,10 +26,15 @@ function saveThumbnail(file, callback){
 }
 
 exports.new =  function(req, res){
-	res.loadPage('materials/new', { 
-		currentSemester : currentSemester(),
-		courses : [] 
+
+	var Course = microcommunity.model('Course')
+	Course.find().exec(function(err, courses){
+		res.loadPage('materials/new', { 
+			currentSemester : currentSemester(),
+			courses : courses
+		})
 	})
+	
 }
 
 function currentSemester(){
@@ -68,7 +73,8 @@ exports.create = function(req, res){
 		var container = new Material({
 			name : req.body.name,
 			description : req.body.description,
-			semester : semester
+			semester : semester,
+			course : req.body.course
 		})
 					
 		if (filePath) container.thumbnailPath = filePath			

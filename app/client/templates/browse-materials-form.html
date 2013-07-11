@@ -1,4 +1,5 @@
 <form class="form-horizontal" method='get' action='/materials' >
+<legend>Browse by time</legend>
 <div class="control-group">
 	<label class="control-label">Academic Year</label>
 	<div class="controls" id = "academic-year-select-region">
@@ -17,11 +18,31 @@
 		</label>
 	</div>
 </div>	
+<div class="control-group">
+  <div class="controls">
+    <button type="submit" class="btn btn-primary">Browse</button>
+  </div>
+</div>
+</form>
+
+<form class="form-horizontal" method='get' action='/materials' >
+<legend>Browse by courses and years</legend>
+<div class="control-group">
+	<label class="control-label">Year</label>
+	<div class="controls" id = "academic-year-select-region">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label">Course</label>
+	<div class="controls" id = "academic-year-select-region">
+	</div>
+</div>
 
 <div class="control-group">
   <div class="controls">
-    <button type="submit" class="btn btn-primary">View</button>
+    <button type="submit" class="btn btn-primary">Browse</button>
   </div>
 </div>
-
 </form>
+

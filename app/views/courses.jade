@@ -1,0 +1,34 @@
+h1.page-header Manage courses
+
+- var courses = server.data.courses
+
+table.table.table-hover
+	thead
+		th Course	
+		th Year
+			
+	tbody
+		each course in courses
+			tr
+				td= course.title
+				td= course.year
+
+h2.page-header Add a new course				
+
+form.form-horizontal(action="/courses", method="post")	
+	.control-group	
+		label.control-label Title
+		.controls
+			input(type="text", name='title')
+	.control-group
+		label.control-label Year
+		.controls		
+			select(name="year")
+				option(value=1) First
+				option(value=2) Second
+				option(value=3) Third
+				option(value=4) Fourth
+				option(value=5) Fifth
+	.control-group
+		.controls
+			input.btn(type="submit") Create							
