@@ -4,7 +4,8 @@
  */
 
 var express = require('express')
-
+	, fs = require('fs');
+	
 var models = require('./models') 
 	, items = require('./items')
 	, sidebars = require('./sidebars')
@@ -17,6 +18,7 @@ function loadPageMiddleware(app, path){
 	return function (req, res, next){
 		res.loadPage = function (appName, data, options){
 			var serverData = {
+				site : app.get('site'),
 				appName: appName,
 				data: data || {},
 				currentUser: req.user,
@@ -76,7 +78,8 @@ function ContainerSidebar(req, res, next){
 	next()
 }
 
-function setupPluginInterface(app, path){	
+function setupPluginInterface(app, path){
+
 	app.use(loadPageMiddleware(app, path))	
 	app.use('/client', express.static(path + '/client-built'))     			
 	app.use('/client', express.static(path + '/client'))
@@ -91,11 +94,13 @@ function setupPluginInterface(app, path){
 	app.use(basicSidebarCallback)		
 }
 
-function useInternalPlugins(app){
+function useInternalPlugins(app, path){
 	var auth = require('./lib/auth')
 	var utils = require('./lib/utils')
+	var root = require('./lib/root')
 	app.use(auth) 
 	app.use(utils.test)	
+	app.use(root)
 }
 
 function useExpressModules(app){
@@ -118,12 +123,22 @@ application.containerMiddleware  = containerMiddleware
 
 application.initApplication = function(path){
 
+	//getting site info
+	var file = path + '/site.json'			 
+	var data = fs.readFileSync(file, 'utf8')
+	console.log('Loaded site data')
+	data = JSON.parse(data)			 
+	console.dir(data)
+	this.set('site', data)	
+
 	//internal plugins
-	useInternalPlugins(this)
+	useInternalPlugins(this, path)
 	//plugin interface
 	setupPluginInterface(this, path)	
 	//express modules	
 	useExpressModules(this)
+	
+	return data
 }
   
 application.initPlugin = function(path){

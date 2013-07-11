@@ -1,0 +1,5 @@
+{
+	"rootUser" : "ahmad@gmail.com",
+	"roles" : ["student", "teacher"],
+	"defaultRole" : "student"
+}

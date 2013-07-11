@@ -18,6 +18,9 @@ module.exports.plugin = function(path){
 }
 module.exports.auth = auth
 
+//site information, will be set on application initialization
+module.exports.site = null
+
 //setting up models
 models.initialize()
 module.exports.models = models
@@ -80,7 +83,8 @@ function createApplication(){
 	app = express()
   utils.merge(app, proto)
   models.start()
-	app.initApplication(mainPath)
+	var site = app.initApplication(mainPath)
+	module.exports.site = site
 	return app
 }
 

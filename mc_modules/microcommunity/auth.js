@@ -4,6 +4,13 @@ exports.ensureAuthenticated = function (req, res, next) {
   res.redirect('/login');
 }
 
+exports.ensureRoot = function(req, res, next){
+	if (req.user.email.toString() === req.app.get('site').rootUser.toString()) { next() } else {
+		req.flash('error', 'You should be root user to view this page')	  
+		res.redirect('/login');	
+	}	
+}
+
 exports.ensureContainerRole = function(role){
 	return function(req, res, next){
 		var hasRole = req.container.hasRole(req.user, role)

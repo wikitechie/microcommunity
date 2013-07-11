@@ -1,0 +1,29 @@
+h1.page-header Users
+
+- var users = server.data.users
+
+table.table.table-hover
+	thead
+		th Name	
+		th Email
+		th Acitions
+			
+	tbody
+		each user in users
+			tr
+				td= user.displayName
+				td= user.email
+				td
+					form(action="/users/#{user._id}/role", method="post")		
+						table(border=0)
+							tr
+								each role in server.site.roles	
+									td		
+										label.radio
+											if user.role == role
+												input(type="radio", value="#{role}", name ="role", checked)
+											else
+												input(type="radio", value="#{role}", name ="role") 								 
+											| #{role} 	
+								td
+									input.btn(type="submit") Update							
