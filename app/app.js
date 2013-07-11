@@ -22,7 +22,7 @@ if (!module.parent){
 
 	//routes
 	var routes = require('./materials-routes')
-	app.get('/materials/new', routes.new)	
+	app.get('/materials/new', auth.ensureAuthenticated, auth.ensureRole('teacher'), routes.new)	
 	app.post('/materials', routes.create)
 	app.get('/materials/:container/members', routes.members)	
 	app.get('/materials/:container/settings',	auth.ensureAuthenticated, auth.ensureContainerAdmin(), routes.settings)

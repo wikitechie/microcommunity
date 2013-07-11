@@ -1,7 +1,8 @@
 .row-fluid
 	.span12
-		.pull-right	
-			a.btn.btn-primary(href='/materials/new') Add a new material	
+		if server.currentUser.role == 'teacher'
+			.pull-right	
+				a.btn.btn-primary(href='/materials/new') Add a new material	
 		h1.page-header
 			= server.data.queryTitle 
 

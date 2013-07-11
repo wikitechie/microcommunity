@@ -9,6 +9,8 @@ var express = require('express')
 var models = require('./models') 
 	, items = require('./items')
 	, sidebars = require('./sidebars')
+	
+
 
 function loadPageMiddleware(app, path){
 
@@ -16,6 +18,13 @@ function loadPageMiddleware(app, path){
 	var layoutPath = __dirname + '/views'	
 
 	return function (req, res, next){
+	
+		function hasRole(role){
+			if (!server.currentUser) return false			
+			if (server.currentUser.role == role) return true
+			else return false	
+		}		
+	
 		res.loadPage = function (appName, data, options){
 			var serverData = {
 				site : app.get('site'),
