@@ -13,10 +13,16 @@ define([
 		browseMaterials : '#browse-materials-region'
 	})
 	
+	var courses = new Backbone.Collection(server.data.courses)
+	
 	App.addInitializer(function(){
 		var materials = new Materials(server.data.containers)		
 		App.materials.show(new Thumbnails({ collection : materials }))		
-		App.browseMaterials.show(new BrowseMaterialsForm({ currentSemester : server.data.currentSemester }))
+		App.browseMaterials.show(new BrowseMaterialsForm({ 
+			currentSemester : server.data.currentSemester,
+			courses : courses,
+			params : server.data.params
+		}))
 	})
 
 	return App

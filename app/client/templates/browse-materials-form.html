@@ -1,10 +1,13 @@
 <form class="form-horizontal" method='get' action='/materials' >
-<legend>Browse by time</legend>
+
+<legend>Filter by semester</legend>
+
 <div class="control-group">
 	<label class="control-label">Academic Year</label>
 	<div class="controls" id = "academic-year-select-region">
 	</div>
-</div>	
+</div>
+	
 <div class="control-group">
 	<label class="control-label">Season</label>
 	<div class="controls">
@@ -16,28 +19,15 @@
 			<input type="radio" name="season" id="spring" value="spring" >
 			Spring
 		</label>
+		<label class="radio inline ">
+			<input type="radio" name="season" id="any" value="false" checked>
+			Any
+		</label>		
 	</div>
 </div>	
-<div class="control-group">
-  <div class="controls">
-    <button type="submit" class="btn btn-primary">Browse</button>
-  </div>
-</div>
-</form>
 
-<form class="form-horizontal" method='get' action='/materials' >
-<legend>Browse by courses and years</legend>
-<div class="control-group">
-	<label class="control-label">Year</label>
-	<div class="controls" id = "academic-year-select-region">
-	</div>
-</div>
-
-<div class="control-group">
-	<label class="control-label">Course</label>
-	<div class="controls" id = "academic-year-select-region">
-	</div>
-</div>
+<legend>Filter by course</legend>
+<div id="course-select-region"></div>
 
 <div class="control-group">
   <div class="controls">
@@ -45,4 +35,5 @@
   </div>
 </div>
 </form>
+
 

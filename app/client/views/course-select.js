@@ -13,14 +13,14 @@ define([
 	
 	var YearSelect = Backbone.Marionette.CompositeView.extend({
 		tagName : 'select',
-		attributes : {
-			name : 'year'
-		},
 		events : {
 			'click' : 'selected'
 		},		
+		attributes : {
+			name : 'year'
+		},		
 		itemView : YearOption,
-		template : '',
+		template : '<option></option>',
 		selected : function(){
 			var yearValue = $(this.el).find(':selected').attr('value')
 			this.options.year.set('value', yearValue)
@@ -45,9 +45,10 @@ define([
 			name : 'course'
 		},
 		itemView : Option,
-		template : '',
+		template : '<option></option>',
 		appendHtml : function(collectionView, itemView, index){
-			if (itemView.model.get('year') === this.options.year.get('value') ) {
+			console.log(this.options.year.get('value'))
+			if (itemView.model.get('year') == this.options.year.get('value') ) {
 				$(collectionView.el).append(itemView.el)					
 			}		
 		}				 		
@@ -55,7 +56,7 @@ define([
 	
 	var CourseSelector = Backbone.Marionette.Layout.extend({	
 		initialize : function(){		
-			this.year = new Backbone.Model({ value : 1 })
+			this.year = new Backbone.Model()
 			var self = this
 			this.year.on('change:value', function(){
 				self.render()
@@ -66,8 +67,7 @@ define([
 			courseSelect : '.course-select-region',
 			yearSelect : '.year-select-region'
 		},
-		onRender : function(){			
-		
+		onRender : function(){		
 			this.courseSelect.show(new Select({ year : this.year, collection : this.collection }))
 			var years = new Backbone.Collection([
 				{ year : 1 , displayName : 'First' },

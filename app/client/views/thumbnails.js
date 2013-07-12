@@ -5,7 +5,8 @@ define([
 
 	var ThumbnailView = Backbone.Marionette.ItemView.extend({
 		tagName : 'li',
-		className : 'span4',		
+		className : 'span4 thumbnail',	
+		attributes : { style : 'margin:4px;' },
 		template : html,
 		serializeData : function(){
 			return this.model.serialize()

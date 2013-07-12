@@ -6,6 +6,7 @@ var microcommunity = require('microcommunity')
 	, Post = microcommunity.model('Post')
 	, Wikipage = microcommunity.model('Wikipage')
 	, File = microcommunity.model('File')
+	, Course = microcommunity.model('Course')
 	, can = microcommunity.can
 
 function saveThumbnail(file, callback){
@@ -142,30 +143,39 @@ exports.stream = function(req, res){
 	})
 }
 
-exports.index = function(req, res){
+exports.index = function(req, res){	
 
 	var current = currentSemester()
 
 	var query = {
 		containerType : 'material'
 	}
-	var queryTitle = ""
+	var queryTitle = "Browse materials"
 	
-	if (req.query.academicYear && req.query.season){	
+	if (req.query.academicYear)
 		query['semester.academicYear'] = req.query.academicYear
-		query['semester.season'] = req.query.semester.season
-	}	else if (req.query.academicYear){
-		queryTitle = "Year " + req.query.academicYear	
-		query['semester.academicYear'] = req.query.academicYear	
-	} else {	
+	
+	if (req.query.season == 'spring' || req.query.season == 'fall')
+		query['semester.season'] = req.query.season
+	
+	if (!req.query.academicYear && !req.query.season) {	
 		queryTitle = "Current semester"
 		query['semester.academicYear'] = current.academicYear
 		query['semester.season'] = current.season	
 	}
-
+	
+	if (req.query.course)
+		query.course = req.query.course
 	
 	Material.find(query).exec(function(err, containers){
-		res.loadPage('materials/index', { containers : containers, queryTitle : queryTitle })	
+		Course.find().exec(function(err, courses){
+			res.loadPage('materials/index', { 
+				containers : containers, 
+				queryTitle : queryTitle,
+				courses : courses,
+				params : req.params
+			})	
+		})		
 	})
 	
 }
