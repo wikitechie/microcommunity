@@ -84,8 +84,11 @@ exports.create = function(req, res){
 			container.newMembership(req.user)
 			container.addRole(req.user, 'mc:admin')	
 			container.addRole(req.user, 'mc:member')	
-			container.save(function(err){
-				res.redirect('/materials/' + container.id)
+			container.save(function(err){			
+				req.user.follow(container)
+				req.user.save(function(err){
+					res.redirect('/materials/' + container.id)
+				})				
 			})						
 		})			
 	})		

@@ -74,8 +74,8 @@ function containerMiddleware(req, res, next, id){
 //TODO create an interface to customize basic sidebar
 function basicSidebarCallback(req, res, next){
 	var links =  [ 
-		{label : 'Main', url : '/' },
-		{label : 'Materials', url : '/materials', icon : 'icon-camera-retro' },
+		{label : 'Home', url : '/'  },
+		{label : 'Browse Materials', url : '/materials', icon : 'icon-camera-retro' },
 	]
 	res.sidebars.pushSidebar('Navigation', links)
 	next()

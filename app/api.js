@@ -1,22 +1,13 @@
 var mongoose = require('mongoose')
 	, User = mongoose.model('User')
 	, Post = mongoose.model('Post')
+	, Wall = mongoose.model('Wall')
 	, Material = mongoose.model('Material')
 	, models = require('microcommunity/models')
 	, auth = require('microcommunity').auth		
 	, can = require('microcommunity').can
 
 module.exports = function(app){
-
-	/*var user = require('connect-roles')
-	user.use('add a section', function(req){
-		if (!req.user) 
-			return false		
-		else if (req.material.hasRole(req.user, 'admin'))
-			return true		
-		else 
-			return false
-	})*/
 
 	app.post('/api/materials/:id/sections', /*fetchMaterial, user.can('add a section'),*/ function(req, res){
 		var section = req.body
@@ -26,13 +17,17 @@ module.exports = function(app){
 	})
 	
 	app.post('/api/materials/:container/memberships', auth.ensureAuthenticated, function(req, res){
-
 		if (!req.container.isMember(req.user)){
 			req.container.newMembership(req.user)
 		}			
 		req.container.addRole(req.user, 'mc:member')
-		req.container.save(function(err){	
-			res.send(200, req.container)	
+		req.container.save(function(err){
+			if (!err) {
+				req.user.follow(req.container)
+				req.user.save(function(err, user){
+					res.send(200, req.container)	
+				})
+			}			
 		})
 	})
 	
@@ -72,18 +67,23 @@ module.exports = function(app){
 	//semester-wall
 	app.post('/api/walls/material/post', function(req, res){
 		User.findById(req.body.author, function(err, author){
-			var post = new Post({
-				content : req.body.content,
-				wall : req.body.wall,
-				walls : [req.body.wall],
-				author : author.id,		
-				//streams : [req.container.stream]
-			})	
-			post.save(function(err){
-				can.authorize(post.toJSON(), 'item', 'comment', req.user, function(err, post){
-					res.send(post)
-				})	
-			})		
+			Wall.findById(req.body.wall, function(err, wall){
+				Material.findById(wall.owner.oid, function(err, container){
+					var post = new Post({
+						content : req.body.content,
+						wall : req.body.wall,
+						walls : [req.body.wall],
+						author : author.id,		
+						streams : [container.stream, author.stream]
+					})	
+					post.save(function(err){
+						can.authorize(post.toJSON(), 'item', 'comment', req.user, function(err, post){
+							res.send(post)
+						})	
+					})				
+				})
+			})
+		
 		})		
 	})
 

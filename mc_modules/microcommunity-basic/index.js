@@ -14,9 +14,7 @@ var Stream = mongoose.model('Stream')
 	, auth = microcommunity.auth
 	, can = microcommunity.can
 
-
 microcommunity.registerPlugin(__dirname)
-
 
 module.exports = function(){
 
@@ -42,7 +40,9 @@ module.exports = function(){
 			res.sidebars.disable()
 			res.loadPage('welcome')		
 		} else {
-			Stream.globalStream(function(err, items){	
+		
+			req.user.loadFeed(function(err, items){
+			//Stream.globalStream(function(err, items){	
 				can.authorizeItems(items, req.user, function(err, items){
 					if (req.user){
 						var currentUser = req.user //just a small hack
@@ -76,6 +76,15 @@ module.exports = function(){
 				})
 			})			
 		})	
+	})
+	
+	app.post('/users/:id/follow', function(req, res){
+		User.findById(req.params.id, function(err, user){
+			req.user.follow(user)
+			req.user.save(function(err){
+				res.redirect('back')			
+			})
+		})
 	})
 
 	//publisher api

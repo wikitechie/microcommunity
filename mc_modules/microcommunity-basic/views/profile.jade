@@ -1,7 +1,11 @@
 .row-fluid.page-header
+	if server.currentUser
+		form(action='/users/#{server.data.user._id}/follow', method="post")
+			input.btn(type='submit', value="Follow").pull-right
 	h1 
 		= server.data.user.displayName
 .row-fluid
+
 	#publisher-region
 	hr
 	#stream-region
