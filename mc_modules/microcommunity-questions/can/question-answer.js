@@ -1,4 +1,4 @@
-var helpers = require('./helpers')
+var helpers = require('microcommunity').can.helpers
 	, _ = require('underscore')
 
 module.exports = function (question, user, callback){

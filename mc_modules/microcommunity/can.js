@@ -1,19 +1,5 @@
 
-var abilities = {
-	item : {
-		comment : require('./can/item-comment')		
-	},
-	wall : {
-		publish : require('./can/wall-publish')
-	},
-	question : {
-		answer : require('./can/question-answer')
-	},
-	answer : {
-		vote : require('./can/answer-vote'),
-		verify : require('./can/answer-verify')
-	}
-}
+var abilities = {}
 
 var authorize = module.exports.authorize = function(object, objectType, action, user, callback){	
 	abilities[objectType][action](object, user, callback)
@@ -41,6 +27,16 @@ var authorizeMiddlewareAPI = module.exports.authorizeMiddlewareAPI = function(ob
 		})	
 	}
 }
+
+module.exports.define = function(objectType, action, func){
+	if (!abilities[objectType]) abilities[objectType] = {}
+	abilities[objectType][action] = func
+}
+
+exports.define('item', 'comment', require('./can/item-comment'))
+exports.define('wall', 'publish', require('./can/wall-publish'))
+
+module.exports.helpers = require('./can/helpers')
 
 //to be used on items
 module.exports.authorizeItems = function (items, user, callback){

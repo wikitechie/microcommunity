@@ -1,4 +1,4 @@
-var helpers = require('./helpers')
+var helpers = require('microcommunity').can.helpers
 
 module.exports = function (answer, user, callback){
 	var mc = require('microcommunity')

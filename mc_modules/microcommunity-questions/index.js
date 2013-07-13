@@ -12,6 +12,10 @@ models.define('Question', 'question', 'items', questionSchema)
 //adding stream items
 items.addItem('Question', 'components/question/model')
 
+microcommunity.can.define('question', 'answer', require('./can/question-answer'))
+microcommunity.can.define('answer', 'vote', require('./can/answer-vote'))
+microcommunity.can.define('answer', 'verify', require('./can/answer-verify'))
+
 microcommunity.registerPlugin(__dirname)
 
 //api
