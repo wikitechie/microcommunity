@@ -30,7 +30,6 @@ userSchema.methods.loadFeed = function(callback){
 		, Item = mc.model('Item')
 	
 	var query = { streams : { $in : this.follows } }
-	console.log(query)
 	Item.fetchItems(query, callback)
 }
 

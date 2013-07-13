@@ -22,14 +22,22 @@ module.exports = function(){
 	var app = module.exports = microcommunity.plugin(__dirname)
 
 	function someMaterialsSidebar(req, res, next){
-		Container.find({ containerType : 'material' }).limit(5).exec(function(err, materials){	
+		var query = { 
+			containerType : 'material'
+		}
+		if (req.user) query['memberships.user'] = req.user.id
+		
+		console.log(query)
+		
+		Container.find(query).limit(5).exec(function(err, materials){	
 			var links = []
 			for(var i=0; i<materials.length; i++){
 				var material = materials[i]
 				var link = { label : material.name , url : '/materials/'+material.id }
 				links.push(link)
 			}		
-			res.sidebars.pushSidebar('Materials', links)
+			var title = req.user ? "Your Materials" : "Materials"
+			res.sidebars.pushSidebar(title, links)
 			next()	
 		})
 	}
