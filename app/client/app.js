@@ -12,7 +12,7 @@ define([
 	var MCApp = Backbone.Marionette.Application.extend({
 		setup : function(){
 			this.currentUser = Models.User.findOrCreate(server.currentUser)
-			
+			this.site = server.site			
 			this.currentContainer = server.currentContainer			
 			if (server.containerMembership){
 				this.containerMembership = new Membership(server.containerMembership)
@@ -57,8 +57,17 @@ define([
 		hasRole : function(role){
 			if (!this.isLoggedIn()) return false			
 			if (this.currentUser.get('role') == role) {return true} else {return false}
-		},
-		can : can
+		},		
+		isRootUser : function(){
+			if (this.currentUser){
+				if (this.currentUser.get('email') == this.site.rootUser)
+					return true
+				else
+					return false
+			} else {
+				return false
+			}
+		}
 				
 	})
 	

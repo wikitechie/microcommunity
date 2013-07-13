@@ -8,7 +8,7 @@ define([
 		idAttribute : '_id',
 		
 		//TODO validate author and wall: validate : function(){}
-		url : function(){		
+		urlRoot : function(){		
 			return this.get('wall').url() + '/' + this.get('objectType')
 		},		
 		serialize : function(){

@@ -8,6 +8,7 @@ var Stream = mongoose.model('Stream')
 	, User = mongoose.model('User')
 	, Wall = mongoose.model('Wall')
 	, Stream = mongoose.model('Stream')
+	, Item = mongoose.model('Item')
 	, Post = mongoose.model('Post')
 	, Photo = mongoose.model('Photo')
 	, Container = mongoose.model('Container')
@@ -104,6 +105,17 @@ module.exports = function(){
 			})		
 		})
 	})
+	
+	app.delete(/^\/api\/walls\/(\w+)\/(\w+)\/(\w+)/, function(req, res){
+		Item.findById(req.params[2], function(err, item){
+			item.remove(function(err){
+				if (!err)
+					res.send(200, {})
+				else
+					res.send(500)
+			})
+		})
+	})	
 
 	//api
 	app.post('/api/walls/user/photo', auth.ensureAuthenticated, function(req, res){

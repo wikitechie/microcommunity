@@ -6,6 +6,23 @@ define([
 	'views/item-plugins/comments'
 ], function(Backbone, html, ActionsView, MessageView, CommentsThread){
 
+
+	var DeleteButton = Backbone.Marionette.ItemView.extend({ 
+		tagName : 'button',
+		className : 'close',
+		template : "&times;",
+		events : {
+			'click' : 'deleteButton'
+		},
+		deleteButton : function(e){
+			e.preventDefault()
+			if (confirm('Are you sure you want to delete this item?')){
+				this.model.destroy({ wait : true })
+			}
+		}							
+	})
+
+
 	var ItemView = Backbone.Marionette.Layout.extend({	
 		initialize : function(options){
 			var opts = options || {}
@@ -20,9 +37,14 @@ define([
 			content : '.content-region',
 			message : '.message-region',
 			actions : '.actions-region',
-			plugin  : '.plugin-region'
+			plugin  : '.plugin-region',
+			deleteButton : '.item-close'
 		},		
 		defaultRenderer : function(){	
+		
+			if (App.isRootUser()){
+				this.deleteButton.show(new DeleteButton({ model : this.model }))
+			}			
 		
 			var itemViewType = this.type
 			var wall = this.wall
@@ -88,6 +110,7 @@ define([
 		onRender : function(){			
 			this.defaultRenderer()
 		}
+		
 	})	
 	return ItemView	
 })
