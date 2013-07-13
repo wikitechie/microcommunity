@@ -28,7 +28,10 @@ userSchema.methods.follow = function(object){
 userSchema.methods.loadFeed = function(callback){
 	var mc = require('microcommunity')
 		, Item = mc.model('Item')
-	Item.fetchItems({ streams : { $in : this.follows } }, callback)
+	
+	var query = { streams : { $in : this.follows } }
+	console.log(query)
+	Item.fetchItems(query, callback)
 }
 
 userSchema.pre('save', function(next){

@@ -42,8 +42,8 @@ module.exports = function(){
 			res.loadPage('welcome')		
 		} else {
 		
-			//req.user.loadFeed(function(err, items){
-			Stream.globalStream(function(err, items){	
+			req.user.loadFeed(function(err, items){
+			//Stream.globalStream(function(err, items){	
 				can.authorizeItems(items, req.user, function(err, items){
 					if (req.user){
 						var currentUser = req.user //just a small hack
