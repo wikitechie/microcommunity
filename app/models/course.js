@@ -3,7 +3,8 @@ var mongoose = require('mongoose')
 	
 var courseSchema = new mongoose.Schema({
 	title : String,
-	year : { type : Number, min : 1, max : 5 }
+	year : { type : Number, min : 1, max : 5 },
+	thumbnailPath : String	
 })
 
 module.exports = courseSchema

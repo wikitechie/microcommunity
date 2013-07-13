@@ -26,8 +26,6 @@ module.exports = function isContainer(schema, options){
 	})	
 
 	schema.add({
-		name: String,
-		description : String,
 		containerType : { type : String, default : containerType },
 		roles : [ String ],
 		memberships : [ membershipsSchema ]			
@@ -118,6 +116,24 @@ module.exports = function isContainer(schema, options){
 		this.memberships[index].roles.push(role)	
 				
 	}	
+	
+	//populating options
+	schema.pre('init', function(next, doc){
+		//dangerous hack!
+		var type = doc.containerType
+		if (!type) type = containerType
+		//
+		var mc = require('microcommunity')
+		var modelName = mc.models.convert(type, 'object', 'model')
+		var populateContainer = mc.models.getModel(modelName).populateContainer
+		if (populateContainer){			
+			populateContainer(doc, next)
+		}	else {
+			next()
+		}
+
+	})
+	
 	
 	
 	schema.plugin(hasWall, { displayNameAttribute : displayNameAttribute, wallType : containerType })

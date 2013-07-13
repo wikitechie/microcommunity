@@ -16,10 +16,11 @@ var sectionSchema = new mongoose.Schema({
 })
 
 var materialSchema = new mongoose.Schema({
-	thumbnailPath : String,	
-	sections : [sectionSchema],
+	courseTitle : String,
+	description : String,
 	semester : { academicYear : Number, season : String },
 	course : { type : mongoose.Schema.Types.ObjectId, ref : 'Course' },
+	sections : [sectionSchema]	
 })
 
 materialSchema.methods.getSidebar = function(){
@@ -30,25 +31,31 @@ materialSchema.methods.getSidebar = function(){
 			{ label : 'Members', url : materialLink + '/members', icon : 'icon-user' },							
 			{ label : 'Stream', url : materialLink + '/stream', icon : 'icon-list-alt' },
 			{ label : 'New Wikipage', url : materialLink + '/wikipages/new', icon : 'icon-pencil' },
-			{ label : 'New Homework', url : materialLink + '/homeworks/new', icon : 'icon-pencil' },			
-			{ label : 'Ask a Question', url : materialLink + '/#', icon : 'icon-question-sign' },
 			{ label : '<i class=""></i> Upload a File', url : materialLink + '/files/new', icon : 'icon-upload' }																		
 		]		
 	return {
-		header : this.name,
+		header : this.displayName,
 		links : links
 	}
 }
 
-var containerOptions = { 
-	containerType : 'material',
-	displayNameAttribute : 'displayName'
+materialSchema.statics.populateContainer = function(doc, callback){
+	var Course = models.getModel('Course')
+	Course.populate(doc, 'course', callback)
 }
 
-materialSchema.virtual('displayName').get(function(){
-	return this.name + ' (' + this.semesterName + ')'
+var containerOptions = { 
+	containerType : 'material',
+	displayNameAttribute : 'fullDisplayName'
+}
+
+materialSchema.virtual('fullDisplayName').get(function(){
+	return this.courseTitle + ' (' + this.semesterName + ')'
 })
 
+materialSchema.virtual('displayName').get(function(){
+	return this.courseTitle
+})
 
 materialSchema.virtual('semesterName').get(function(){
 	if (this.semester.season == 'fall')

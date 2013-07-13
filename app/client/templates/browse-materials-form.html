@@ -2,38 +2,58 @@
 
 <legend>Filter by semester</legend>
 
-<div class="control-group">
-	<label class="control-label">Academic Year</label>
-	<div class="controls" id = "academic-year-select-region">
+	<div class="control-group">
+		<label class="control-label">Academic Year</label>
+		<div class="controls" id = "academic-year-select-region">
+		</div>
 	</div>
-</div>
 	
-<div class="control-group">
-	<label class="control-label">Season</label>
-	<div class="controls">
-		<label class="radio inline">
-			<input type="radio" name="season" id="fall" value="fall" >
-			Fall
-		</label>
-		<label class="radio inline ">
-			<input type="radio" name="season" id="spring" value="spring" >
-			Spring
-		</label>
-		<label class="radio inline ">
-			<input type="radio" name="season" id="any" value="false" checked>
-			Any
-		</label>		
+	<div class="control-group">
+		<label class="control-label">Season</label>
+		<div class="controls">
+	
+			<label class="radio inline">
+				<% if (server.data.params.season == 'fall') { %>
+				<input type="radio" name="season" id="fall" value="fall" checked >
+				<% } else {  %>	
+				<input type="radio" name="season" id="fall" value="fall" >										
+				<% }  %>																		
+				Fall
+			</label>
+			<label class="radio inline">
+				<% if (server.data.params.season == 'spring') { %>
+				<input type="radio" name="season" id="spring" value="spring" checked >
+				<% } else {  %>	
+				<input type="radio" name="season" id="spring" value="spring" >										
+				<% }  %>	
+				Spring
+			</label>	
+			<label class="radio inline">
+				<% if (!server.data.params.season || server.data.params.season == "false") { %>
+				<input type="radio" name="season" id="any" value="false" checked>
+				<% } else {  %>	
+				<input type="radio" name="season" id="any" value="false">
+				<% }  %>	
+				Any
+			</label>
+		</div>
+	</div>	
+	
+	<legend>Current Semester</legend>
+	<div class="control-group">
+		<div class="controls">
+			<a href="/materials" class="btn btn-success">Current Semester</a>		
+		</div>
+	</div>	
+
+	<legend>Filter by course and year</legend>
+	<div id="course-select-region"></div>
+
+	<div class="control-group">
+		<div class="controls">
+		  <button type="submit" class="btn btn-primary">Browse</button>
+		</div>
 	</div>
-</div>	
-
-<legend>Filter by course</legend>
-<div id="course-select-region"></div>
-
-<div class="control-group">
-  <div class="controls">
-    <button type="submit" class="btn btn-primary">Browse</button>
-  </div>
-</div>
 </form>
 
 

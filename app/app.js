@@ -20,8 +20,8 @@ module.exports = microcommunity
 
 if (!module.parent){
 
-	var app = microcommunity.createApplication()		
-
+	var app = microcommunity.createApplication()	
+	
 	//routes
 	var routes = require('./materials-routes')
 	app.get('/materials/new', auth.ensureAuthenticated, auth.ensureRole('teacher'), routes.new)	
@@ -32,21 +32,9 @@ if (!module.parent){
 	app.get('/materials/:container/wall', routes.wall)
 	app.get('/materials/:container/stream', routes.stream)
 	app.get('/materials', routes.index)
-	
-	var Course = microcommunity.model('Course')
-	
-	app.get('/courses', auth.ensureAuthenticated, auth.ensureRoot, function(req, res){ 
-		Course.find().exec(function(err, courses){
-			res.loadPage('courses', { courses : courses })
-		})		
-	})
-	
-	app.post('/courses', auth.ensureAuthenticated, auth.ensureRoot, function(req, res){ 
-		var course = new Course({ year : req.body.year, title : req.body.title })		
-		course.save(function(err){
-			res.redirect('/courses')
-		})
-	})	
+		
+	app.get('/courses', auth.ensureAuthenticated, auth.ensureRoot, routes.coursesIndex)	
+	app.post('/courses', auth.ensureAuthenticated, auth.ensureRoot, routes.createCourse)	
 
 	//api
 	var api = require('./api')

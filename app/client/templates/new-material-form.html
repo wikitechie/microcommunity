@@ -1,48 +1,34 @@
 <form class="form-horizontal" method='post' action='/materials' enctype="multipart/form-data">
-	<legend>Basic Information</legend>
-	<div class="control-group">
-		<label class="control-label">Title</label>
-		<div class="controls">
-			<input type="text" name='name' placeholder="Material name">
-		</div>
-	</div>
+	<div class="course-select-region"></div>
 	<div class="control-group">
 		<label class="control-label">Description</label>
 		<div class="controls">
 			<textarea name='description' class="input-xlarge"></textarea>
 		</div>
 	</div>		
-	<div class="control-group">
-		<label class="control-label">Thumbnail</label>
-		<div class="controls">
-			<input type='file' name='thumbnail' />
-		</div>
-	</div>		
-	<legend>Academic Information</legend>	
-	<div class="control-group">
-		<label class="control-label">Course</label>
-		<div class="controls course-select-region">		
-		</div>
-	</div>	
+
 	<div class="control-group">
 		<label class="control-label">Academic Year</label>
-		<div class="controls">
-			<select name="academicYear">
-				<option value="<%= currentSemester.academicYear %>">
-					<%= currentSemester.academicYear - 1 %> - <%= currentSemester.academicYear %> 
-				</option>
-			</select>
+		<div class="controls academic-year-select-region">
 		</div>
 	</div>	
 	<div class="control-group">
 		<label class="control-label">Season</label>
 		<div class="controls">
 			<label class="radio">
-				<input type="radio" name="season" id="fall" value="fall" >
+				<% if (currentSemester.season == 'fall') { %>
+				<input type="radio" name="season" id="fall" value="fall" checked >
+				<% } else {  %>	
+				<input type="radio" name="season" id="fall" value="fall" >										
+				<% }  %>																		
 				Fall
 			</label>
 			<label class="radio">
-				<input type="radio" name="season" id="spring" value="spring">
+				<% if (currentSemester.season == 'spring') { %>
+				<input type="radio" name="season" id="spring" value="spring" checked >
+				<% } else {  %>	
+				<input type="radio" name="season" id="spring" value="spring" >										
+				<% }  %>	
 				Spring
 			</label>
 		</div>

@@ -3,11 +3,10 @@
 		if server.currentUser && server.currentUser.role == 'teacher'
 			.pull-right	
 				a.btn.btn-primary(href='/materials/new') Add a new material	
-		h1.page-header
-			= server.data.queryTitle 
+		h1.page-header Browse Materials
 			
 .row-fluid
-	.span6	
+	.span7
 		#materials-region
-	.span6
+	.span5
 		#browse-materials-region

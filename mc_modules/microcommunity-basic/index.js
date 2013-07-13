@@ -27,17 +27,14 @@ module.exports = function(){
 		}
 		if (req.user) query['memberships.user'] = req.user.id
 		
-		console.log(query)
-		
 		Container.find(query).limit(5).exec(function(err, materials){	
 			var links = []
 			for(var i=0; i<materials.length; i++){
 				var material = materials[i]
-				var link = { label : material.name , url : '/materials/'+material.id }
+				var link = { label : material.displayName , url : '/materials/'+material.id }
 				links.push(link)
 			}		
-			var title = req.user ? "Your Materials" : "Materials"
-			res.sidebars.pushSidebar(title, links)
+			res.sidebars.pushSidebar("Materials", links)
 			next()	
 		})
 	}
@@ -75,14 +72,16 @@ module.exports = function(){
 	app.get('/profiles/:id', someMaterialsSidebar, function(req, res){	
 		var id = req.params.id	
 		User.findById(id, function(err, user){
-			Wall.loadItems(user.wall, function(err, items){		
-				var authorizedUser = user.toJSON()		
-				can.authorize(authorizedUser.wall, 'wall', 'publish', req.user, function(err, wall){
-					res.loadPage('profile', {
-						user : authorizedUser, 
-						items : items
-					})			
-				})
+			Wall.loadItems(user.wall, function(err, items){	
+				can.authorizeItems(items, req.user, function(err, items){				
+					var authorizedUser = user.toJSON()		
+					can.authorize(authorizedUser.wall, 'wall', 'publish', req.user, function(err, wall){
+						res.loadPage('profile', {
+							user : authorizedUser, 
+							items : items
+						})			
+					})
+				})							
 			})			
 		})	
 	})

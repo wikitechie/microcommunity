@@ -12,6 +12,10 @@ define([
 	})
 	
 	var YearSelect = Backbone.Marionette.CompositeView.extend({
+		initialize : function(options){
+			if (options.defaultYear)
+				this.template = ''
+		},
 		tagName : 'select',
 		events : {
 			'click' : 'selected'
@@ -23,10 +27,10 @@ define([
 		template : '<option></option>',
 		selected : function(){
 			var yearValue = $(this.el).find(':selected').attr('value')
-			this.options.year.set('value', yearValue)
+			this.options.year.set('value', yearValue)	
 		},
 		onRender : function(){
-			var value = this.options.year.get('value')
+			var value = this.options.year.get('value')	
 			$(this.el).find("option[value="+value+"]").attr('selected', true)
 		},
 	})
@@ -40,6 +44,11 @@ define([
 	})
 	
 	var Select = Backbone.Marionette.CompositeView.extend({
+		initialize : function(options){
+			if (options.defaultYear)
+				this.template = ''
+				
+		},
 		tagName : 'select',
 		attributes : {
 			name : 'course'
@@ -47,16 +56,26 @@ define([
 		itemView : Option,
 		template : '<option></option>',
 		appendHtml : function(collectionView, itemView, index){
-			console.log(this.options.year.get('value'))
-			if (itemView.model.get('year') == this.options.year.get('value') ) {
+			if (!this.options.year.get('value')){
+				$(collectionView.el).append(itemView.el)								
+			} else if (itemView.model.get('year') == this.options.year.get('value') ) {
 				$(collectionView.el).append(itemView.el)					
 			}		
+		},
+		onRender : function(){
+			if (server.data.params && server.data.params.course){	
+				var value = server.data.params.course
+				$(this.el).find("option[value="+value+"]").attr('selected', true)						
+				server.data.params.course = null
+			}		
+
 		}				 		
 	})
 	
 	var CourseSelector = Backbone.Marionette.Layout.extend({	
-		initialize : function(){		
-			this.year = new Backbone.Model()
+		initialize : function(options){		
+			this.year = new Backbone.Model({ value : options.defaultYear })
+			if (server.data.params && server.data.params.year) this.year.set('value', server.data.params.year)
 			var self = this
 			this.year.on('change:value', function(){
 				self.render()
@@ -68,7 +87,11 @@ define([
 			yearSelect : '.year-select-region'
 		},
 		onRender : function(){		
-			this.courseSelect.show(new Select({ year : this.year, collection : this.collection }))
+			this.courseSelect.show(new Select({ 
+				year : this.year, 
+				collection : this.collection,
+				defaultYear : this.options.defaultYear
+			}))
 			var years = new Backbone.Collection([
 				{ year : 1 , displayName : 'First' },
 				{ year : 2 , displayName : 'Second' },
@@ -76,7 +99,11 @@ define([
 				{ year : 4 , displayName : 'Fourth' },
 				{ year : 5 , displayName : 'Fifth' }
 			])
-			this.yearSelect.show(new YearSelect({ collection : years, year : this.year }))
+			this.yearSelect.show(new YearSelect({ 
+				collection : years, 
+				year : this.year,  
+				defaultYear : this.options.defaultYear
+			}))
 		}		
 	})		
 	

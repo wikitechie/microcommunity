@@ -1,17 +1,16 @@
 <div class='row-fluid'>
-	<div class='span3'>
+	<div class='span2'>
 		<div class="thumbnail">
-			<img src="<%= thumbnailPath %>" alt="">
+			<img src="<%= course.thumbnailPath %>" alt="">
 		</div>
 	</div>
-	<div class='span9'>
-		<div class='page-header'>
-			<h1><%= name	%> <small>(<%= semesterName %>)</small></h1>	
-		</div>	
+	<div class='span10'>
 		<div class="pull-right" id="button-region">
+		</div>		
+		<div class='page-header'>
+			<h1><%= displayName	%> <small>(<%= semesterName %>)</small></h1>	
 		</div>				
 		<p><%= description %></p>
 	</div>
 </div>
-
 <hr />

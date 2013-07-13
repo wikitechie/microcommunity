@@ -4,18 +4,22 @@ h1.page-header Manage courses
 
 table.table.table-hover
 	thead
+		th Thumbnail
 		th Course	
 		th Year
 			
 	tbody
 		each course in courses
 			tr
+				td(width="50px")
+					- var src = course.thumbnailPath ? course.thumbnailPath : '/publication.png'
+					img(src="#{src}", width='50px')
 				td= course.title
 				td= course.year
 
 h2.page-header Add a new course				
 
-form.form-horizontal(action="/courses", method="post")	
+form.form-horizontal(action="/courses", method="post", enctype="multipart/form-data")	
 	.control-group	
 		label.control-label Title
 		.controls
@@ -29,6 +33,11 @@ form.form-horizontal(action="/courses", method="post")
 				option(value=3) Third
 				option(value=4) Fourth
 				option(value=5) Fifth
+	.control-group	
+		label.control-label Thumbnail
+		.controls
+			input(type="file", name='thumbnail')				
 	.control-group
 		.controls
-			input.btn(type="submit") Create							
+			input.btn(type="submit") Create
+			

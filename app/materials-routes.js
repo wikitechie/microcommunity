@@ -8,6 +8,8 @@ var microcommunity = require('microcommunity')
 	, File = microcommunity.model('File')
 	, Course = microcommunity.model('Course')
 	, can = microcommunity.can
+	, Course = microcommunity.model('Course')	
+	, _ = require('underscore')
 
 function saveThumbnail(file, callback){
 	if (file.name !== ''){
@@ -25,6 +27,32 @@ function saveThumbnail(file, callback){
 		callback(null)
 	}		
 }
+
+
+//courses
+
+exports.coursesIndex =  function(req, res){ 
+	Course.find().exec(function(err, courses){
+		res.loadPage('courses', { courses : courses })
+	})		
+}
+
+exports.createCourse =  function(req, res){ 
+
+	saveThumbnail(req.files.thumbnail, function(filePath){	
+		var course = new Course({ 
+			year : req.body.year, 
+			title : req.body.title,
+			thumbnailPath : filePath
+		})		
+		course.save(function(err){
+			res.redirect('/courses')
+		})	
+	})
+		
+}
+
+//materials
 
 exports.new =  function(req, res){
 
@@ -64,21 +92,20 @@ function currentSemester(){
 }
 
 exports.create = function(req, res){
-	saveThumbnail(req.files.thumbnail, function(filePath){	
-	
+
+	Course.findById(req.body.course, function(err, course){
 		var semester = {
 			season : req.body.season,
 			academicYear : req.body.academicYear
 		}
 		
 		var container = new Material({
-			name : req.body.name,
+			courseTitle : course.title,
 			description : req.body.description,
 			semester : semester,
-			course : req.body.course
+			course : course.id
 		})
 					
-		if (filePath) container.thumbnailPath = filePath			
 		container.save(function(err){						
 			//making the creator the default admin		
 			container.newMembership(req.user)
@@ -90,8 +117,9 @@ exports.create = function(req, res){
 					res.redirect('/materials/' + container.id)
 				})				
 			})						
-		})			
-	})		
+		})	
+	})
+
 }
 
 
@@ -148,6 +176,18 @@ exports.stream = function(req, res){
 
 exports.index = function(req, res){	
 
+	function loadMaterials(query){
+		Material.find(query).exec(function(err, containers){
+			Course.find().exec(function(err, courses){
+				res.loadPage('materials/index', { 
+					containers : containers, 
+					courses : courses,
+					params : req.query
+				})	
+			})		
+		})	
+	}
+
 	var current = currentSemester()
 
 	var query = {
@@ -169,16 +209,17 @@ exports.index = function(req, res){
 	
 	if (req.query.course)
 		query.course = req.query.course
+		
+	if (req.query.year){
+		Course.find({ year : req.query.year}, function(err, courses){
+			var coursesIds = _.pluck(courses, "_id")
+			query['course'] = { $in :  coursesIds }	
+			loadMaterials(query)	
+		})	
+	} else {
+		loadMaterials(query)
+	}
 	
-	Material.find(query).exec(function(err, containers){
-		Course.find().exec(function(err, courses){
-			res.loadPage('materials/index', { 
-				containers : containers, 
-				queryTitle : queryTitle,
-				courses : courses,
-				params : req.params
-			})	
-		})		
-	})
+	
 	
 }
