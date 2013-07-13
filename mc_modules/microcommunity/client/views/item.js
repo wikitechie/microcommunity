@@ -42,7 +42,7 @@ define([
 		},		
 		defaultRenderer : function(){	
 		
-			if (App.isRootUser()){
+			if (this.model.can('delete')){
 				this.deleteButton.show(new DeleteButton({ model : this.model }))
 			}			
 		

@@ -98,7 +98,7 @@ Models.prototype.define = function(modelName, objectType, collectionName, schema
 }
 
 
-Models.prototype.getModel = function(modelName){
+Models.prototype.model = Models.prototype.getModel = function(modelName){
 	return mongoose.model(modelName)
 }
 

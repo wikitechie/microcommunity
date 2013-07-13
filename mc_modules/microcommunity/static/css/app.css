@@ -8,13 +8,13 @@
   float: left;
 }
 
-/*.item-close {
+.item-close {
     display: none;
 }
 
 .item:hover .item-close {
     display: block;
-}*/
+}
 
 .activityMessage{
 	display: inline;

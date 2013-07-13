@@ -7,9 +7,9 @@ var activitySchema = new mongoose.Schema({
 	homework : { type : mongoose.Schema.Types.ObjectId, ref : 'Homework' }
 })
 
-activitySchema.pre('init', function(next, doc){
-	this.model('NewHomeworkActivity').populate(doc, 'homework', next)	
-})
+activitySchema.statics.populateItem = function(doc, next){
+	models.model('NewHomeworkActivity').populate(doc, 'homework', next)	
+}
 
 activitySchema.plugin(isItem, { objectType : 'activity:new-homework' })
 

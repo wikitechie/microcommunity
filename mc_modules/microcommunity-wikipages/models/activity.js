@@ -7,9 +7,9 @@ var activitySchema = new mongoose.Schema({
 	wikipage : { type : mongoose.Schema.Types.ObjectId, ref : 'Wikipage' }
 })
 
-activitySchema.pre('init', function(next, doc){
-	this.model('NewWikipageActivity').populate(doc, 'wikipage', next)	
-})
+activitySchema.statics.populateItem =  function(doc, next){
+	models.model('NewWikipageActivity').populate(doc, 'wikipage', next)	
+}
 
 activitySchema.plugin(isItem, { objectType : 'activity:new-wikipage' })
 

@@ -10,9 +10,9 @@ var revisionSchema = new mongoose.Schema({
 	diff : mongoose.Schema.Types.Mixed
 })
 
-revisionSchema.pre('init', function(next, doc){
-	this.model('Revision').populate(doc, 'wikipage', next)	
-})
+revisionSchema.statics.populateItem = function(doc, next){
+	models.model('Revision').populate(doc, 'wikipage', next)	
+}
 
 revisionSchema.plugin(isItem, {objectType : 'revision' })
 

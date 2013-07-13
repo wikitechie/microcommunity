@@ -6,8 +6,8 @@ var microcommunity = require('microcommunity')
 
 //registering models
 var wikipageSchema = require('./models/wikipage')
-var revisionSchema = require('./models/activity')
-var activitySchema = require('./models/revision')
+var activitySchema = require('./models/activity')
+var revisionSchema = require('./models/revision')
 
 models.define('Wikipage', 'wikipage', 'wikipages', wikipageSchema)
 models.define('Revision', 'revision', 'items', revisionSchema)

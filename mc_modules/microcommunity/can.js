@@ -34,14 +34,18 @@ module.exports.define = function(objectType, action, func){
 }
 
 exports.define('item', 'comment', require('./can/item-comment'))
+exports.define('item', 'delete', require('./can/item-delete'))
 exports.define('wall', 'publish', require('./can/wall-publish'))
+
 
 module.exports.helpers = require('./can/helpers')
 
 //to be used on items
 module.exports.authorizeItems = function (items, user, callback){
 	authorizeCollection(items, 'item', 'comment', user, function(err, items){
-		authorizeCollection(items, 'question', 'answer', user, callback)	
+		authorizeCollection(items, 'question', 'answer', user, function(err, items){
+			authorizeCollection(items, 'item', 'delete', user, callback)			
+		})	
 	})
 }
 
