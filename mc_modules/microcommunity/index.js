@@ -8,6 +8,7 @@ var connect = require('connect')
 	, sidebars = require('./sidebars')
 	, build = require('./build')
 	, can = require('./can')
+	, files = require('./files')
 
 var microcommunity = module.exports = {}
 
@@ -28,6 +29,7 @@ module.exports.items = items
 module.exports.model = models.getModel
 module.exports.sidebars = sidebars
 module.exports.can = can
+module.exports.files = files
 
 //client building
 module.exports.build = build
@@ -37,7 +39,8 @@ var mainPath
 var pluginPaths = []
 
 module.exports.registerApp = function(path){
-	mainPath = path
+	mainPath = module.exports.path = path
+	console.log(module.exports.path)
 }
 
 module.exports.registerPlugin = function(path){
@@ -45,6 +48,7 @@ module.exports.registerPlugin = function(path){
 }
 
 module.exports.dirname = __dirname
+
 
 //find the client modules in an app/plugin
 function findModules(path, callback){ 

@@ -11,23 +11,6 @@ var microcommunity = require('microcommunity')
 	, Course = microcommunity.model('Course')	
 	, _ = require('underscore')
 
-function saveThumbnail(file, callback){
-	if (file.name !== ''){
-		var path = require('path')
-			, fs = require('fs')	
-		var randomeName = path.basename(file.path)
-		fs.readFile(file.path, function (err, data) {
-			var relativePath = "/uploads/" + randomeName;
-			var absolutePath = __dirname + '/static/' + relativePath
-			fs.writeFile(absolutePath, data, function (err) {
-				callback(relativePath)
-			})
-		})		
-	} else {
-		callback(null)
-	}		
-}
-
 
 //courses
 
@@ -39,7 +22,7 @@ exports.coursesIndex =  function(req, res){
 
 exports.createCourse =  function(req, res){ 
 
-	saveThumbnail(req.files.thumbnail, function(filePath){	
+	microcommunity.files.saveFile(req.files.thumbnail, '/uploads/', function(filePath){	
 		var course = new Course({ 
 			year : req.body.year, 
 			title : req.body.title,

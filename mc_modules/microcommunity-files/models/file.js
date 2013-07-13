@@ -5,6 +5,7 @@ var mongoose = require('mongoose')
 var fileSchema = new mongoose.Schema({
 	name: String,
 	description : String,
+	filePath : String,
 })
 
 fileSchema.plugin(isContent)
