@@ -15,6 +15,14 @@ module.exports = function(app){
 			res.send(200, section)
 		})
 	})
+
+	app.post('/api/materials/:id/sections/:section/highlight', function(req, res){
+		var section = req.body
+		var update = { $set : { highlighted : req.params.section } }
+		Material.findByIdAndUpdate(req.params.id, update, function(err, material){	
+			res.send(200, section)
+		})
+	})	
 	
 	app.post('/api/materials/:container/memberships', auth.ensureAuthenticated, function(req, res){
 		if (!req.container.isMember(req.user)){

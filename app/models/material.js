@@ -20,7 +20,8 @@ var materialSchema = new mongoose.Schema({
 	description : String,
 	semester : { academicYear : Number, season : String },
 	course : { type : mongoose.Schema.Types.ObjectId, ref : 'Course' },
-	sections : [sectionSchema]	
+	sections : [sectionSchema],
+	highlighted : { type : mongoose.Schema.Types.ObjectId }
 })
 
 materialSchema.methods.getSidebar = function(){

@@ -18,26 +18,22 @@ define([
 	})
 
 	var SectionView = Backbone.Marionette.Layout.extend({
-		initialize : function(){
-			this.highlight = false
-		},
 		className : 'well',
 		template : html,
 		events : {
-			'mouseover' : 'displayControls',
 			'click .pin-btn' : 'setHighlighted'
 		},
-		displayControls : function(){
-			console.log('displaying controls')
-		},
 		setHighlighted : function(){
-			if (!this.highlight){
-				$(this.el).css('background-color','rgb(252, 248, 227)')
-				this.highlight = true
-			} else {
-				$(this.el).css('background-color','')
-				this.highlight = false
-			}
+			this.options.highlighted.save({
+				'section' : this.model.id
+			},{
+				success : function(){ console.log('success') },
+				error : function(){ console.log('error') },
+				wait : true
+			})
+		},
+		hightlightView : function(){
+			$(this.el).css('background-color','rgb(252, 248, 227)')
 		},
 		regions : {
 			attachements : "#attachement-list-region",
@@ -46,7 +42,9 @@ define([
 		onRender : function(){
 			this.attachements.show(new AttachementListView({ collection : this.model.get('attachements') }))
 			if (App.isContainerAdmin())
-				this.sectionToolbar.show(new SectionToolbarView({ model : this.model }))								
+				this.sectionToolbar.show(new SectionToolbarView({ model : this.model }))	
+			if (this.options.highlighted.get('section') == this.model.id)	
+				this.hightlightView()				
 		}				
 	})
 	
