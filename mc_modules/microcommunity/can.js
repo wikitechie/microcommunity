@@ -17,13 +17,13 @@ var abilities = {
 
 var authorize = module.exports.authorize = function(object, objectType, action, user, callback){	
 	abilities[objectType][action](object, user, callback)
-}
+}	
 
 var authorizeCollection = module.exports.authorizeCollection = 
 	function(collection, objectType, action, user, callback){
 	
 		function authorizeForUser(user){
-			return function (object, callback){			
+			return function (object, callback){
 				authorize(object, objectType, action, user, callback)
 			}	
 		}

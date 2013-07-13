@@ -22,7 +22,7 @@ define([
 		var material = new Material(server.data.material)
 		App.courseHeader.show(new CourseHeaderView({ model : material }))			
 		
-		if (material.get('wall').get('canPublish')){
+		if (material.get('wall').can('publish')){
 			var options = {
 				wall : material.get('wall'),
 				publishers : [PostPublisher, QuestionPublisher]

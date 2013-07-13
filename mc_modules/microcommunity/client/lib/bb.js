@@ -14,5 +14,13 @@ define([
 		return _.template(template, data)
 	}
 	
-	return Backbone	
+	Backbone.Model.prototype.can  =  function(action){
+		if (this.get('can')) 
+			return this.get('can')[action] 
+		else
+			return false
+	}	
+	
+	return Backbone
+		
 })

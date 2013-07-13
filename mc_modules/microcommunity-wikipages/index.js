@@ -10,8 +10,8 @@ var revisionSchema = require('./models/activity')
 var activitySchema = require('./models/revision')
 
 models.define('Wikipage', 'wikipage', 'wikipages', wikipageSchema)
-models.define('Revision', 'revision', 'revisions', revisionSchema)
-models.define('NewWikipageActivity', 'activity:new-wikipage', 'newwikipageactivities', activitySchema)
+models.define('Revision', 'revision', 'items', revisionSchema)
+models.define('NewWikipageActivity', 'activity:new-wikipage', 'items', activitySchema)
 
 //adding stream items
 items.addItem('Revision', 'components/revision/model')

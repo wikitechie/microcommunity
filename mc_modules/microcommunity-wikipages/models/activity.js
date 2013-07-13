@@ -11,6 +11,6 @@ activitySchema.pre('init', function(next, doc){
 	this.model('NewWikipageActivity').populate(doc, 'wikipage', next)	
 })
 
-activitySchema.plugin(isItem)
+activitySchema.plugin(isItem, { objectType : 'activity:new-wikipage' })
 
 module.exports = activitySchema

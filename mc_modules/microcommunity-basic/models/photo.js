@@ -7,8 +7,8 @@ var photoSchema = new mongoose.Schema({
 	content: String
 })
 
-photoSchema.plugin(isItem)
+photoSchema.plugin(isItem, { objectType : 'photo' })
 
-Photo = models.define('Photo', 'photo', 'photos', photoSchema)
+Photo = models.define('Photo', 'photo', 'items', photoSchema)
 items.addItem('Photo', 'models/items/photo')
 

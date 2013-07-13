@@ -7,7 +7,7 @@ var util = require('util')
 	
 var oldInit = Model.prototype.init;
 Model.prototype.init = function(doc, query, fn) {
-  var key = 'containerType';
+  var key = this.schema.options['discriminatorKey'];
   if (key) {
     var newFn = function() {
       // this is pretty ugly, but we need to run the code below before the callback
@@ -19,13 +19,15 @@ Model.prototype.init = function(doc, query, fn) {
 
     // If the discriminatorField contains a model name, we set the documents prototype to that model
     var objectType = doc[key];
+    
     if (objectType){
-		  var modelName = models.convert(objectType, 'object', 'model')
+		  var modelName = models.convert(objectType, 'object', 'model')	  
 		  var model = mongoose.models[modelName];
 		  if(model) {
 		    obj.__proto__ = model.prototype;
 		  }    
     }
+    
     return obj;
   } else {
     // If theres no discriminatorKey we can just call the original method
@@ -76,8 +78,12 @@ Models.prototype.convert = function(string, from, to){
 
 Models.prototype.define = function(modelName, objectType, collectionName, schema){
 
+	//authorization	
+	schema.add({ can : mongoose.Schema.Types.Mixed })
+	schema.pre('save', function(next){ delete this.can; next() })	
+
 	//configuration and creation of the mongoose model
-	schema.virtual('objectType').get(function(){ return objectType })	
+	if (collectionName != 'items') schema.virtual('objectType').get(function(){ return objectType })	
 	schema.set('toJSON', { virtuals: true })
 	var MyModel = mongoose.model(modelName, schema, collectionName)	
 	
@@ -128,8 +134,7 @@ Models.prototype.initialize = function(){
 	models.define('Wall', 'wall', 'walls', wallSchema)
 	models.define('Item', 'item', 'items', itemSchema)
 	models.define('User', 'user', 'users', userSchema)
-	models.define('Container', 'container', 'containers', containerSchema)	
-
+	models.define('Container', 'container', 'containers', containerSchema)
 }
 
 var models = new Models()

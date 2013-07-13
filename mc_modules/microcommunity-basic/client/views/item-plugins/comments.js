@@ -48,7 +48,7 @@ define([
 			var comment = new Comment({
 				author : App.currentUser.id,
 				content : this.ui.input.val(),
-				item : this.model.get('item')
+				item : this.model.id
 			})
 			this.disable()			
 			var self = this			
@@ -90,7 +90,7 @@ define([
 		onRender : function(){
 			var comments = this.model.get('comments')
 			this.commentsList.show(new CommentsList({ collection : comments }))
-			if (this.model.get('canComment')){
+			if (this.model.can('comment')){
 				var options = { model : this.model, collection : comments, commenter : App.currentUser }			
 				this.commentsForm.show(new CommentsForm(options))			
 			}

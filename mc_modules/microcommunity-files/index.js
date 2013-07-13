@@ -8,7 +8,7 @@ var fileSchema = require('./models/file')
 var newFileActivitySchema = require('./models/new-file-activity')
 
 models.define('File', 'file', 'files', fileSchema)
-models.define('NewFileActivity', 'activity:new-file', 'newfileactivities', newFileActivitySchema)
+models.define('NewFileActivity', 'activity:new-file', 'items', newFileActivitySchema)
 items.addItem('NewFileActivity', 'componenets/new-file-activity/model')
 
 microcommunity.registerPlugin(__dirname)

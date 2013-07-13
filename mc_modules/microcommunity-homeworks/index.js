@@ -9,7 +9,7 @@ var homeworkSchema = require('./models/homework')
 var activitySchema = require('./models/new-homework-activity')
 
 models.define('Homework', 'homework', 'homeworks', homeworkSchema)
-models.define('NewHomeworkActivity', 'activity:new-homework', 'activities', activitySchema)
+models.define('NewHomeworkActivity', 'activity:new-homework', 'items', activitySchema)
 
 //adding stream items
 items.addItem('NewHomeworkActivity', 'components/new-homework-activity/model')

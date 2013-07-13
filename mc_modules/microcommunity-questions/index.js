@@ -7,7 +7,7 @@ var microcommunity = require('microcommunity')
 //registering models
 var questionSchema = require('./models/question')
 
-models.define('Question', 'question', 'questions', questionSchema)
+models.define('Question', 'question', 'items', questionSchema)
 
 //adding stream items
 items.addItem('Question', 'components/question/model')

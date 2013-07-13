@@ -33,7 +33,7 @@ define([
 		},		
 		vote : function(type){
 			var self = this
-			if (this.model.get('canVote')){			
+			if (this.model.can('vote')){			
 				var vote = new Vote({ 
 					user : App.currentUser.id,				
 					type : type, 
@@ -155,7 +155,7 @@ define([
 		onRender : function(){
 			var	 answers = this.model.get('answers')
 			this.answersList.show(new AnswersListView({ collection : answers }))
-			if (this.model.get('canAnswer')){
+			if (this.model.can('answer')){
 				var options = { model : this.model, collection : answers, author : App.currentUser }			
 				this.answersForm.show(new AnswersForm(options))			
 			}

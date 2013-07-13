@@ -14,6 +14,6 @@ revisionSchema.pre('init', function(next, doc){
 	this.model('Revision').populate(doc, 'wikipage', next)	
 })
 
-revisionSchema.plugin(isItem)
+revisionSchema.plugin(isItem, {objectType : 'revision' })
 
 module.exports = revisionSchema

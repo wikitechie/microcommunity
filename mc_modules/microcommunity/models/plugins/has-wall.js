@@ -35,6 +35,7 @@ module.exports = function hasWall(schema, options){
 		if (this.isNew){
 			console.log('new wall')
 			var Wall = mongoose.model('Wall')		
+			console.log(this)
 			var collection = models.convert(this.objectType, 'object', 'collection')
 			var dbref = new mongoose.Types.DBRef(collection, this.id)		
 		

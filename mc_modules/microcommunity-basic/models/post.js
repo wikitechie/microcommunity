@@ -19,14 +19,12 @@ var postSchema = new mongoose.Schema({
 	comments : [ commentSchema ]
 })
 
-//comments populating options
-postSchema.pre('init', function(next, doc){	
+postSchema.statics.populateItem = function(doc, next){
 	var User = mongoose.model('User')
 	User.populate(doc.comments, 'author', next)
-})
+}
 
+postSchema.plugin(isItem, { objectType : 'post' })
 
-postSchema.plugin(isItem)
-
-models.define('Post', 'post', 'posts', postSchema)
+models.define('Post', 'post', 'items', postSchema)
 items.addItem('Post', 'models/items/post')

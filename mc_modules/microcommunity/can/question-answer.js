@@ -23,18 +23,18 @@ module.exports = function (question, user, callback){
 
 	if (question.objectType === 'question'){
 		if (!user){
-			helpers.attachAction(question, 'canAnswer', false)
+			helpers.attachAction(question, 'answer', false)
 			answersCallback(null, question)
 		} else {		
 			var answer = _.find(question.answers, function(answer){ 
 				return (answer.author.id.toString() === user.id.toString()) 
 			})
-			
+
 			if (answer){
-				helpers.attachAction(question, 'canAnswer', false)
+				helpers.attachAction(question, 'answer', false)
 				answersCallback(null, question)				
 			} else {
-				helpers.authorizeIfContainerMember(question.container, question, 'canAnswer', user, answersCallback)	
+				helpers.authorizeIfContainerMember(question.container, question, 'answer', user, answersCallback)	
 			}			
 		} 	
 	} else {

@@ -21,7 +21,7 @@ define([
 		wall : '#wall-region'	
 	})
 		
-	if (wikipage.get('wall').get('canPublish')){
+	if (wikipage.get('wall').can('publish')){
 		var options = {
 			wall : wikipage.get('wall'),
 			identifier : 'wikipage-wall',

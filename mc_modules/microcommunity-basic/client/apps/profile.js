@@ -27,7 +27,7 @@ define([
 	var profileUser = Models.User.findOrCreate(server.data.user)	
 	
 	if (App.isLoggedIn())	
-	if (profileUser.get('wall').get('canPublish')){
+	if (profileUser.get('wall').can('publish')){
 		var options = {
 			wall : profileUser.get('wall'),
 			identifier : 'user-wall',

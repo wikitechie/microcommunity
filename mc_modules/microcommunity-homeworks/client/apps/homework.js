@@ -40,7 +40,7 @@ define([
 		wall : '#wall-region'	
 	})
 		
-	if (homework.get('wall').get('canPublish')){
+	if (homework.get('wall').can('publish')){
 		var options = {
 			wall : homework.get('wall'),
 			publishers : [PostPublisher]

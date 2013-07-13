@@ -11,6 +11,6 @@ schema.pre('init', function(next, doc){
 	this.model('NewFileActivity').populate(doc, 'file', next)	
 })
 
-schema.plugin(isItem)
+schema.plugin(isItem, {objectType : 'activity:new-file' })
 
 module.exports = schema

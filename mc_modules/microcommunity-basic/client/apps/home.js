@@ -14,7 +14,7 @@ define([
 	})
 	
 	if (App.isLoggedIn())	
-	if (App.currentUser.get('wall').get('canPublish')){	
+	if (App.currentUser.get('wall').can('publish')){	
 		var options = {
 			wall : App.currentUser.get('wall'),
 			publishers : [PostPublisher, PhotoPublisher]

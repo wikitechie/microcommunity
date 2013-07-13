@@ -11,6 +11,6 @@ activitySchema.pre('init', function(next, doc){
 	this.model('NewHomeworkActivity').populate(doc, 'homework', next)	
 })
 
-activitySchema.plugin(isItem)
+activitySchema.plugin(isItem, { objectType : 'activity:new-homework' })
 
 module.exports = activitySchema

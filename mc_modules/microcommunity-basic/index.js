@@ -41,8 +41,8 @@ module.exports = function(){
 			res.loadPage('welcome')		
 		} else {
 		
-			req.user.loadFeed(function(err, items){
-			//Stream.globalStream(function(err, items){	
+			//req.user.loadFeed(function(err, items){
+			Stream.globalStream(function(err, items){	
 				can.authorizeItems(items, req.user, function(err, items){
 					if (req.user){
 						var currentUser = req.user //just a small hack
@@ -122,7 +122,7 @@ module.exports = function(){
 	
 	function fetchItem(req, res, next){
 		var Item = microcommunity.model('Item')
-		Item.findItem(req.params.item, function(err, item){	
+		Item.findById(req.params.item, function(err, item){	
 			req.item = item
 			next()
 		})		
@@ -130,26 +130,19 @@ module.exports = function(){
 	
 	var middleware = can.authorizeMiddlewareAPI('item', 'comment')
 	
-	app.post('/api/items/:item/comments', fetchItem, middleware, function(req, res){	
+	app.post('/api/items/:item/comments', function(req, res){	
 		var comment = req.body
 		comment.published = Date()
-		
-		var Item = microcommunity.model('Item')
-		Item.findById(req.item.item, function(err, pureItem){	
-			var dbref = pureItem.object	
-			var modelName = microcommunity.models.convert(dbref.namespace, 'collection', 'model')
-			var Model = microcommunity.model(modelName)
-		
-			var update = { $push : { comments : comment } }
-			var options = { select : 'comments' }
-			Model.findByIdAndUpdate(dbref.oid, update, options, function(err, object){
-				var l = object.comments.length
-				var comment = object.comments[l-1]
-				res.send(comment)
-			})
-		})			
+				
+		var Post = microcommunity.model('Post')
 
-
+		var update = { $push : { comments : comment } }
+		var options = { select : 'comments' }
+		Post.findByIdAndUpdate(req.params.item, update, options, function(err, object){
+			var l = object.comments.length
+			var comment = object.comments[l-1]
+			res.send(comment)
+		})
 		
 	})
 	

@@ -1,5 +1,9 @@
 module.exports.attachAction = function(item, action, value){
-	item[action] = value	
+	//item[action] = value
+	
+	if (!item.can) item.can = {}
+	item.can[action] = value
+		
 }
 
 module.exports.authorizeIfContainerMember = function (container, item, action, user, callback){
