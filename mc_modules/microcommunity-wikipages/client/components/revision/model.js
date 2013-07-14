@@ -3,9 +3,10 @@ define([
 	'models/item',
 	'models/wikipage',
 	'components/revision/views/diff',
+	'views/item-plugins/comments',	
 	'text!components/revision/templates/wall-message.html',
 	'text!components/revision/templates/stream-message.html'	
-], function(Backbone, Item, Wikipage, DiffView, messageTemplateWall, messageTemplateStream){
+], function(Backbone, Item, Wikipage, DiffView, Comments, messageTemplateWall, messageTemplateStream){
 	
 	var Revision = Item.extend({
 		messageTemplate : function(type){
@@ -22,6 +23,7 @@ define([
 			return _.extend(parent, { wikipage : this.get('wikipage').serialize() })
 		},		
 		contentView : DiffView,
+		pluginView : Comments,
 		relations : [
 			{
 				type : Backbone.HasOne,

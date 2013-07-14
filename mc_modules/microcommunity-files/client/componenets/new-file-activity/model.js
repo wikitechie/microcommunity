@@ -2,8 +2,9 @@ define([
 	'bb',
 	'models/item',
 	'models/file',
-	'componenets/new-file-activity/file-view'		
-], function(Backbone, Item, File, FileView){
+	'componenets/new-file-activity/file-view',
+	'views/item-plugins/comments',	
+], function(Backbone, Item, File, FileView, Comments){
 	
 	var Activity = Item.extend({
 		messageTemplate : function(type, wall){
@@ -14,6 +15,7 @@ define([
 			}
 		},
 		contentView : FileView,		
+		pluginView : Comments,
 		serialize : function(){
 			var parent = Item.prototype.serialize.apply(this)		
 			return _.extend(parent, { file : this.get('file').serialize() })
