@@ -29,7 +29,7 @@ html
 				.navbar.navbar-fixed-top
 					.navbar-inner
 						.container
-							a(href='/').brand MicroCommunity
+							a(href='/').brand= server.site.siteName
 							- if (!server.currentUser)
 								<ul class="nav pull-right">
 								<li>
