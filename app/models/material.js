@@ -26,12 +26,12 @@ var materialSchema = new mongoose.Schema({
 materialSchema.methods.getSidebar = function(){
 	var materialLink = "/materials/" + this.id
 	var links = [ 
-			{ label : 'Home', url : materialLink, icon : 'icon-home' },
+			{ label : 'Main', url : materialLink, icon : 'icon-book' },
 			{ label : 'Wall', url : materialLink + '/wall', icon : 'icon-comment' },
 			{ label : 'Members', url : materialLink + '/members', icon : 'icon-user' },							
 			{ label : 'Stream', url : materialLink + '/stream', icon : 'icon-list-alt' },
 			{ label : 'New Wikipage', url : materialLink + '/wikipages/new', icon : 'icon-pencil' },
-			{ label : '<i class=""></i> Upload a File', url : materialLink + '/files/new', icon : 'icon-upload' }																		
+			{ label : 'Upload a File', url : materialLink + '/files/new', icon : 'icon-upload' }																		
 		]		
 	return {
 		header : this.displayName,

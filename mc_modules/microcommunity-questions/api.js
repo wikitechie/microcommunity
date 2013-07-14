@@ -2,28 +2,31 @@ var mc = require('microcommunity')
 	, User = mc.model('User')
 	, Wall = mc.model('Wall')
 	, Question = mc.model('Question')	
+	, Container = mc.model('Container')
 	, can = mc.can
 
 module.exports = function(app){
 
 	app.post('/api/walls/*/question', function(req, res){
 		Wall.findById(req.body.wall, function(err, wall){	
-			User.findById(req.body.author, function(err, author){
-				var question = new Question({
-					content : req.body.content,
-					wall : req.body.wall,
-					walls : [req.body.wall],
-					author : author.id,		
-					streams : [author.stream],
-					container : wall.owner.oid
-				})	
-				question.save(function(err){
-					question = question.toJSON()
-					can.authorize(question, 'question', 'answer', req.user, function(err, question){
-						res.send(question)
-					})					
+			Container.findById(wall.owner.oid, function(err, container){
+				User.findById(req.body.author, function(err, author){
+					var question = new Question({
+						content : req.body.content,
+						wall : req.body.wall,
+						walls : [req.body.wall],
+						author : author.id,		
+						streams : [author.stream, container.stream],
+						container : wall.owner.oid
+					})	
+					question.save(function(err){
+						question = question.toJSON()
+						can.authorize(question, 'question', 'answer', req.user, function(err, question){
+							res.send(question)
+						})					
+					})		
 				})		
-			})
+			})			
 		})		
 	})
 	

@@ -18,7 +18,7 @@ define([
 		},	
 		serialize : function(){			
 			var parent = Item.prototype.serialize.apply(this)		
-			return _.extend(parent,{})
+			return _.extend(parent, { wall : this.get('wall').serialize() })
 		},		
 		contentView : QuestionView,
 		pluginView : AnswersView,

@@ -20,8 +20,8 @@ var questionSchema = new mongoose.Schema({
 })
 
 questionSchema.statics.populateItem = function(doc, next){
-	var User = models.getModel('User')
-	User.populate(doc, 'answers.author', next)
+	var User = models.getModel('Question')
+	User.populate(doc, 'answers.author container', next)
 }
 
 questionSchema.plugin(isItem, { objectType : 'question' })

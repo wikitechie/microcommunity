@@ -60,7 +60,7 @@ exports.put = function(req, res){
 			var content = req.body.content
 			var summary = req.body.summary
 	
-			var streams = [req.user.stream, wikipage.stream ]
+			var streams = [ req.user.stream, wikipage.stream, wikipage.container.stream ]
 	
 			if (req.body.material){
 				streams.push(req.body.material.stream)

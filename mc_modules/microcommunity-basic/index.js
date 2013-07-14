@@ -67,6 +67,26 @@ module.exports = function(){
 			})		
 		}	
 	})
+	
+	app.get('/stream', someMaterialsSidebar, function(req, res){
+		Stream.globalStream(function(err, items){	
+			can.authorizeItems(items, req.user, function(err, items){
+				if (req.user){
+					var currentUser = req.user //just a small hack
+					req.user = req.user.toJSON()
+					can.authorize(req.user.wall, 'wall', 'publish', currentUser, function(err, wall){
+						res.loadPage('home', { 
+							items : items 
+						})				
+					})				
+				} else {
+					res.loadPage('home', { 
+						items : items 
+					})			
+				}			
+			})				
+		})		
+	})
 
 	//profile app
 	app.get('/profiles/:id', someMaterialsSidebar, function(req, res){	
