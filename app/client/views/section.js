@@ -27,8 +27,6 @@ define([
 			this.options.highlighted.save({
 				'section' : this.model.id
 			},{
-				success : function(){ console.log('success') },
-				error : function(){ console.log('error') },
 				wait : true
 			})
 		},
@@ -43,8 +41,12 @@ define([
 			this.attachements.show(new AttachementListView({ collection : this.model.get('attachements') }))
 			if (App.isContainerAdmin())
 				this.sectionToolbar.show(new SectionToolbarView({ model : this.model }))	
-			if (this.options.highlighted.get('section') == this.model.id)	
-				this.hightlightView()				
+
+			if (this.options.highlighted.get('section')){
+				if (this.options.highlighted.get('section') === this.model.id)	
+					this.hightlightView()							
+			}
+			
 		}				
 	})
 	

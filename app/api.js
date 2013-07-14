@@ -10,10 +10,13 @@ var mongoose = require('mongoose')
 module.exports = function(app){
 
 	app.post('/api/materials/:id/sections', /*fetchMaterial, user.can('add a section'),*/ function(req, res){
-		var section = req.body
+		var section = {
+			title : req.body.title,
+			description : req.body.description
+		}
 		Material.findByIdAndUpdate(req.params.id, { $push : { sections : section } }, function(err, material){	
 			res.send(200, section)
-		})
+		})		
 	})
 
 	app.post('/api/materials/:id/sections/:section/highlight', function(req, res){
@@ -24,18 +27,21 @@ module.exports = function(app){
 		})
 	})	
 	
-	app.post('/api/materials/:container/memberships', auth.ensureAuthenticated, function(req, res){
-		if (!req.container.isMember(req.user)){
-			req.container.newMembership(req.user)
+	app.post('/api/materials/:id/memberships', auth.ensureAuthenticated, function(req, res){
+		Material.findById(req.params.id, function(err, material){
+		if (!material.isMember(req.user)){
+			material.newMembership(req.user)
 		}			
-		req.container.addRole(req.user, 'mc:member')
-		req.container.save(function(err){
+		material.addRole(req.user, 'mc:member')
+		material.save(function(err){
+
 			if (!err) {
-				req.user.follow(req.container)
+				req.user.follow(material)
 				req.user.save(function(err, user){
-					res.send(200, req.container)	
+					res.send(200, material)	
 				})
 			}			
+		})
 		})
 	})
 	
