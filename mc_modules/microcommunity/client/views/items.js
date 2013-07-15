@@ -4,17 +4,29 @@ define([
 	'models/item',
 	'text!templates/items.html'
 ], function(Backbone, ItemView, Item, html){
+
+			
+	var ItemsFetch = Backbone.Collection.extend({
+		model : Item
+	})
+
 	var ItemsView = Backbone.Marionette.CompositeView.extend({
+	
 		initialize : function(options){
 			//options passed to each instance of ItemView
 			this.itemViewOptions = { 
-				type : options.type, 
-				wall : options.wall 
+				parent : this.model				
 			}
+			
+			//load more
 			this.base = this.collection.last().id
 			this.pageSize = 5
-			this.currentPage = 0				
+			this.currentPage = 0			
+			this.loadMoreCollection = new ItemsFetch()	
+			this.loadMoreCollection.url = this.model.url()
+							
 		},	
+		
 		template : html,
 		itemView : ItemView,	
 		events : {
@@ -37,16 +49,10 @@ define([
 		},
 		loadMore : function(){
 		
-			this.disableLoad()
-			
-			var ItemsFetch = Backbone.Collection.extend({
-				model : Item,
-				url : '/api/streams/global'
-			})
-			
-			var self = this		
-			var fetch = new ItemsFetch()
-			fetch.fetch({ 
+			this.disableLoad()			
+			var self = this
+
+			this.loadMoreCollection.fetch({ 
 				data : {
 					base : this.base,
 					pageSize : this.pageSize,
@@ -55,12 +61,20 @@ define([
 				success : function(collection, response){
 					self.currentPage++ 
 					self.enabledLoad() 
-					self.collection.add(response)					
+					if (response.length == 0){
+						self.setEndOfStream()
+					} else {
+						self.collection.add(response)					
+					}
+					
 				},
 				error : function(){ self.enabledLoad() }
-			})
-			
+			})			
 		
+		},
+		setEndOfStream : function(){
+			this.ui.loadMore.attr('disabled', true)	
+			this.ui.loadMore.text("No thing more to load")		
 		},
 		disableLoad : function(){
 			this.ui.spinner.css('visibility', 'visible')						

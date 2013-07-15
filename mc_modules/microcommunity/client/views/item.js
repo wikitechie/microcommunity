@@ -22,13 +22,7 @@ define([
 		}							
 	})
 
-
 	var ItemView = Backbone.Marionette.Layout.extend({	
-		initialize : function(options){
-			var opts = options || {}
-			this.type = opts.type || 'stream'
-			this.wall = opts.wall
-		},
 		template : html,
 		serializeData: function(){
 			return _.extend(this.model.serialize())
@@ -44,10 +38,7 @@ define([
 		
 			if (this.model.can('delete')){
 				this.deleteButton.show(new DeleteButton({ model : this.model }))
-			}			
-		
-			var itemViewType = this.type
-			var wall = this.wall
+			}
 			
 			/* this helper function takes a property (of the contentView)
 				 -> if it is a View it returns it
@@ -64,7 +55,7 @@ define([
 						normalized = property					
 					}			
 					else {
-						normalized = property(itemViewType, wall)
+						normalized = property()
 					}
 						
 				} else {

@@ -10,9 +10,17 @@ var wallSchema = new mongoose.Schema({
 	wallType : String
 })
 
-wallSchema.statics.loadItems = function(id, callback){
+wallSchema.statics.loadItems = function(id, base, page, pageSize, callback){
+
+	if (typeof base === 'function'){
+		callback = base
+		base = 0
+		page = 0
+		pageSize = 10
+	} 		
+
 	var Item = mongoose.model('Item')	
-	Item.fetchItems({ walls : id }, callback)	
+	Item.pager({ walls : id }, base, page, pageSize, callback)	
 }
 
 module.exports = wallSchema

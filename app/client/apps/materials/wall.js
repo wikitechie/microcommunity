@@ -30,12 +30,14 @@ define([
 			var Publisher = publiserhModule(App, App.publisher, options)		
 		}
 	
-		var options = { 
+		/*var options = { 
 			items : server.data.items, 
 			type : 'wall',
 			wall : material.get('wall')
-		}		
-		var Stream = streamModule(App, App.stream, options)		
+		}		*/
+		
+		material.get('wall').set('items', server.data.items)
+		var Stream = streamModule(App, App.stream, material.get('wall'))		
 		
 	})
 		

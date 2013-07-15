@@ -9,9 +9,9 @@ define([
 	
 	var Activity = Item.extend({
 		messageTemplate : function(type, wall){
-			if (wall && wall.get('owner').$ref == 'wikipages')
+			/*if (wall && wall.get('owner').$ref == 'wikipages')
 				return messageTemplateWall			
-			else 
+			else*/ 
 				return messageTemplateStream
 		},
 		serialize : function(){		

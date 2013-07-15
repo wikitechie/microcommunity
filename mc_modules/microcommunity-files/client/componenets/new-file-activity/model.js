@@ -7,7 +7,7 @@ define([
 ], function(Backbone, Item, File, FileView, Comments){
 	
 	var Activity = Item.extend({
-		messageTemplate : function(type, wall){
+		messageTemplate : function(wall){
 			if (!wall){
 				return 'uploaded a new file to a course'
 			} else {				

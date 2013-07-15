@@ -36,9 +36,8 @@ define([
 		var Publisher = publiserhModule(App, App.publisher, options)		
 	}
 
-	var options = { items : server.data.items, type : 'wall' }
-	var Stream = streamModule(App, App.stream, options)		
-		
+	profileUser.get('wall').set('items', server.data.items)
+	var Stream = streamModule(App, App.stream, profileUser.get('wall'))		
 		
 	return App
 	

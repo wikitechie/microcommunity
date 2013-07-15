@@ -5,9 +5,10 @@ define([
 	var MessageView = Backbone.Marionette.ItemView.extend({
 		className : 'activityMessage',
 		serializeData : function(){
-			return this.model.serialize()	  
-		},				
+			return _.extend(this.model.serialize())
+		}
 	})	
 
-	return MessageView	
+	return MessageView
+		
 })

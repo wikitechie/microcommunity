@@ -69,7 +69,7 @@ module.exports = function(){
 	})
 	
 	app.get('/stream', someMaterialsSidebar, function(req, res){
-		Stream.globalStream(0, 0, 10, function(err, items){	
+		Stream.globalStream(function(err, items){	
 			can.authorizeItems(items, req.user, function(err, items){
 				if (req.user){
 					var currentUser = req.user //just a small hack
@@ -88,18 +88,31 @@ module.exports = function(){
 		})		
 	})
 	
-	app.get('/api/streams/global', function(req, res){	
-		console.log(req.query)
+	app.get('/api/streams/:stream', function(req, res){	
 		var base = req.query.base ? req.query.base : 0				
 		var page = req.query.page ? req.query.page : 0
-		var pageSize = req.query.pageSize ? req.query.pageSize : 4			
-		Stream.globalStream(base, page, pageSize, function(err, items){
-			console.log(err)
-			console.log(items)
-			items.forEach(function(item){console.log(item.content)})
+		var pageSize = req.query.pageSize ? req.query.pageSize : 4	
+		
+		if (req.params.stream === 'global'){
+			Stream.globalStream(base, page, pageSize, function(err, items){
+				res.send(items)
+			})			
+		} else {
+			Stream.loadItems(req.params.stream, base, page, pageSize, function(err, items){
+				res.send(items)
+			})	
+		}				
+	})	
+	
+	app.get('/api/walls/:wall/:wallType', function(req, res){	
+		var base = req.query.base ? req.query.base : 0				
+		var page = req.query.page ? req.query.page : 0
+		var pageSize = req.query.pageSize ? req.query.pageSize : 4	
+
+		Wall.loadItems(req.params.wall, base, page, pageSize, function(err, items){
 			res.send(items)
-		})	
-	})
+		})				
+	})	
 	
 
 	//profile app
@@ -130,7 +143,7 @@ module.exports = function(){
 	})
 
 	//publisher api
-	app.post('/api/walls/user/post', function(req, res){	
+	app.post('/api/walls/:wall/user/post', function(req, res){	
 		User.findById(req.body.author, function(err, author){
 			var post = new Post({
 				content : req.body.content,

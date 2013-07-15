@@ -29,16 +29,10 @@ define([
 		}		
 		var Publisher = publiserhModule(App, App.publisher, options)		
 	}
-
-	var options = { 
-		items : server.data.items, 
-		type : 'wall',
-		wall : wikipage.get('wall')
-	}
-	var Stream = streamModule(App, App.wall, options)		
-		
-	return App
 	
+	wikipage.get('wall').set('items', server.data.items)
+	var Stream = streamModule(App, App.wall, wikipage.get('wall'))	
 	
 	return App
+	
 })

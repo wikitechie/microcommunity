@@ -9,7 +9,7 @@ var mongoose = require('mongoose')
 
 module.exports = function(app){
 
-	app.post('/api/walls/wikipage/post', function(req, res){
+	app.post('/api/walls/:wall/wikipage/post', function(req, res){
 	
 		Wall.findById(req.body.wall, function(err, wall){	
 			Wikipage.findById(wall.owner.oid, function(err, wikipage){	
@@ -27,6 +27,7 @@ module.exports = function(app){
 				})				
 			})		
 		})
+		
 	})
 
 	app.post('/api/publishers/wikipage-wall/photos', function(req, res){

@@ -79,7 +79,7 @@ module.exports = function(app){
 	})
 
 	//semester-wall
-	app.post('/api/walls/material/post', function(req, res){
+	app.post('/api/walls/:wall/material/post', function(req, res){
 		User.findById(req.body.author, function(err, author){
 			Wall.findById(req.body.wall, function(err, wall){
 				Material.findById(wall.owner.oid, function(err, container){

@@ -28,16 +28,32 @@ define([
 					return material.link()
 					break																							
 			}			
-		},				
+		},	
+		defaults : {
+			objectType : 'wall'
+		},			
 		serialize : function(){
 			return _.extend(this.toJSON(), { link : this.link() })
 		},
 		url : function(){
 			if (!this.get('wallType')) { throw "Wall: Undefined wallType error" }
 			else {
-				return '/api/walls/' + this.get('wallType')
+				return '/api/walls/' + this.id + '/' + this.get('wallType')
 			}			
 		},	
+		relations : [
+			{
+				type : Backbone.HasMany,
+				key : 'items',
+				relatedModel : 'Core.Item',
+				collectionType : 'Core.Items',
+				/*reverseRelation : {
+					key : 'parentWall',
+					includeInJSON : false
+				}*/
+			}				
+		
+		]		
 	})
 	
 	return Wall

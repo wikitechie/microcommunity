@@ -5,8 +5,11 @@ define([
 	'views/course-header',
 	'models/material',	
 	'modules/publisher',
-	'modules/stream'
-], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule){
+	'modules/stream',
+	'models/stream',
+], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule, Stream){
+
+	console.log(Stream)
 	
 	App.addRegions({
 		publisher : '#publisher-region',
@@ -17,13 +20,12 @@ define([
 	App.addInitializer(function(){
 	
 		var material = Material.findOrCreate(server.data.material)
+				
 		App.courseHeader.show(new CourseHeaderView({ model : material }))
 		
-		var options = { 
-			items : server.data.items, 
-			type : 'stream',
-		}
-		var Stream = streamModule(App, App.stream, options)				
+		var stream = new Core.Stream({ _id : material.get('stream'), items : server.data.items })
+				
+		var Stream = streamModule(App, App.stream, stream)				
 		
 			
 	})		

@@ -2,11 +2,12 @@ define([
   "bb",
 	'views/items'  
 ], function(Backbone, ItemsView){
-  return function(App, Region, options){
+  return function(App, region, stream){
   
-		var StreamController = Marionette.Controller.extend({
+		var ItemsController = Marionette.Controller.extend({
 			initialize : function(options){
-				this.collection = new Core.Items(options.items, { type : options.type })										
+				//this.collection = new Core.Items(options.items, { type : options.type })	
+				this.collection = options.items									
 			},
 			prependItem : function(item){
 				this.collection.add(item, { at : 0 })
@@ -15,24 +16,22 @@ define([
   
 		return App.module('Stream', function(Stream, App){
 
-			Stream.addInitializer(function(){		
-				
-				var controller = new StreamController({
-					items : options.items,
-					type : options.type
+			Stream.addInitializer(function(){	
+			
+				var controller = new ItemsController({
+					items : stream.get('items')
 				})		
 
-				var items = new ItemsView({	
-					collection: controller.collection,
-					type : options.type,
-					wall : options.wall
+				var itemsView = new ItemsView({	
+					collection: stream.get('items'),
+					model : stream				
 				})			
 				
 				App.vent.on('publisher:newitem', function(item){				
 					controller.prependItem(item) 
 				})				
 								
-				Region.show(items)										
+				region.show(itemsView)										
 			})			
 		})	  	
 	}

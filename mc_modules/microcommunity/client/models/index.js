@@ -4,9 +4,10 @@ define([
 	'models/items',
 	'models/items-index',
 	'models/wall',
+	'models/stream',
 	'jquery',
 	'bb'
-], function(User, Item, Items, ItemsIndex, Wall, $, Backbone){
+], function(User, Item, Items, ItemsIndex, Wall, Stream, $, Backbone){
 	
 	//defining Core as a global variable. This is important to make BackboneRelations functional
 	
@@ -16,7 +17,8 @@ define([
 		User : User,
 		Item : Item,
 		Items : Items,
-		Wall : Wall
+		Wall : Wall,
+		Stream : Stream
 	}
 	
 	return Core

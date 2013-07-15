@@ -40,7 +40,6 @@ var pluginPaths = []
 
 module.exports.registerApp = function(path){
 	mainPath = module.exports.path = path
-	console.log(module.exports.path)
 }
 
 module.exports.registerPlugin = function(path){

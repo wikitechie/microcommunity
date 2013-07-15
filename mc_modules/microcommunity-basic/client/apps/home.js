@@ -5,8 +5,9 @@ define([
 	'modules/stream',
 	'models/materials',
 	'views/publishers/post',
-	'views/publishers/photo'	
-], function(App, Models, publiserhModule, streamModule, Materials, PostPublisher, PhotoPublisher){
+	'views/publishers/photo',
+	'models/stream'
+], function(App, Models, publiserhModule, streamModule, Materials, PostPublisher, PhotoPublisher, Stream){
 
 	App.addRegions({
 		publisher : '#publisher-region',
@@ -21,9 +22,10 @@ define([
 		}		
 		var Publisher = publiserhModule(App, App.publisher, options)		
 	}
-
-	var options = { items : server.data.items, type : 'stream' }	
-	var Stream = streamModule(App, App.stream, options)		
+	
+	var globalStream = new Stream({ _id : 'global', items : server.data.items })
+		
+	var Stream = streamModule(App, App.stream, globalStream)		
 		
 	return App
 	

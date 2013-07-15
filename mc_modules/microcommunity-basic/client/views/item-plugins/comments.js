@@ -89,6 +89,11 @@ define([
 		},
 		onRender : function(){
 			var comments = this.model.get('comments')
+			
+			if (comments.length > 0 || this.model.can('comment')){
+				$(this.el).find('ul').prepend("<hr />")
+			}
+			
 			this.commentsList.show(new CommentsList({ collection : comments }))
 			if (this.model.can('comment')){
 				var options = { model : this.model, collection : comments, commenter : App.currentUser }			
