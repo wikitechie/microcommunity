@@ -13,9 +13,11 @@ streamSchema.statics.loadItems = function(id, callback){
 	Item.fetchItems({ streams : id }, callback)	
 }
 
-streamSchema.statics.globalStream = function(callback){
+streamSchema.statics.globalStream = function(base, page, pageSize, callback){
+
 	var Item = mongoose.model('Item')	
-	Item.fetchItems({}, callback)
+	Item.pager({}, base, page, pageSize , callback)
+	
 }
 
 module.exports = streamSchema

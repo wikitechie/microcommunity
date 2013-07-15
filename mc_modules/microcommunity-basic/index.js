@@ -69,7 +69,7 @@ module.exports = function(){
 	})
 	
 	app.get('/stream', someMaterialsSidebar, function(req, res){
-		Stream.globalStream(function(err, items){	
+		Stream.globalStream(0, 0, 10, function(err, items){	
 			can.authorizeItems(items, req.user, function(err, items){
 				if (req.user){
 					var currentUser = req.user //just a small hack
@@ -87,6 +87,20 @@ module.exports = function(){
 			})				
 		})		
 	})
+	
+	app.get('/api/streams/global', function(req, res){	
+		console.log(req.query)
+		var base = req.query.base ? req.query.base : 0				
+		var page = req.query.page ? req.query.page : 0
+		var pageSize = req.query.pageSize ? req.query.pageSize : 4			
+		Stream.globalStream(base, page, pageSize, function(err, items){
+			console.log(err)
+			console.log(items)
+			items.forEach(function(item){console.log(item.content)})
+			res.send(items)
+		})	
+	})
+	
 
 	//profile app
 	app.get('/profiles/:id', someMaterialsSidebar, function(req, res){	
