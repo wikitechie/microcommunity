@@ -20,7 +20,7 @@ define([
 			var self = this
 			this.model.save({ status : 'approved' }, {
 				success : function(model){
-					self.remove()						
+					self.model.destroy()						
 				}
 			})
 		},
@@ -28,7 +28,7 @@ define([
 			var self = this
 			this.model.save({ status : 'decline' }, {
 				success : function(model){
-					self.remove()					
+					self.model.destroy()					
 				}
 			})		
 		}				

@@ -53,7 +53,7 @@ define([
 		initialize : function(){
 			var Requests = Backbone.Collection.extend({ model : Request })
 			var requests = new Requests(this.model.get('requests'))
-			this.list = new MembershipRequestsModal({ model: this.model, collection : requests })		
+			this.list = new MembershipRequestsModal({ model: this.model, collection : requests })	
 		},
 		tagName : 'a',
 		className : 'btn btn-primary',
