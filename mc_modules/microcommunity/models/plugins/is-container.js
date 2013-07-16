@@ -22,18 +22,27 @@ module.exports = function isContainer(schema, options){
 	
 	var membershipsSchema = new mongoose.Schema({
 		user : { type : mongoose.Schema.Types.ObjectId, ref : 'User' },
-		roles : [ String ]
-	})	
+		roles : [ String ]		
+	})
+
+	var requestsSchema = new mongoose.Schema({
+		user : { type : mongoose.Schema.Types.ObjectId, ref : 'User' }
+	})		
 
 	schema.add({
 		containerType : { type : String, default : containerType },
 		roles : [ String ],
-		memberships : [ membershipsSchema ]			
+		memberships : [ membershipsSchema ],
+		requests : [ requestsSchema ]	
 	})
 	
 	schema.methods.populateMemberships = function(callback){
 		this.populate('memberships.user', callback)		
 	}
+	
+	schema.methods.populateRequests = function(callback){
+		this.populate('requests.user', callback)		
+	}	
 	
 	//adding default roles	
 	schema.pre('save', function(next){
@@ -96,11 +105,19 @@ module.exports = function isContainer(schema, options){
 	
 	schema.methods.newMembership = function(user){
 		if (!this.isMember(user)){
-			return this.memberships.push({ user : user })			
+			return this.memberships.push({ user : user.id })
 		} else {
 			return false
 		}		
 	}
+	
+	schema.methods.newMembershipRequest = function(user){
+		if (!this.isMember(user)){
+			return this.requests.push({ user : user })			
+		} else {
+			return false
+		}		
+	}	
 
 	schema.methods.addRole = function(user, roleName){		
 		var membership = this.isMember(user)
@@ -111,8 +128,8 @@ module.exports = function isContainer(schema, options){
 			
 		if (!membership)
 			throw new Error("MicroCommunity: Container of type '" + this.containerType + "' does not have member '" + user.id + "'")	
-			
-		var index = this.membershipIndex(membership)
+
+		var index = this.memberships.indexOf(membership)
 		this.memberships[index].roles.push(role)	
 				
 	}	

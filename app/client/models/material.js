@@ -1,8 +1,9 @@
 define([
 	'bb',
 	'models/section',
-	'models/user'
-], function(Backbone, Section, User){
+	'models/user',
+	'models/request'
+], function(Backbone, Section, User, Request){
 	
 	var Course = Backbone.RelationalModel.extend({
 		defaults : {
@@ -39,7 +40,7 @@ define([
 			reverseRelation : {
 				key : 'parent'
 			}	
-		},
+		},	
 		{
 			type : Backbone.HasMany,
 			key : 'members',

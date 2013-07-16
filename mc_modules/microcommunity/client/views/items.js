@@ -19,7 +19,7 @@ define([
 			}
 			
 			//load more
-			this.base = this.collection.last().id
+			this.base = this.collection.last() ? this.collection.last().id : 0
 			this.pageSize = 5
 			this.currentPage = 0			
 			this.loadMoreCollection = new ItemsFetch()	

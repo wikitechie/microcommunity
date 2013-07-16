@@ -7,14 +7,17 @@ define([
 	'modules/publisher',
 	'modules/stream',
 	'views/publishers/post',
-	'views/publishers/question'
-], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule, PostPublisher, QuestionPublisher){
+	'views/publishers/question',
+	'views/membership-requests',
+	'models/request'
+], function(App, BasicSidebar, MaterialSidebar, CourseHeaderView, Material, publiserhModule, streamModule, PostPublisher, QuestionPublisher, MembershipRequests, Request){
 	
 	
 	App.addRegions({
 		publisher : '#publisher-region',
 		stream : '#stream-region',
-		courseHeader : '#course-header-region'				
+		courseHeader : '#course-header-region',
+		requests : '#requests-region'			
 	})
 		
 	App.addInitializer(function(){
@@ -37,7 +40,7 @@ define([
 		}		*/
 		
 		material.get('wall').set('items', server.data.items)
-		var Stream = streamModule(App, App.stream, material.get('wall'))		
+		var Stream = streamModule(App, App.stream, material.get('wall'))			
 		
 	})
 		

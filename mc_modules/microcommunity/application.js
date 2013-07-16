@@ -60,14 +60,16 @@ function loadPageMiddleware(app, path){
 function containerMiddleware(req, res, next, id){
 	var Container = models.getModel('Container')
 	Container.findById(id, function(err, container){
-		req.container = container
-		if (req.user){
-			var membership = req.container.isMember(req.user)
-			if (membership){
-				req.containerMembership = membership
-			}
-		}						
-		next()
+		container.populateRequests(function(err, container){
+			req.container = container
+			if (req.user){
+				var membership = req.container.isMember(req.user)
+				if (membership){
+					req.containerMembership = membership
+				}
+			}						
+			next()
+		})		
 	})
 }  
 

@@ -3,8 +3,10 @@ define([
 	'text!templates/course-header.html',
 	'models/membership',
 	'text!templates/container-settings-button.html',
-	'views/modal'
-], function(Backbone, html, Membership, dropdownHtml, Modal){	
+	'views/modal',
+	'models/request',
+	'views/membership-requests-modal'
+], function(Backbone, html, Membership, dropdownHtml, Modal, Request, MembershipRequestsModal){	
 
 	var ParticipateButton = Backbone.Marionette.ItemView.extend({
 		tagName : "button",
@@ -28,26 +30,53 @@ define([
 			}
 		},
 		template : "Participate",
-		onRender : function(){		
-			if (this.isDisabled()){
+		onRender : function(){
+			var result = _.find(this.model.get('requests'), function(request){
+				return (request.user._id == App.currentUser.id)
+			})		
+			if (result){
+				$(this.el).html("Request Pending")
 				$(this.el).addClass('disabled')
-			}
+			}			
 		},
 		isDisabled : function(){
 			return (App.isContainerMember())
 		},
 		disable : function(){
 			$(this.el).addClass('disabled')	
-			this.template = "You are a member now!"
+			this.template = "Request pending!"
 			this.render()	
 		}
 	})
 	
-	var SettingsButton = Backbone.Marionette.CompositeView.extend({
+	var RequestsButton = Backbone.Marionette.ItemView.extend({
+		initialize : function(){
+			var Requests = Backbone.Collection.extend({ model : Request })
+			var requests = new Requests(this.model.get('requests'))
+			this.list = new MembershipRequestsModal({ model: this.model, collection : requests })		
+		},
+		tagName : 'a',
+		className : 'btn btn-primary',
+		template : "<span class=\"badge badge-info\"><%= count %></span>	 Requests",
+		events : {
+			'click' : 'click'
+		},
+		serializeData : function(){
+			return { count : this.model.get('requests').length }
+		},
+		click : function(){
+			this.list.show()
+		}			
+	})
+	
+	var SettingsButton = Backbone.Marionette.Layout.extend({
 		template : dropdownHtml,
 		events : {
 			'click .leave-btn' : 'leave'
-		}, 
+		},
+		regions : {
+			requestsButton : '.requests-btn-region'
+		},
 		leave : function(e){
 			e.preventDefault()
 			
@@ -57,7 +86,12 @@ define([
 					window.location.href = '/'
 				}
 			})
-			modal.show()
+			modal.show()			
+		},
+		onRender : function(){		
+			if (App.isContainerAdmin()){		
+				this.requestsButton.show(new RequestsButton({ model : this.model }))			
+			}				
 		}
 	})	
 
@@ -73,7 +107,7 @@ define([
 				} else {
 					this.button.show(new ParticipateButton({ model : this.model }))
 				}	
-			}		
+			}
 		}				
 	})		
 	
