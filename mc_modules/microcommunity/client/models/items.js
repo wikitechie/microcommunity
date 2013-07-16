@@ -4,11 +4,7 @@ define([
 ],function(Item, Backbone){
 
 	var Items = Backbone.Collection.extend({
-		model : Item,
-		initialize : function(models, options){
-			if (options && options.type)
-				this.type = options.type
-		}		
+		model : Item	
 	})
 		
 	return Items

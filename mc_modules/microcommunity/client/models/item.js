@@ -14,11 +14,15 @@ define([
 		serialize : function(){
 			if (this.get('wall'))
 				var wall = this.get('wall').serialize()
+			
+			var parent
+			if (this.collection.parent)
+				parent = this.collection.parent.toJSON()
 					
 			return _.extend(this.toJSON(), {
 				author: this.get('author').serialize(),
 				wall : wall,
-				parentType : this.collection.type
+				parent : parent
 			})
 		},
 		

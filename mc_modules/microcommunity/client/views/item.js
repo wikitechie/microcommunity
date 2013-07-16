@@ -44,18 +44,20 @@ define([
 				 -> if it is a View it returns it
 				 -> if it is a function, it calls it passing itemViewType (wall or stream) and the wall object
 				 -> else it returns it as it is
-			*/			
+			*/
+			
+			var parent = this.options.parent
 		
 			function normalizeProperty(property){
 				var normalized
 				if ('function' == typeof property){
-					//testing if the function is an ItemView	
+					//testing if the function is an ItemView
 					var instance = new property()
 					if (instance instanceof Backbone.Marionette.ItemView){
 						normalized = property					
-					}			
+					}
 					else {
-						normalized = property()
+						normalized = property(parent)
 					}
 						
 				} else {

@@ -95,11 +95,15 @@ module.exports = function(){
 		
 		if (req.params.stream === 'global'){
 			Stream.globalStream(base, page, pageSize, function(err, items){
-				res.send(items)
+				can.authorizeItems(items, req.user, function(err, items){
+					res.send(items)
+				})				
 			})			
 		} else {
 			Stream.loadItems(req.params.stream, base, page, pageSize, function(err, items){
-				res.send(items)
+				can.authorizeItems(items, req.user, function(err, items){
+					res.send(items)
+				})
 			})	
 		}				
 	})	
@@ -110,7 +114,9 @@ module.exports = function(){
 		var pageSize = req.query.pageSize ? req.query.pageSize : 4	
 
 		Wall.loadItems(req.params.wall, base, page, pageSize, function(err, items){
-			res.send(items)
+			can.authorizeItems(items, req.user, function(err, items){
+				res.send(items)
+			})
 		})				
 	})	
 	

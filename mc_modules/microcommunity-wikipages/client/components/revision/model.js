@@ -9,8 +9,8 @@ define([
 ], function(Backbone, Item, Wikipage, DiffView, Comments, messageTemplateWall, messageTemplateStream){
 	
 	var Revision = Item.extend({
-		messageTemplate : function(type){
-			if (type == 'wall')
+		messageTemplate : function(parent){
+			if (parent && parent.get('objectType') == 'wall')
 				return messageTemplateWall
 			else
 				return messageTemplateStream

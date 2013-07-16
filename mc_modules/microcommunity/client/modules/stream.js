@@ -6,8 +6,8 @@ define([
   
 		var ItemsController = Marionette.Controller.extend({
 			initialize : function(options){
-				//this.collection = new Core.Items(options.items, { type : options.type })	
-				this.collection = options.items									
+				this.collection = options.items	
+				this.collection.parent = stream						
 			},
 			prependItem : function(item){
 				this.collection.add(item, { at : 0 })
