@@ -207,16 +207,27 @@ module.exports = function(){
 		comment.published = Date()
 				
 		var Post = microcommunity.model('Post')
-
 		var update = { $push : { comments : comment } }
 		var options = { select : 'comments' }
 		Post.findByIdAndUpdate(req.params.item, update, options, function(err, object){
 			var l = object.comments.length
 			var comment = object.comments[l-1]
-			res.send(comment)
-		})
-		
+			can.authorize(comment, 'comment', 'delete', req.user, function(err, comment){
+				res.send(comment)
+			})		
+			
+		})		
 	})
+	
+	app.delete('/api/items/:item/comments/:comment', function(req, res){				
+		var Post = microcommunity.model('Post')
+		Post.findById(req.params.item, function(err, item){
+			item.comments.remove({ _id : req.params.comment})
+			item.save(function(err){
+				res.send(200, {})
+			})		
+		})		
+	})	
 	
 	
 	return app

@@ -5,10 +5,13 @@ define([
 	var Comment = Backbone.RelationalModel.extend({
 		idAttribute : '_id'	,
 		urlRoot : function(){
-			return '/api/items/' + this.get('item') + '/comments'
+			return '/api/items/' + this.get('item').id + '/comments'
 		},
 		serialize : function(){					
 			return _.extend(this.toJSON(), { author: this.get('author').serialize()	})
+		},
+		defaults : {
+			published : Date()
 		},
 		relations : [
 			{

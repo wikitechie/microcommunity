@@ -3,6 +3,7 @@
 		<img class="media-object" src="<%= author.avatar %>" width="30px" />
 	</a>
 	<div class="media-body">
+		<div class="delete-comment-region pull-right"></div>
 		<p><a href="<%= author.link %>"><%= author.displayName %></a> <%= content %> · <small><%= moment(published).fromNow() %></small></p> 	
 		<hr/>							
 	</div>

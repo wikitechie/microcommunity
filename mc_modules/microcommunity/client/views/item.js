@@ -7,22 +7,6 @@ define([
 	'views/item/menu'
 ], function(Backbone, html, ActionsView, MessageView, CommentsThread, Menu){
 
-
-	var DeleteButton = Backbone.Marionette.ItemView.extend({ 
-		tagName : 'button',
-		className : 'close',
-		template : "&times;",
-		events : {
-			'click' : 'deleteButton'
-		},
-		deleteButton : function(e){
-			e.preventDefault()
-			if (confirm('Are you sure you want to delete this item?')){
-				this.model.destroy({ wait : true })
-			}
-		}							
-	})
-
 	var ItemView = Backbone.Marionette.Layout.extend({	
 		template : html,
 		serializeData: function(){

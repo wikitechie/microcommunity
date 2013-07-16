@@ -6,15 +6,45 @@ define([
 	'models/comment',
 ], function(Backbone, html, commentHTML, commentFormHTML, Comment){
 
-	var CommentView = Backbone.Marionette.ItemView.extend({
+	var DeleteButton = Backbone.Marionette.ItemView.extend({ 
+		tagName : 'button',
+		className : 'close',
+		template : "&times;",
+		events : {
+			'click' : 'deleteButton'
+		},
+		deleteButton : function(e){
+			e.preventDefault()
+			if (confirm('Are you sure you want to delete this item?')){
+				this.model.destroy({ wait : true })
+			}
+		}							
+	})
+
+	var CommentView = Backbone.Marionette.Layout.extend({
 		template : commentHTML,
 		serializeData: function(){
 			return _.extend(this.model.serialize())
-		}		
+		},
+		regions : {
+			deleteComment : '.delete-comment-region'		
+		}, 
+		onRender : function(){
+			if (this.model.can('delete'))
+				this.deleteComment.show(new DeleteButton({ model : this.model }))		
+		}
+		
 	})	
 	var CommentsList = Backbone.Marionette.CompositeView.extend({
 		itemView : CommentView,
-		template : ''			
+		template : '',
+		appendHtml : function(collectionView, itemView, index){
+			//some models are added automatically by BackboneRelational before they are actually saved
+			//so we just check if the model is new or not
+			if (!itemView.model.isNew()) {
+				$(collectionView.el).append(itemView.el)	
+			}
+		}					
 	})	
 
 	var CommentsForm = Backbone.Marionette.ItemView.extend({
@@ -54,6 +84,7 @@ define([
 			var self = this			
 			comment.save({}, {
 				success : function(model){ 
+					self.collection.remove(model)				
 					self.collection.add(model)
 					self.enable()
 					self.reset()					

@@ -36,6 +36,7 @@ module.exports.define = function(objectType, action, func){
 exports.define('item', 'comment', require('./can/item-comment'))
 exports.define('item', 'delete', require('./can/item-delete'))
 exports.define('wall', 'publish', require('./can/wall-publish'))
+exports.define('comment', 'delete', require('./can/comment-delete'))
 
 
 module.exports.helpers = require('./can/helpers')

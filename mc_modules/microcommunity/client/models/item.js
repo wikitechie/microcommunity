@@ -47,10 +47,10 @@ define([
 				key : 'comments',
 				relatedModel : Comment,
 				collectionType : Comments,
-				/*reverseRelation : {
+				reverseRelation : {
 					key : 'item',
 					includeInJSON : false
-				}*/
+				}
 			}				
 		]
 						
