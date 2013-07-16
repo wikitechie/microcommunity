@@ -113,7 +113,7 @@ define([
 			var material = this.model.get('parent').id			
 			
 			var attachement = new Attachement({ 
-				section : section,
+				section : this.model.id,
 				material : material,
 				title : this.ui.title.val(),
 				description : this.ui.description.val(),

@@ -3,7 +3,7 @@ define([
 	'models/item',
 	'models/file',
 	'componenets/new-file-activity/file-view',
-	'views/item-plugins/comments',	
+	'views/item-plugins/comments'
 ], function(Backbone, Item, File, FileView, Comments){
 	
 	var Activity = Item.extend({

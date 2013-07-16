@@ -5,8 +5,15 @@ define([
 	'views/sidebars/basic',
 	'views/sidebars/sidebars',
 	'models/materials',
-	'can'
-], function(Backbone, Models, Membership, basicSidebar, SidebarsView, Materials, can){
+	'can',
+	
+	//modules for configuration
+	'views/pin-attachement-modal',
+	'models/material',
+	'components/activity/model',	
+	'componenets/new-file-activity/model',		
+		
+], function(Backbone, Models, Membership, basicSidebar, SidebarsView, Materials, can, PinAttachementModal, Material, NewWikipageActivity, NewFileActivity){
 
 
 	var MCApp = Backbone.Marionette.Application.extend({
@@ -83,6 +90,36 @@ define([
 			App.sidebar.show(new SidebarsView({ collection : sidebars }))	
 		})	
 	}	
+	
+	//App configurations
+	//#TODO separate this part of file and make it dynamic
+	
+	function pinResourceMenuItem(resource, prototype){
+		var menuItem = { 
+			name : 'pin-outline', 
+			label : 'Pin to outline...', 
+			handler : function(model){	
+				var material = Material.findOrCreate(server.currentContainer)				
+				var pinAttachement = new PinAttachementModal({ 
+					model : material, 
+					resource : model.get(resource)
+				})
+				pinAttachement.show()				
+			},
+			condition : function(model){
+				if (server.currentContainer && App.isContainerAdmin()) return true
+				else return false
+			}
+		}
+		
+		if (!prototype.menu) prototype.menu = []
+		prototype.menu.push(menuItem)
+				
+	}
+	
+	pinResourceMenuItem('wikipage', NewWikipageActivity.prototype)
+	pinResourceMenuItem('file', NewFileActivity.prototype)	
+	
 	
 	return App
 })

@@ -12,11 +12,16 @@ define([
 		},
 		click : function(e){
 			e.preventDefault()
-			this.model.collection.trigger(this.model.get('name'))
+			this.model.collection.trigger(this.model.get('name'), this.options.item)
 		}		
 	})
 
 	var ItemMenuView = Backbone.Marionette.CompositeView.extend({
+		itemViewOptions : function(){
+			return {
+				item : this.model
+			}
+		},
 		itemView : MenuEntry, 
 		template : html,
 		appendHtml : function(collectionView, itemView){

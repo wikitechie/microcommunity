@@ -39,17 +39,24 @@ define([
 		constructMenu : function(){	
 		
 			var menu = new Backbone.Collection()
+			
+			var self = this
+			
+			if (this.model.menu)			
+			this.model.menu.forEach(function(menuItem){
+				if (menuItem.condition(self.model)){
+					menu.add({ label : menuItem.label, name : menuItem.name })
+					menu.on(menuItem.name, menuItem.handler, self)				
+				}			
+			})
 						
 			if (this.model.can('delete')){			
-			
-				menu.add({ label : 'Delete', name : 'delete' })
-			
+				menu.add({ label : 'Delete', name : 'delete' })			
 				menu.on('delete', function(){
 					if (confirm('Are you sure you want to delete this item?')){
 						this.model.destroy({ wait : true })
 					}
-				}, this)			
-
+				}, this)
 			}
 			
 			if (menu.length > 0)						

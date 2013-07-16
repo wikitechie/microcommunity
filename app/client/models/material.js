@@ -9,6 +9,7 @@ define([
 			'thumbnailPath' : '/publication.png'
 		}
 	})
+	
 	var Material = Backbone.RelationalModel.extend({
 	initialize : function(data){
 		var members = _.pluck(data.memberships, 'user')	
@@ -20,7 +21,8 @@ define([
 	idAttribute : '_id',
 	link : function(){
 		return '/materials/' + this.id
-	},		
+	},	
+	urlRoot : '/api/materials/',	
 	serialize : function(){
 		return _.extend(this.toJSON(), { link : this.link() })
 	},

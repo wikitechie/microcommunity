@@ -21,7 +21,7 @@ define([
 		serialize : function(){		
 			var parent = Item.prototype.serialize.apply(this)		
 			return _.extend(parent, { wikipage : this.get('wikipage').serialize() })
-		},		
+		},	
 		contentView : DiffView,
 		pluginView : Comments,
 		relations : [

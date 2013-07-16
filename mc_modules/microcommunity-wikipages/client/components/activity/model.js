@@ -4,7 +4,7 @@ define([
 	'models/wikipage',
 	'components/activity/views/content',
 	'text!components/activity/templates/wall-message.html',
-	'text!components/activity/templates/stream-message.html'		
+	'text!components/activity/templates/stream-message.html',
 ], function(Backbone, Item, Wikipage, ActivityView, messageTemplateWall, messageTemplateStream){
 	
 	var Activity = Item.extend({
@@ -12,8 +12,10 @@ define([
 			if (parent){
 				if (parent.get('objectType') === 'wall' && parent.get('owner').$ref == 'wikipages')
 					return messageTemplateWall		
-			} else
-				return messageTemplateStream			
+				else {
+					return messageTemplateStream			
+				}
+			}				
 		},
 		serialize : function(){		
 			var parent = Item.prototype.serialize.apply(this)		
@@ -21,10 +23,12 @@ define([
 		},
 		contentView : function(parent){
 			if (parent){
-				if (parent.get('objectType') === 'wall' && parent.get('owner').$ref == 'wikipages')
+				if (parent.get('objectType') === 'wall' && parent.get('owner').$ref == 'wikipages'){
 					return false		
-			} else
-				return ActivityView	
+				} else {
+					return ActivityView	
+				}				
+			} 			
 		},
 		relations : [
 			{

@@ -9,6 +9,12 @@ var mongoose = require('mongoose')
 
 module.exports = function(app){
 
+	app.get('/api/materials/:material', function(req, res){
+		Material.findById(req.params.material, function(err, material){
+			res.send(material)
+		})
+	})
+
 	app.post('/api/materials/:id/sections', /*fetchMaterial, user.can('add a section'),*/ function(req, res){
 		var section = {
 			title : req.body.title,
@@ -57,23 +63,20 @@ module.exports = function(app){
 
 	//adding a new section
 	app.post('/api/materials/:material/sections/:section/attachements', function(req, res){	
+	
+		//preparing attachment
 		var attachement = req.body
 		var objectType = models.convert(req.body.object.type, 'object', 'collection')
 		var objectId = req.body.object.id
 		attachement.object = new mongoose.Types.DBRef(objectType, objectId)
-	
-		var section = req.params.section
-	
-		var sectionIndex = 'sections.' + section + '.attachements'
-	
-		var update = {}
-		update[sectionIndex] = attachement
 		
-		Material.findByIdAndUpdate(
-			req.params.material,
-			{ $push : update }, 
-			function(err, material){
-				res.send(200, attachement)
+		//query and update objects
+		var query = { _id : req.params.material, 'sections._id' : req.params.section }			
+		var update = 	{ $push : { 'sections.$.attachements' :  attachement } }
+		
+		Material.findOneAndUpdate(query, update, function(err, material){
+			console.log(err)
+			res.send(200, attachement)
 		})
 	
 	})
