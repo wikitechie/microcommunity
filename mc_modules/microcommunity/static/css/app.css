@@ -8,11 +8,11 @@
   float: left;
 }
 
-.item-close {
+.menu-region {
     display: none;
 }
 
-.item:hover .item-close {
+.item:hover .menu-region {
     display: block;
 }
 

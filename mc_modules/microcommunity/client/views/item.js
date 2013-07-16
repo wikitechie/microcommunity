@@ -3,8 +3,9 @@ define([
 	'text!templates/item.html',
 	'views/item/actions',
 	'views/item/message',
-	'views/item-plugins/comments'
-], function(Backbone, html, ActionsView, MessageView, CommentsThread){
+	'views/item-plugins/comments',
+	'views/item/menu'
+], function(Backbone, html, ActionsView, MessageView, CommentsThread, Menu){
 
 
 	var DeleteButton = Backbone.Marionette.ItemView.extend({ 
@@ -32,13 +33,33 @@ define([
 			message : '.message-region',
 			actions : '.actions-region',
 			plugin  : '.plugin-region',
-			deleteButton : '.item-close'
-		},		
-		defaultRenderer : function(){	
+			menu : '.menu-region'
+		},
 		
-			if (this.model.can('delete')){
-				this.deleteButton.show(new DeleteButton({ model : this.model }))
+		constructMenu : function(){	
+		
+			var menu = new Backbone.Collection()
+						
+			if (this.model.can('delete')){			
+			
+				menu.add({ label : 'Delete', name : 'delete' })
+			
+				menu.on('delete', function(){
+					if (confirm('Are you sure you want to delete this item?')){
+						this.model.destroy({ wait : true })
+					}
+				}, this)			
+
 			}
+			
+			if (menu.length > 0)						
+				this.menu.show(new Menu({ model : this.model, collection : menu }))		
+			
+		},
+				
+		defaultRenderer : function(){		
+		
+			this.constructMenu()
 			
 			/* this helper function takes a property (of the contentView)
 				 -> if it is a View it returns it

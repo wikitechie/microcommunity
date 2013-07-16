@@ -166,8 +166,8 @@ module.exports = function(){
 		})
 	})
 	
-	app.delete(/^\/api\/walls\/(\w+)\/(\w+)\/(\w+)/, function(req, res){
-		Item.findById(req.params[2], function(err, item){
+	app.delete(/^\/api\/walls\/(\w+)\/(\w+)\/(\w+)\/(\w+)/, function(req, res){
+		Item.findById(req.params[3], function(err, item){
 			item.remove(function(err){
 				if (!err)
 					res.send(200, {})
