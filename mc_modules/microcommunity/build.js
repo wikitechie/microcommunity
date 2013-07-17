@@ -23,7 +23,7 @@ function mergeFiles(mcModules, path, callback){
 	})		
 }
 
-function generateItemsIndex(mcModules, path, callback){
+function generateItemsIndex(mcModules, destinatinoPath, callback){
 
 	var templateFile = __dirname + '/build-templates/items-index-template.js'
 	var self = this
@@ -36,12 +36,12 @@ function generateItemsIndex(mcModules, path, callback){
 			newPaths.push(newPath)	
 		}
 		var file = _.template(template)({ paths : newPaths.toString() })
-		var itemsIndexPath = path + '/'+ mergingFolder +'/models/items-index.js'
+		var itemsIndexPath = destinatinoPath + '/'+ mergingFolder +'/models/items-index.js'
 		fs.writeFile(itemsIndexPath, file, callback)
 	})
 }
 
-function generateBuildFile(mcModules, path, callback){
+function generateBuildFile(mcModules, destinatinoPath, callback){
 	var templateFile = __dirname + '/build-templates/build-template.js'
 	fs.readFile(templateFile, 'utf8', function (err, template) {
 		var modulesList = []
@@ -52,7 +52,7 @@ function generateBuildFile(mcModules, path, callback){
 			}
 		}
 		var file = _.template(template)({ modules : JSON.stringify(modulesList) })
-		var itemsIndexPath = path + '/' + mergingFolder + '/build.js'
+		var itemsIndexPath = destinatinoPath + '/' + mergingFolder + '/build.js'
 		fs.writeFile(itemsIndexPath, file, callback)
 	})
 }
@@ -68,9 +68,11 @@ module.exports = function(destinationPath){
 	this.getClientModules(function(err, mcModules){
 		self.mergeFiles(mcModules, destinationPath, function(err){	
 			self.generateItemsIndex(mcModules, destinationPath, function (err) {
+				if (err) throw err
 				console.log('items-index.js written successfully to client-merged')
 			})		
 			self.generateBuildFile(mcModules, destinationPath, function (err) {
+				if (err) throw err			
 				console.log('build.js written successfully to client-merged')
 			})	
 		})
