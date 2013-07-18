@@ -5,19 +5,20 @@ module.exports = function (question, user, callback){
 	var mc = require('microcommunity')
 	
 	function answersCallback(err, question){	
+		var list = []
 	
 		for (var i=0; i<question.answers.length; i++){
-			question.answers[i].question = question
+			list.push({ question : question, answer : question.answers[i] })
 		}
+		console.log('here')
+		console.log(list.length)
 	
-		mc.can.authorizeCollection(question.answers, 'answer', 'vote', user, function(err, answers){	
-		mc.can.authorizeCollection(question.answers, 'answer', 'verify', user, function(err, answers){					
-			for (var i=0; i<answers.length; i++){
+		mc.can.authorizeCollection(list, 'answer', 'vote', user, function(err, answers){	
+			/*for (var i=0; i<answers.length; i++){
 				delete answers[i].question
-			}	
-			question.answers = answers			
+			}*/	
+			//question.answers = answers			
 			callback(null, question)
-		})	
 		})			
 	}
 

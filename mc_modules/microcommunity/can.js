@@ -8,6 +8,9 @@ var authorize = module.exports.authorize = function(object, objectType, action, 
 var authorizeCollection = module.exports.authorizeCollection = 
 	function(collection, objectType, action, user, callback){
 	
+		console.log(objectType)
+		console.log(action)
+	
 		function authorizeForUser(user){
 			return function (object, callback){
 				authorize(object, objectType, action, user, callback)

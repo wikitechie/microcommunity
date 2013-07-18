@@ -20,8 +20,10 @@ module.exports = function(app){
 						container : wall.owner.oid
 					})	
 					question.save(function(err){
+						console.log(question)
 						question = question.toJSON()
 						can.authorize(question, 'question', 'answer', req.user, function(err, question){
+							console.log(question)
 							res.send(question)
 						})					
 					})		
@@ -37,10 +39,10 @@ module.exports = function(app){
 		Question.findByIdAndUpdate(req.params.question, update, function(err, question){
 			var last = question.answers.length - 1
 			
+			console.log(question)
+			
 			var answer = question.answers[last].toJSON()
-			answer.question = question	
-			can.authorize(answer, 'answer', 'vote', req.user, function(err, answer){
-				delete answer.question
+			can.authorize({answer : answer, question : question}, 'answer', 'vote', req.user, function(err, answer){
 				res.send(200, answer)				
 			})			
 			

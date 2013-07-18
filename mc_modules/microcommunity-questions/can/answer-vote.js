@@ -1,16 +1,21 @@
 var helpers = require('microcommunity').can.helpers
 	, _ = require('underscore')
 
-module.exports = function (answer, user, callback){
+module.exports = function (data, user, callback){
 	var mc = require('microcommunity')
+
+	var answer = data.answer
+	var question = data.question
+	
+	console.log(data)
 
 	if (!user){
 		helpers.attachAction(answer, 'vote', false)
 		callback(null, answer)
 	} else {
-		var Container = mc.model('Container')	
-			, Question = mc.model('Question')
-		Container.findById(answer.question.container, function(err, container){					
+		var Container = mc.model('Container')
+		
+		Container.findById(question.container, function(err, container){					
 			if (!container.isMember(user)){		
 				helpers.attachAction(answer, 'vote', false)
 				callback(null, answer)			
