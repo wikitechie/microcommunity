@@ -20,10 +20,8 @@ module.exports = function(app){
 						container : wall.owner.oid
 					})	
 					question.save(function(err){
-						console.log(question)
 						question = question.toJSON()
 						can.authorize(question, 'question', 'answer', req.user, function(err, question){
-							console.log(question)
 							res.send(question)
 						})					
 					})		
@@ -37,10 +35,7 @@ module.exports = function(app){
 		answer.published = new Date()		
 		var update = { $push : { answers : answer } }	
 		Question.findByIdAndUpdate(req.params.question, update, function(err, question){
-			var last = question.answers.length - 1
-			
-			console.log(question)
-			
+			var last = question.answers.length - 1			
 			var answer = question.answers[last].toJSON()
 			can.authorize({answer : answer, question : question}, 'answer', 'vote', req.user, function(err, answer){
 				res.send(200, answer)				
@@ -65,11 +60,8 @@ module.exports = function(app){
 		Question.findOneAndUpdate(query, update, function(err, question){
 			var _ = require('underscore')
 			var answer = _.find(question.answers, function(answer){ return (answer.id === req.params.answer) })	
-			
-			var answer = answer.toJSON()
-			answer.question = question
-			
-			can.authorize(answer, 'answer', 'vote', req.user, function(err, answer){
+					
+			can.authorize({answer:answer, question:question}, 'answer', 'vote', req.user, function(err, answer){
 				delete answer.question
 				res.send(200, answer)
 			})

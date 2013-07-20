@@ -9,15 +9,8 @@ module.exports = function (question, user, callback){
 	
 		for (var i=0; i<question.answers.length; i++){
 			list.push({ question : question, answer : question.answers[i] })
-		}
-		console.log('here')
-		console.log(list.length)
-	
+		}	
 		mc.can.authorizeCollection(list, 'answer', 'vote', user, function(err, answers){	
-			/*for (var i=0; i<answers.length; i++){
-				delete answers[i].question
-			}*/	
-			//question.answers = answers			
 			callback(null, question)
 		})			
 	}

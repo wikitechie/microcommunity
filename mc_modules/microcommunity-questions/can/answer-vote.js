@@ -6,8 +6,6 @@ module.exports = function (data, user, callback){
 
 	var answer = data.answer
 	var question = data.question
-	
-	console.log(data)
 
 	if (!user){
 		helpers.attachAction(answer, 'vote', false)

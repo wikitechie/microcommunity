@@ -54,14 +54,9 @@ module.exports = function(app){
 		}			
 		//material.addRole(req.user, 'mc:member')
 		material.save(function(err){
-		console.log(err)
 			if (!err) {
 				req.user.follow(material)
-				console.log(material)
-				console.log(material.stream)
-				console.log(req.user.follows)
 				req.user.save(function(err, user){
-					console.log(req.user.follows)				
 					res.send(200, material)	
 				})
 			}			
@@ -93,7 +88,6 @@ module.exports = function(app){
 		var update = 	{ $push : { 'sections.$.attachements' :  attachement } }
 		
 		Material.findOneAndUpdate(query, update, function(err, material){
-			console.log(err)
 			res.send(200, attachement)
 		})
 	
@@ -112,7 +106,6 @@ module.exports = function(app){
 						streams : [container.stream, author.stream]
 					})	
 					post.save(function(err){
-						console.log(post.streams)
 						can.authorize(post.toJSON(), 'item', 'comment', req.user, function(err, post){
 							res.send(post)
 						})	
