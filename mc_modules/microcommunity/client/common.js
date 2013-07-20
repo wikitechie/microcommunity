@@ -1,5 +1,8 @@
 requirejs.config({
 	baseUrl: "/client",
+	
+  urlArgs: "bust=" + (new Date()).getTime(),
+	
 
   paths: {
 
@@ -17,12 +20,16 @@ requirejs.config({
     bootstrap: 'lib/bootstrap',
     bootbox: 'lib/bootbox.min',    
     'jquery.gravatar': 'lib/jquery.gravatar',
-    'jquery.spin': 'lib/jquery.spin',
+    'jquery.spin': 'lib/jquery.spin',  
     'spin': 'lib/spin.min',
     'md5' : 'lib/md5',
     'general' : 'lib/general',
     'moment' : 'lib/moment.min',
-    'diff' : 'lib/diff'
+    'diff' : 'lib/diff',
+
+		'jquery.ui.widget' : 'lib/jquery.ui.widget',
+		'jquery.iframe-transport' : 'lib/jquery.iframe-transport',
+		'jquery.fileupload' : 'lib/jquery.fileupload',	      
   },
   
   shim: {
@@ -46,7 +53,8 @@ requirejs.config({
   	'diff' : [],
   	'bootstrap-notify': ['jquery'],
   	'bootbox' : ['bootstrap'],
-  	'bootstrap' : ['jquery']	
+  	'bootstrap' : ['jquery'],
+  	'jquery.fileupload' : ['jquery', 'jquery.ui.widget', 'jquery.iframe-transport' ]
   }  
 })
 

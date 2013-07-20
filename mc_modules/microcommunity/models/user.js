@@ -22,7 +22,6 @@ userSchema.methods.follow = function(object){
 	//var f = _.find(this.follows, function(follow){ return ( follow.toString() === object.stream.toString() ) })
 	//if (!f){
 		this.follows.push(object.stream)
-		console.log(this.follows)
 	//}
 }
 
@@ -31,7 +30,6 @@ userSchema.methods.loadFeed = function(callback){
 		, Item = mc.model('Item')
 	
 	var query = { streams : { $in : this.follows } }
-	console.log(query)
 	Item.fetchItems(query, callback)
 }
 

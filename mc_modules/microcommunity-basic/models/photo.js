@@ -4,7 +4,8 @@ var mongoose = require('mongoose')
 	, isItem = models.plugins.isItem
 
 var photoSchema = new mongoose.Schema({
-	content: String
+	content: String,
+	filePath : String,
 })
 
 photoSchema.plugin(isItem, { objectType : 'photo' })

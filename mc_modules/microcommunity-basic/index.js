@@ -178,17 +178,17 @@ module.exports = function(){
 	})	
 
 	//api
-	app.post('/api/walls/user/photo', auth.ensureAuthenticated, function(req, res){
+	app.post('/api/walls/:wall/user/photo', auth.ensureAuthenticated, function(req, res){
 		var photo = new Photo({
 			content : req.body.content,
+			filePath : req.body.filePath,
 			author : req.body.author,
 			wall : req.body.wall,
 			streams : [req.user.stream]		
 		})
+		
 		photo.save(function(err){
-			Photo.findById(photo.id, function(){
-				res.send(photo)						
-			})	
+			res.send(photo)
 		})	
 	})
 	
@@ -228,6 +228,24 @@ module.exports = function(){
 			})		
 		})		
 	})	
+	
+	
+	app.post('/api/fileupload', function(req, res){
+		var isImage = /^image/
+		if (isImage.test(req.files.file.type)){
+			microcommunity.files.saveFile(req.files.file, '/photos/', function(filePath){
+				res.send({ files : [
+					{
+						url : filePath
+					}
+			
+				]})
+			})		
+		} else {
+			res.send(500)
+		}	
+
+	})
 	
 	
 	return app

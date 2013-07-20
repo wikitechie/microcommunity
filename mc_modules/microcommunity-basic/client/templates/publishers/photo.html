@@ -1,3 +1,9 @@
 <textarea class="span12" id="photo-content" placeholder="Write something..." rows="1"></textarea>
-<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>
+<input id="file-upload" type="file" name="file" data-url="/api/fileupload/">
+<div style="width:200px">
+	<div class="progress progress-striped active">
+		<div class="bar" style="width: 0%;"></div>
+	</div>
+	<div class="preview"></div>
+</div>
 
