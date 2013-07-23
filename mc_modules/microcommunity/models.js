@@ -103,7 +103,8 @@ Models.prototype.model = Models.prototype.getModel = function(modelName){
 }
 
 Models.prototype.start = function(){
-	mongoose.connect('mongodb://localhost/test')
+	var mongodbUrl = process.env.MONGODB_URL || 'mongodb://localhost/test'	
+	mongoose.connect(mongodbUrl)
 }
 
 Models.prototype.initialize = function(){
