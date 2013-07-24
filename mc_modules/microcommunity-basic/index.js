@@ -14,14 +14,16 @@ var Stream = mongoose.model('Stream')
 	, Container = mongoose.model('Container')
 	, auth = microcommunity.auth
 	, can = microcommunity.can
+	, sidebars = microcommunity.sidebars
 
 microcommunity.registerPlugin(__dirname)
 
 module.exports = function(){
 
 	var app = module.exports = microcommunity.plugin(__dirname)
+	
 
-	function someMaterialsSidebar(req, res, next){
+	/*function someMaterialsSidebar(req, res, next){
 		var query = { 
 			containerType : 'material'
 		}
@@ -37,10 +39,10 @@ module.exports = function(){
 			res.sidebars.pushSidebar("Materials", links)
 			next()	
 		})
-	}
+	}*/
 	
 	//main app
-	app.get('/', someMaterialsSidebar, function(req, res){
+	app.get('/', /*someMaterialsSidebar,*/ function(req, res){
 	
 		if (!req.user){
 			res.sidebars.disable()
@@ -68,7 +70,7 @@ module.exports = function(){
 		}	
 	})
 	
-	app.get('/stream', someMaterialsSidebar, function(req, res){
+	app.get('/stream', /*someMaterialsSidebar,*/ function(req, res){
 		Stream.globalStream(function(err, items){	
 			can.authorizeItems(items, req.user, function(err, items){
 				if (req.user){
@@ -122,7 +124,7 @@ module.exports = function(){
 	
 
 	//profile app
-	app.get('/profiles/:id', someMaterialsSidebar, function(req, res){	
+	app.get('/profiles/:id', /*someMaterialsSidebar,*/ function(req, res){	
 		var id = req.params.id	
 		User.findById(id, function(err, user){
 			Wall.loadItems(user.wall, function(err, items){	

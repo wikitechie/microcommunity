@@ -3,11 +3,10 @@ define([
 	'models/index',
 	'modules/publisher',
 	'modules/stream',
-	'models/materials',
 	'views/publishers/post',
 	'views/publishers/photo',
 	'models/stream'
-], function(App, Models, publiserhModule, streamModule, Materials, PostPublisher, PhotoPublisher, Stream){
+], function(App, Models, publiserhModule, streamModule, PostPublisher, PhotoPublisher, Stream){
 
 	App.addRegions({
 		publisher : '#publisher-region',

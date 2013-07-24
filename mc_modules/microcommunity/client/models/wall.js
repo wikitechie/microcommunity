@@ -2,9 +2,9 @@ define([
 	'bb',
 	'models/item',
 	'models/user',
-	'models/wikipage',
-	'models/wiki',
-	'models/material'
+	//'models/wikipage',
+	//'models/wiki',
+	//'models/material'
 ], function(Backbone, Item, User, Wikipage, Wiki, Material){
 
 	var Wall = Backbone.RelationalModel.extend({	
@@ -15,7 +15,7 @@ define([
 					var user = User.findOrCreate(this.get('owner').$id)
 					return user.link()
 					break	
-				case 'wikipages':
+				/*case 'wikipages':
 					var wikipage = Wikipage.findOrCreate({ _id : this.get('owner').$id })
 					return wikipage.link()
 					break	
@@ -26,7 +26,7 @@ define([
 				case 'containers':
 					var material = Material.findOrCreate({ _id : this.get('owner').$id })
 					return material.link()
-					break																							
+					break		*/																					
 			}			
 		},	
 		defaults : {

@@ -4,16 +4,14 @@ define([
 	'models/membership',
 	'views/sidebars/basic',
 	'views/sidebars/sidebars',
-	'models/materials',
-	'can',
 	
 	//modules for configuration
-	'views/pin-attachement-modal',
+	/*'views/pin-attachement-modal',
 	'models/material',
 	'components/activity/model',	
-	'componenets/new-file-activity/model',		
+	'componenets/new-file-activity/model',	*/	
 		
-], function(Backbone, Models, Membership, basicSidebar, SidebarsView, Materials, can, PinAttachementModal, Material, NewWikipageActivity, NewFileActivity){
+], function(Backbone, Models, Membership, basicSidebar, SidebarsView /*, PinAttachementModal, Material, NewWikipageActivity, NewFileActivity*/){
 
 
 	var MCApp = Backbone.Marionette.Application.extend({
@@ -117,8 +115,8 @@ define([
 				
 	}
 	
-	pinResourceMenuItem('wikipage', NewWikipageActivity.prototype)
-	pinResourceMenuItem('file', NewFileActivity.prototype)	
+	//pinResourceMenuItem('wikipage', NewWikipageActivity.prototype)
+	//pinResourceMenuItem('file', NewFileActivity.prototype)	
 	
 	
 	return App

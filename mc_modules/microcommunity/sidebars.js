@@ -1,3 +1,9 @@
+var globalSidebar = [
+	{label : 'Home', url : '/' , icon: 'icon-home' },
+	{label : 'Global stream', url : '/stream', icon : 'icon-rss-sign'  },	
+	//{label : 'Browse Materials', url : '/materials', icon : 'icon-camera-retro' },	
+]
+
 function Sidebars(){
 	this.collection = [] 
 	this.disabled = false
@@ -19,6 +25,14 @@ Sidebars.prototype.getSidebars = function(){
 	} else {
 		return this.collection
 	}	
+}
+
+Sidebars.getGlobalSidebar = function(){
+	return globalSidebar
+}
+
+Sidebars.setGlobalSidebar = function(sidebar){
+	globalSidebar = sidebar
 }
 
 Sidebars.prototype.disable = function(){

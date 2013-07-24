@@ -1,0 +1,1 @@
+PORT=3002 MONGODB_URL=mongodb://localhost/test2 NODE_PATH=../../mc_modules:../../node_modules nodemon app.js

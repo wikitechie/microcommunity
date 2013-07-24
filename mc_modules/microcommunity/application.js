@@ -9,8 +9,6 @@ var express = require('express')
 var models = require('./models') 
 	, items = require('./items')
 	, sidebars = require('./sidebars')
-	
-
 
 function loadPageMiddleware(app, path){
 
@@ -73,20 +71,14 @@ function containerMiddleware(req, res, next, id){
 	})
 }  
 
-//TODO create an interface to customize basic sidebar
-function basicSidebarCallback(req, res, next){
-	var links =  [ 
-		{label : 'Home', url : '/' , icon: 'icon-home' },
-		{label : 'Global stream', url : '/stream', icon : 'icon-rss-sign'  },		
-		{label : 'Browse Materials', url : '/materials', icon : 'icon-camera-retro' },
-	]
-	res.sidebars.pushSidebar('Navigation', links)
-	next()
-}
-
 function ContainerSidebar(req, res, next){
 	var sidebar = req.container.getSidebar()
 	res.sidebars.pushSidebar(sidebar.header, sidebar.links)
+	next()
+}
+	
+function globalSidebarCallback(req, res, next){
+	res.sidebars.pushSidebar('Everything', sidebars.getGlobalSidebar())
 	next()
 }
 
@@ -102,8 +94,8 @@ function setupPluginInterface(app, path){
 		var Sidebars = require('./sidebars')
 		res.sidebars = new Sidebars()
 		next()
-	})		
-	app.use(basicSidebarCallback)		
+	})
+	app.use(globalSidebarCallback)	
 }
 
 function useInternalPlugins(app, path){
@@ -141,12 +133,12 @@ application.initApplication = function(path){
 	console.log('Loaded site data')
 	data = JSON.parse(data)			 
 	console.dir(data)
-	this.set('site', data)	
+	this.set('site', data)
 
 	//internal plugins
 	useInternalPlugins(this, path)
 	//plugin interface
-	setupPluginInterface(this, path)	
+	setupPluginInterface(this, path)
 	//express modules	
 	useExpressModules(this)
 	
@@ -156,6 +148,5 @@ application.initApplication = function(path){
 application.initPlugin = function(path){
 	//plugin interface
 	setupPluginInterface(this, path)	
-}
-  
+}  
   

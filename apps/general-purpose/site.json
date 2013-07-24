@@ -1,0 +1,6 @@
+{
+	"siteName" : "MicroCommunity",
+	"rootUser" : "root@root.com",
+	"roles" : ["member", "moderator"],
+	"defaultRole" : "member"
+}
