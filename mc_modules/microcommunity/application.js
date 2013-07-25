@@ -95,7 +95,6 @@ function setupPluginInterface(app, path){
 		res.sidebars = new Sidebars()
 		next()
 	})
-	app.use(globalSidebarCallback)	
 }
 
 function useInternalPlugins(app, path){
@@ -112,7 +111,7 @@ function useExpressModules(app){
 	app.set('view engine', 'jade')
 	app.use(express.favicon())
 	app.use(express.logger('dev')) 
-	app.use(app.router)  
+	//app.use(app.router)  
 	app.use(express.static(__dirname + '/static'))
 	app.use('/client', express.static(__dirname + '/client-built'))     
 	app.use('/client', express.static(__dirname + '/client'))
@@ -125,14 +124,13 @@ var application = module.exports = {}
 
 application.containerMiddleware  = containerMiddleware
 
-application.initApplication = function(path){
+application.initApplication = function(path, middleware){
 
 	//getting site info
 	var file = path + '/site.json'			 
 	var data = fs.readFileSync(file, 'utf8')
 	console.log('Loaded site data')
 	data = JSON.parse(data)			 
-	console.dir(data)
 	this.set('site', data)
 
 	//internal plugins
@@ -149,4 +147,20 @@ application.initPlugin = function(path){
 	//plugin interface
 	setupPluginInterface(this, path)	
 }  
+
+application.useGlobal = function(middleware){	
+	if (!this.globalMiddlewares) this.globalMiddlewares = []
+	this.use(middleware)
+	this.globalMiddlewares.push(middleware)
+}
+
+application.usePlugin = function(plugin){
+	var app = this
+	this.globalMiddlewares.forEach(function(mw){
+		var position = plugin.stack.length-1
+		plugin.stack.splice(position, 0, { route : '', handle : mw })
+		app.use(plugin)		
+
+	})
+}
   

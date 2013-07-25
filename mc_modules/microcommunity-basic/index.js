@@ -16,11 +16,10 @@ var Stream = mongoose.model('Stream')
 	, can = microcommunity.can
 	, sidebars = microcommunity.sidebars
 
-microcommunity.registerPlugin(__dirname)
 
 module.exports = function(){
 
-	var app = module.exports = microcommunity.plugin(__dirname)
+	var app = microcommunity.createPlugin({ path : __dirname })
 	
 
 	/*function someMaterialsSidebar(req, res, next){

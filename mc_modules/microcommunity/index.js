@@ -14,9 +14,7 @@ var microcommunity = module.exports = {}
 
 //setting up app and plugin functions
 module.exports.createApplication = createApplication
-module.exports.plugin = function(path){
-	return createPlugin(path)	
-}
+module.exports.createPlugin = createPlugin
 module.exports.auth = auth
 
 //site information, will be set on application initialization
@@ -82,19 +80,31 @@ module.exports.getClientModules = function(callback){
 	async.map(allPaths, findModules, callback)
 }
 
-function createApplication(){
+function createApplication(options){
+
+	if (!options) throw "MCommunity: No options passed"
+	if (!options.path) throw "MCommunity: No path passed"
+
+	mainPath = module.exports.path = options.path
 	app = express()
   utils.merge(app, proto)
   models.start()
 	var site = app.initApplication(mainPath)
+	
 	module.exports.site = site
 	return app
 }
 
-function createPlugin(path){
+function createPlugin(options){
+
+	if (!options) throw "MCommunity: No options passed"
+	if (!options.path) throw "MCommunity: No path passed"
+
+	pluginPaths.push(options.path)
+	
 	var plugin = express()
   utils.merge(plugin, proto)
-	plugin.initPlugin(path)
+	plugin.initPlugin(options.path)
 	return plugin	
 }
 

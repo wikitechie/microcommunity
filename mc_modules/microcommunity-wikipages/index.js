@@ -17,8 +17,6 @@ models.define('NewWikipageActivity', 'activity:new-wikipage', 'items', activityS
 items.addItem('Revision', 'components/revision/model')
 items.addItem('NewWikipageActivity', 'components/activity/model')
 
-microcommunity.registerPlugin(__dirname)
-
 //routes and api
 var wikipagesRoutes = require('./wikipages-routes')
 	, api = require('./api')	
@@ -39,7 +37,7 @@ module.exports = function(options){
 	if (!options.containersPath) throw new Error()
 	var containersPath = options.containersPath
 
-	var app = microcommunity.plugin(__dirname)
+	var app = microcommunity.createPlugin({ path : __dirname })
 	
 	app.get(containersPath + '/:container/wikipages/new', auth.ensureAuthenticated, wikipagesRoutes.new)
 	app.post(containersPath +'/:container/wikipages', auth.ensureAuthenticated, wikipagesRoutes.create)

@@ -3,7 +3,7 @@ var microcommunity = require('microcommunity')
 
 require('./models/wiki')
 
-var app = module.exports = microcommunity.plugin(__dirname)
+var app = module.exports = microcommunity.createPlugin({ path : __dirname })
 
 //routes
 var routes = require('./routes')

@@ -1,7 +1,6 @@
-var globalSidebar = [
+var defaultSidebar = [
 	{label : 'Home', url : '/' , icon: 'icon-home' },
-	{label : 'Global stream', url : '/stream', icon : 'icon-rss-sign'  },	
-	//{label : 'Browse Materials', url : '/materials', icon : 'icon-camera-retro' },	
+	{label : 'Global stream', url : '/stream', icon : 'icon-rss-sign'  }
 ]
 
 function Sidebars(){
@@ -27,12 +26,8 @@ Sidebars.prototype.getSidebars = function(){
 	}	
 }
 
-Sidebars.getGlobalSidebar = function(){
-	return globalSidebar
-}
-
-Sidebars.setGlobalSidebar = function(sidebar){
-	globalSidebar = sidebar
+Sidebars.getDefault = function(){
+	return defaultSidebar
 }
 
 Sidebars.prototype.disable = function(){

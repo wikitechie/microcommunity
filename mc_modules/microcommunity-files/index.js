@@ -11,8 +11,6 @@ models.define('File', 'file', 'files', fileSchema)
 models.define('NewFileActivity', 'activity:new-file', 'items', newFileActivitySchema)
 items.addItem('NewFileActivity', 'componenets/new-file-activity/model')
 
-microcommunity.registerPlugin(__dirname)
-
 var routes = require('./files-routes')
 
 //initialization function
@@ -22,7 +20,7 @@ module.exports = function(options){
 	if (!options.containersPath) throw new Error()
 	var containersPath = options.containersPath
 	
-	var app = microcommunity.plugin(__dirname)
+	var app = microcommunity.createPlugin({ path : __dirname })
 
 	app.get(containersPath + '/:container/files/new', auth.ensureAuthenticated, routes.new)
 	app.post(containersPath + '/:container/files', auth.ensureAuthenticated, routes.create)

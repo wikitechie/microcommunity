@@ -3,22 +3,23 @@ var microcommunity = require('microcommunity')
 	, auth = require('microcommunity').auth
 	, sidebars = microcommunity.sidebars	
 
-microcommunity.registerApp(__dirname)
-
-module.exports = microcommunity
-
 //creating and setting up the app	
 
 if (!module.parent){
 
-	var app = microcommunity.createApplication()	
-
-	//using basic app
-	app.use(basic())	
+	var app = microcommunity.createApplication({ path : __dirname })
 	
 	app.get('/test', function(req, res){
 		res.loadPage('test', { user : 'amjad' })
 	})	
+	
+	app.useGlobal(function (req, res, next){
+		res.sidebars.pushSidebar('Everything', sidebars.getDefault())
+		next()
+	})		
+	
+	//using basic app
+	app.usePlugin(basic())		
 	
 	var port = process.env.PORT || 3000
 	console.log("listening on port " + port)

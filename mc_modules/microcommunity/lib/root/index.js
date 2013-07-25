@@ -1,9 +1,8 @@
 var mc = require('microcommunity')
-	, plugin = mc.plugin
 	, auth = mc.auth
 	, User = mc.model('User')
 
-var app = module.exports = plugin(__dirname)
+var app = module.exports = mc.createPlugin({ path : __dirname })
 
 app.get('/root', auth.ensureAuthenticated, auth.ensureRoot, function(req, res){ 
 	User.find({}, function(err, users){

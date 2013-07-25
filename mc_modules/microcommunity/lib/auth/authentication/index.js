@@ -1,8 +1,8 @@
 
 var passport = require('passport')	
-	, plugin = require('microcommunity').plugin
+	, createPlugin = require('microcommunity').createPlugin
 
-var app = module.exports = plugin(__dirname)
+var app = module.exports = createPlugin({ path : __dirname })
 
 app.get('/login', function(req, res){
 	res.sidebars.disable()

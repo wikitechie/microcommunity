@@ -11,16 +11,20 @@ var coursesSchema = require('./models/course')
 microcommunity.models.define('Material', 'material', 'containers', materialSchema)
 microcommunity.models.define('Course', 'course', 'courses', coursesSchema)
 
-microcommunity.registerApp(__dirname)
-
-module.exports = microcommunity
-
 //creating and setting up the app	
 
 if (!module.parent){
 
-	var app = microcommunity.createApplication()	
+	var app = microcommunity.createApplication({ path : __dirname })	
+
+	var sidebar = microcommunity.sidebars.getDefault()
+	sidebar.push({label : 'Browse Materials', url : '/materials', icon : 'icon-camera-retro' })	
 	
+	app.useGlobal(function (req, res, next){
+		res.sidebars.pushSidebar('Everything', sidebar)
+		next()
+	})	
+
 	//routes
 	var routes = require('./materials-routes')
 	app.get('/materials/new', auth.ensureAuthenticated, auth.ensureRole('teacher'), routes.new)	
@@ -35,18 +39,19 @@ if (!module.parent){
 	app.get('/courses', auth.ensureAuthenticated, auth.ensureRoot, routes.coursesIndex)	
 	app.post('/courses', auth.ensureAuthenticated, auth.ensureRoot, routes.createCourse)	
 
+
 	//api
 	var api = require('./api')
 	api(app)
 
 	//using external plugins
 	//using wikipages plugin
-	app.use(wikipagesPlugin({ containersPath : '/materials' }))
+	app.usePlugin(wikipagesPlugin({ containersPath : '/materials' }))
 	//using file plugin
-	app.use(filesPlugin({ containersPath : '/materials' }))
-	app.use(questionsPlugin())
+	app.usePlugin(filesPlugin({ containersPath : '/materials' }))
+	app.usePlugin(questionsPlugin())
 	//using basic app
-	app.use(basic())
+	app.usePlugin(basic())
 	
 	var port = process.env.PORT || 3000
 	console.log("listening on port " + port)

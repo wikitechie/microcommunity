@@ -2,9 +2,9 @@
 var passport = require('passport')	
 	, mongoose = require('mongoose')
 	, User = mongoose.model('User')
-	, plugin = require('microcommunity').plugin
+	, createPlugin = require('microcommunity').createPlugin
 
-var app = module.exports = plugin(__dirname)
+var app = module.exports = createPlugin({ path : __dirname })
 
 app.configure(function(){
   app.set('views', __dirname + '/views')

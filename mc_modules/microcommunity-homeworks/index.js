@@ -14,8 +14,6 @@ models.define('NewHomeworkActivity', 'activity:new-homework', 'items', activityS
 //adding stream items
 items.addItem('NewHomeworkActivity', 'components/new-homework-activity/model')
 
-microcommunity.registerPlugin(__dirname)
-
 //routes and api
 var homeworksRoutes = require('./homeworks-routes')
 	, api = require('./api')	
@@ -56,7 +54,7 @@ module.exports = function(options){
 	if (!options.containersPath) throw new Error()
 	var containersPath = options.containersPath
 
-	var app = microcommunity.plugin(__dirname)
+	var app = microcommunity.createPlugin({ path : __dirname })
 	
 	app.get(containersPath + '/:container/homeworks/new', 
 		auth.ensureAuthenticated,
