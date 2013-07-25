@@ -3,8 +3,7 @@ var microcommunity = require('microcommunity')
 	, wikipagesPlugin = require('microcommunity-wikipages')
 	, questionsPlugin = require('microcommunity-questions')
 	, filesPlugin = require('microcommunity-files')
-	, auth = require('microcommunity').auth	
-	, Container = microcommunity.model('Container')
+	, auth = require('microcommunity').auth
 
 //registering models
 var materialSchema = require('./models/material')	
@@ -16,39 +15,15 @@ microcommunity.models.define('Course', 'course', 'courses', coursesSchema)
 
 if (!module.parent){
 
-	var app = microcommunity.createApplication({ path : __dirname })	
+	var app = microcommunity.createApplication({ path : __dirname })
 
-	var sidebar = microcommunity.sidebars.getDefault()
-	sidebar.push({label : 'Browse Materials', url : '/materials', icon : 'icon-camera-retro' })	
-	
-	function someMaterialsSidebar(req, res, next){
-		var query = { 
-			containerType : 'material'
-		}
-		if (req.user) query['memberships.user'] = req.user.id
-		
-		Container.find(query).limit(5).exec(function(err, materials){	
-			var links = []
-			for(var i=0; i<materials.length; i++){
-				var material = materials[i]
-				var link = { label : material.displayName , url : '/materials/'+material.id }
-				links.push(link)
-			}		
-			res.sidebars.pushSidebar("Materials", links)
-			next()	
-		})
-	}	
-	
-	app.useGlobal(function (req, res, next){
-		res.sidebars.pushSidebar('Everything', sidebar)
-		next()
-	})	
-	
-	app.useGlobal(someMaterialsSidebar)
+	//applying global sidebars	
+	app.useGlobal(require('./sidebars').default)
+	app.useGlobal(require('./sidebars').materials)	
 	
 	//routes
-	app.use('/materials', require('./routers/materials-routes').middleware)		
-	app.use('/courses', require('./routers/courses-routes').middleware)
+	app.use('/materials', require('./routers/materials').middleware)		
+	app.use('/courses', require('./routers/courses').middleware)
 	app.use('/api', require('./routers/api').middleware)
 
 	//using external plugins
@@ -57,6 +32,7 @@ if (!module.parent){
 	app.usePlugin(questionsPlugin())
 	app.usePlugin(basic())
 	
+	//starting up application	
 	var port = process.env.PORT || 3000
 	console.log("listening on port " + port)
 	app.listen(port)

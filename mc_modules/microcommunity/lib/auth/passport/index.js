@@ -4,7 +4,7 @@ var express = require('express')
   , User = mongoose.model('User')
   , flash = require('connect-flash')  
 
-var app = module.exports = express.createServer();
+var app = module.exports = express();
 
 var local = require('./strategies/local')
 	, google = require('./strategies/google')

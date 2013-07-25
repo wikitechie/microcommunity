@@ -4,7 +4,7 @@ var express = require('express')
   , fs = require('fs')	
   , path = require('path')
 
-var app = module.exports.test = express.createServer();
+var app = module.exports.test = express();
 
 var rootPath = path.normalize(__dirname + '/../../..')
 
