@@ -10,71 +10,22 @@ var microcommunity = require('microcommunity')
 	, can = microcommunity.can
 	, Course = microcommunity.model('Course')	
 	, _ = require('underscore')
+	, auth = microcommunity.auth
 
+var express = require('express');
+var router = new express.Router();
 
-//courses
-
-exports.coursesIndex =  function(req, res){ 
-	Course.find().exec(function(err, courses){
-		res.loadPage('courses', { courses : courses })
-	})		
-}
-
-exports.createCourse =  function(req, res){ 
-
-	microcommunity.files.saveFile(req.files.thumbnail, '/uploads/', function(filePath){	
-		var course = new Course({ 
-			year : req.body.year, 
-			title : req.body.title,
-			thumbnailPath : filePath
-		})		
-		course.save(function(err){
-			res.redirect('/courses')
-		})	
-	})
-		
-}
-
-//materials
-
-exports.new =  function(req, res){
-
+router.get('/new', auth.ensureAuthenticated, auth.ensureRole('teacher'), function(req, res){
 	var Course = microcommunity.model('Course')
 	Course.find().exec(function(err, courses){
 		res.loadPage('materials/new', { 
 			currentSemester : currentSemester(),
 			courses : courses
 		})
-	})
-	
-}
+	})	
+})	
 
-function currentSemester(){
-
-	var currentTime = new Date()
-	var year = currentTime.getFullYear()
-	var month = currentTime.getMonth()
-	
-	var academicYear	
-	if (month < 9){
-		academicYear = year
-	} else {
-		academicYear = year - 1 
-	}
-	
-	var season
-	if (month > 1 && month < 7)
-		season = 'spring'
-	else 
-		season = 'fall'
-	
-	return {
-		academicYear : academicYear,
-		season : season
-	}
-}
-
-exports.create = function(req, res){
+router.post('/', function(req, res){
 
 	Course.findById(req.body.course, function(err, course){
 		var semester = {
@@ -103,24 +54,26 @@ exports.create = function(req, res){
 		})	
 	})
 
-}
+})
 
 
-exports.members = function(req, res){
+router.get('/:container/members', function(req, res){
 	req.container.populateMemberships(function(err, material){
 		res.loadPage('materials/members', {
 			material : material
 		})			
 	})			
-}
-
-exports.settings = function(req, res){		
+})
+	
+router.get('/:container/settings',	
+	auth.ensureAuthenticated, auth.ensureContainerAdmin(), 
+	function(req, res){		
 		res.loadPage('materials/settings', {
 			material : req.container
 		})		
-}
+})
 
-exports.show = function(req, res){
+router.get('/:container', function(req, res){
 	Wikipage.find({ container : req.container.id }).exec(function(err, wikipages){
 		File.find({ container : req.container.id }).exec(function(err, files){
 			res.loadPage('materials/show', {
@@ -130,9 +83,9 @@ exports.show = function(req, res){
 			})
 		})		
 	})	
-}
+})
 
-exports.wall = function(req, res){
+router.get('/:container/wall', function(req, res){
 	Wall.loadItems(req.container.wall, function(err, items){
 		can.authorizeItems(items, req.user, function(err, items){
 			req.container = req.container.toJSON()		
@@ -144,9 +97,10 @@ exports.wall = function(req, res){
 			})					
 		})			
 	})
-}
+})
 
-exports.stream = function(req, res){
+
+router.get('/:container/stream',function(req, res){
 	Stream.loadItems(req.container.stream, function(err, items){
 		can.authorizeItems(items, req.user, function(err, items){
 			res.loadPage('materials/stream', {
@@ -155,9 +109,9 @@ exports.stream = function(req, res){
 			})
 		})
 	})
-}
+})
 
-exports.index = function(req, res){	
+router.get('/', function(req, res){	
 
 	function loadMaterials(query){
 		Material.find(query).exec(function(err, containers){
@@ -201,8 +155,36 @@ exports.index = function(req, res){
 		})	
 	} else {
 		loadMaterials(query)
+	}	
+})
+
+
+module.exports = router
+
+function currentSemester(){
+
+	var currentTime = new Date()
+	var year = currentTime.getFullYear()
+	var month = currentTime.getMonth()
+	
+	var academicYear	
+	if (month < 9){
+		academicYear = year
+	} else {
+		academicYear = year - 1 
 	}
 	
+	var season
+	if (month > 1 && month < 7)
+		season = 'spring'
+	else 
+		season = 'fall'
 	
-	
+	return {
+		academicYear : academicYear,
+		season : season
+	}
 }
+
+
+

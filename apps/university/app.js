@@ -45,33 +45,16 @@ if (!module.parent){
 	})	
 	
 	app.useGlobal(someMaterialsSidebar)
-
+	
 	//routes
-	var routes = require('./materials-routes')
-	app.get('/materials/new', auth.ensureAuthenticated, auth.ensureRole('teacher'), routes.new)	
-	app.post('/materials', routes.create)
-	app.get('/materials/:container/members', routes.members)	
-	app.get('/materials/:container/settings',	auth.ensureAuthenticated, auth.ensureContainerAdmin(), routes.settings)
-	app.get('/materials/:container', routes.show)
-	app.get('/materials/:container/wall', routes.wall)
-	app.get('/materials/:container/stream', routes.stream)
-	app.get('/materials', routes.index)
-		
-	app.get('/courses', auth.ensureAuthenticated, auth.ensureRoot, routes.coursesIndex)	
-	app.post('/courses', auth.ensureAuthenticated, auth.ensureRoot, routes.createCourse)	
-
-
-	//api
-	var api = require('./api')
-	api(app)
+	app.use('/materials', require('./routers/materials-routes').middleware)		
+	app.use('/courses', require('./routers/courses-routes').middleware)
+	app.use('/api', require('./routers/api').middleware)
 
 	//using external plugins
-	//using wikipages plugin
 	app.usePlugin(wikipagesPlugin({ containersPath : '/materials' }))
-	//using file plugin
 	app.usePlugin(filesPlugin({ containersPath : '/materials' }))
 	app.usePlugin(questionsPlugin())
-	//using basic app
 	app.usePlugin(basic())
 	
 	var port = process.env.PORT || 3000

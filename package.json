@@ -11,7 +11,7 @@
   },
   "dependencies": {
   	"should" : "*",
-    "express": "3.0.0alpha1",
+    "express": "3.0.6",
     "connect": "*",
     "mongoose": "*",
     "mongoose-dbref": "*",    
