@@ -82,7 +82,8 @@ define([
 		})	
 	}	
 	
-	AppConfig(App)
+	if (typeof AppConfig === 'function')
+		AppConfig(App)
 	
 	
 	return App
