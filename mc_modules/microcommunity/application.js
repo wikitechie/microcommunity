@@ -76,11 +76,6 @@ function ContainerSidebar(req, res, next){
 	res.sidebars.pushSidebar(sidebar.header, sidebar.links)
 	next()
 }
-	
-function globalSidebarCallback(req, res, next){
-	res.sidebars.pushSidebar('Everything', sidebars.getGlobalSidebar())
-	next()
-}
 
 function setupPluginInterface(app, path){
 
@@ -89,7 +84,6 @@ function setupPluginInterface(app, path){
 	app.use('/client', express.static(path + '/client'))
 	app.use(express.static(path + '/static')) 
 	app.set('views', path + '/views'	)	
-	app.param('container', containerMiddleware, ContainerSidebar)	
 	app.use(function(req, res, next){
 		var Sidebars = require('./sidebars')
 		res.sidebars = new Sidebars()

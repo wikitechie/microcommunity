@@ -1,4 +1,5 @@
 var microcommunity = require('microcommunity')
+	, models = microcommunity.models
 	, Container = microcommunity.model('Container')
 	, Material = microcommunity.model('Material')
 	, Wall = microcommunity.model('Wall')	
@@ -14,6 +15,30 @@ var microcommunity = require('microcommunity')
 
 var express = require('express');
 var router = new express.Router();
+
+function containerMiddleware(req, res, next, id){
+	var Container = models.getModel('Container')
+	Container.findById(id, function(err, container){
+		container.populateRequests(function(err, container){
+			req.container = container
+			if (req.user){
+				var membership = req.container.isMember(req.user)
+				if (membership){
+					req.containerMembership = membership
+				}
+			}						
+			next()
+		})		
+	})
+}  
+
+function ContainerSidebar(req, res, next){
+	var sidebar = req.container.getSidebar()
+	res.sidebars.pushSidebar(sidebar.header, sidebar.links)
+	next()
+}
+
+router.param('container', containerMiddleware, ContainerSidebar)	
 
 router.get('/new', auth.ensureAuthenticated, auth.ensureRole('teacher'), function(req, res){
 	var Course = microcommunity.model('Course')
