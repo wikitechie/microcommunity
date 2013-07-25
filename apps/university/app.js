@@ -4,6 +4,7 @@ var microcommunity = require('microcommunity')
 	, questionsPlugin = require('microcommunity-questions')
 	, filesPlugin = require('microcommunity-files')
 	, auth = require('microcommunity').auth	
+	, Container = microcommunity.model('Container')
 
 //registering models
 var materialSchema = require('./models/material')	
@@ -20,10 +21,30 @@ if (!module.parent){
 	var sidebar = microcommunity.sidebars.getDefault()
 	sidebar.push({label : 'Browse Materials', url : '/materials', icon : 'icon-camera-retro' })	
 	
+	function someMaterialsSidebar(req, res, next){
+		var query = { 
+			containerType : 'material'
+		}
+		if (req.user) query['memberships.user'] = req.user.id
+		
+		Container.find(query).limit(5).exec(function(err, materials){	
+			var links = []
+			for(var i=0; i<materials.length; i++){
+				var material = materials[i]
+				var link = { label : material.displayName , url : '/materials/'+material.id }
+				links.push(link)
+			}		
+			res.sidebars.pushSidebar("Materials", links)
+			next()	
+		})
+	}	
+	
 	app.useGlobal(function (req, res, next){
 		res.sidebars.pushSidebar('Everything', sidebar)
 		next()
 	})	
+	
+	app.useGlobal(someMaterialsSidebar)
 
 	//routes
 	var routes = require('./materials-routes')

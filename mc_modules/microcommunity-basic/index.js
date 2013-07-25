@@ -21,27 +21,8 @@ module.exports = function(){
 
 	var app = microcommunity.createPlugin({ path : __dirname })
 	
-
-	/*function someMaterialsSidebar(req, res, next){
-		var query = { 
-			containerType : 'material'
-		}
-		if (req.user) query['memberships.user'] = req.user.id
-		
-		Container.find(query).limit(5).exec(function(err, materials){	
-			var links = []
-			for(var i=0; i<materials.length; i++){
-				var material = materials[i]
-				var link = { label : material.displayName , url : '/materials/'+material.id }
-				links.push(link)
-			}		
-			res.sidebars.pushSidebar("Materials", links)
-			next()	
-		})
-	}*/
-	
 	//main app
-	app.get('/', /*someMaterialsSidebar,*/ function(req, res){
+	app.get('/', function(req, res){
 	
 		if (!req.user){
 			res.sidebars.disable()
@@ -69,7 +50,7 @@ module.exports = function(){
 		}	
 	})
 	
-	app.get('/stream', /*someMaterialsSidebar,*/ function(req, res){
+	app.get('/stream', function(req, res){
 		Stream.globalStream(function(err, items){	
 			can.authorizeItems(items, req.user, function(err, items){
 				if (req.user){
@@ -123,7 +104,7 @@ module.exports = function(){
 	
 
 	//profile app
-	app.get('/profiles/:id', /*someMaterialsSidebar,*/ function(req, res){	
+	app.get('/profiles/:id', function(req, res){	
 		var id = req.params.id	
 		User.findById(id, function(err, user){
 			Wall.loadItems(user.wall, function(err, items){	
