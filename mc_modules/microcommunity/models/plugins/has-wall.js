@@ -33,9 +33,7 @@ module.exports = function hasWall(schema, options){
 	schema.pre('save', function(next){
 	
 		if (this.isNew){
-			console.log('new wall')
 			var Wall = mongoose.model('Wall')		
-			console.log(this)
 			var collection = models.convert(this.objectType, 'object', 'collection')
 			var dbref = new mongoose.Types.DBRef(collection, this.id)		
 		
@@ -56,7 +54,6 @@ module.exports = function hasWall(schema, options){
 			})		
 		
 		} else {
-			console.log('no wall')	
 			next()
 		}
 
