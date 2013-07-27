@@ -5,7 +5,7 @@ define([
 	'modules/stream',
 	'views/group-header',
 	'views/publishers/post',
-], function(App, Group, publiserhModule, streamModule, GroupHeader, PostPublisher){
+], function(App, 	Group, publiserhModule, streamModule, GroupHeader, PostPublisher){
 	
 	App.addRegions({
 		publisher : '#publisher-region',

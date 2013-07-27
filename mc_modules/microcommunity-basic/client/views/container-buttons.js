@@ -1,11 +1,10 @@
 define([
 	'bb',
-	'text!templates/group-header.html',
 	'models/membership',
 	'text!templates/container-settings-button.html',
 	'models/request',
 	'views/membership-requests-modal'
-], function(Backbone, html, Membership, dropdownHtml, Request, MembershipRequestsModal){	
+], function(Backbone, Membership, dropdownHtml, Request, MembershipRequestsModal){	
 
 	var ParticipateButton = Backbone.Marionette.ItemView.extend({
 		tagName : "button",

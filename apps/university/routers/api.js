@@ -10,13 +10,13 @@ var mongoose = require('mongoose')
 var express = require('express');
 var router = new express.Router();	
 
-router.get('/api/materials/:material', function(req, res){
+router.get('/materials/:material', function(req, res){
 	Material.findById(req.params.material, function(err, material){
 		res.send(material)
 	})
 })
 
-router.post('/api/materials/:id/sections', /*fetchMaterial, user.can('add a section'),*/ function(req, res){
+router.post('/materials/:id/sections', /*fetchMaterial, user.can('add a section'),*/ function(req, res){
 	var section = {
 		title : req.body.title,
 		description : req.body.description
@@ -26,7 +26,7 @@ router.post('/api/materials/:id/sections', /*fetchMaterial, user.can('add a sect
 	})		
 })
 
-router.post('/api/materials/:id/sections/:section/highlight', function(req, res){
+router.post('/materials/:id/sections/:section/highlight', function(req, res){
 	var section = req.body
 	var update = { $set : { highlighted : req.params.section } }
 	Material.findByIdAndUpdate(req.params.id, update, function(err, material){	
@@ -35,7 +35,7 @@ router.post('/api/materials/:id/sections/:section/highlight', function(req, res)
 })	
 
 //adding a new section
-router.post('/api/materials/:material/sections/:section/attachements', function(req, res){	
+router.post('/materials/:material/sections/:section/attachements', function(req, res){	
 
 	//preparing attachment
 	var attachement = req.body
@@ -54,7 +54,7 @@ router.post('/api/materials/:material/sections/:section/attachements', function(
 })
 
 //semester-wall
-router.post('/api/walls/:wall/material/post', function(req, res){
+router.post('/walls/:wall/material/post', function(req, res){
 	User.findById(req.body.author, function(err, author){
 		Wall.findById(req.body.wall, function(err, wall){
 			Material.findById(wall.owner.oid, function(err, container){
@@ -66,7 +66,7 @@ router.post('/api/walls/:wall/material/post', function(req, res){
 					streams : [container.stream, author.stream]
 				})	
 				post.save(function(err){
-					can.authorize(post.toJSON(), 'item', 'comment', req.user, function(err, post){
+					can.authorize(post, 'item', 'comment', req.user, function(err, post){
 						res.send(post)
 					})	
 				})				
@@ -76,7 +76,7 @@ router.post('/api/walls/:wall/material/post', function(req, res){
 	})		
 })
 
-router.post('/api/walls/material/photo', function(req, res){	
+router.post('/walls/material/photo', function(req, res){	
 		User.findById(req.body.author, function(err, author){
 		var post = new Photo({
 			content : req.body.content,
