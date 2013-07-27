@@ -5,7 +5,8 @@ define([
 	'modules/stream',
 	'views/group-header',
 	'views/publishers/post',
-], function(App, 	Group, publiserhModule, streamModule, GroupHeader, PostPublisher){
+	'views/publishers/question'
+], function(App, 	Group, publiserhModule, streamModule, GroupHeader, PostPublisher, QuestionPublisher){
 	
 	App.addRegions({
 		publisher : '#publisher-region',
@@ -22,7 +23,7 @@ define([
 		if (group.get('wall').can('publish')){
 			var options = {
 				wall : group.get('wall'),
-				publishers : [PostPublisher]
+				publishers : [PostPublisher, QuestionPublisher]
 			}		
 			var Publisher = publiserhModule(App, App.publisher, options)		
 		}
