@@ -8,7 +8,7 @@ var router = new express.Router()
 function containerMiddleware(req, res, next, id){
 	var Container = microcommunity.model('Container')
 	Container.findById(id, function(err, container){
-		//container.populateRequests(function(err, container){
+		container.populateRequests(function(err, container){
 			req.container = container
 			if (req.user){
 				var membership = req.container.isMember(req.user)
@@ -17,7 +17,7 @@ function containerMiddleware(req, res, next, id){
 				}
 			}						
 			next()
-		//})		
+		})		
 	})
 }  
 

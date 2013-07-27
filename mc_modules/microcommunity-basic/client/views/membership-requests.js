@@ -6,7 +6,7 @@ define([
 
 	var RequestView = Backbone.Marionette.ItemView.extend({
 		initialize : function(){
-			this.model.set('material', this.options.material.id)
+			this.model.set('container', this.options.container.id)
 		},
 		template : requestHtml,
 		serializeData : function(){
@@ -42,7 +42,7 @@ define([
 		itemView : RequestView,
 		itemViewOptions : function(){
 			return {
-				material : this.model
+				container : this.model
 			}
 		}	 
 	})

@@ -16,7 +16,6 @@ var Stream = mongoose.model('Stream')
 	, can = microcommunity.can
 	, sidebars = microcommunity.sidebars
 
-
 module.exports = function(){
 
 	var app = microcommunity.createPlugin({ path : __dirname })
@@ -141,7 +140,7 @@ module.exports = function(){
 				streams : [author.stream]
 			})	
 			post.save(function(err){
-				can.authorize(post.toJSON(), 'item', 'comment', req.user, function(err, post){
+				can.authorize(post, 'item', 'comment', req.user, function(err, post){
 					res.send(post)
 				})				
 			})		
@@ -229,6 +228,36 @@ module.exports = function(){
 
 	})
 	
+	//container api	
+	app.post('/api/containers/:id/memberships', auth.ensureAuthenticated, function(req, res){
+		Container.findById(req.params.id, function(err, container){
+		if (!container.isMember(req.user)){
+			container.newMembershipRequest(req.user, ['mc:member'])
+		}			
+		container.save(function(err){
+			if (!err) {
+				req.user.follow(container)
+				req.user.save(function(err, user){
+					res.send(200, container)	
+				})
+			}			
+		})
+		})
+	})	
+	
+	app.put('/api/containers/:container/requests/:status/:request', function(req, res){
+		Container.findById(req.params.container, function(err, container){
+			if (req.params.status === 'approved'){
+				container.requests.remove({ _id : req.params.request })		
+				container.memberships.push({ user : req.body.user, roles : ['mc:member'] })
+			} else if (req.params.status === 'decline') {
+				container.requests.remove({ _id : req.params.request })
+			}
+			container.save(function(err){
+				res.send(200, {})
+			})			
+		})		
+	})	
 	
 	return app
 }

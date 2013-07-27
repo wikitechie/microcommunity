@@ -2,9 +2,6 @@ var helpers = require('./helpers')
 
 module.exports = function(wall, user, callback){
 
-
-	console.log( wall.owner.namespace)
-
 	var mc = require('microcommunity')
 	if (!user) {
 		helpers.attachAction(wall, 'publish', false)	

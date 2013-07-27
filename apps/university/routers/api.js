@@ -16,20 +16,6 @@ router.get('/api/materials/:material', function(req, res){
 	})
 })
 
-router.put('/api/materials/:material/requests/:status/:request', function(req, res){
-	Material.findById(req.params.material, function(err, material){
-		if (req.params.status === 'approved'){
-			material.requests.remove({ _id : req.params.request })		
-			material.memberships.push({ user : req.body.user, roles : ['mc:member'] })
-		} else if (req.params.status === 'decline') {
-			material.requests.remove({ _id : req.params.request })
-		}
-		material.save(function(err){
-			res.send(200, {})
-		})			
-	})		
-})
-
 router.post('/api/materials/:id/sections', /*fetchMaterial, user.can('add a section'),*/ function(req, res){
 	var section = {
 		title : req.body.title,
@@ -47,33 +33,6 @@ router.post('/api/materials/:id/sections/:section/highlight', function(req, res)
 		res.send(200, section)
 	})
 })	
-
-router.post('/api/materials/:id/memberships', auth.ensureAuthenticated, function(req, res){
-	Material.findById(req.params.id, function(err, material){
-	if (!material.isMember(req.user)){
-		material.newMembershipRequest(req.user, ['mc:member'])
-	}			
-	//material.addRole(req.user, 'mc:member')
-	material.save(function(err){
-		if (!err) {
-			req.user.follow(material)
-			req.user.save(function(err, user){
-				res.send(200, material)	
-			})
-		}			
-	})
-	})
-})
-
-router.delete('/api/materials/:container/memberships/:membership', 
-	auth.ensureAuthenticated,
-	auth.ensureContainerMember(), 
-	function(req, res){
-		//TODO implement memebership removal
-		req.container.save(function(err){				
-			res.send(200, req.container)	
-		})
-})
 
 //adding a new section
 router.post('/api/materials/:material/sections/:section/attachements', function(req, res){	

@@ -41,8 +41,8 @@ router.post('/walls/:wall/group/post', auth.ensureAuthenticated, function(req, r
 			author : author.id,		
 			streams : [author.stream]
 		})	
-		post.save(function(err){
-			can.authorize(post.toJSON(), 'item', 'comment', req.user, function(err, post){
+		post.save(function(err, post){
+			can.authorize(post, 'item', 'comment', req.user, function(err, post){
 				res.send(post)
 			})				
 		})		
