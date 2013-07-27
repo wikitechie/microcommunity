@@ -14,19 +14,14 @@ if (!module.parent){
 	
 	app.get('/test', function(req, res){
 		res.loadPage('test', { user : 'amjad' })
-	})	
-	
-	var sidebar = sidebars.getDefault()
-	sidebar.push({ label : 'Groups', url : '/groups', icon : 'icon-group'  })
-	
-	app.useGlobal(function (req, res, next){
-		res.sidebars.pushSidebar('Everything', sidebar)
-		next()
 	})
 	
-	app.use('/groups', require('./routers/groups').middleware)	
-	app.use('/api', require('./routers/api').middleware)				
+	app.useGlobal(require('./sidebars').default)
+	app.useGlobal(require('./sidebars').groups)	
 	
+	app.use('/groups', require('./routers/groups').middleware)	
+	app.use('/api', require('./routers/api').middleware)	
+
 	//using basic app
 	app.usePlugin(basic())		
 	

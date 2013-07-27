@@ -15,19 +15,15 @@ function containerMiddleware(req, res, next, id){
 				if (membership){
 					req.containerMembership = membership
 				}
-			}						
+			}
+			var sidebar = req.container.getSidebar()
+			res.sidebars.pushSidebar(sidebar.header, sidebar.links)									
 			next()
 		})		
 	})
 }  
 
-function ContainerSidebar(req, res, next){
-	var sidebar = req.container.getSidebar()
-	res.sidebars.pushSidebar(sidebar.header, sidebar.links)
-	next()
-}
-
-router.param('container', containerMiddleware, ContainerSidebar)	
+router.param('container', containerMiddleware)	
 
 router.get('/', function(req, res){	
 	var Group = microcommunity.model('Group') 

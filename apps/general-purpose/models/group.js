@@ -10,9 +10,9 @@ var groupSchema = new mongoose.Schema({
 groupSchema.methods.getSidebar = function(){
 	var groupLink = "/groups/" + this.id
 	var links = [ 
-			{ label : 'Home', url : materialLink, icon : 'icon-book' },
-			{ label : 'Members', url : materialLink + '/members', icon : 'icon-user' },							
-			{ label : 'Stream', url : materialLink + '/stream', icon : 'icon-list-alt' }
+			{ label : 'Home', url : groupLink, icon : 'icon-book' },
+			{ label : 'Members', url : groupLink + '/members', icon : 'icon-user' },							
+			{ label : 'Stream', url : groupLink + '/stream', icon : 'icon-list-alt' }
 		]		
 	return {
 		header : this.displayName,

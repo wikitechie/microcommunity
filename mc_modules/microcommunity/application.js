@@ -89,6 +89,7 @@ function setupPluginInterface(app, path){
 		res.sidebars = new Sidebars()
 		next()
 	})
+
 }
 
 function useInternalPlugins(app, path){
@@ -142,19 +143,26 @@ application.initPlugin = function(path){
 	setupPluginInterface(this, path)	
 }  
 
-application.useGlobal = function(middleware){	
+application.useGlobal = function(path, middleware){	
+
+	if (typeof path === 'function'){
+		middleware = path	
+		path = ''
+	}	
+	
 	if (!this.globalMiddlewares) this.globalMiddlewares = []
-	this.use(middleware)
-	this.globalMiddlewares.push(middleware)
+	this.use(path, middleware)
+	this.globalMiddlewares.push({ route : path, handle : middleware })
+	
 }
 
 application.usePlugin = function(plugin){
 	var app = this
-	this.globalMiddlewares.forEach(function(mw){
-		var position = plugin.stack.length-1
-		plugin.stack.splice(position, 0, { route : '', handle : mw })
-		app.use(plugin)		
-
-	})
+	if (this.globalMiddlewares)
+		this.globalMiddlewares.forEach(function(mw){
+			var position = plugin.stack.length-1
+			plugin.stack.splice(position, 0, mw)
+			app.use(plugin)
+		})
 }
   
