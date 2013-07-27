@@ -5,15 +5,19 @@ define([
 ], function(Backbone, html, groupHtml){
 
 	var GroupView = Backbone.Marionette.ItemView.extend({
-		className : 'row-fluid',
+		tagName : 'li',	
 		template : groupHtml,
+		className : 'span4 thumbnail',
+		attributes : { style : 'margin:4px; min-height:100px;' },					
 		serializeData : function(){
 			return this.model.serialize()
 		}		
 	})
 
 	var GroupListView = Backbone.Marionette.CompositeView.extend({
+		tagName : 'ul',	
 		template : '',
+		className : 'thumbnails',		
 		itemView : GroupView	 
 	})
 		
